@@ -66,6 +66,12 @@
                                         تیزر تبلیغاتی 1 موسسه سیمرغ
                                     </video>
                                 </div>
+                                <div class="col-12 col-md-6">
+                                    <video class="w-100" controls>
+                                        <source src="../upload/videos/2024/chromakey3.mp4" type="video/mp4">
+                                        تیزر تبلیغاتی 1 موسسه سیمرغ
+                                    </video>
+                                </div>
                             </div>
                         </div>
                     </div>
