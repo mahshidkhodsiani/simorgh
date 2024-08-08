@@ -35,7 +35,7 @@
             <div class="row justify-content-center">
                 <div class="col-12 col-md-10">
                     <div class="card border border-danger" style="border-radius: 40px;">
-                        <img class="mx-auto d-block img-fluid" src="../images/speaking.jpg" alt="دوره های گویندگی مووسه هفت هنر سیمرغ" 
+                        <img class="mx-auto d-block img-fluid" src="../images/speaking.jpg" alt="دوره های گویندگی موسسه هفت هنر سیمرغ" 
                             style="width: 100%; height: auto;">
                         <div class="card-body" dir="rtl" style="text-align: right;">
                             <h1>دوره های فن بیان و گویندگی</h1>

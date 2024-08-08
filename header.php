@@ -152,7 +152,7 @@
 
         </div>
         <div class="col-2">
-            <a href="register" class="btn mb-2 mb-md-0 btn-outline-quarternary btn-block">ثبت نام</a>
+            <!-- <a href="register" class="btn mb-2 mb-md-0 btn-outline-quarternary btn-block">ثبت نام</a> -->
         </div>
 
         </div>
@@ -208,12 +208,12 @@
                         <li class="has-children">
                             <a href="#">بازیگری</a>
                             <ul class="dropdown">
-                            <li><a href="#">مقدماتی</a></li>
-                            <li><a href="#">پیشرفته</a></li>
+                            <li><a href="courses/acting">مقدماتی</a></li>
+                            <li><a href="courses/acting">پیشرفته</a></li>
                             </ul>
                         </li>
                         <li><a href="#faq-section" class="nav-link">انیمیشن سازی</a></li>
-                        <li><a href="#faq-section" class="nav-link">موشن گرافیک</a></li>
+                        <li><a href="courses/motion_graphics" class="nav-link">موشن گرافیک</a></li>
                         
                         <li class="has-children">
                             <a href="#">گریم سینمایی</a>

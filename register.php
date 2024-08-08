@@ -24,9 +24,25 @@
                 <div class="col-md-7 col-sm-12 border">
                     <?php
                     if(isset($_POST['sabtenam'])){
-                        if(isset($_POST['speaking1']) OR isset($_POST['speaking2'])){
+                        if(isset($_POST['speaking1'])){
                             $course = 'فن بیان و گویندگی(مقدماتی) "16 جلسه دو ساعته" - قیمت : 7/500/000 تومان ';
                             $dargah = "speaking1";
+                        }
+                        if(isset($_POST['speaking2'])){
+                            $course = 'فن بیان و گویندگی(پیشرفته) "16 جلسه دو ساعته" - قیمت : 8/900/000 تومان ';
+                            $dargah = "speaking2";
+                        }
+                        if(isset($_POST['motion'])){
+                            $course = 'موشن گرافیک "16 جلسه سه ساعته" - قیمت : 9/500/000 تومان ';
+                            $dargah = "motion";
+                        }
+                        if(isset($_POST['acting1'])){
+                            $course = 'بازیگری (مقدماتی) "15 جلسه سه ساعته" - قیمت : 8/800/000 تومان ';
+                            $dargah = "acting1";
+                        }
+                        if(isset($_POST['acting2'])){
+                            $course = 'بازیگری (پیشرفته) "16 جلسه سه ساعته" - قیمت : 12/800/000 تومان ';
+                            $dargah = "acting2";
                         }
                         ?>
                         <form class="p-2" action="" method="POST">
