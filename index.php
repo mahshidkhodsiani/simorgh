@@ -37,10 +37,10 @@
             <img class="d-block w-100" src="images/1.jpg" alt="First slide">
           </div>
           <div class="carousel-item">
-            <img class="d-block w-100" src="images/2.jpg" alt="Second slide">
+            <img class="d-block w-100" src="images/3.jpg" alt="Second slide">
           </div>
           <div class="carousel-item">
-            <img class="d-block w-100" src="images/3.jpg" alt="Second slide">
+            <img class="d-block w-100" src="images/6.jpg" alt="Second slide">
           </div>
         </div>
         <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
@@ -57,37 +57,164 @@
 
 
     <div class="container-fluid px-4"> <!-- Add custom padding using Bootstrap classes -->
-      <div class="section noise mt-3">
-        <div class="circle-container">
-          <div class="circle" data-modal="dub">
-            <span class="straight title">دوبله<br>(کلیک کنید)</span>
-            <p class="coursedescibe">دوبله به دو صورتِ همزمان و ناهمزمان، گروهی و تک‌نفره...</p>
+
+
+
+
+
+
+
+      <!-- Team -->
+      <section id="team" class="pb-5">
+          <div class="container">
+              <h5 class="section-title h1">برگزاری دوره های هنری ، فنی</h5>
+              <div class="row">
+                  <!-- Team member -->
+                  <div class="col-xs-12 col-sm-6 col-md-3">
+                      <div class="image-flip" >
+                          <div class="mainflip flip-0">
+                              <div class="frontside">
+                                  <div class="card">
+                                      <div class="card-body text-center">
+                                          <p><img class=" img-fluid" src="images/speaking.jpg" alt="card image"></p>
+                                          <h4 class="card-title">فن بیان و گویندگی</h4>
+                                          <p class="card-text">اینجا صدایتان شنیده می شود!</p>
+                                          <a href="courses/speaking" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="backside">
+                                  <div class="card">
+                                      <div class="card-body text-center mt-4">
+                                          <a href="courses/speaking"><h4 class="card-title">فن بیان و گویندگی</h4></a>
+                                          <p class="card-text">اگر صدای خوب یا استعداد گویندگی
+                                             دارید میتوانید در آموزشگاه رادیو سیمرغ دوره های آکادمیک و تجربی رو بگذرونید و در ضبط برنامه ها حضور پیدا کنید.</p>
+                                  
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- ./Team member -->
+                  <!-- Team member -->
+                  <div class="col-xs-12 col-sm-6 col-md-3">
+                      <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
+                          <div class="mainflip">
+                              <div class="frontside">
+                                  <div class="card">
+                                      <div class="card-body text-center">
+                                          <p><img class=" img-fluid" src="images/audio.jpg" alt="card image"></p>
+                                          <h4 class="card-title">آرشیو گویندگان</h4>
+                                          <p class="card-text">آرشیو گویندگان موسسه سیمرغ ذخیره‌ای بی‌نظیر از استعدادها و مهارت‌ها</p>
+                                          <a href="https://www.fiverr.com/share/qb8D02" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="backside">
+                                  <div class="card">
+                                      <div class="card-body text-center mt-4">
+                                          <a href="#"><h4 class="card-title">آرشیو گویندگان</h4></a>
+                                          <p class="card-text">موسسه سیمرغ، با سابقه‌ای درخشان در زمینه تولید محتوا و دوبله،
+                                             به‌عنوان یکی از برترین مراکز آموزشی و تولیدی در صنعت صدا و تصویر شناخته می‌شود. آرشیو گویندگان موسسه سیمرغ، منبعی ارزشمند از استعدادهای بی‌نظیر و مهارت‌های حرفه‌ای در زمینه گویندگی و دوبله است.</p>
+                                          <ul class="list-inline">
+                                              <li class="list-inline-item">
+                                                  <a class="social-icon text-xs-center" target="_blank" href="https://www.fiverr.com/share/qb8D02">
+                                                      <i class="fa fa-facebook"></i>
+                                                  </a>
+                                              </li>
+                                              <li class="list-inline-item">
+                                                  <a class="social-icon text-xs-center" target="_blank" href="https://www.fiverr.com/share/qb8D02">
+                                                      <i class="fa fa-twitter"></i>
+                                                  </a>
+                                              </li>
+                                              <li class="list-inline-item">
+                                                  <a class="social-icon text-xs-center" target="_blank" href="https://www.fiverr.com/share/qb8D02">
+                                                      <i class="fa fa-skype"></i>
+                                                  </a>
+                                              </li>
+                                              <li class="list-inline-item">
+                                                  <a class="social-icon text-xs-center" target="_blank" href="https://www.fiverr.com/share/qb8D02">
+                                                      <i class="fa fa-google"></i>
+                                                  </a>
+                                              </li>
+                                          </ul>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- ./Team member -->
+                  <!-- Team member -->
+                  <div class="col-xs-12 col-sm-6 col-md-3">
+                      <div class="image-flip" >
+                          <div class="mainflip flip-0">
+                              <div class="frontside">
+                                  <div class="card">
+                                      <div class="card-body text-center">
+                                          <p><img class=" img-fluid" src="images/acting.jpg" alt="card image"></p>
+                                          <h4 class="card-title">بازیگری</h4>
+                                          <p class="card-text">آیا به دنبال ارتقاء مهارت‌های بازیگری خود هستید؟</p>
+                                          <a href="courses/speaking" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="backside">
+                                  <div class="card">
+                                      <div class="card-body text-center mt-4">
+                                          <a href="courses/acting"><h4 class="card-title">آموزش بازیگری</h4></a>
+                                          <p class="card-text">موسسه «سیمرغ»، پیشرو در آموزش بازیگری در ایران، دوره‌های تخصصی بازیگری مقدماتی و پیشرفته را ارائه می‌دهد.
+                                             این دوره‌ها با هدف توسعه توانایی‌های بازیگری شما و آماده‌سازی شما برای ورود به دنیای هنر طراحی شده‌اند.</p>
+                                  
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- ./Team member -->
+                  <!-- Team member -->
+                  <div class="col-xs-12 col-sm-6 col-md-3">
+                      <div class="image-flip" >
+                          <div class="mainflip flip-0">
+                              <div class="frontside">
+                                  <div class="card">
+                                      <div class="card-body text-center">
+                                          <p><img class=" img-fluid" src="images/speaking.jpg" alt="card image"></p>
+                                          <h4 class="card-title">موشن گرافیک</h4>
+                                          <p class="card-text">اگه شغل مناسب ندارین ،یا دنبال شغل دوم با درآمد بالا هستین... </p>
+                                          <a href="courses/speaking" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="backside">
+                                  <div class="card">
+                                      <div class="card-body text-center mt-4">
+                                          <a href="courses/motion_graphics"><h4 class="card-title">آموزش موشن گرافیک</h4></a>
+                                          <p class="card-text">میتونین رشته موشن گرافیک یاد بگیرین و بصورت حضوری و حتی دورکاری در منزل خودتون تولید محتوا بسازید و کسب درآمد کنید.
+                                            کلاسها بصورت حضوری و آنلاین</p>
+                                  
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- ./Team member -->
+             
+
+              </div>
           </div>
-          <div class="circle" data-modal="anim">
-            <span class="straight title">انیمیشن<br>(کلیک کنید)</span>
-            <p class="coursedescibe">پویانمایی یا انیمیشن نمایشِ تُند و پیوستهٔ تصاویری...</p>
-          </div>
-          <div class="circle" data-modal="design">
-            <span class="straight title">طراحی<br>(کلیک کنید)</span>
-            <p class="coursedescibe">اثر هنری ترکیبی از شرایط مورد نظر است...</p>
-          </div>
-          <div class="circle" data-modal="music">
-            <span class="straight title">موسیقی<br>(کلیک کنید)</span>
-            <p class="coursedescibe">سه نظریه زیبایی‌شناسی دربارهٔ موسیقی وجود دارد...</p>
-          </div>
-        </div>
-      </div>
+      </section>
+      <!-- Team -->
+
 
       <hr class="my-4">
 
-      <!-- Modal Structure -->
-      <div id="modal" class="modal">
-        <div class="modal-content">
-          <span class="close">&times;</span>
-          <h2 id="modal-title"></h2>
-          <p id="modal-text"></p>
-        </div>
-      </div>
+   
+
+
 
       <section class="light">
         <div class="container py-2">
@@ -186,7 +313,7 @@
               
                 <h1 class="h1 text-center text-dark" id="pageHeaderTitle">
                 <img src="images/link.jpg" height="30px" width="30px" alt="گالری سیمرغ"/>
-                گالری تصاویر
+                نمونه کارها
                 </h1>
             </a>
 
@@ -199,7 +326,7 @@
      
 
 
-      <section class="light">
+      <!-- <section class="light">
         <div class="container py-2">
           <a href="gallery/all">
             <h1 class="h1 text-center text-dark" id="pageHeaderTitle">
@@ -226,7 +353,7 @@
           </div>
       
         </div>
-      </section>
+      </section> -->
 
 
 
@@ -237,55 +364,6 @@
     </div> <!-- End of container-fluid -->
 
 
-
-    
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-          var circles = document.querySelectorAll('.circle');
-          var modal = document.getElementById('modal');
-          var modalTitle = document.getElementById('modal-title');
-          var modalText = document.getElementById('modal-text');
-          var closeBtn = document.querySelector('.close');
-
-          var content = {
-              dub: {
-                  title: 'دوبله',
-                  text: '<p class="coursedescibe">دوبله به دو صورتِ همزمان و ناهمزمان (غیرهمزمان)، گروهی و تک‌نفره انجام می‌گیرد.<br><strong>1-دوبله همزمان</strong><br>دوبله همزمان یک فیلم در حال پخش در سینما است مردم نشسته‌اند و دوبلرها زنده و نفس به نفس دوبله می‌کنند اگر اشتباهی شود و کلمه یا جمله ای جا بیفتد و یا اشتباهی در دوبله کردن انجام شود، امکان برگشت و درست کردن آن وجود ندارد اگر کار دوبله در استودیو انجام شود و مشکل یا اشتباهی به وجود بیاید می‌توان آن را حل کرد اما در دوبله همزمان  باید شش دانگ حواس دوبلورها به کار باشد ، چه کار خوب باشد و چه بد باید دوبله را ادامه دهید.<br><strong>2-دوبلهٔ ناهمزمان</strong><br>در دوبلهٔ ناهمزمان، لزومی برای تطبیق صدای جایگزین با حرکات لبِ افرادِ فیلم وجود ندارد. در این نوع دوبله، صدای اصلی فیلم قطع نمی‌شود و تنها از شدت آن کاسته می‌شود.<br>دیدن بیشتر <a href="#">اینجا</a></p>'
-              },
-              anim: {
-                  title: 'انیمیشن',
-                  text: '<p class="coursedescibe">پویانمایی یا انیمیشن (به انگلیسی: Animation) نمایشِ تُند و پیوستهٔ تصاویری از اثرِ هنریِ دوبعدی، یا موقعیت‌های مدل‌های واقعی، برای ایجاد توهم حرکت است.[ب] حرکت روان تصاویرِ پویا در پویانمایی‌ها، ناشی از یک خطای دید است که به دلیل پدیدهٔ ماندگاری تصاویر پدید می‌آید. پویانمایی می‌تواند در قالب هر دو رسانهٔ آنالوگ مانند فیلم متحرک، نوار ویدئو یا در رسانه‌های دیجیتال؛ پویانمایی فِلش، ویدئوی دیجیتال ضبط شده یا "GIF" پویا باشد. برای نمایشِ پویانمایی می‌توان از یک دوربین، رایانه یا یک پروژکتور با فن‌آوری‌های نو استفاده کرد. رایج‌ترین روش برای نمایش پویانمایی، سینما یا ویدئو است. یک پویانمایی، به دو روشِ سنتی و روش دیجیتال ایجاد می‌شود. اِستاپ‌موشن شیوه‌ای از پویانمایی است که در آن با جابجایی یا تغیرِ مکان، شکل یا حالتِ اشیاء به صورت دو یا سه بعدی با استفاده از برشِ لبه‌های کاغذ، رنگ‌آمیزیِ فیلم‌های شفاف یا عروسک؛ و ثبت هر لحظه از قاب به شکل یک تصویر، و نمایشِ پیوسته تصاویر جایگزین شده، با تصاویر قبلی و معمولاً با ۱۲،۱۰،۸، ۲۴،۱۶،۱۵، ۵۰،۳۰،۲۵ یا ۶۰ قاب در ثانیه، یک اثر پویانمایی ایجاد می‌شود.<br>دیدن بیشتر <a href="#">اینجا</a></p>'
-              },
-              design: {
-                  title: 'طراحی',
-                  text: '<p class="coursedescibe">«اثر هنری ترکیبی از شرایط مورد نظر است که به منظور ارائه تجربه‌های زیبایی شناختی ارزشمند قادر به نشان دادن ویژگی‌های زیبایی شناختی هنر باشد.»<br>در حالی که کارکردی ها ارزش هنر را وابسته به ماهیت آن می‌دانند، تعریف رویه گرایان صرفاً توصیفی بوده و مبتنی بر ارزیابی نیست. از تعاریف رویه ای ارائه شده می‌توان به تعریف دیکی اشاره کرد که یک تعریف سازمانی محسوب می‌شود. او در درجه اول اثر هنری را به عنوان «اثر تصنعی» و در درجه دوم به عنوان «مجموعه ای از جنبه‌های کلیدی که از طرف برخی از نامزدها برای قدردانی از افراد فعال در منظومه هنر اعطا می‌شود» می‌بیند.<br>دیدن بیشتر <a href="#">اینجا</a></p>'
-              },
-              music: {
-                  title: 'موسیقی',
-                  text: '<p class="coursedescibe">سه نظریه زیبایی‌شناسی دربارهٔ موسیقی وجود دارد:<br><strong>1- موسیقی به مثابه زبان احساسات</strong><br><strong>2-موسیقی به مثابه نماد احساس</strong><br><strong>3-ذات موسیقی صدا و حرکت است.</strong><br>بسیاری از پدیده‌های طبیعی مانند آبشار و وزش باد از میان برگ‌های درختان و نوای طبیعی موسیقی ایجاد می‌کنند. پس باید بپذیریم موسیقی پدیده‌ای است در فطرت آدمی. از آنجا که موسیقی، یکی از زیر مجموعه‌های فرهنگ، در همه جوامع وجود دارد، و گاه با افسانه‌ها و حکایت‌ها و احساسات آمیخته شده‌است.<br>دیدن بیشتر <a href="#">اینجا</a></p>'
-              }
-          };
-
-          circles.forEach(function (circle) {
-              circle.addEventListener('click', function () {
-                  var modalKey = this.getAttribute('data-modal');
-                  modalTitle.innerText = content[modalKey].title;
-                  modalText.innerHTML = content[modalKey].text;
-                  modal.style.display = 'block';
-              });
-          });
-
-          closeBtn.addEventListener('click', function () {
-              modal.style.display = 'none';
-          });
-
-          window.addEventListener('click', function (event) {
-              if (event.target == modal) {
-                  modal.style.display = 'none';
-              }
-          });
-      });
-    </script>
 
     <?php include 'footer.php'; ?>
   </body>

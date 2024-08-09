@@ -173,7 +173,7 @@
             <ul class="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
                 <li><a href="./" class="nav-link">صفحه اصلی</a></li>
                 <!-- <li><a href="articles/index.php?title=درباره موسسه" class="nav-link">درباره موسسه</a></li> -->
-                <li><a href="articles/about.php" class="nav-link">درباره موسسه</a></li>
+                <li><a href="articles/about" class="nav-link">درباره موسسه</a></li>
                
                 <li class="has-children">
                     <a href="articles/order_ads">سفارش تبلیغات</a>
@@ -196,6 +196,21 @@
                             <li><a href="courses/speaking">پیشرفته</a></li>
                             </ul>
                         </li>
+                        <li><a href="#faq-section" class="nav-link">گویندگی کوتاه مدت رادیو</a></li>
+
+                        <li class="has-children">
+                            <a href="#">بازیگری</a>
+                            <ul class="dropdown">
+                            <li><a href="courses/acting">مقدماتی</a></li>
+                            <li><a href="courses/acting">پیشرفته</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#faq-section" class="nav-link">بازیگری کودک</a></li>
+                        <li><a href="courses/motion_graphics" class="nav-link">موشن گرافیک</a></li>
+                        <li><a href="#faq-section" class="nav-link">عکاسی</a></li>
+
+
+
                         
                         <li class="has-children">
                             <a href="#">دوبله</a>
@@ -205,15 +220,8 @@
                             </ul>
                         </li>
                         
-                        <li class="has-children">
-                            <a href="#">بازیگری</a>
-                            <ul class="dropdown">
-                            <li><a href="courses/acting">مقدماتی</a></li>
-                            <li><a href="courses/acting">پیشرفته</a></li>
-                            </ul>
-                        </li>
+                       
                         <li><a href="#faq-section" class="nav-link">انیمیشن سازی</a></li>
-                        <li><a href="courses/motion_graphics" class="nav-link">موشن گرافیک</a></li>
                         
                         <li class="has-children">
                             <a href="#">گریم سینمایی</a>
@@ -222,12 +230,12 @@
                             <li><a href="#">پیشرفته</a></li>
                             </ul>
                         </li>
-                        <li><a href="#faq-section" class="nav-link">عکاسی</a></li>
                         <li><a href="#faq-section" class="nav-link">کارگردانی</a></li>
                         <li><a href="#faq-section" class="nav-link">تدوین فیلم</a></li>
-                        <li><a href="#faq-section" class="nav-link">کارگاه های آموزشی</a></li>
+                        <li><a href="#faq-section" class="nav-link">نقاشی</a></li>
                     </ul>
                 </li>
+
                 <li class="has-children">
                     <a href="#">پکیج های آموزشی</a>
                     <ul class="dropdown arrow-top">
@@ -239,8 +247,15 @@
                         
                     </ul>
                 </li>
+
+                <li class="has-children">
+                    <a href="#">سفارش گویندگی</a>
+                    <ul class="dropdown arrow-top">
+                        <li><a href="#pricing-section" class="nav-link">آرشیو گویندگان</a>
+                    </ul>
+                </li>
                 
-                <li><a href="#services-section" class="nav-link">سفارش گویندگی و نریشن</a></li>
+             
                 <li class="has-children">
                     <a href="#">برنامه های رادیویی</a>
                     <ul class="dropdown arrow-top">
@@ -277,6 +292,9 @@
         <div class="">
             <a href="./" >
                 <img src="images/logo1.png" height="60px">
+                <br>
+                <p style="color: red;">به سایت هفت هنر سیمرغ خوش آمدید.</p>
+            
             </a>
         </div>
 
