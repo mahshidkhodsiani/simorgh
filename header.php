@@ -236,7 +236,7 @@
                     </ul>
                 </li>
 
-                <li class="has-children">
+                <!-- <li class="has-children">
                     <a href="#">پکیج های آموزشی</a>
                     <ul class="dropdown arrow-top">
                         <li><a href="#pricing-section" class="nav-link">موشن گرافیک</a></li>
@@ -246,14 +246,9 @@
                         <li><a href="#faq-section" class="nav-link">فوتوشاپ</a></li>
                         
                     </ul>
-                </li>
+                </li> -->
 
-                <li class="has-children">
-                    <a href="#">سفارش گویندگی</a>
-                    <ul class="dropdown arrow-top">
-                        <li><a href="#pricing-section" class="nav-link">آرشیو گویندگان</a>
-                    </ul>
-                </li>
+             
                 
              
                 <li class="has-children">
@@ -264,20 +259,7 @@
                         <li><a href="#faq-section" class="nav-link">کتاب صوتی</a></li>
                     </ul>
                 </li>
-                <li class="has-children">
-                    <a href="#">خدمات سیمرغ</a>
-                    <ul class="dropdown arrow-top">
-                        <li><a href="#pricing-section" class="nav-link">موشن گرافیک</a></li>
-                        <li><a href="#faq-section" class="nav-link">فن بیان</a></li>
-                        <li><a href="#faq-section" class="nav-link">انیمیشن سازی</a></li>
-                        <li><a href="#faq-section" class="nav-link">تولید فیلم</a></li>
-                        <li><a href="#faq-section" class="nav-link">گویندگی رادیو</a></li>
-                        <li><a href="#faq-section" class="nav-link">برگزاری سمینار و همایش</a></li>
-                        <li><a href="#faq-section" class="nav-link">چاپ و نشر</a></li>
-                        <li><a href="#faq-section" class="nav-link">طراحی سایت</a></li>
-                        
-                    </ul>
-                </li>
+              
                 <li><a href="articles/suggustion" class="nav-link">انتقادات و پیشنهادات</a></li>
 
             </ul>
@@ -292,9 +274,7 @@
         <div class="">
             <a href="./" >
                 <img src="images/logo1.png" height="60px">
-                <br>
-                <p style="color: red;">به سایت هفت هنر سیمرغ خوش آمدید.</p>
-            
+              
             </a>
         </div>
 

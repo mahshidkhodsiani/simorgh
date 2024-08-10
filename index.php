@@ -58,156 +58,176 @@
 
     <div class="container-fluid px-4"> <!-- Add custom padding using Bootstrap classes -->
 
+    <p style="color: red; text-align: right ;font-family: monospace;font-size: 26px;">به سایت آموزشگاه سینمایی و موسسه هفت هنر سیمرغ خوش آمدید</p>
+    <p style="color: red; text-align: right ;">برگزاری ورکشاپ, کارگاه و دوره های تخصصی و آموزشی</p>
 
 
+     <!-- Team -->
+<section id="team" class="pb-5">
+    <div class="container">
+        <h5 class="section-title h1">تازه ترین ها</h5>
+        <div class="row">
+            <!-- Team member -->
+            <div class="col-6 col-sm-4 mb-4">
+                <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
+                    <div class="mainflip">
+                        <div class="frontside">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <p><img class="img-fluid" src="images/audio.jpg" alt="card image"></p>
+                                    <h4 class="card-title">آرشیو گویندگان</h4>
+                                    <p class="card-text">آرشیو گویندگان موسسه سیمرغ ذخیره‌ای بی‌نظیر از استعدادها و مهارت‌ها</p>
+                                    <a href="articles/speakers_archive" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="backside">
+                            <div class="card">
+                                <div class="card-body text-center mt-4">
+                                    <a href="articles/speakers_archive"><h4 class="card-title">سفارش گویندگی (کلیک کنید)</h4></a>
+                                    <p class="card-text">آرشیو گویندگان موسسه سیمرغ، منبعی ارزشمند از استعدادهای بی‌نظیر و مهارت‌های حرفه‌ای در زمینه گویندگی و دوبله است. شما هم می‌توانید جزو آنها باشید...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ./Team member -->
+            <!-- Team member -->
+            <div class="col-6 col-sm-4 mb-4">
+                <div class="image-flip" >
+                    <div class="mainflip flip-0">
+                        <div class="frontside">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <p><img class="img-fluid" src="images/speaking.jpg" alt="card image"></p>
+                                    <h4 class="card-title">آموزش فن بیان و گویندگی</h4>
+                                    <p class="card-text">اینجا صدایتان شنیده می‌شود!</p>
+                                    <a href="courses/speaking" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="backside">
+                            <div class="card">
+                                <div class="card-body text-center mt-4">
+                                    <a href="courses/speaking"><h4 class="card-title">فن بیان و گویندگی (کلیک کنید)</h4></a>
+                                    <p class="card-text">اگر صدای خوب یا استعداد گویندگی دارید می‌توانید در آموزشگاه رادیو سیمرغ دوره‌های آکادمیک و تجربی را بگذرانید و در ضبط برنامه‌ها حضور پیدا کنید.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ./Team member -->
+            <!-- Team member -->
+            <div class="col-6 col-sm-4 mb-4">
+                <div class="image-flip" >
+                    <div class="mainflip flip-0">
+                        <div class="frontside">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <p><img class="img-fluid" src="images/packages.jpg" alt="card image"></p>
+                                    <h4 class="card-title">پکیج‌های آموزشی</h4>
+                                    <p class="card-text">پکیج‌های آموزشی موسسه سیمرغ، راهی نوین برای یادگیری و پیشرفت</p>
+                                    <a href="packages" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="backside">
+                            <div class="card">
+                                <div class="card-body text-center mt-4">
+                                    <a href="packages"><h4 class="card-title">پکیج‌های آموزشی (کلیک کنید)</h4></a>
+                                    <p class="card-text">اگر به دنبال پکیج‌های آموزشی جامع و کاربردی برای ارتقاء مهارت‌های خود هستید، موسسه سیمرغ بهترین گزینه برای شماست</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ./Team member -->
+            <!-- Team member -->
+            <div class="col-6 col-sm-4 mb-4">
+                <div class="image-flip" >
+                    <div class="mainflip flip-0">
+                        <div class="frontside">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <p><img class="img-fluid" src="images/acting.jpg" alt="card image"></p>
+                                    <h4 class="card-title">آموزش بازیگری</h4>
+                                    <p class="card-text">آیا به دنبال ارتقاء مهارت‌های بازیگری خود هستید؟</p>
+                                    <a href="courses/acting" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="backside">
+                            <div class="card">
+                                <div class="card-body text-center mt-4">
+                                    <a href="courses/acting"><h4 class="card-title">آموزش بازیگری (کلیک کنید)</h4></a>
+                                    <p class="card-text">موسسه «سیمرغ»، پیشرو در آموزش بازیگری در ایران، دوره‌های تخصصی بازیگری مقدماتی و پیشرفته را ارائه می‌دهد. این دوره‌ها با هدف توسعه توانایی‌های بازیگری شما و آماده‌سازی شما برای ورود به دنیای هنر طراحی شده‌اند.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ./Team member -->
+            <!-- Team member -->
+            <div class="col-6 col-sm-4 mb-4">
+                <div class="image-flip" >
+                    <div class="mainflip flip-0">
+                        <div class="frontside">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <p><img class="img-fluid" src="images/ordering.jpg" alt="card image"></p>
+                                    <h4 class="card-title">سفارش تبلیغات شما</h4>
+                                    <p class="card-text">اینجا کسب و کارتان دیده می‌شود</p>
+                                    <a href="articles/order_ads" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="backside">
+                            <div class="card">
+                                <div class="card-body text-center mt-4">
+                                    <a href="articles/order_ads"><h4 class="card-title">سفارش تبلیغات (کلیک کنید)</h4></a>
+                                    <p class="card-text">آیا به دنبال راهی برای ارتقاء برند خود و جذب مشتریان بیشتر هستید؟ سفارش تبلیغات می‌تواند بهترین گزینه برای شما باشد!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ./Team member -->
+            <!-- Team member -->
+            <div class="col-6 col-sm-4 mb-4">
+                <div class="image-flip" >
+                    <div class="mainflip flip-0">
+                        <div class="frontside">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <p><img class="img-fluid" src="images/website.jpg" alt="card image"></p>
+                                    <h4 class="card-title">خدمات سیمرغ</h4>
+                                    <p class="card-text">راهکارهای حرفه‌ای برای کسب‌وکار شما</p>
+                                    <a href="courses/motion_graphics" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="backside">
+                            <div class="card">
+                                <div class="card-body text-center mt-4">
+                                    <a href="courses/motion_graphics"><h4 class="card-title">خدمات سیمرغ (کلیک کنید)</h4></a>
+                                    <p class="card-text">موسسه سیمرغ با ارائه مجموعه‌ای جامع از خدمات تخصصی، به شما کمک می‌کند تا به اهداف کسب‌وکاری خود دست یابید و در دنیای رقابتی امروز پیشرفت کنید. خدمات ما به گونه‌ای طراحی شده‌اند که نیازهای مختلف شما را برآورده کنند و بهترین نتایج را ارائه دهند.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ./Team member -->
+        </div>
+    </div>
+</section>
+<!-- Team -->
 
-
-
-
-      <!-- Team -->
-      <section id="team" class="pb-5">
-          <div class="container">
-              <h5 class="section-title h1">برگزاری دوره های هنری ، فنی</h5>
-              <div class="row">
-                  <!-- Team member -->
-                  <div class="col-xs-12 col-sm-6 col-md-3">
-                      <div class="image-flip" >
-                          <div class="mainflip flip-0">
-                              <div class="frontside">
-                                  <div class="card">
-                                      <div class="card-body text-center">
-                                          <p><img class=" img-fluid" src="images/speaking.jpg" alt="card image"></p>
-                                          <h4 class="card-title">فن بیان و گویندگی</h4>
-                                          <p class="card-text">اینجا صدایتان شنیده می شود!</p>
-                                          <a href="courses/speaking" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="backside">
-                                  <div class="card">
-                                      <div class="card-body text-center mt-4">
-                                          <a href="courses/speaking"><h4 class="card-title">فن بیان و گویندگی</h4></a>
-                                          <p class="card-text">اگر صدای خوب یا استعداد گویندگی
-                                             دارید میتوانید در آموزشگاه رادیو سیمرغ دوره های آکادمیک و تجربی رو بگذرونید و در ضبط برنامه ها حضور پیدا کنید.</p>
-                                  
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <!-- ./Team member -->
-                  <!-- Team member -->
-                  <div class="col-xs-12 col-sm-6 col-md-3">
-                      <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
-                          <div class="mainflip">
-                              <div class="frontside">
-                                  <div class="card">
-                                      <div class="card-body text-center">
-                                          <p><img class=" img-fluid" src="images/audio.jpg" alt="card image"></p>
-                                          <h4 class="card-title">آرشیو گویندگان</h4>
-                                          <p class="card-text">آرشیو گویندگان موسسه سیمرغ ذخیره‌ای بی‌نظیر از استعدادها و مهارت‌ها</p>
-                                          <a href="https://www.fiverr.com/share/qb8D02" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="backside">
-                                  <div class="card">
-                                      <div class="card-body text-center mt-4">
-                                          <a href="#"><h4 class="card-title">آرشیو گویندگان</h4></a>
-                                          <p class="card-text">موسسه سیمرغ، با سابقه‌ای درخشان در زمینه تولید محتوا و دوبله،
-                                             به‌عنوان یکی از برترین مراکز آموزشی و تولیدی در صنعت صدا و تصویر شناخته می‌شود. آرشیو گویندگان موسسه سیمرغ، منبعی ارزشمند از استعدادهای بی‌نظیر و مهارت‌های حرفه‌ای در زمینه گویندگی و دوبله است.</p>
-                                          <ul class="list-inline">
-                                              <li class="list-inline-item">
-                                                  <a class="social-icon text-xs-center" target="_blank" href="https://www.fiverr.com/share/qb8D02">
-                                                      <i class="fa fa-facebook"></i>
-                                                  </a>
-                                              </li>
-                                              <li class="list-inline-item">
-                                                  <a class="social-icon text-xs-center" target="_blank" href="https://www.fiverr.com/share/qb8D02">
-                                                      <i class="fa fa-twitter"></i>
-                                                  </a>
-                                              </li>
-                                              <li class="list-inline-item">
-                                                  <a class="social-icon text-xs-center" target="_blank" href="https://www.fiverr.com/share/qb8D02">
-                                                      <i class="fa fa-skype"></i>
-                                                  </a>
-                                              </li>
-                                              <li class="list-inline-item">
-                                                  <a class="social-icon text-xs-center" target="_blank" href="https://www.fiverr.com/share/qb8D02">
-                                                      <i class="fa fa-google"></i>
-                                                  </a>
-                                              </li>
-                                          </ul>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <!-- ./Team member -->
-                  <!-- Team member -->
-                  <div class="col-xs-12 col-sm-6 col-md-3">
-                      <div class="image-flip" >
-                          <div class="mainflip flip-0">
-                              <div class="frontside">
-                                  <div class="card">
-                                      <div class="card-body text-center">
-                                          <p><img class=" img-fluid" src="images/acting.jpg" alt="card image"></p>
-                                          <h4 class="card-title">بازیگری</h4>
-                                          <p class="card-text">آیا به دنبال ارتقاء مهارت‌های بازیگری خود هستید؟</p>
-                                          <a href="courses/speaking" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="backside">
-                                  <div class="card">
-                                      <div class="card-body text-center mt-4">
-                                          <a href="courses/acting"><h4 class="card-title">آموزش بازیگری</h4></a>
-                                          <p class="card-text">موسسه «سیمرغ»، پیشرو در آموزش بازیگری در ایران، دوره‌های تخصصی بازیگری مقدماتی و پیشرفته را ارائه می‌دهد.
-                                             این دوره‌ها با هدف توسعه توانایی‌های بازیگری شما و آماده‌سازی شما برای ورود به دنیای هنر طراحی شده‌اند.</p>
-                                  
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <!-- ./Team member -->
-                  <!-- Team member -->
-                  <div class="col-xs-12 col-sm-6 col-md-3">
-                      <div class="image-flip" >
-                          <div class="mainflip flip-0">
-                              <div class="frontside">
-                                  <div class="card">
-                                      <div class="card-body text-center">
-                                          <p><img class=" img-fluid" src="images/speaking.jpg" alt="card image"></p>
-                                          <h4 class="card-title">موشن گرافیک</h4>
-                                          <p class="card-text">اگه شغل مناسب ندارین ،یا دنبال شغل دوم با درآمد بالا هستین... </p>
-                                          <a href="courses/speaking" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="backside">
-                                  <div class="card">
-                                      <div class="card-body text-center mt-4">
-                                          <a href="courses/motion_graphics"><h4 class="card-title">آموزش موشن گرافیک</h4></a>
-                                          <p class="card-text">میتونین رشته موشن گرافیک یاد بگیرین و بصورت حضوری و حتی دورکاری در منزل خودتون تولید محتوا بسازید و کسب درآمد کنید.
-                                            کلاسها بصورت حضوری و آنلاین</p>
-                                  
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <!-- ./Team member -->
-             
-
-              </div>
-          </div>
-      </section>
-      <!-- Team -->
 
 
       <hr class="my-4">
