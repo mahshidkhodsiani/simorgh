@@ -259,7 +259,7 @@
                     </ul>
                 </li>
         
-                <li><a href="suggestion" class="nav-link">انتقادات و پیشنهادات</a></li>
+                <li><a href="../articles/suggestion" class="nav-link">انتقادات و پیشنهادات</a></li>
 
             </ul>
         </nav>

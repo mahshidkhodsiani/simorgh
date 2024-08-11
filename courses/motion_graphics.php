@@ -37,7 +37,7 @@
                     <div class="card border border-danger" style="border-radius: 40px;">
                         <img class="mx-auto d-block img-fluid" src="../images/motion.jpg" alt="دوره های موشن گرافیک " 
                             style="width: 100%; height: auto;">
-                        <div class="card-body" dir="rtl" style="text-align: right;">
+                            <div class="card-body" dir="rtl" style="text-align: right;">
                             <h1>دوره های موشن گرافیک</h1>
                             
                             <br>

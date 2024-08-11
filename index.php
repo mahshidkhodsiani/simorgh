@@ -248,9 +248,11 @@
 
       <section class="light">
         <div class="container py-2">
-          <h1 class="h1 text-center text-dark" id="pageHeaderTitle">
-            آخرین مقالات
-          </h1>
+            <a href="#">
+                <h1 class="h1 text-center text-dark" id="pageHeaderTitle">
+                آخرین مقالات
+                </h1>
+            </a>
 
           <?php
           $sql = "SELECT * FROM articles ORDER BY id DESC LIMIT 4";
@@ -287,10 +289,8 @@
               <div class="postcard__bar"></div>
               <div class="postcard__preview-txt"><?= $body_content ?></div>
               <ul class="postcard__tagbox">
-                <li class="tag__item"><i class="fas fa-clock mr-2"></i><?= $row['type'] ?></li>
-                <li class="tag__item play blue">
-                  <a href="#"><i class="fas fa-play mr-2"></i>مقالات</a>
-                </li>
+                <li class="tag__item"><i class="fas fa-clock mr-2"></i> پست</li>
+             
               </ul>
             </div>
           </article>
@@ -313,10 +313,8 @@
               <div class="postcard__bar"></div>
               <div class="postcard__preview-txt"><?= $body_content ?></div>
               <ul class="postcard__tagbox">
-                <li class="tag__item"><i class="fas fa-clock mr-2"></i><?= $row['type'] ?></li>
-                <li class="tag__item play red">
-                  <a href="#"><i class="fas fa-play mr-2"></i>مقالات</a>
-                </li>
+                <li class="tag__item"><i class="fas fa-clock mr-2"></i>پست</li>
+            
               </ul>
             </div>
           </article>

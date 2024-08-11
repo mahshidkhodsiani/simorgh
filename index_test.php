@@ -113,7 +113,7 @@
               <div class="postcard__bar"></div>
               <div class="postcard__preview-txt"><?= $body_content ?></div>
               <ul class="postcard__tagbox">
-                <li class="tag__item"><i class="fas fa-clock mr-2"></i><?= $row['type'] ?></li>
+                <li class="tag__item"><i class="fas fa-clock mr-2"></i>پست</li>
                 <li class="tag__item play blue">
                   <a href="#"><i class="fas fa-play mr-2"></i>مقالات</a>
                 </li>
