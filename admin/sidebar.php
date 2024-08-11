@@ -92,6 +92,14 @@
         <img src="../images/add-article.jpg" height="20px" width="20px">
         افزودن مقاله جدید
     </a>
+    <a href="new_course" class="nav-link <?php if (basename($_SERVER['REQUEST_URI']) === 'new_course') echo 'active'; ?>">
+        <img src="../images/add-article.jpg" height="20px" width="20px">
+        افزودن دوره جدید
+    </a>
+    <a href="new_work" class="nav-link <?php if (basename($_SERVER['REQUEST_URI']) === 'new_work') echo 'active'; ?>">
+        <img src="../images/add-article.jpg" height="20px" width="20px">
+        افزودن نمونه کار جدید
+    </a>
 
     <!-- for dropdown :
     <a href="javascript:void(0);" class="nav-link dropdown-btn">
@@ -114,10 +122,7 @@
         مدیریت یوزر ها
     </a>
 
-    <a href="new_work" class="nav-link <?php if (basename($_SERVER['REQUEST_URI']) === 'new_work') echo 'active'; ?>">
-        <img src="../images/add-work.jpg" height="20px" width="20px">
-        افزودن نمونه کار جدید
-    </a>
+ 
     
 </div>
 

@@ -5,7 +5,7 @@ include 'config.php';
 
 
     // Prepare and execute the SQL query
-    $sql ="SELECT * from audio_files";
+    $sql ="SELECT * from sounds";
 
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {

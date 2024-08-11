@@ -107,6 +107,26 @@
 }
 
 
+/* Style for the welcome message */
+.welcome-text {
+    color: #d9534f; /* A soft red color */
+    font-size: 14px; /* Larger font size for prominence */
+    text-align: center; /* Center the text */
+    font-family: 'Brush Script MT', cursive; /* Use a cursive font */
+    font-weight: bold; /* Make the font bold */
+    margin-bottom: 10px; /* Add space below the paragraph */
+}
+
+/* Style for the workshop message */
+.workshop-text {
+    color: #d9534f; /* Match the color with the welcome text */
+    font-size: 12px; /* Slightly smaller font size */
+    text-align: center; /* Center the text */
+    font-family: 'Brush Script MT', cursive; /* Use the same cursive font */
+    font-weight: normal; /* Regular font weight */
+}
+
+
 </style>
 
 
@@ -125,7 +145,7 @@
 <div class="top-bar">
     <div class="container">
         <div class="row">
-        <div class="col-10">
+        <div class="col-5">
         
 
             <div class="float-right">
@@ -147,13 +167,16 @@
             </div>
 
 
+           
 
          
 
         </div>
-        <div class="col-2">
-            <!-- <a href="register" class="btn mb-2 mb-md-0 btn-outline-quarternary btn-block">ثبت نام</a> -->
+        <div class="col-7">
+            <p class="welcome-text">به سایت آموزشگاه سینمایی و موسسه هفت هنر سیمرغ خوش آمدید</p>
+            <p class="workshop-text">برگزاری ورکشاپ, کارگاه و دوره های تخصصی و آموزشی</p>
         </div>
+
 
         </div>
 
@@ -260,7 +283,7 @@
                     </ul>
                 </li>
               
-                <li><a href="articles/suggustion" class="nav-link">انتقادات و پیشنهادات</a></li>
+                <li><a href="articles/suggestion" class="nav-link">انتقادات و پیشنهادات</a></li>
 
             </ul>
         </nav>

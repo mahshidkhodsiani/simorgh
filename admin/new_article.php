@@ -92,17 +92,13 @@ $id = $_SESSION["all_data"]['id'];
                     <div class="row">
                         <div class="col-md-2 border">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" id="news" name="type" value="news" required>
-                                <label class="form-check-label" for="news">خبری</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" id="posts" name="type" value="posts" required>
-                                <label class="form-check-label" for="posts">پستی</label>
+                                <input class="form-check-input" type="radio" name="post" required>
+                                <label class="form-check-label" for="post">پست جدید</label>
                             </div>
                         </div>
                         <div class="col-md-4"></div>
                         <div class="col-md-6">
-                            <button class="btn btn-outline-success" type="submit">ثبت مقاله</button>
+                            <button class="btn btn-outline-success" type="submit_post">ثبت مقاله</button>
                         </div>
                     </div>
                 </form>
