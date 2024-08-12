@@ -196,7 +196,7 @@
                             <li><a href="../courses/speaking">پیشرفته</a></li>
                             </ul>
                         </li>
-                        <li><a href="#faq-section" class="nav-link">گویندگی کوتاه مدت رادیو</a></li>
+                        <li><a href="../courses/short_speaking" class="nav-link">گویندگی کوتاه مدت رادیو</a></li>
 
                         <li class="has-children">
                             <a href="#">بازیگری</a>
@@ -213,21 +213,21 @@
 
                         
                         <li class="has-children">
-                            <a href="#">دوبله</a>
+                            <a href="../courses/dubbing">دوبله</a>
                             <ul class="dropdown">
-                            <li><a href="#">مقدماتی</a></li>
-                            <li><a href="#">پیشرفته</a></li>
+                            <li><a href="../courses/dubbing">مقدماتی</a></li>
+                            <li><a href="../courses/dubbing">پیشرفته</a></li>
                             </ul>
                         </li>
                         
                        
-                        <li><a href="#faq-section" class="nav-link">انیمیشن سازی</a></li>
+                        <li><a href="../courses/animation" class="nav-link">انیمیشن سازی</a></li>
                         
                         <li class="has-children">
-                            <a href="#">گریم سینمایی</a>
+                            <a href="../courses/makeup">گریم سینمایی</a>
                             <ul class="dropdown">
-                            <li><a href="#">مقدماتی</a></li>
-                            <li><a href="#">پیشرفته</a></li>
+                            <li><a href="../courses/makeup">مقدماتی</a></li>
+                            <li><a href="../courses/makeup">پیشرفته</a></li>
                             </ul>
                         </li>
                         <li><a href="#faq-section" class="nav-link">کارگردانی</a></li>
