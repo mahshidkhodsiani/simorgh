@@ -35,14 +35,14 @@
             <div class="row justify-content-center">
                 <div class="col-12 col-md-10">
                     <div class="card border border-danger" style="border-radius: 40px;">
-                        <img class="mx-auto d-block img-fluid" src="../images/motion.jpg" alt="دوره های موشن گرافیک " 
-                            style="width: 100%; height: auto;">
+                        <!-- <img class="mx-auto d-block img-fluid" src="../images/motion.jpg" alt="دوره های موشن گرافیک " 
+                            style="width: 100%; height: auto;"> -->
                             <div class="card-body" dir="rtl" style="text-align: right;">
-                            <h1>دوره های موشن گرافیک</h1>
+                            <h1>دوره گویندگی کوتاه مدت</h1>
                             
                             <br>
                             
-                            <h3 class="">دوره آکادمیک و تخصصی موشن گرافیک و&nbsp; تولید محتوا&nbsp;</h3><p>آموزشگاه فرهنگی هنری و سینمایی سیمرغ</p><p><br></p><p>کمتر از سه ماه با آموزش تخصصی تولید محتوا</p><p>نرم افزارهای آموزشی</p><p>افترافکت ، پریمیر ،فتوشاپ و ایلیستراتور</p><p>آموزش موشن گرافیک&nbsp; و ساخت تیزر تبلیغاتی</p><p>آموزش ادیت ویدیو و صداگذاری</p><p>آموزش ساخت کلیپ و تولید محتوا</p><p>آموزش فتوشاپ و طراحی بنر و پوستر</p><p><br></p><p>✔ اگه شغل مناسب ندارین ،یا دنبال شغل دوم با درآمد بالا هستین ،&nbsp;</p><p>میتونین رشته موشن گرافیک یاد بگیرین و بصورت حضوری و حتی دورکاری در منزل خودتون تولید محتوا بسازید و کسب درآمد کنید.</p><p>کلاسها بصورت حضوری و آنلاین</p><p>❗شهریه بصورت اقساطی❗</p><p>❗ با ارائه مدرک❗</p><p>آدرس؛ میرزای شیرازی ، پایینتر از مطهری کوچه پانزدهم پلاک ۴۴ واحد ۲</p><p dir="rtl" style="margin-right: 0px; margin-left: 0px; color: rgb(33, 37, 41); font-family: Verdana;"><span style="font-size: 11pt; font-family: Calibri, sans-serif;"><span style="font-size: 16pt; background-color: rgb(155, 89, 173);">تلفن : ۰۲۱۸۸۳۴۱۶۵۲</span></span></p><p dir="rtl" style="margin-right: 0px; margin-left: 0px; color: rgb(33, 37, 41); font-family: Verdana;"><span style="font-size: 11pt; font-family: Calibri, sans-serif;"><span style="font-size: 16pt; background-color: rgb(155, 89, 173);">واتساپ : ۰۹۳۵۴۶۳۷۰۵۵</span></span></p><p style="color: rgb(33, 37, 41); font-family: Verdana;">برای ثبت‌نام، می‌توانید از لینک‌ زیر استفاده کنید.</p>
+                            <p>رادیو سیمرغ برگزار میکند.</p><p><br></p><p>اینجا صدایتان شنیده میشود</p><p><br></p><h4 class="">دوره های کوتاه مدت&nbsp;<br>گویندگی رادیو و نمایش های رادیویی</h4><p><br></p><p>فرصتی مناسبی برای علاقمندان کار در رادیو</p><p><br></p><p>ویژه کسانیکه دوره های مقدماتی یا پیشرفته گویندگی را گذرانده ان.</p><p>۵ جلسه عملی در استودیو</p><p>بهمراه شرکت در تولید برنامه های رادیویی</p><p><br></p><p>ارائه گواهینامه شرکت در دوره</p><p>همکاری در رادیو</p><p><br></p><p>هزینه دوره: ۱.۹۰۰.۰۰۰</p><p dir="rtl" style="margin-right: 0px; margin-left: 0px; color: rgb(33, 37, 41); font-family: Verdana;"><span style="font-size: 11pt; font-family: Calibri, sans-serif;"><span style="font-size: 16pt; background-color: rgb(155, 89, 173);">تلفن : ۰۲۱۸۸۳۴۱۶۵۲</span></span></p><p dir="rtl" style="margin-right: 0px; margin-left: 0px; color: rgb(33, 37, 41); font-family: Verdana;"><span style="font-size: 11pt; font-family: Calibri, sans-serif;"><span style="font-size: 16pt; background-color: rgb(155, 89, 173);">واتساپ : ۰۹۳۵۴۶۳۷۰۵۵</span></span></p><p style="color: rgb(33, 37, 41); font-family: Verdana;">برای ثبت‌نام، می‌توانید از لینک‌ زیر استفاده کنید.</p>
                             
                             
                             <div class="col-6 col-md-6">

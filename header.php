@@ -1,3 +1,6 @@
+<link href="https://fonts.googleapis.com/css2?family=Titr:wght@400;700&display=swap" rel="stylesheet">
+
+
 <style>
 .social-icon img {
     transition: transform 0.3s, filter 0.3s;
@@ -111,8 +114,8 @@
 .welcome-text {
     color: #d9534f; /* A soft red color */
     font-size: 14px; /* Larger font size for prominence */
-    text-align: center; /* Center the text */
-    font-family: 'Brush Script MT', cursive; /* Use a cursive font */
+    font-family: 'Titr', sans-serif;
+    left: 0;
     font-weight: bold; /* Make the font bold */
     margin-bottom: 10px; /* Add space below the paragraph */
 }
@@ -120,14 +123,15 @@
 /* Style for the workshop message */
 .workshop-text {
     color: #d9534f; /* Match the color with the welcome text */
-    font-size: 12px; /* Slightly smaller font size */
-    text-align: center; /* Center the text */
-    font-family: 'Brush Script MT', cursive; /* Use the same cursive font */
-    font-weight: normal; /* Regular font weight */
+    font-size: 22px; /* Slightly smaller font size */
+    text-align: right;
+    font-family: 'Titr', sans-serif;
+    font-weight: bold; /* Regular font weight */
 }
 
 
 </style>
+
 
 
 
@@ -174,7 +178,6 @@
         </div>
         <div class="col-7">
             <p class="welcome-text">به سایت آموزشگاه سینمایی و موسسه هفت هنر سیمرغ خوش آمدید</p>
-            <p class="workshop-text">برگزاری ورکشاپ, کارگاه و دوره های تخصصی و آموزشی</p>
         </div>
 
 

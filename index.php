@@ -43,17 +43,10 @@
             <div class="carousel-item">
                 <img class="d-block w-100" src="images/3.jpg" alt="Second slide">
                 <div class="carousel-caption d-none d-md-block">
-                    <h3 style="color: red;">آموزش های متنوع</h3>
-                    <p style="color: red;">کلاس ها و دوره های فرهنگی هنری.</p>
+                 
                 </div>
             </div>
-            <div class="carousel-item">
-                <img class="d-block w-100" src="images/6.jpg" alt="Third slide">
-                <div class="carousel-caption d-none d-md-block">
-                    <h3 style="color: red;">عکاسی حرفه ای</h3>
-                    <p style="color: red;">آموزش عکاسی حرفه ای.</p>
-                </div>
-            </div>
+           
         </div>
         <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -68,12 +61,16 @@
 
 
 
+
     <div class="container-fluid px-4"> <!-- Add custom padding using Bootstrap classes -->
+    <p class="workshop-text"> * برگزاری ورکشاپ, کارگاه و دوره های تخصصی و آموزشی *</p>
 
     
 
      <!-- Team -->
     <section id="team" class="pb-5">
+
+
         <div class="container">
             <h5 class="section-title h1">تازه ترین ها</h5>
             <div class="row">
@@ -86,7 +83,8 @@
                                     <div class="card-body text-center">
                                         <p><img class="img-fluid" src="images/audio.jpg" alt="card image"></p>
                                         <h4 class="card-title">آرشیو گویندگان</h4>
-                                        <p class="card-text">آرشیو گویندگان موسسه سیمرغ ذخیره‌ای بی‌نظیر از استعدادها و مهارت‌ها</p>
+                                        <p class="card-text">منبعی ارزشمند از صداهای بی نظیر و مهارت های حرفه ای در زمینه دوبله و گویندگی 
+                                        جهت شنیدن صدای های متنوع کلیک کنید</p>
                                         <a href="articles/speakers_archive" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
                                     </div>
                                 </div>
@@ -95,7 +93,7 @@
                                 <div class="card">
                                     <div class="card-body text-center mt-4">
                                         <a href="articles/speakers_archive"><h4 class="card-title">سفارش گویندگی (کلیک کنید)</h4></a>
-                                        <p class="card-text">آرشیو گویندگان موسسه سیمرغ، منبعی ارزشمند از استعدادهای بی‌نظیر و مهارت‌های حرفه‌ای در زمینه گویندگی و دوبله است. شما هم می‌توانید جزو آنها باشید...</p>
+                                        <p class="card-text">اگر دنبال صداهای جذاب با گوینده های متنوع هستید کلیک کنید.</p>
                                     </div>
                                 </div>
                             </div>

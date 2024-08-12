@@ -75,15 +75,12 @@
                         <!-- <img class="mx-auto d-block img-fluid" src="../images/audio.jpg" alt="ثبت گویندگی" style="width: 100%; height: auto;"> -->
                         <div class="card-body" dir="rtl" style="text-align: right;">
                             <h3 class="">آرشیو گویندگان موسسه سیمرغ: منبعی برای یادگیری و الهام</h3>
-                            <p>آرشیو گویندگان <a href="https://simorghtv.com/" target="_blank">موسسه سیمرغ</a> یکی از منابع ارزشمند و منحصر به فرد برای علاقه‌مندان به هنر گویندگی و تولید محتوا است. این آرشیو شامل مجموعه‌ای گسترده از آثار و فایل‌های صوتی تولید شده توسط گویندگان برجسته و حرفه‌ای موسسه سیمرغ است که می‌تواند به عنوان منبعی غنی برای یادگیری و الهام‌بخشی به کار رود.</p>
-                            <p><br></p>
-                            <p style="color: rgb(33, 37, 41); font-family: Verdana;">می توانید صدای خود را از طریق یکی از شبکات اجتماعی برای ما ارسال کنید :</p>
-     
-                            <h4 class="" style="font-family: &quot;Open Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; color: rgb(33, 37, 41);"><span style="background-color: rgb(247, 198, 206);">۰۹۳۵۴۶۳۷۰۵۵</span></h4>
-
+                         
+                           
                             <br>
                             <a href="send_voice" class="btn btn-outline-quarternary btn-block animated-button">ارسال صدای خودتان</a>
 
+                         
 
                             <div class="table-responsive mt-5">
                                 <table class="table table-striped">
