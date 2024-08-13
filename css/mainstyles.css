@@ -1,6 +1,28 @@
-body {
-    font-family: "Verdana"  !important; 
+
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap");
+
+
+@font-face {
+  font-family: 'Dana-FaNum';
+  src: url('../../../fonts/Dana-FaNum-Bold.ttf') format('truetype'),
+       url('../../../fonts/Dana-FaNum-BoldItalic.ttf') format('truetype'),
+       url('../../../fonts/Dana-FaNum-Regular.ttf') format('truetype'),
+       url('../../../fonts/Dana-FaNum-RegularItalic.ttf') format('truetype');
 }
+
+@font-face {
+  font-family: 'B Titr';
+  src: url('../fonts/B_Tir_YasDL.com.ttf') format('ttf'),
+       url('../fonts/B_Titr_Bold_0.ttf') format('ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+body {
+    font-family: "B Titr"  !important; 
+}
+
 
 html, body {
     height: 100%;
@@ -10,7 +32,7 @@ html, body {
 }
 
 body {
-    font-family: "Verdana" !important; 
+    font-family: "B Titr" !important; 
     background: #f8f9fa; /* Add background color if needed */
 }
 
@@ -152,7 +174,7 @@ section .section-title {
 
 .frontside .card .card-title,
 .backside .card .card-title {
-    color: #4d0707 !important;
+    color: #081a6b !important;
 }
 
 .frontside .card .card-body img {

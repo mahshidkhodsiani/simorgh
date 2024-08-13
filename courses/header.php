@@ -210,15 +210,7 @@
                         <li><a href="#faq-section" class="nav-link">عکاسی</a></li>
 
 
-
-                        
-                        <li class="has-children">
-                            <a href="dubbing">دوبله</a>
-                            <ul class="dropdown">
-                            <li><a href="dubbing">مقدماتی</a></li>
-                            <li><a href="dubbing">پیشرفته</a></li>
-                            </ul>
-                        </li>
+                        <li><a href="dubbing" class="nav-link">دوبله</a></li>
                         
                       
                         <li><a href="animation" class="nav-link">انیمیشن سازی</a></li>
@@ -256,8 +248,6 @@
                     <a href="#">برنامه های رادیویی</a>
                     <ul class="dropdown arrow-top">
                         <li><a href="#pricing-section" class="nav-link">برنامه های رادیویی</a></li>
-                        <li><a href="#faq-section" class="nav-link">پادکست</a></li>
-                        <li><a href="#faq-section" class="nav-link">کتاب صوتی</a></li>
                     </ul>
                 </li>
              

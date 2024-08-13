@@ -44,6 +44,26 @@
                             $course = 'بازیگری (پیشرفته) "16 جلسه سه ساعته" - قیمت : 12/800/000 تومان ';
                             $dargah = "acting2";
                         }
+                        if(isset($_POST['short-speaking'])){
+                            $course = 'گویندگی کوتاه مدت "5 جلسه دو ساعته" - قیمت : 2/300/000 تومان ';
+                            $dargah = "short-speaking";
+                        }
+                        if(isset($_POST['dubbing'])){
+                            $course = 'دوبله "10 جلسه سه ساعته" - قیمت : 7/500/000 تومان ';
+                            $dargah = "dubbing";
+                        }
+                        if(isset($_POST['animation'])){
+                            $course = 'انیمیشن سازی "12 جلسه " - قیمت : 7/900/000 تومان ';
+                            $dargah = "animation";
+                        }
+                        if(isset($_POST['makeup1'])){
+                            $course = 'گریم سینمایی (مقدماتی) "10 جلسه" - قیمت : 6/500/000 تومان ';
+                            $dargah = "makeup1";
+                        }
+                        if(isset($_POST['makeup2'])){
+                            $course = 'گریم سینمایی (پیشرفته) "12 جلسه" - قیمت : 8/000/000 تومان ';
+                            $dargah = "makeup2";
+                        }
                         ?>
                         <form class="p-2" action="" method="POST">
                             <h2 style="text-align: center;">فرم ثبت نام</h2>

@@ -47,8 +47,8 @@
                             
                             <div class="col-6 col-md-6">
                                 <form method="post" action="../register">
-                                    <button name="motion" class="btn btn-warning btn-lg btn-block">ثبت نام</button>
-                                    <!-- <button name="speaking2" class="btn btn-warning btn-lg btn-block">ثبت نام پیشرفته</button> -->
+                                    <button name="makeup1" class="btn btn-warning btn-lg btn-block">ثبت نام مقدماتی</button>
+                                    <button name="makeup2" class="btn btn-warning btn-lg btn-block">ثبت نام پیشرفته</button>
                                     <input type="hidden" name="sabtenam">
                                 </form>
                                 

@@ -74,11 +74,12 @@
                     <div class="card border border-danger" style="border-radius: 40px;">
                         <!-- <img class="mx-auto d-block img-fluid" src="../images/audio.jpg" alt="ثبت گویندگی" style="width: 100%; height: auto;"> -->
                         <div class="card-body" dir="rtl" style="text-align: right;">
-                            <h3 class="">آرشیو گویندگان موسسه سیمرغ: منبعی برای یادگیری و الهام</h3>
+                          
                          
                            
                             <br>
-                            <a href="send_voice" class="btn btn-outline-quarternary btn-block animated-button">ارسال صدای خودتان</a>
+
+                            <h3 class="">آرشیو گویندگان موسسه سیمرغ</h3><p>منبعی ارزشمند از صداهای بی نظیر و مهارت های حرفه ای متنوع جهت گویندگی متن های شماست.</p><p>پس از گوش دادن صدا و انتخاب گوینده متن خود را به همراه اسم گوینده در تلرگام یا واتساپ برای ما ارسال کنید تا با کیفیت عالی در استودیوی سیمرغ برای شما ضبط و ارسال کنیم.&nbsp;</p>
 
                          
 
@@ -88,6 +89,7 @@
                                         <tr>
                                             <th class="text-center">ردیف</th>
                                             <th class="text-center">اسم گوینده</th>
+                                            <th class="text-center">نوع صدا</th>
                                             <th class="text-center">صدا</th>
                                             <th class="text-center">تصویر گوینده</th>
                                         </tr>
@@ -97,6 +99,7 @@
                                         <tr>
                                             <td class="text-center">1</td>
                                             <td class="text-center">آیدا نصیری</td>
+                                            <td class="text-center"></td>
                                             <td class="text-center"> 
                                                 <audio controls>
                                                     <source src="../upload/sounds/2024/aida-nasiri/aida-nasiri.mp3" type="audio/mpeg">
@@ -110,6 +113,7 @@
                                         <tr>
                                             <td class="text-center">2</td>
                                             <td class="text-center">زری راد</td>
+                                            <td class="text-center"></td>
                                             <td class="text-center"> 
                                                 <audio controls>
                                                     <source src="../upload/sounds/2024/zari-rad/zari-rad.mp3" type="audio/mpeg">

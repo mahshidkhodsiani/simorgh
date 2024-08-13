@@ -83,8 +83,7 @@
                                     <div class="card-body text-center">
                                         <p><img class="img-fluid" src="images/audio.jpg" alt="card image"></p>
                                         <h4 class="card-title">آرشیو گویندگان</h4>
-                                        <p class="card-text">منبعی ارزشمند از صداهای بی نظیر و مهارت های حرفه ای در زمینه دوبله و گویندگی 
-                                        جهت شنیدن صدای های متنوع کلیک کنید</p>
+                                        <p class="card-text">اگر دنبال صداهای جذاب با گوینده های متنوع هستید کلیک کنید.</p>
                                         <a href="articles/speakers_archive" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
                                     </div>
                                 </div>
@@ -92,8 +91,10 @@
                             <div class="backside">
                                 <div class="card">
                                     <div class="card-body text-center mt-4">
-                                        <a href="articles/speakers_archive"><h4 class="card-title">سفارش گویندگی (کلیک کنید)</h4></a>
-                                        <p class="card-text">اگر دنبال صداهای جذاب با گوینده های متنوع هستید کلیک کنید.</p>
+                                        <a href="articles/speakers_archive"><h4 class="card-title">سفارش صدا (کلیک کنید)</h4></a>
+                                        <p class="card-text">آرشیو بهترین گویندگان با صداهای متنوع تیزر تبلیغاتی، موشن گرافیک ، دوبلوری، پادکست ،
+                                            کتاب صوتی و هرصدایی که بخواهید میتوانید ایجا برای آن گوینده پیدا کنید
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -335,44 +336,7 @@
 
     <section class="light">
         <div class="container py-2">
-            <a href="gallery/all">
-              
-                <h1 class="h1 text-center text-dark" id="pageHeaderTitle">
-                <img src="images/link.jpg" height="30px" width="30px" alt="گالری سیمرغ"/>
-                نمونه کارها
-                </h1>
-            </a>
-        
-            
-
-            <?php
-            $sql = "SELECT * FROM gallery ORDER BY id DESC LIMIT 4";
-            $result = $conn->query($sql);
-
-            if ($result->num_rows > 0) {
-                $counter = 0; // Initialize a counter
-                while ($row = $result->fetch_assoc()) {
-                    if ($counter % 4 == 0) {
-                        if ($counter > 0) echo '</div>'; // Close previous row if not the first one
-                        echo '<div class="row">'; // Start a new row
-                    }
-                    ?>
-                    <div class="col-6 col-sm-3 mb-3">
-                        <div class="card">
-                            <img class="card-img-top" src="<?php echo htmlspecialchars($row['images']); ?>" alt="نمونه کارهای هنری">
-                        </div>
-                    </div>
-                    <?php
-                    $counter++;
-                }
-                if ($counter % 4 != 0) echo '</div>'; // Close the last row if needed
-            } else {
-                echo "No images found.";
-            }
-            ?>
-
-
-
+           
 
 
            

@@ -35,8 +35,8 @@
             <div class="row justify-content-center">
                 <div class="col-12 col-md-10">
                     <div class="card border border-danger" style="border-radius: 40px;">
-                        <!-- <img class="mx-auto d-block img-fluid" src="../images/motion.jpg" alt="دوره های موشن گرافیک " 
-                            style="width: 100%; height: auto;"> -->
+                        <img class="mx-auto d-block img-fluid" src="../images/short-speaking.jpg" alt="دوره های گویندگی " 
+                            style="width: 100%; height: auto;">
                             <div class="card-body" dir="rtl" style="text-align: right;">
                             <h1>دوره گویندگی کوتاه مدت</h1>
                             
@@ -47,7 +47,7 @@
                             
                             <div class="col-6 col-md-6">
                                 <form method="post" action="../register">
-                                    <button name="motion" class="btn btn-warning btn-lg btn-block">ثبت نام</button>
+                                    <button name="short-speaking" class="btn btn-warning btn-lg btn-block">ثبت نام</button>
                                     <!-- <button name="speaking2" class="btn btn-warning btn-lg btn-block">ثبت نام پیشرفته</button> -->
                                     <input type="hidden" name="sabtenam">
                                 </form>

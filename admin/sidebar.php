@@ -121,6 +121,10 @@
         <img src="../images/add-user.jpg" height="20px" width="20px">
         مدیریت یوزر ها
     </a>
+    <a href="suggests" class="nav-link <?php if (basename($_SERVER['REQUEST_URI']) === 'suggests') echo 'active'; ?>">
+        <img src="../images/suggests.png" height="20px" width="20px">
+        انتقادات و پیشنهادات
+    </a>
 
  
     
