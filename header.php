@@ -275,7 +275,7 @@
                 <li class="has-children">
                     <a href="#">برنامه های رادیویی</a>
                     <ul class="dropdown arrow-top">
-                        <li><a href="#pricing-section" class="nav-link">برنامه های رادیویی</a></li>
+                        <li><a href="radios" class="nav-link">برنامه های رادیویی</a></li>
                     </ul>
                 </li>
               

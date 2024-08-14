@@ -100,6 +100,10 @@
         <img src="../images/add-article.jpg" height="20px" width="20px">
         افزودن نمونه کار جدید
     </a>
+    <a href="new_radio" class="nav-link <?php if (basename($_SERVER['REQUEST_URI']) === 'new_radio') echo 'active'; ?>">
+        <img src="../images/radio.jpg" height="20px" width="20px">
+        افزودن رادیوی جدید
+    </a>
 
     <!-- for dropdown :
     <a href="javascript:void(0);" class="nav-link dropdown-btn">

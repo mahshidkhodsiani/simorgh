@@ -99,7 +99,7 @@
                                         <tr>
                                             <td class="text-center">1</td>
                                             <td class="text-center">آیدا نصیری</td>
-                                            <td class="text-center"></td>
+                                            <td class="text-center">تلفن گویا</td>
                                             <td class="text-center"> 
                                                 <audio controls>
                                                     <source src="../upload/sounds/2024/aida-nasiri/aida-nasiri.mp3" type="audio/mpeg">
@@ -113,7 +113,7 @@
                                         <tr>
                                             <td class="text-center">2</td>
                                             <td class="text-center">زری راد</td>
-                                            <td class="text-center"></td>
+                                            <td class="text-center">تلفن گویا</td>
                                             <td class="text-center"> 
                                                 <audio controls>
                                                     <source src="../upload/sounds/2024/zari-rad/zari-rad.mp3" type="audio/mpeg">

@@ -17,6 +17,8 @@
     <meta name="twitter:description" content="موسسه هفت هنر سیمرغ، پیشرو در آموزش گویندگی، انیمیشن، طراحی و موسیقی با دوره‌های تخصصی و کارگاه‌های عملی.">
     <meta name="twitter:image" content="URL-to-your-image.jpg">
     <title>هفت هنر سیمرغ</title>
+
+    <link rel="icon" href="/images/logo1.ico" type="image/x-icon">
   
     <?php include 'includes.php'; ?>
 </head>

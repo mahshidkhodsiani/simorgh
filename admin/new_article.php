@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION["all_data"])) {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit();
 }
 
