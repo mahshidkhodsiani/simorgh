@@ -249,9 +249,10 @@
 
       <section class="light">
         <div class="container py-2">
-            <a href="#">
-                <h1 class="h1 text-center text-dark" id="pageHeaderTitle">
+            <a href="articles">
+                <h1 class="h1 text-center text-dark" id="pageHeaderTitle" title="کلیک کنید">
                 آخرین مقالات
+                <img src="images/link.jpg" height="30px" width="30px" alt="آخرین مقالات" title="آخرین مقالات سیمرغ">
                 </h1>
             </a>
 
@@ -338,8 +339,36 @@
 
     <section class="light">
         <div class="container py-2">
-           
+            <a href="#">
+                <h1 class="h1 text-center text-dark" id="pageHeaderTitle">
+                آخرین برنامه های رادیویی
+                </h1>
+            </a>
 
+            <?php
+
+            ?>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Special title treatment</h5>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Special title treatment</h5>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                    </div>
+                </div>
+            </div>
 
            
         

@@ -42,7 +42,7 @@
                                 <tr>
                                     <td class="text-center">1</td>
                                     <td class="text-center"></td>
-                                    <td class="text-center"></td>
+                                    <td class="text-center">برنامه رادیویی</td>
                                     <td class="text-center"> 
                                         <audio controls>
                                             <source src="../upload/radios/2024/19-mordad.mp3" type="audio/mpeg">
@@ -53,7 +53,7 @@
                                 <tr>
                                     <td class="text-center">2</td>
                                     <td class="text-center"></td>
-                                    <td class="text-center"></td>
+                                    <td class="text-center">برنامه رادیویی</td>
                                     <td class="text-center"> 
                                         <audio controls>
                                             <source src="../upload/radios/2024/dovom-khordad.mp3" type="audio/mpeg">

@@ -74,39 +74,41 @@ $id = $_SESSION["all_data"]['id'];
             <div class="col-md-8 mt-5">
 
               
-                <form id="articleForm" enctype="multipart/form-data">
-                    <div class="row">
-                        <div class="col-6">
-                            <label for="title">عنوان مقاله:</label>
-                            <input type="text" id="title" name="title" class="form-control mb-2" placeholder="عنوان را اینجا وارد کنید">
-                        </div>
-                        <div class="col-6">
-                            <label for="image">تصویر شاخص:</label>
-                            <input type="file" name="image" class="form-control" id="inputGroupFile02">
-                        </div>
+            <form action="" method="POST" id="articleForm" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-6">
+                        <label for="title">عنوان مقاله:</label>
+                        <input type="text" id="title" name="title" class="form-control mb-2" placeholder="عنوان را اینجا وارد کنید" required>
                     </div>
-                    
-                    <div class="summernote" id="summernote"></div> 
-                    <br>
+                    <div class="col-6">
+                        <label for="image">تصویر شاخص:</label>
+                        <input type="file" name="image" class="form-control" id="inputGroupFile02" required>
+                    </div>
+                </div>
+                
+                <div class="summernote" id="summernote"></div> 
+                <input type="hidden" name="content" id="content">
+                <br>
 
-                    <div class="row">
-                        <div class="col-md-2 border">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="post" required>
-                                <label class="form-check-label" for="post">پست جدید</label>
-                            </div>
-                        </div>
-                        <div class="col-md-4"></div>
-                        <div class="col-md-6">
-                            <button class="btn btn-outline-success" type="submit_post">ثبت مقاله</button>
+                <div class="row">
+                    <div class="col-md-2 border">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="type" value="post" required>
+                            <label class="form-check-label" for="post">پست جدید</label>
                         </div>
                     </div>
-                </form>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-6">
+                        <button class="btn btn-outline-success" type="submit" name="submit_post">ثبت مقاله</button>
+                    </div>
+                </div>
+            </form>
 
                 
             </div>
         </div>
     </div>
+
 
     <script>
         $(document).ready(function() {
@@ -114,93 +116,133 @@ $id = $_SESSION["all_data"]['id'];
                 $('.nav-link').removeClass('active');
                 $(this).addClass('active');
             });
-        });
 
-    </script>
-
-    <script>
-        function toggleCheckbox(checkedId, uncheckedId) {
-            var checkedBox = document.getElementById(checkedId);
-            var uncheckedBox = document.getElementById(uncheckedId);
-            if (checkedBox.checked) {
-                uncheckedBox.checked = false;
-            }
-        }
-    </script>
-
-    <script>
-        $('.summernote').summernote({
-
-            hint: {
-
-                mentions: ['jayden','sam','alvin','david'],
-
-                match: /\B@(\w*)$/,
-
-                search:function (keyword, callback) {
-
-                    callback($.grep(this.mentions,function (item) {
-
-                        return item.indexOf(keyword) == 0;
-
-                    }));
-
-                },
-
-                content:function (item) {
-
-                    return '@' + item;
-
-                }   
-
-            }
-
-        });
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            $('#summernote').summernote();
-
-            $('#articleForm').on('submit', function(event) {
-                event.preventDefault(); // Prevent the default form submission
-
-                // Get the content of Summernote and the title
-                var articleContent = $('#summernote').summernote('code');
-                var title = $('#title').val();
-                var type = $('input[name="type"]:checked').val();
-                var fileInput = $('#inputGroupFile02')[0].files[0];
-
-                // Prepare FormData
-                var formData = new FormData();
-                formData.append('title', title);
-                formData.append('content', articleContent);
-                formData.append('type', type);
-                if (fileInput) {
-                    formData.append('image', fileInput);
-                }
-
-                // Send the data via POST request
-                $.ajax({
-                    url: 'submit_article.php', // Replace with your actual endpoint
-                    type: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(response) {
-                        // Handle success
-                        alert('مقاله با موفقیت ثبت شد');
+            // Initialize Summernote
+            $('#summernote').summernote({
+                hint: {
+                    mentions: ['jayden', 'sam', 'alvin', 'david'],
+                    match: /\B@(\w*)$/,
+                    search: function(keyword, callback) {
+                        callback($.grep(this.mentions, function(item) {
+                            return item.indexOf(keyword) == 0;
+                        }));
                     },
-                    error: function(error) {
-                        // Handle error
-                        alert('خطا در ثبت مقاله');
+                    content: function(item) {
+                        return '@' + item;
                     }
-                });
+                }
+            });
+
+            // Transfer content from Summernote to hidden input field before form submission
+            $('#articleForm').on('submit', function() {
+                var summernoteContent = $('#summernote').summernote('code');
+                $('#content').val(summernoteContent);
             });
         });
     </script>
 
 
+
+
 </body>
 
 </html>
+
+
+<?php
+
+include "../config.php";
+
+if (isset($_POST['submit_post'])) {
+    $title = $_POST['title'];
+    $content = $_POST['content'];
+    $type = $_POST['type'];
+
+    // Escape strings to prevent SQL injection
+    $title = $conn->real_escape_string($title);
+    $content = $conn->real_escape_string($content);
+    $type = $conn->real_escape_string($type);
+
+    $imagePath = '';
+
+    // Handle the file upload
+    if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
+        $uploadDir = '../upload/images/2024/';
+        $originalFileName = basename($_FILES['image']['name']);
+        $uploadFile = $uploadDir . $originalFileName;
+
+        // Ensure the upload directory exists
+        if (!file_exists($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+
+        // Move the uploaded file to the target directory
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $uploadFile)) {
+            $imagePath = "upload/images/2024/" . $originalFileName; // Save the relative path for the database entry
+        } else {
+            echo json_encode(["status" => "error", "message" => "Failed to upload file."]);
+            exit;
+        }
+    }
+
+    // Use prepared statements to prevent SQL injection
+    $stmt = $conn->prepare("INSERT INTO articles (title, body, type, images, created_at) VALUES (?, ?, ?, ?, NOW())");
+    $stmt->bind_param("ssss", $title, $content, $type, $imagePath);
+
+    if ($stmt->execute()) {
+          // Success Toast
+          echo "<div id='successToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 20px; right: 20px; width: 300px;'>
+          <div class='toast-header bg-success text-white'>
+              <strong class='mr-auto'>Success</strong>
+              <button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>
+                  <span aria-hidden='true'>&times;</span>
+              </button>
+          </div>
+          <div class='toast-body'>
+              پست شما با موفقیت ثبت شد!
+          </div>
+        </div>
+        <script>
+        $(document).ready(function(){
+            $('#successToast').toast({
+                autohide: true,
+                delay: 3000
+            }).toast('show');
+            setTimeout(function(){
+                window.location.href = 'new_article';
+            }, 3000);
+        });
+        </script>";
+    } else {
+        // Error Toast
+        echo "<div id='errorToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 20px; right: 20px; width: 300px;'>
+            <div class='toast-header bg-danger text-white'>
+                <strong class='mr-auto'>Error</strong>
+                <button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>
+                    <span aria-hidden='true'>&times;</span>
+                </button>
+            </div>
+            <div class='toast-body'>
+                خطایی در افزودن پست پیش آمده!
+            </div>
+            </div>
+            <script>
+            $(document).ready(function(){
+                $('#errorToast').toast({
+                    autohide: true,
+                    delay: 3000
+                }).toast('show');
+                setTimeout(function(){
+                    $('#errorToast').toast('hide');
+                }, 3000);
+            });
+            </script>";
+
+        echo "<div class='alert alert-danger mt-2' role='alert'>
+            Error: " . $sql . "<br>" . $conn->error . "
+            </div>";
+    }
+
+    $stmt->close();
+}
+?>
