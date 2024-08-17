@@ -64,6 +64,7 @@
                             $course = 'گریم سینمایی (پیشرفته) "12 جلسه" - قیمت : 8/000/000 تومان ';
                             $dargah = "makeup2";
                         }
+
                         ?>
                         <form class="p-2" action="" method="POST">
                             <h2 style="text-align: center;">فرم ثبت نام</h2>
