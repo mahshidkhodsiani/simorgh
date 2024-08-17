@@ -215,18 +215,18 @@
                             <div class="frontside">
                                 <div class="card">
                                     <div class="card-body text-center">
-                                        <p><img class="img-fluid" src="images/website.jpg" alt="card image"></p>
-                                        <h4 class="card-title">خدمات سیمرغ</h4>
-                                        <p class="card-text">راهکارهای حرفه‌ای برای کسب‌وکار شما</p>
-                                        <a href="courses/motion_graphics" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
+                                        <p><img class="img-fluid" src="images/radio-simorgh.jpg" alt="رادیو سیمرغ"></p>
+                                        <h4 class="card-title">رادیو سیمرغ</h4>
+                                        <p class="card-text"> سفری شنیدنی در دنیای فرهنگ و هنر</p>
+                                        <a href="radios" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="backside">
                                 <div class="card">
                                     <div class="card-body text-center mt-4">
-                                        <a href="courses/motion_graphics"><h4 class="card-title">خدمات سیمرغ (کلیک کنید)</h4></a>
-                                        <p class="card-text">موسسه سیمرغ با ارائه مجموعه‌ای جامع از خدمات تخصصی، به شما کمک می‌کند تا به اهداف کسب‌وکاری خود دست یابید و در دنیای رقابتی امروز پیشرفت کنید. خدمات ما به گونه‌ای طراحی شده‌اند که نیازهای مختلف شما را برآورده کنند و بهترین نتایج را ارائه دهند.</p>
+                                        <a href="radios"><h4 class="card-title">برنامه های رادیویی (کلیک کنید)</h4></a>
+                                        <p class="card-text">با گوش سپردن به برنامه‌های رادیویی موسسه "هفت هنر سیمرغ"، می‌توانید به یک ماجراجویی شنیدنی در دنیای هنر و فرهنگ قدم بگذارید</p>
                                     </div>
                                 </div>
                             </div>
