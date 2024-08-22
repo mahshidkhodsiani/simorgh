@@ -188,45 +188,22 @@
                 <li class="has-children">
                     <a href="#">دوره های آموزشی</a>
                     <ul class="dropdown arrow-top">
-                        
-                        <li class="has-children">
-                            <a href="#">فن بیان و گویندگی</a>
-                            <ul class="dropdown">
-                            <li><a href="speaking">مقدماتی</a></li>
-                            <li><a href="speaking">پیشرفته</a></li>
-                            </ul>
-                        </li>
+                        <li><a href="speaking" class="nav-link">فن بیان و گویندگی</a></li>
                         <li><a href="short_speaking" class="nav-link">گویندگی کوتاه مدت رادیو</a></li>
-
-                        <li class="has-children">
-                            <a href="#">بازیگری</a>
-                            <ul class="dropdown">
-                            <li><a href="acting">مقدماتی</a></li>
-                            <li><a href="acting">پیشرفته</a></li>
-                            </ul>
-                        </li>
+                        <li><a href="acting" class="nav-link">بازیگری</a></li>
                         <li><a href="#faq-section" class="nav-link">بازیگری کودک</a></li>
                         <li><a href="motion_graphics" class="nav-link">موشن گرافیک</a></li>
                         <li><a href="#faq-section" class="nav-link">عکاسی</a></li>
-
-
                         <li><a href="dubbing" class="nav-link">دوبله</a></li>
-                        
-                      
                         <li><a href="animation" class="nav-link">انیمیشن سازی</a></li>
-                        
-                        <li class="has-children">
-                            <a href="makeup">گریم سینمایی</a>
-                            <ul class="dropdown">
-                            <li><a href="makeup">مقدماتی</a></li>
-                            <li><a href="makeup">پیشرفته</a></li>
-                            </ul>
-                        </li>
+                        <li><a href="makeup" class="nav-link">گریم سینمایی</a></li>
                         <li><a href="#faq-section" class="nav-link">کارگردانی</a></li>
                         <li><a href="#faq-section" class="nav-link">تدوین فیلم</a></li>
                         <li><a href="#faq-section" class="nav-link">نقاشی</a></li>
                     </ul>
                 </li>
+
+             
 
 
                 <!-- <li class="has-children">
@@ -247,9 +224,17 @@
                 <li class="has-children">
                     <a href="#">خدمات سیمرغ</a>
                     <ul class="dropdown arrow-top">
-                        <li><a href="" class="nav-link">طراحی سایت</a></li>
+                        
+                        <li class="has-children">
+                            <a href="#">طراحی سایت</a>
+                            <ul class="dropdown">
+                            <li><a href="">مقدماتی</a></li>
+                            <li><a href="">پیشرفته</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
+                
              
                 <li><a href="../articles/suggestion" class="nav-link">انتقادات و پیشنهادات</a></li>
 

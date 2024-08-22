@@ -341,7 +341,7 @@
         <div class="container py-2">
             <a href="#">
                 <h1 class="h1 text-center text-dark" id="pageHeaderTitle">
-                آخرین برنامه های رادیویی
+                آخرین اخبار
                 </h1>
             </a>
 
@@ -353,9 +353,9 @@
                 <div class="col-sm-6">
                     <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">رادیو سیمرغ</h5>
-                        <p class="card-text">رادیو سیمرغ: مکانی جذاب برای گوش دادن</p>
-                        <a href="#" class="btn btn-primary">شنیدن بیشتر</a>
+                        <h5 class="card-title">عضویت در آرشیو گویندگان</h5>
+                        <p class="card-text"></p>
+                        <a href="articles/send_voice" class="btn btn-primary">شنیدن بیشتر</a>
                     </div>
                     </div>
                 </div>
@@ -364,7 +364,7 @@
                     <div class="card-body">
                         <h5 class="card-title">رادیو سیمرغ</h5>
                         <p class="card-text">رادیو سیمرغ: مکانی جذاب برای گوش دادن</p>
-                        <a href="#" class="btn btn-primary">شنیدن بیشتر</a>
+                        <a href="radios" class="btn btn-primary">شنیدن بیشتر</a>
                     </div>
                     </div>
                 </div>

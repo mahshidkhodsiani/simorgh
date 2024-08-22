@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>هفت هنر سیمرغ</title>
+    <title>دوره های گریم</title>
 
-    <!-- Uncomment the Google Fonts link if needed -->
-    <!-- <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet"> -->
 
     <link rel="stylesheet" href="../fonts/icomoon/style.css">
     <link rel="stylesheet" href="../css/owl.carousel.min.css">
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/mainstyles.css">
+
+    <link rel="icon" href="../images/logo1.ico" type="image/x-icon">
 
 
 </head>
@@ -35,8 +35,8 @@
             <div class="row justify-content-center">
                 <div class="col-12 col-md-10">
                     <div class="card border border-danger" style="border-radius: 40px;">
-                        <!-- <img class="mx-auto d-block img-fluid" src="../images/motion.jpg" alt="دوره های موشن گرافیک " 
-                            style="width: 100%; height: auto;"> -->
+                        <img class="mx-auto d-block img-fluid" src="../images/cinema-grim.jpg" alt="دوره های موشن گرافیک " 
+                            style="width: 100%; height: auto;">
                             <div class="card-body" dir="rtl" style="text-align: right;">
                             <h1>دوره های گریم سینمایی</h1>
                             
