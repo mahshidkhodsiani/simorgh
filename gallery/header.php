@@ -188,16 +188,28 @@
                 <li class="has-children">
                     <a href="#">دوره های آموزشی</a>
                     <ul class="dropdown arrow-top">
-                        <li><a href="../courses/speaking" class="nav-link">فن بیان و گویندگی</a></li>
-                        <li><a href="../courses/short_speaking" class="nav-link">گویندگی کوتاه مدت رادیو</a></li>
-                        <li><a href="../courses/acting" class="nav-link">بازیگری</a></li>
-                        <li><a href="#faq-section" class="nav-link">بازیگری کودک</a></li>
+                        <li class="has-children">
+                            <a href="">فن بیان و گویندگی</a>
+                            <ul class="dropdown">
+                            <li><a href="../courses/radio_announcer_course">دوره تخصصی گویندگی رادیو</a></li>
+                            <li><a href="../courses/children_speech_course">فن بیان و گویندگی کودکان</a></li>
+                            <li><a href="../courses/speaking_training_course">دوره آموزشی فن بیان و گویندگی</a></li>
+                            <li><a href="../courses/show_radio_course">دوره آموزشی نمایش رادیویی</a></li>
+                            </ul>
+                        </li>
+                        <li class="has-children">
+                            <a href="">بازیگری</a>
+                            <ul class="dropdown">
+                            <li><a href="../courses/acting1">بازیگری بزرگسال</a></li>
+                            <li><a href="../courses/acting2">بازیگری کودک</a></li>
+                            </ul>
+                        </li>
                         <li><a href="../courses/motion_graphics" class="nav-link">موشن گرافیک</a></li>
                         <li><a href="#faq-section" class="nav-link">عکاسی</a></li>
                         <li><a href="../courses/dubbing" class="nav-link">دوبله</a></li>
                         <li><a href="../courses/animation" class="nav-link">انیمیشن سازی</a></li>
                         <li><a href="../courses/makeup" class="nav-link">گریم سینمایی</a></li>
-                        <li><a href="#faq-section" class="nav-link">کارگردانی</a></li>
+                        <li><a href="../courses/directing" class="nav-link">کارگردانی</a></li>
                         <li><a href="#faq-section" class="nav-link">تدوین فیلم</a></li>
                         <li><a href="#faq-section" class="nav-link">نقاشی</a></li>
                     </ul>

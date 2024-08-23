@@ -355,7 +355,7 @@
                     <div class="card-body">
                         <h5 class="card-title">عضویت در آرشیو گویندگان</h5>
                         <p class="card-text"></p>
-                        <a href="articles/send_voice" class="btn btn-primary">شنیدن بیشتر</a>
+                        <a href="articles/send_voice" class="btn btn-primary">عضویت</a>
                     </div>
                     </div>
                 </div>

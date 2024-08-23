@@ -188,16 +188,28 @@
                 <li class="has-children">
                     <a href="#">دوره های آموزشی</a>
                     <ul class="dropdown arrow-top">
-                        <li><a href="speaking" class="nav-link">فن بیان و گویندگی</a></li>
-                        <li><a href="short_speaking" class="nav-link">گویندگی کوتاه مدت رادیو</a></li>
-                        <li><a href="acting" class="nav-link">بازیگری</a></li>
-                        <li><a href="#faq-section" class="nav-link">بازیگری کودک</a></li>
+                        <li class="has-children">
+                            <a href="speaking">فن بیان و گویندگی</a>
+                            <ul class="dropdown">
+                            <li><a href="radio_announcer_course">دوره تخصصی گویندگی رادیو</a></li>
+                            <li><a href="children_speech_course">فن بیان و گویندگی کودکان</a></li>
+                            <li><a href="speaking_training_course">دوره آموزشی فن بیان و گویندگی</a></li>
+                            <li><a href="show_radio_course">دوره آموزشی نمایش رادیویی</a></li>
+                            </ul>
+                        </li>
+                        <li class="has-children">
+                            <a href="">بازیگری</a>
+                            <ul class="dropdown">
+                            <li><a href="acting1">بازیگری بزرگسال</a></li>
+                            <li><a href="acting2">بازیگری کودک</a></li>
+                            </ul>
+                        </li>
                         <li><a href="motion_graphics" class="nav-link">موشن گرافیک</a></li>
                         <li><a href="#faq-section" class="nav-link">عکاسی</a></li>
                         <li><a href="dubbing" class="nav-link">دوبله</a></li>
                         <li><a href="animation" class="nav-link">انیمیشن سازی</a></li>
                         <li><a href="makeup" class="nav-link">گریم سینمایی</a></li>
-                        <li><a href="#faq-section" class="nav-link">کارگردانی</a></li>
+                        <li><a href="directing" class="nav-link">کارگردانی</a></li>
                         <li><a href="#faq-section" class="nav-link">تدوین فیلم</a></li>
                         <li><a href="#faq-section" class="nav-link">نقاشی</a></li>
                     </ul>
