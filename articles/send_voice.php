@@ -62,14 +62,15 @@
                                 <br>
                                 
                                 <form method="post" action="" class="form-group">
-                                    <label>مبلغ : <span style="font-size:10pt; color:#666">500 هزار تومان</label>
-                                    <input type="text" class="form-control" name="amount" value="5000000" />
+                                    <label>مبلغ (تومان) : <span style="font-size:10pt; color:#666">بین 1 هزار تومان و 5 هزار تومان</span></label>
+                                    <input type="text" class="form-control" name="amount" value="1000" /> <!-- Example: 1,000 Tomans -->
                                     <br>
-                                    <label>شماره موبایل : <span style="font-size:10pt; color:#666"></label>
+                                    <label>شماره موبایل : <span style="font-size:10pt; color:#666"></span></label>
                                     <input type="text" class="form-control" name="mobile" />
                                     <br>
                                     <input type="submit" value="انتقال به درگاه آپ">
                                 </form>
+
 
                                 </div>
                                 <div class="col-md-6 border">
@@ -134,63 +135,70 @@
 
 
 <?php
-
-// include 'config.php';
-
-
-require '../rest/API/Gateway.php';
-require '../rest/ipgcfg.php';
+require 'API/Gateway.php';
+require 'ipgcfg.php';
 
 if(!empty($_POST)){
     $CurUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
     $CurUrl = substr($CurUrl, 0, strrpos($CurUrl, '/')+1);
-    $CallBackUrl = $CurUrl.'../rest/back.php';
+    $CallBackUrl = $CurUrl.'back.php';
+
+    $amountInTomans = $_POST['amount'];
+    $amountInRials = $amountInTomans * 10; // Convert Tomans to Rials
+
+    // Ensure amount is within the valid range
+    if($amountInRials < 10000 || $amountInRials > 50000) {
+        echo '<div class="error">
+            <span style="color: #d00">مبلغ باید بین 1,000 تومان و 5,000 تومان باشد.</span>
+        </div>';
+        exit();
+    }
 
     $result = Gateway::make()
         ->config($Username, $Password, $merchantConfigID, $CallBackUrl)
-        ->amount($_POST['amount'])
+        ->amount($amountInRials)
         ->invoiceId(time())
         ->token();
 
-    if($result['code'] == 200){    
+    if($result['code'] == 200){
         Gateway::redirect($result['content'], $_POST['mobile']);
     } else {
-        handlePaymentError($result);
+        if ($result['errortype']){
+            echo '<div class="error">
+                <span style="color: #d00">خطای ماژول CURL.<br>
+                کدخطا: <b>'.$result['code'].'</b></span>
+                <p align="right">شرح خطا:</p>
+                <div style="text-align: left; direction: ltr;">
+                    <span style="font:bold 11pt verdana ">'.$result['content'].'</span>
+                </div>
+            </div>';
+            exit();
+        }
+        echo '<div class="error">
+            <span style="color: #d00">خطا هنگام ایجاد تراکنش.<br>
+            کدخطا: <b>'.$result['code'].'</b></span>
+            <div style="text-align:right;">
+                شرح خطا:<br><span style="direction:ltr; font:bold 11pt verdana ">'.$result['content'].'</span></div>
+                <div style="text-align:justify; direction:rtl; line-height:1.4; margin-top:30px">برای دریافت شرح کاملتر خطا با مراجعه به نشانی 
+                <a href="https://rest.asanpardakht.net" target="_blank">https://rest.asanpardakht.net</a> ، شرح خطای <b>'.$result['code'].'</b> 
+                را در متد <b>Token</b> مشاهده کنید.
+            </div>
+        </div>';
     }
 }
 
-function handlePaymentError($result){
-    $errorHtml = '<div class="error"><span style="color: #d00">خطا هنگام ایجاد تراکنش.<br>
-                  کدخطا: <b>'.$result['code'].'</b></span>';
-    if ($result['errortype']) {
-        $errorHtml .= '<div style="text-align:right;">شرح خطا:<br><span style="direction:ltr; font:bold 11pt verdana ">'.$result['content'].'</span></div>';
-    } else {
-        $errorHtml .= '<div style="text-align:justify; direction:rtl; line-height:1.4; margin-top:30px">برای دریافت شرح کاملتر خطا با مراجعه به نشانی 
-                       <a href="https://rest.asanpardakht.net" target="_blank">https://rest.asanpardakht.net</a> ، شرح خطای <b>'.$result['code'].'</b> 
-                       را در متد <b>Token</b> مشاهده کنید.</div>';
-    }
-    echo $errorHtml.'</div>';
-
-    // Log error details for further analysis
-    error_log('Payment Error: ' . print_r($result, true));
-
-    exit();
+if ($Username == 'Your Username' || 
+    $Password == 'Your Password' || 
+    $merchantConfigID == 'Your merchantConfigID'){
+    // echo '<div align="center">
+    // <img src="HELP.jpg" />
+    // </div>';
 }
+?>
 
 
 
-// if ($Username == 'Your Username' || 
-// 	$Password == 'Your Password' || 
-// 	$merchantConfigID == 'Your merchantConfigID')
-	// echo '<div align="center">
-			// <img src="HELP.jpg" />
-		  // </div>
-			// ';
-
-
-
-
-
+<?php
 
 
 

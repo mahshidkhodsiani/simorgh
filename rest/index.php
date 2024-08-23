@@ -79,6 +79,7 @@ if(!extension_loaded('curl')){
         <input type="submit" value="انتقال به درگاه آپ">
     </form>
 </div>
+
 <?php
 if(!empty($_POST)){
 	$CurUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
