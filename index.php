@@ -289,7 +289,7 @@
                 </time>
               </div>
               <div class="postcard__bar"></div>
-              <div class="postcard__preview-txt"><?= $body_content ?></div>
+              <div class="postcard__preview-txt mr-5"><?= $body_content ?></div>
               <ul class="postcard__tagbox">
                 <li class="tag__item"><i class="fas fa-clock mr-2"></i> پست</li>
              

@@ -139,61 +139,53 @@ require 'API/Gateway.php';
 require 'ipgcfg.php';
 
 if(!empty($_POST)){
-    $CurUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-    $CurUrl = substr($CurUrl, 0, strrpos($CurUrl, '/')+1);
-    $CallBackUrl = $CurUrl.'back.php';
-
-    $amountInTomans = $_POST['amount'];
-    $amountInRials = $amountInTomans * 10; // Convert Tomans to Rials
-
-    // Ensure amount is within the valid range
-    if($amountInRials < 10000 || $amountInRials > 50000) {
-        echo '<div class="error">
-            <span style="color: #d00">مبلغ باید بین 1,000 تومان و 5,000 تومان باشد.</span>
-        </div>';
-        exit();
-    }
+	$CurUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+	$CurUrl = substr($CurUrl,0, strrpos($CurUrl, '/')+1);
+	$CallBackUrl = $CurUrl.'back.php';	
 
     $result = Gateway::make()
-        ->config($Username, $Password, $merchantConfigID, $CallBackUrl)
-        ->amount($amountInRials)
+        ->config($Username,$Password,$merchantConfigID,$CallBackUrl)
+        ->amount($_POST['amount'])
         ->invoiceId(time())
         ->token();
 
-    if($result['code'] == 200){
-        Gateway::redirect($result['content'], $_POST['mobile']);
-    } else {
-        if ($result['errortype']){
-            echo '<div class="error">
-                <span style="color: #d00">خطای ماژول CURL.<br>
-                کدخطا: <b>'.$result['code'].'</b></span>
-                <p align="right">شرح خطا:</p>
-                <div style="text-align: left; direction: ltr;">
-                    <span style="font:bold 11pt verdana ">'.$result['content'].'</span>
-                </div>
-            </div>';
-            exit();
-        }
-        echo '<div class="error">
-            <span style="color: #d00">خطا هنگام ایجاد تراکنش.<br>
-            کدخطا: <b>'.$result['code'].'</b></span>
-            <div style="text-align:right;">
-                شرح خطا:<br><span style="direction:ltr; font:bold 11pt verdana ">'.$result['content'].'</span></div>
-                <div style="text-align:justify; direction:rtl; line-height:1.4; margin-top:30px">برای دریافت شرح کاملتر خطا با مراجعه به نشانی 
-                <a href="https://rest.asanpardakht.net" target="_blank">https://rest.asanpardakht.net</a> ، شرح خطای <b>'.$result['code'].'</b> 
-                را در متد <b>Token</b> مشاهده کنید.
-            </div>
-        </div>';
+    if($result['code'] == 200){	
+        Gateway::redirect($result['content'],$_POST['mobile']);
+    }
+	else{
+		if ($result['errortype']){
+			echo 
+			'<div class="error">
+				<span style="color: #d00">خطای ماژول CURL.<br>
+				کدخطا: <b>'.$result['code'].'</b></span>
+				<p align="right">شرح خطا:</p>
+				<div style="text-align: left; direction: ltr;">
+					<span style="font:bold 11pt verdana ">'.$result['content'].'</span>
+				</div>		
+			</div>';		
+			exit();
+		}
+        echo 
+		'<div class="error">
+			<span style="color: #d00">خطا هنگام ایجاد تراکنش.<br>
+			کدخطا: <b>'.$result['code'].'</b></span>
+			<div style="text-align:right;">
+				شرح خطا:<br><span style="direction:ltr; font:bold 11pt verdana ">'.$result['content'].'</span></div>
+				<div style="text-align:justify; direction:rtl; line-height:1.4;  margin-top:30px">برای دریافت شرح کاملتر خطا با مراجعه به نشانی 
+				<a href="https://rest.asanpardakht.net" target="_blank">https://rest.asanpardakht.net</a> ، شرح خطای <b>'.$result['code'].'</b> 
+				را در متد <b>Token</b> مشاهده کنید.
+			</div>		
+		</div>';
     }
 }
 
 if ($Username == 'Your Username' || 
-    $Password == 'Your Password' || 
-    $merchantConfigID == 'Your merchantConfigID'){
-    // echo '<div align="center">
-    // <img src="HELP.jpg" />
-    // </div>';
-}
+	$Password == 'Your Password' || 
+	$merchantConfigID == 'Your merchantConfigID')
+	// echo '<div align="center">
+			// <img src="HELP.jpg" />
+		  // </div>
+			// ';
 ?>
 
 
