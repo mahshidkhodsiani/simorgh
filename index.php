@@ -163,7 +163,7 @@
                             <div class="frontside">
                                 <div class="card">
                                     <div class="card-body text-center">
-                                        <p><img class="img-fluid" src="images/acting.jpg" alt="card image"></p>
+                                        <p><img class="img-fluid" src="images/acting1.jpg" alt="card image"></p>
                                         <h4 class="card-title">آموزش بازیگری</h4>
                                         <p class="card-text">آیا به دنبال ارتقاء مهارت‌های بازیگری خود هستید؟</p>
                                         <a href="courses/acting" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>

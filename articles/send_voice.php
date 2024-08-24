@@ -61,9 +61,9 @@
 
                                 <br>
                                 
-                                <form method="post" action="" class="form-group">
-                                    <label>مبلغ (تومان) : <span style="font-size:10pt; color:#666">بین 1 هزار تومان و 5 هزار تومان</span></label>
-                                    <input type="text" class="form-control" name="amount" value="1000" /> <!-- Example: 1,000 Tomans -->
+                                <form method="post" action="" class="form-group border p-1">
+                                    <label>مبلغ  : <span style="font-size:10pt; color:#666"> (حداقل 12000 ریال) </span></label>
+                                    <input type="text" class="form-control" name="amount" value="10000" /> <!-- Example: 1,000 Tomans -->
                                     <br>
                                     <label>شماره موبایل : <span style="font-size:10pt; color:#666"></span></label>
                                     <input type="text" class="form-control" name="mobile" />
@@ -134,9 +134,13 @@
 
 
 
+
+
 <?php
+
 require 'API/Gateway.php';
 require 'ipgcfg.php';
+
 
 if(!empty($_POST)){
 	$CurUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
@@ -187,6 +191,8 @@ if ($Username == 'Your Username' ||
 		  // </div>
 			// ';
 ?>
+
+
 
 
 

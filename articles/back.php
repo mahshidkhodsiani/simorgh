@@ -4,9 +4,7 @@ require 'ipgcfg.php';
 
 $invoiceID = $_REQUEST['invoice'];
 
-$gateway =Gateway::make()
-    ->config($Username,$Password,$merchantConfigID)
-    ->invoiceId($invoiceID);
+$gateway =Gateway::make()->config($Username,$Password,$merchantConfigID)->invoiceId($invoiceID);
 $result = $gateway->TranResult();
 
 	if($result['code'] != 200){

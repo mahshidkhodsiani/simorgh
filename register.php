@@ -6,6 +6,9 @@
     <title>هفت هنر سیمرغ</title>
 
     <?php include 'includes.php'; ?>
+
+    <link rel="icon" href="images/logo1.ico" type="image/x-icon">
+
 </head>
 <body>
 

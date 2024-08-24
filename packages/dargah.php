@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/mainstyles.css">
 
+    <link rel="icon" href="../images/logo1.ico" type="image/x-icon">
+
     <?php include '../includes.php'; ?>
 </head>
 <body>
