@@ -6,6 +6,9 @@
     <title>هفت هنر سیمرغ</title>
 
     <?php include 'includes.php'; ?>
+
+    <link rel="icon" href="images/logo1.ico" type="image/x-icon">
+
 </head>
 <body>
 
@@ -25,11 +28,11 @@
                     <?php
                     if(isset($_POST['sabtenam'])){
                         if(isset($_POST['speaking1'])){
-                            $course = 'فن بیان و گویندگی(مقدماتی) "16 جلسه دو ساعته" - قیمت : 7/500/000 تومان ';
+                            $course = 'گویندگی رادیو(استاد نادر) "10 جلسه سه ساعته" - قیمت : 12/500/000 تومان ';
                             $dargah = "speaking1";
                         }
                         if(isset($_POST['speaking2'])){
-                            $course = 'فن بیان و گویندگی(پیشرفته) "16 جلسه دو ساعته" - قیمت : 8/900/000 تومان ';
+                            $course = 'فن بیان و گویندگی(استاد خواجه ئیان) "12 جلسه دو ساعته" - قیمت : 7/500/000 تومان ';
                             $dargah = "speaking2";
                         }
                         if(isset($_POST['motion'])){
@@ -66,6 +69,19 @@
                         }
 
                         ?>
+
+<div class="container">
+    <form method="post" action="rest/index.php">
+        <label>مبلغ : <span style="font-size:10pt; color:#666">(حداقل 12000 ریال)</label>
+        <input type="text" name="amount" value="12000" />
+        <br>
+        <label>شماره موبایل : <span style="font-size:10pt; color:#666">(اختیاری)</label></label>
+        <input type="text" name="mobile" />
+        <br>
+        <input type="submit" value="انتقال به درگاه آپ">
+    </form>
+</div>
+
                         <form class="p-2" action="" method="POST">
                             <h2 style="text-align: center;">فرم ثبت نام</h2>
                             <h6 style="text-align: right;">اطلاعات شما :</h6>
@@ -151,4 +167,3 @@
 </html>
 
 <?php
-

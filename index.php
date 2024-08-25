@@ -163,7 +163,7 @@
                             <div class="frontside">
                                 <div class="card">
                                     <div class="card-body text-center">
-                                        <p><img class="img-fluid" src="images/acting.jpg" alt="card image"></p>
+                                        <p><img class="img-fluid" src="images/acting1.jpg" alt="card image"></p>
                                         <h4 class="card-title">آموزش بازیگری</h4>
                                         <p class="card-text">آیا به دنبال ارتقاء مهارت‌های بازیگری خود هستید؟</p>
                                         <a href="courses/acting" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
@@ -289,7 +289,7 @@
                 </time>
               </div>
               <div class="postcard__bar"></div>
-              <div class="postcard__preview-txt"><?= $body_content ?></div>
+              <div class="postcard__preview-txt mr-5"><?= $body_content ?></div>
               <ul class="postcard__tagbox">
                 <li class="tag__item"><i class="fas fa-clock mr-2"></i> پست</li>
              
@@ -341,7 +341,7 @@
         <div class="container py-2">
             <a href="#">
                 <h1 class="h1 text-center text-dark" id="pageHeaderTitle">
-                آخرین برنامه های رادیویی
+                آخرین اخبار
                 </h1>
             </a>
 
@@ -353,9 +353,9 @@
                 <div class="col-sm-6">
                     <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">رادیو سیمرغ</h5>
-                        <p class="card-text">رادیو سیمرغ: مکانی جذاب برای گوش دادن</p>
-                        <a href="#" class="btn btn-primary">شنیدن بیشتر</a>
+                        <h5 class="card-title">عضویت در آرشیو گویندگان</h5>
+                        <p class="card-text"></p>
+                        <a href="articles/send_voice" class="btn btn-primary">عضویت</a>
                     </div>
                     </div>
                 </div>
@@ -364,7 +364,7 @@
                     <div class="card-body">
                         <h5 class="card-title">رادیو سیمرغ</h5>
                         <p class="card-text">رادیو سیمرغ: مکانی جذاب برای گوش دادن</p>
-                        <a href="#" class="btn btn-primary">شنیدن بیشتر</a>
+                        <a href="radios" class="btn btn-primary">شنیدن بیشتر</a>
                     </div>
                     </div>
                 </div>

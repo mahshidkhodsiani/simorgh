@@ -46,6 +46,17 @@ body {
 
 
 
+.postcard__preview-txt {
+  display: -webkit-box;
+  -webkit-line-clamp: 4; /* Limits the content to 4 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+
+
 
 
 
@@ -182,6 +193,7 @@ section .section-title {
     height: 120px;
     border-radius: 50%;
 }
+
 
 
 

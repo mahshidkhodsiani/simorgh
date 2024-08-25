@@ -4,3 +4,34 @@
 گویندگی
 بازیگری
 تئاتر
+
+
+
+
+
+
+اطلاعات تراکنش :
+cardNumber : 603769xxxx3298
+rrn : 058163375872
+refID : 602f685b1f110054b
+amount : 10000
+payGateTranID : 2005275115
+salesOrderID : 1724486806
+hash :
+serviceTypeId : 1
+serviceStatusCode :
+destinationMobile :
+productId :
+productNameFa :
+productPrice :
+operatorId :
+operatorNameFa :
+simTypeId :
+simTypeTitleFa :
+billId :
+payId :
+billOrganizationNameFa :
+payGateTranDate : 2024-08-24T11:37:05.1593103
+payGateTranDateEpoch : 1724486825
+تراکنش verify شد.
+تراکنش settlement شد.
