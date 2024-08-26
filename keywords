@@ -12,11 +12,11 @@
 
 اطلاعات تراکنش :
 cardNumber : 603769xxxx3298
-rrn : 058163375872
-refID : 602f685b1f110054b
+rrn : 058181839820
+refID : 5f683d07967595155
 amount : 10000
-payGateTranID : 2005275115
-salesOrderID : 1724486806
+payGateTranID : 2005698762
+salesOrderID : 1724568484
 hash :
 serviceTypeId : 1
 serviceStatusCode :
@@ -31,7 +31,7 @@ simTypeTitleFa :
 billId :
 payId :
 billOrganizationNameFa :
-payGateTranDate : 2024-08-24T11:37:05.1593103
-payGateTranDateEpoch : 1724486825
+payGateTranDate : 2024-08-25T10:18:17.4446057
+payGateTranDateEpoch : 1724568497
 تراکنش verify شد.
-تراکنش settlement شد.
+تراکنش settlement شد.تراکنش settlement شد.

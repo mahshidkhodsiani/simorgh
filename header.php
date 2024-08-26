@@ -276,18 +276,20 @@
                     </ul>
                 </li>
 
-
-                
               
                 <li><a href="articles/suggestion" class="nav-link">انتقادات و پیشنهادات</a></li>
 
+                <a href="register" class="btn mb-2 mb-md-0 btn-outline-quarternary">ثبت نام</a>
             </ul>
+
         </nav>
+
               
 
 
-        <div class="toggle-button d-inline-block d-lg-none"><a href="#" class="site-menu-toggle py-5 js-menu-toggle text-black"><span class="icon-menu h3"></span></a></div>
+        <!-- <div class="toggle-button d-inline-block d-lg-none"><a href="#" class="site-menu-toggle py-5 js-menu-toggle text-black"><span class="icon-menu h3"></span></a></div> -->
        
+
 
 
         <div class="">

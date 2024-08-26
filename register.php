@@ -25,62 +25,9 @@
         <div class="container mt-4">
             <div class="row justify-content-center">
                 <div class="col-md-7 col-sm-12 border">
-                    <?php
-                    if(isset($_POST['sabtenam'])){
-                        if(isset($_POST['speaking1'])){
-                            $course = 'گویندگی رادیو(استاد نادر) "10 جلسه سه ساعته" - قیمت : 12/500/000 تومان ';
-                            $dargah = "speaking1";
-                        }
-                        if(isset($_POST['speaking2'])){
-                            $course = 'فن بیان و گویندگی(استاد خواجه ئیان) "12 جلسه دو ساعته" - قیمت : 7/500/000 تومان ';
-                            $dargah = "speaking2";
-                        }
-                        if(isset($_POST['motion'])){
-                            $course = 'موشن گرافیک "16 جلسه سه ساعته" - قیمت : 9/500/000 تومان ';
-                            $dargah = "motion";
-                        }
-                        if(isset($_POST['acting1'])){
-                            $course = 'بازیگری (مقدماتی) "15 جلسه سه ساعته" - قیمت : 8/800/000 تومان ';
-                            $dargah = "acting1";
-                        }
-                        if(isset($_POST['acting2'])){
-                            $course = 'بازیگری (پیشرفته) "16 جلسه سه ساعته" - قیمت : 12/800/000 تومان ';
-                            $dargah = "acting2";
-                        }
-                        if(isset($_POST['short-speaking'])){
-                            $course = 'گویندگی کوتاه مدت "5 جلسه دو ساعته" - قیمت : 2/300/000 تومان ';
-                            $dargah = "short-speaking";
-                        }
-                        if(isset($_POST['dubbing'])){
-                            $course = 'دوبله "10 جلسه سه ساعته" - قیمت : 7/500/000 تومان ';
-                            $dargah = "dubbing";
-                        }
-                        if(isset($_POST['animation'])){
-                            $course = 'انیمیشن سازی "12 جلسه " - قیمت : 7/900/000 تومان ';
-                            $dargah = "animation";
-                        }
-                        if(isset($_POST['makeup1'])){
-                            $course = 'گریم سینمایی (مقدماتی) "10 جلسه" - قیمت : 6/500/000 تومان ';
-                            $dargah = "makeup1";
-                        }
-                        if(isset($_POST['makeup2'])){
-                            $course = 'گریم سینمایی (پیشرفته) "12 جلسه" - قیمت : 8/000/000 تومان ';
-                            $dargah = "makeup2";
-                        }
+                 
 
-                        ?>
-
-<div class="container">
-    <form method="post" action="rest/index.php">
-        <label>مبلغ : <span style="font-size:10pt; color:#666">(حداقل 12000 ریال)</label>
-        <input type="text" name="amount" value="12000" />
-        <br>
-        <label>شماره موبایل : <span style="font-size:10pt; color:#666">(اختیاری)</label></label>
-        <input type="text" name="mobile" />
-        <br>
-        <input type="submit" value="انتقال به درگاه آپ">
-    </form>
-</div>
+                
 
                         <form class="p-2" action="" method="POST">
                             <h2 style="text-align: center;">فرم ثبت نام</h2>
@@ -127,7 +74,18 @@
                             <div class="form-group" style="text-align: right;">
                                 <label for="course">دوره انتخابی</label>
                                 <select class="form-control" name="course" id="course">
-                                    <option><?=$course ?></option>
+                                    <option>'گویندگی تخصصی رادیو "15 جلسه سه ساعته" - قیمت: دو قسط 6 میلیونی : /'</option>
+                                    <option>'فن بیان کودکان "10 جلسه دو ساعته" - قیمت : 5/900/000 تومان'</option>
+                                    <option>'فن بیان و گویندگی "8 جلسه دو ساعته" - قیمت : 6/500/000 تومان'</option>
+                                    <option>'نمایش رادیویی "8 جلسه دو ساعته" - قیمت : 5/500/000 تومان'</option>
+                                    <option>'بازیگری بزرگسال "16 جلسه دو ساعته" - قیمت : 9/900/000 تومان'</option>
+                                    <option>'بازیگری مخصوص کودکان "12 جلسه سه ساعته" - قیمت : 7/500/000 تومان'</option>
+                                    <option>'موشن گرافیک "16 جلسه دو ساعته" - قیمت : 9/500/000 تومان'</option>
+                                    <option>'آموزش و جذب دوبلر "10 جلسه سه ساعته" - قیمت : 7/500/000 تومان'</option>
+                                    <option>'انیمیشن سازی "12 جلسه سه ساعته" - قیمت : 7/900/000 تومان'</option>
+                                    <option>'گریم سینمایی (مقدماتی) "10 جلسه سه ساعته" - قیمت : 6/500/000 تومان'</option>
+                                    <option>'گریم سینمایی (پیشرفته) "10 جلسه سه ساعته" - قیمت : 8/000/000 تومان'</option>
+                                    <option>'کارگردانی و فیلمسازی "12 جلسه سه ساعته" - قیمت : 11/000/000 تومان'</option>
                                 </select>
                             </div>
                             <div class="form-group" style="text-align: right;">
@@ -149,11 +107,8 @@
                             <button class="btn mb-2 mb-md-0 btn-outline-info btn-block" name="pre-submit">پرداخت</button>
                         </form>
 
-                    <?php
-                    }else{
-                        echo '<h3 style="text-align: center;">هنوز دوره ای انتخاب نکردید</h3>';
-                    }
-                    ?>
+                
+                    
                    
 
                 </div>
