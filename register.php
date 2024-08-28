@@ -151,7 +151,7 @@ if (!empty($_POST)) {
         case 'course1':
             $_SESSION['course'] = "گویندگی تخصصی رادیو";
             $_SESSION['introduce'] = "قیمت: دو قسط 6 میلیونی";
-            $_POST['amount'] = 20000 ;
+            $_POST['amount'] = 60000000 ;
             break;
         case 'course2':
             $_SESSION['course'] = "فن بیان کودکان";

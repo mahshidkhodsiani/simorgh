@@ -111,17 +111,17 @@
                             <div class="frontside">
                                 <div class="card">
                                     <div class="card-body text-center">
-                                        <p><img class="img-fluid" src="images/speaking.jpg" alt="card image"></p>
+                                        <p><img class="img-fluid" src="images/speaking3.jpg" alt="card image"></p>
                                         <h4 class="card-title">آموزش فن بیان و گویندگی</h4>
                                         <p class="card-text">اینجا صدایتان شنیده می‌شود!</p>
-                                        <a href="courses/speaking" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
+                                        <a href="courses/speaking_training_course" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="backside">
                                 <div class="card">
                                     <div class="card-body text-center mt-4">
-                                        <a href="courses/speaking"><h4 class="card-title">فن بیان و گویندگی (کلیک کنید)</h4></a>
+                                        <a href="courses/speaking_training_course"><h4 class="card-title">فن بیان و گویندگی (کلیک کنید)</h4></a>
                                         <p class="card-text">اگر صدای خوب یا استعداد گویندگی دارید می‌توانید در آموزشگاه رادیو سیمرغ دوره‌های آکادمیک و تجربی را بگذرانید و در ضبط برنامه‌ها حضور پیدا کنید.</p>
                                     </div>
                                 </div>
@@ -166,14 +166,14 @@
                                         <p><img class="img-fluid" src="images/acting1.jpg" alt="card image"></p>
                                         <h4 class="card-title">آموزش بازیگری</h4>
                                         <p class="card-text">آیا به دنبال ارتقاء مهارت‌های بازیگری خود هستید؟</p>
-                                        <a href="courses/acting" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
+                                        <a href="courses/acting1" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="backside">
                                 <div class="card">
                                     <div class="card-body text-center mt-4">
-                                        <a href="courses/acting"><h4 class="card-title">آموزش بازیگری (کلیک کنید)</h4></a>
+                                        <a href="courses/acting1"><h4 class="card-title">آموزش بازیگری (کلیک کنید)</h4></a>
                                         <p class="card-text">موسسه «سیمرغ»، پیشرو در آموزش بازیگری در ایران، دوره‌های تخصصی بازیگری مقدماتی و پیشرفته را ارائه می‌دهد. این دوره‌ها با هدف توسعه توانایی‌های بازیگری شما و آماده‌سازی شما برای ورود به دنیای هنر طراحی شده‌اند.</p>
                                     </div>
                                 </div>
