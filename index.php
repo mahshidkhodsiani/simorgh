@@ -261,22 +261,22 @@
 
           
             <article class="postcard light blue">
-                <a href="courses/radio_announcer_course" class="postcard__img_link">
-                    <img class="postcard__img" src="images/speaking1.jpg" alt="موسسه هفت هنر سیمرغ" />
+                <a href="courses/workshop" class="postcard__img_link">
+                    <img class="postcard__img" src="images/workshop.jpg" alt="موسسه هفت هنر سیمرغ" height="400px"/>
                 </a>
                 <div class="postcard__text t-dark">
-                    <h1 class="postcard__title blue"><a href="courses/radio_announcer_course">فن بیان و گویندگی تخصصی رادیو</a></h1>
+                    <h1 class="postcard__title blue"><a href="courses/workshop">ورکشاپ گویندگی رادیو</a></h1>
                     <div class="postcard__subtitle small">
                     
                         
                     </div>
                     <div class="postcard__bar"></div>
                     <div class="postcard__preview-txt mr-5">
-                        <p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">همراه با اجرای برنامه های رادیویی</p><p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">مدرسین دوره</p><p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">سجاد نادر ( تهیه کننده و برنامه ساز رادیو)</p><p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">میترا خواجه ئیان ( استاد دانشگاه و کارشناس رادیو)</p><p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">مینا امامی ( کارشناس ارشد نمایش و مدرس نمایش رادیویی)</p>
+                        <p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">تجربه ای متفاوت در رادیو سیمرغ</p><p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">همراه با گویندگان رادیو</p><p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">شماهم اگر استعداد یا علاقه ای در زمینه گویندگی دارید میتوانید روزهای پنجشنبه هرهفته با شرکت در ورکشاپ گویندگی در ضبط برنامه رادیویی حضور داشته باشید.</p>
 
                     </div>
                     <ul class="postcard__tagbox">
-                        <a href="courses/radio_announcer_course"><li class="tag__item"><i class="fas fa-clock mr-2"></i>ادامه</li></a>
+                        <a href="courses/workshop"><li class="tag__item"><i class="fas fa-clock mr-2"></i>ادامه</li></a>
                     </ul>
                 </div>
             </article>
@@ -285,22 +285,22 @@
 
 
             <article class="postcard light red">
-                <a class="postcard__img_link"  href="courses/children_speech_course">
-                    <img class="postcard__img" src="images/speaking2.jpg" alt="موسسه هفت هنر سیمرغ" />
+                <a class="postcard__img_link"  href="courses/speaking_training_course">
+                    <img class="postcard__img" src="images/speaking3.jpg" alt="موسسه هفت هنر سیمرغ" height="400px"/>
                 </a>
                 <div class="postcard__text t-dark">
-                    <h1 class="postcard__title blue"><a href="courses/children_speech_course">آموزش دوبله و گویندگی مخصوص کودکان</a></h1>
+                    <h1 class="postcard__title blue"><a href="courses/speaking_training_course">دوره آموزشی فن بیان و گویندگی</a></h1>
 
                     <div class="postcard__subtitle small">
                         
                     </div>
                     <div class="postcard__bar"></div>
                     <div class="postcard__preview-txt">
-                        <p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">❗️اگر فن بیان و اعتماد بنفس کودکتان ضعیفه نگران نباشید ❗️</p><p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;"><br></p><p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">دوره های تخصصی فن بیان و گویندگی در آموزشگاه سیمرغ راه حل شماست.</p><p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">&nbsp;<span style="background-color: var(--bs-body-bg); font-size: var(--bs-body-font-size); font-weight: var(--bs-body-font-weight); text-align: var(--bs-body-text-align);">فن بیان و ارتباط کلامی</span></p>
+                        <h4 class="" style="font-family: &quot;Open Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; color: rgb(33, 37, 41);"><p style="font-family: &quot;B Titr&quot;; font-size: 16px;">سرفصل های دوره</p><p style="font-family: &quot;B Titr&quot;; font-size: 16px;">❗️فن بیان و سخنوری&nbsp;</p><p style="font-family: &quot;B Titr&quot;; font-size: 16px;">❗️انواع حس ، لحن ، بیان و تنفس</p><p style="font-family: &quot;B Titr&quot;; font-size: 16px;">❗️تیزرهای تبلیغاتی و دکلمه خوانی ...</p></h4>
 
                     </div>
                     <ul class="postcard__tagbox">
-                        <a href="courses/children_speech_course"><li class="tag__item"><i class="fas fa-clock mr-2"></i>ادامه</li></a>
+                        <a href="courses/speaking_training_course"><li class="tag__item"><i class="fas fa-clock mr-2"></i>ادامه</li></a>
                     
                     </ul>
                 </div>
@@ -308,22 +308,22 @@
 
 
             <article class="postcard light blue">
-                <a href="courses/speaking_training_course" class="postcard__img_link">
-                    <img class="postcard__img" src="images/speaking3.jpg" alt="موسسه هفت هنر سیمرغ" />
+                <a href="courses/acting1" class="postcard__img_link">
+                    <img class="postcard__img" src="images/acting1.jpg" alt="موسسه هفت هنر سیمرغ" height="400px"/>
                 </a>
                 <div class="postcard__text t-dark">
-                    <h1 class="postcard__title blue"><a href="courses/speaking_training_course">دوره آموزشی فن بیان و گویندگی </a></h1>
+                    <h1 class="postcard__title blue"><a href="courses/acting1">دوره‌های بازیگری بزرگسال موسسه «سیمرغ» </a></h1>
                     <div class="postcard__subtitle small">
                     
                         
                     </div>
                     <div class="postcard__bar"></div>
                     <div class="postcard__preview-txt mr-5">
-                        <h4 class="" style="font-family: &quot;Open Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; color: rgb(33, 37, 41);"><p style="font-family: &quot;B Titr&quot;; font-size: 16px;">سرفصل های دوره</p><p style="font-family: &quot;B Titr&quot;; font-size: 16px;">❗️فن بیان و سخنوری&nbsp;</p><p style="font-family: &quot;B Titr&quot;; font-size: 16px;">❗️انواع حس ، لحن ، بیان و تنفس</p><p style="font-family: &quot;B Titr&quot;; font-size: 16px;">❗️تیزرهای تبلیغاتی و دکلمه خوانی ...</p></h4>
+                        <p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">سرفصل های دوره&nbsp;</p><p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">-بازیگری روی صحنه</p><p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">-بدن و بیان در بازیگری</p><p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">-فن بیان در‌ بازیگری</p><p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">-بداهه گویی و بداهه پردازی</p>
 
                     </div>
                     <ul class="postcard__tagbox">
-                        <a href="courses/speaking_training_course"><li class="tag__item"><i class="fas fa-clock mr-2"></i>ادامه</li></a>
+                        <a href="courses/acting1"><li class="tag__item"><i class="fas fa-clock mr-2"></i>ادامه</li></a>
                     </ul>
                 </div>
             </article>
@@ -332,22 +332,22 @@
 
 
             <article class="postcard light red">
-                <a class="postcard__img_link"  href="courses/show_radio_course">
-                    <img class="postcard__img" src="images/speaking4.jpg" alt="موسسه هفت هنر سیمرغ" />
+                <a class="postcard__img_link"  href="courses/motion_graphics">
+                    <img class="postcard__img" src="images/motion.jpg" alt="موسسه هفت هنر سیمرغ" height="400px"/>
                 </a>
                 <div class="postcard__text t-dark">
-                    <h1 class="postcard__title blue"><a href="courses/show_radio_course">دوره آموزشی نمایش رادیویی </a></h1>
+                    <h1 class="postcard__title blue"><a href="courses/motion_graphics">دوره آکادمیک و تخصصی موشن گرافیک و  تولید محتوا </a></h1>
 
                     <div class="postcard__subtitle small">
                         
                     </div>
                     <div class="postcard__bar"></div>
                     <div class="postcard__preview-txt">
-                        <h4 class="" style="font-family: &quot;Open Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; color: rgb(33, 37, 41);"><p style="font-family: &quot;B Titr&quot;; font-size: 16px;">سرفصل های دوره</p><p style="font-family: &quot;B Titr&quot;; font-size: 16px;">❗️انواع نمایشنامه</p><p style="font-family: &quot;B Titr&quot;; font-size: 16px;">❗️تخیل فعال</p><p style="font-family: &quot;B Titr&quot;; font-size: 16px;">❗️خلق کاراکتر</p><p style="font-family: &quot;B Titr&quot;; font-size: 16px;">❗️ریتم ، تمپو ، موتیف</p></h4>
+                        <p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">آموزشگاه فرهنگی هنری و سینمایی سیمرغ</p><p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">کمتر از سه ماه با آموزش تخصصی تولید محتوا</p><p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">نرم افزارهای آموزشی</p>
 
                     </div>
                     <ul class="postcard__tagbox">
-                        <a href="courses/show_radio_course"><li class="tag__item"><i class="fas fa-clock mr-2"></i>ادامه</li></a>
+                        <a href="courses/motion_graphics"><li class="tag__item"><i class="fas fa-clock mr-2"></i>ادامه</li></a>
                     
                     </ul>
                 </div>

@@ -30,8 +30,8 @@
             <div class="row justify-content-center">
                 <div class="col-12 col-md-10">
                     <div class="card border border-danger p-4 text-center">
-                        <h1 class="">پرداخت شما به درستی انجام شد</h1>
-                        <button class="btn btn-outline-success mt-3">در حال انتقال به صفحه ارسال صدا</button>
+                        <h2 class="">پرداخت شما به درستی انجام شد. از این صفحه اسکرین شات بگیرید</h2>
+                        <button class="btn btn-success mt-3">در حال انتقال به صفحه ارسال صدا</button>
                     </div>
                 </div>
             </div>

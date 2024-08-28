@@ -59,8 +59,8 @@ if ($verify['code'] == 200) {
         if ($result) {
             $new_id = $conn->insert_id;
             $_SESSION['new_id'] = $new_id;
-            echo "<script>alert('اطلاعات شما به درستی ذخیره شد و شما ثبت نام شدید. از فیش واریزی اسکرین شات بگیرید')</script>";
-            echo "<script>location.href='index';</script>";
+           
+            // echo "<script>location.href='payment_receipt';</script>";
         } else {
             echo 'خطا در ذخیره اطلاعات تراکنش در پایگاه داده.';
         }

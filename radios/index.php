@@ -51,11 +51,11 @@
                         $start_from = ($page - 1) * $limit;
 
                         // Fetching data from the database
-                        $sql = "SELECT * FROM radio ORDER BY id ASC LIMIT $start_from, $limit";
+                        $sql = "SELECT * FROM radio ORDER BY id DESC LIMIT $start_from, $limit";
                         $result = $conn->query($sql);
 
                         // Count the total number of rows
-                        $sql_total = "SELECT COUNT(id) FROM radio";
+                        $sql_total = "SELECT COUNT(id) FROM radio ORDER BY id DESC";
                         $result_total = $conn->query($sql_total);
                         $row_total = $result_total->fetch_row();
                         $total_records = $row_total[0];
