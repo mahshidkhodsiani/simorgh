@@ -1,3 +1,7 @@
+<?php
+
+session_start();
+?>
 <!doctype html>
 <html lang="fa" dir="rtl">
 <head>
@@ -32,7 +36,9 @@
             <div class="row justify-content-center">
                 <div class="col-12 col-md-10">
                     <div class="card border border-danger p-4 text-center">
-                        <h2 class="">اطلاعات شما به درستی ذخیره شد و شما ثبت نام شدید. از این صفحه اسکرین شات بگیرید</h2>
+                        <h2 style="text-align: center; " class=""><span style="background-color: rgb(107, 165, 74);">رسید پرداختی</span></h2><p>با سپاس .پرداخت شما با موفقیت انجام شد.</p><p><br></p>
+                            <p>مبلغ : <?= $_SESSION['amount']?></p>
+                        <p><br></p><p>در اولین فرصت همکاران ما با شما تماس خواهند گرفت.</p><p>لطفا از رسید خود عکس بگیرید</p><p><br></p>
                         <button class="btn btn-success mt-3">در حال انتقال به صفحه اصلی</button>
                     </div>
                 </div>
@@ -43,7 +49,7 @@
             // Redirect to user_voice.php after 3 seconds
             setTimeout(function() {
                 window.location.href = 'index.php';
-            }, 5000);
+            }, 10000);
         </script>
 
         <?php
