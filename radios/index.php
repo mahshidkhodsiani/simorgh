@@ -37,6 +37,31 @@
                                  این برنامه‌ها، با صدای گرم و روایات جذاب، شما را به یک دنیای جدید از هنر و فرهنگ دعوت می‌کنند؛ دنیایی که هر روز با شما همراه خواهد بود.<br></p>
                         </div>
 
+                        <?php
+                   
+
+                        // Pagination logic
+                        $limit = 5; // Number of entries per page
+                        if (isset($_GET['page'])) {
+                            $page = (int)$_GET['page'];
+                        } else {
+                            $page = 1;
+                        }
+
+                        $start_from = ($page - 1) * $limit;
+
+                        // Fetching data from the database
+                        $sql = "SELECT * FROM radio ORDER BY id ASC LIMIT $start_from, $limit";
+                        $result = $conn->query($sql);
+
+                        // Count the total number of rows
+                        $sql_total = "SELECT COUNT(id) FROM radio";
+                        $result_total = $conn->query($sql_total);
+                        $row_total = $result_total->fetch_row();
+                        $total_records = $row_total[0];
+                        $total_pages = ceil($total_records / $limit);
+                        ?>
+
                         <div class="table-responsive mt-5">
                             <table class="table table-striped">
                                 <thead>
@@ -48,32 +73,64 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- Rows -->
-                                    <tr>
-                                        <td class="text-center">1</td>
-                                        <td class="text-center"></td>
-                                        <td class="text-center">برنامه رادیویی</td>
-                                        <td class="text-center"> 
-                                            <audio controls>
-                                                <source src="../upload/radios/2024/19-mordad.mp3" type="audio/mpeg">
-                                            </audio>
-                                        </td>
-                                    
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">2</td>
-                                        <td class="text-center"></td>
-                                        <td class="text-center">برنامه رادیویی</td>
-                                        <td class="text-center"> 
-                                            <audio controls>
-                                                <source src="../upload/radios/2024/dovom-khordad.mp3" type="audio/mpeg">
-                                            </audio>
-                                        </td>
-                                    
-                                    </tr>
+                                    <?php
+                                    if ($result->num_rows > 0) {
+                                        $row_number = $start_from + 1; // Start row numbering
+                                        while ($row = $result->fetch_assoc()) {
+                                            echo "<tr>";
+                                            echo "<td class='text-center'>" . $row_number++ . "</td>";
+                                            echo "<td class='text-center'>" . htmlspecialchars($row['title']) . "</td>";
+                                            echo "<td class='text-center'>" . htmlspecialchars($row['program_type']) . "</td>";
+                                            echo "<td class='text-center'>";
+                                            if (!empty($row['file_path'])) {
+                                                echo "<audio controls>";
+                                                echo "<source src='" . htmlspecialchars($row['file_path']) . "' type='audio/mpeg'>";
+                                                echo "Your browser does not support the audio element.";
+                                                echo "</audio>";
+                                            } else {
+                                                echo "No audio file";
+                                            }
+                                            echo "</td>";
+                                            echo "</tr>";
+                                        }
+                                    } else {
+                                        echo "<tr><td colspan='4' class='text-center'>No records found</td></tr>";
+                                    }
+                                    ?>
                                 </tbody>
                             </table>
                         </div>
+
+                        <!-- Pagination -->
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination justify-content-center">
+                                <!-- Previous Page Link -->
+                                <li class="page-item <?php if ($page <= 1) echo 'disabled'; ?>">
+                                    <a class="page-link" href="<?php if ($page > 1) echo '?page=' . ($page - 1); ?>">قبلی</a>
+                                </li>
+                                
+                                <!-- Numbered Page Links -->
+                                <?php
+                                for ($i = 1; $i <= $total_pages; $i++) {
+                                    echo "<li class='page-item" . ($i == $page ? " active" : "") . "'>";
+                                    echo "<a class='page-link' href='?page=" . $i . "'>" . $i . "</a>";
+                                    echo "</li>";
+                                }
+                                ?>
+                                
+                                <!-- Next Page Link -->
+                                <li class="page-item <?php if ($page >= $total_pages) echo 'disabled'; ?>">
+                                    <a class="page-link" href="<?php if ($page < $total_pages) echo '?page=' . ($page + 1); ?>">بعدی</a>
+                                </li>
+                            </ul>
+                        </nav>
+
+                        <?php
+                        // Close the connection
+                        $conn->close();
+                        ?>
+
+
                         
                     </div>
                 </div>

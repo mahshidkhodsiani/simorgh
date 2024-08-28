@@ -62,11 +62,11 @@ if($verify['code'] == 200){
         
             $_SESSION['new_id'] = $new_id;
 
-            echo "<script>alert('اطلاعات شما به درستی ذخیره شد')</script>";
+            // echo "<script>alert('اطلاعات شما به درستی ذخیره شد')</script>";
 
 
         
-            echo "<script>location.href='user_voice.php';</script>";
+            echo "<script>location.href='payment_receipt.php';</script>";
         } else {
             echo 'خطا در ذخیره اطلاعات تراکنش در پایگاه داده.';
         }

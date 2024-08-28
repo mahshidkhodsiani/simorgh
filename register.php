@@ -67,13 +67,14 @@ session_start();
                             </div>
                             <h6 style="text-align: right;">اطلاعات ثبت نامی :</h6>
                             <div class="form-group" style="text-align: right;">
-                                <label for="course">دوره انتخابی</label>
+                                <label for="course">دوره </label>
                                 <select class="form-control" name="course" id="course">
+                                    <option>دوره مورد نظر را انتخاب کنید</option>
                                     <option value="course1">'گویندگی تخصصی رادیو "15 جلسه سه ساعته" - قیمت: دو قسط 6 میلیونی '</option>
                                     <option value="course2">'فن بیان کودکان "10 جلسه دو ساعته" - قیمت : 5/900/000 تومان'</option>
-                                    <option value="course3">'فن بیان و گویندگی "8 جلسه دو ساعته" - قیمت : 6/500/000 تومان'</option>
+                                    <option value="course3">'فن بیان و و گویندگی کودکان "8 جلسه دو ساعته" - قیمت : 6/500/000 تومان'</option>
                                     <option value="course4">'نمایش رادیویی "8 جلسه دو ساعته" - قیمت : 5/500/000 تومان'</option>
-                                    <option value="course5">'بازیگری بزرگسال "16 جلسه دو ساعته" - قیمت : 9/900/000 تومان'</option>
+                                    <option value="course5">'بازیگری بزرگسال "16 جلسه دو ساعته" - قیمت : 8/800/000 تومان'</option>
                                     <option value="course6">'بازیگری مخصوص کودکان "12 جلسه سه ساعته" - قیمت : 7/500/000 تومان'</option>
                                     <option value="course7">'موشن گرافیک "16 جلسه دو ساعته" - قیمت : 9/500/000 تومان'</option>
                                     <option value="course8">'آموزش و جذب دوبلر "10 جلسه سه ساعته" - قیمت : 7/500/000 تومان'</option>
@@ -81,6 +82,9 @@ session_start();
                                     <option value="course10">'گریم سینمایی (مقدماتی) "10 جلسه سه ساعته" - قیمت : 6/500/000 تومان'</option>
                                     <option value="course11">'گریم سینمایی (پیشرفته) "10 جلسه سه ساعته" - قیمت : 8/000/000 تومان'</option>
                                     <option value="course12">'کارگردانی و فیلمسازی "12 جلسه سه ساعته" - قیمت : 11/000/000 تومان'</option>
+                                    <option value="course13">'ورکشاپ - قیمت : 500/000 تومان'</option>
+                                    <option value="course14">'تدوین و ادیت فیلم "10 جلسه دو ساعته" - قیمت : 6/500/000 تومان'</option>
+
                                 </select>
                             </div>
                             <div class="form-group" style="text-align: right;">
@@ -169,8 +173,8 @@ if (!empty($_POST)) {
             break;
         case 'course5':
             $_SESSION['course'] = "بازیگری بزرگسال";
-            $_SESSION['introduce'] = "قیمت: 9/900/000 تومان";
-            $_POST['amount'] = 99000000 ;
+            $_SESSION['introduce'] = "قیمت: 8/800/000 تومان";
+            $_POST['amount'] = 88000000 ;
 
             break;
         case 'course6':
@@ -213,6 +217,18 @@ if (!empty($_POST)) {
             $_SESSION['course'] = "کارگردانی و فیلمسازی";
             $_SESSION['introduce'] = "قیمت: 11/000/000 تومان";
             $_POST['amount'] = 110000000 ;
+
+            break;
+        case 'course13':
+            $_SESSION['course'] = "ورکشاپ گویندگی رادیو";
+            $_SESSION['introduce'] = "قیمت: 500/000 تومان";
+            $_POST['amount'] = 5000000 ;
+
+            break;
+        case 'course14':
+            $_SESSION['course'] = "تدوین و ادیت فیلم";
+            $_SESSION['introduce'] = "قیمت: 6/500/000 تومان";
+            $_POST['amount'] = 65000000 ;
 
             break;
     }
