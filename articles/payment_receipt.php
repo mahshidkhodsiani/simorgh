@@ -26,7 +26,7 @@ session_start();
     include '../PersianCalendar.php';
     include '../jalaliDate.php';
     $sdate = new SDate();
-    if(isset($_SESSION['new_id'])){
+    if(isset($_SESSION['invoice'])){
  
     ?>
         <div class="container mt-4">

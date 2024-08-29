@@ -13,13 +13,7 @@ $invoiceID = $_REQUEST['invoice']; // Get the invoice ID from the request
 $gateway = Gateway::make()->config($Username, $Password, $merchantConfigID)->invoiceId($invoiceID);
 $result = $gateway->TranResult();
 
-// Retrieve the transaction data from the session
-$invoiceID = $_SESSION['invoiceId'];
-$mobile = $_SESSION['mobile'];
-$name = $_SESSION['name'];
-$lastname = $_SESSION['lastname'];
-$age = $_SESSION['age'];
-$amount = $_SESSION['amount'];
+
 
 if($result['code'] != 200){
     echo 'مشکل در TranResult تراکنش';
@@ -48,28 +42,11 @@ if($verify['code'] == 200){
     if($settlement['code'] == 200){
        
        
-        $sql = "INSERT INTO contacts (user_id, name, lastname, age, course, introduce, mobile, created_at) 
-        VALUES ('$invoiceID', '$name', '$lastname', '$age', 'voice','500 toman','$mobile', NOW())";
+        $sql = "UPDATE contacts SET pardakht = 1 WHERE user_id = '$invoiceID'";
+        $conn->query($sql);
 
-    
-
-        $result = $conn->query($sql);
-
-        if ($result) {
-     
-            $new_id = $conn->insert_id;
-
-        
-            $_SESSION['new_id'] = $new_id;
-
-            // echo "<script>alert('اطلاعات شما به درستی ذخیره شد')</script>";
-
-
-        
-            echo "<script>location.href='payment_receipt.php';</script>";
-        } else {
-            echo 'خطا در ذخیره اطلاعات تراکنش در پایگاه داده.';
-        }
+        $_SESSION['invoice'] = $invoiceID;
+        echo "<script>location.href='payment_receipt';</script>";
      
 
     } else {

@@ -129,13 +129,28 @@ if(!empty($_POST)){
 
     $invoiceId = time(); // Generate an invoice ID based on current time
 
-    // Store necessary information in session
-    $_SESSION['mobile'] = $_POST['mobile'];
-    $_SESSION['name'] = $_POST['name'];
-    $_SESSION['lastname'] = $_POST['lastname'];
-    $_SESSION['age'] = $_POST['age'];
-    $_SESSION['amount'] = $_POST['amount'];
-    $_SESSION['invoiceId'] = $invoiceId;
+
+  
+    $mobile = $_POST['mobile'];
+    $name = $_POST['name'];
+    $lastname = $_SESSION['lastname'];
+    $age = $_POST['age'];
+    $amount = $_POST['amount'];
+ 
+
+    $sql = "INSERT INTO contacts (user_id, name, lastname, age, course, introduce, mobile, created_at) 
+        VALUES ('$invoiceID', '$name', '$lastname', '$age', 'voice','500 toman','$mobile', NOW())";
+
+    
+
+        $result = $conn->query($sql);
+
+        if ($result) {
+     
+            $new_id = $conn->insert_id;
+        } else {
+            echo 'خطا در ذخیره اطلاعات تراکنش در پایگاه داده.';
+        }
 
     
 	$CallBackUrl = $CurUrl.'back.php';	
@@ -180,19 +195,6 @@ if(!empty($_POST)){
     }
 }
 
-if ($Username == 'Your Username' || 
-	$Password == 'Your Password' || 
-	$merchantConfigID == 'Your merchantConfigID')
-	// echo '<div align="center">
-			// <img src="HELP.jpg" />
-		  // </div>
-			// ';
+
 ?>
-
-
-
-
-
-<?php
-
 
