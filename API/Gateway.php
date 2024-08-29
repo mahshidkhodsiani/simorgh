@@ -187,6 +187,7 @@ class Gateway
         </script>';
         echo '</body>';
         echo '</html>';
+       
     }
 }
 

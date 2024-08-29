@@ -1,27 +1,20 @@
 <?php
-
 session_start();
+
 
 require 'API/Gateway.php';
 require 'ipgcfg.php';
 include "config.php"; // Include your database connection file
 
+
+
+
 $invoiceID = $_REQUEST['invoice']; // Get the invoice ID from the request
 $gateway = Gateway::make()->config($Username, $Password, $merchantConfigID)->invoiceId($invoiceID);
 $result = $gateway->TranResult();
 
-// Retrieve the transaction data from the session
-$invoiceID = $_SESSION['invoiceId'];
-$mobile = $_SESSION['mobile'];
-$name = $_SESSION['name'];
-$lastname = $_SESSION['lastname'];
-$age = $_SESSION['age'];
-$amount = $_SESSION['amount'];
-$email = $_SESSION['email'];
-$address = $_SESSION['address'];
-$course = $_SESSION['course'];
-$introduce = $_SESSION['introduce'];
-$reference = $_SESSION['reference'];
+
+
 
 if ($result['code'] != 200) {
     echo 'مشکل در TranResult تراکنش';
@@ -48,22 +41,15 @@ if ($verify['code'] == 200) {
     // Settlement
     $settlement = $gateway->settlement($result['content']['payGateTranID']);
     if ($settlement['code'] == 200) {
-        // Prepare the SQL query with course and reference details
-        $sql = "INSERT INTO contacts (user_id, name, lastname, age, course, email, introduce, mobile, know, address, created_at) 
-                VALUES ('$invoiceID', '$name', '$lastname', '$age', '$course', '$email', '$introduce', '$mobile', '$reference', '$address', NOW())";
 
-        echo $sql;
 
-        $result = $conn->query($sql);
-
-        if ($result) {
-            $new_id = $conn->insert_id;
-            $_SESSION['new_id'] = $new_id;
-           
-            // echo "<script>location.href='payment_receipt';</script>";
-        } else {
-            echo 'خطا در ذخیره اطلاعات تراکنش در پایگاه داده.';
-        }
+        $sql = "UPDATE contacts SET pardakht = 1 WHERE user_id = '$invoiceID'";
+        $conn->query($sql);
+        
+      
+        $_SESSION['invoice'] = $invoiceID;
+        echo "<script>location.href='payment_receipt';</script>";
+       
     } else {
         echo 'مشکل در settlement تراکنش';
         echo '<br>';
@@ -78,5 +64,7 @@ if ($verify['code'] == 200) {
     echo '<br>';
     echo 'Response: ' . $verify['content'];
 }
+
+
 
 ?>

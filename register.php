@@ -132,127 +132,146 @@ if (!empty($_POST)) {
     $CurUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
     $CurUrl = substr($CurUrl, 0, strrpos($CurUrl, '/') + 1);
 
-    $invoiceId = time(); // Generate an invoice ID based on current time
 
-    // Store necessary information in session
-    $_SESSION['mobile'] = $_POST['mobile'];
-    $_SESSION['name'] = $_POST['name'];
-    $_SESSION['lastname'] = $_POST['lastname'];
-    $_SESSION['meli_code'] = $_POST['meli_code'];
-    $_SESSION['age'] = $_POST['age'];
-    $_SESSION['amount'] = $_POST['amount'];
-    $_SESSION['email'] = $_POST['email'];
-    $_SESSION['address'] = $_POST['address'];
-    $_SESSION['description'] = isset($_POST['explain']) ? $_POST['explain'] : NULL;
-    $_SESSION['invoiceId'] = $invoiceId;
+    $invoiceId = time(); 
+
+
+    $mobile = $_POST['mobile'];
+    $name = $_POST['name'];
+    $lastname = $_POST['lastname'];
+    $meli_code = $_POST['meli_code'];
+    $age = $_POST['age'];
+    $email = $_POST['email'];
+    $address = $_POST['address'];
+   
+    $description = isset($_POST['explain']) ? $_POST['explain'] : NULL;
+ 
+
 
     // Handle course selection
     switch ($_POST['course']) {
         case 'course1':
-            $_SESSION['course'] = "گویندگی تخصصی رادیو";
-            $_SESSION['introduce'] = "قیمت: دو قسط 6 میلیونی";
-            $_POST['amount'] = 60000000 ;
+            $course = "گویندگی تخصصی رادیو";
+            $introduce = "قیمت: دو قسط 6 میلیونی";
+            $amount = 20000 ;
             break;
         case 'course2':
-            $_SESSION['course'] = "فن بیان کودکان";
-            $_SESSION['introduce'] = "قیمت: 5/900/000 تومان";
-            $_POST['amount'] = 59000000 ;
+            $course = "فن بیان کودکان";
+            $introduce = "قیمت: 5/900/000 تومان";
+            $amount = 59000000 ;
 
             break;
         case 'course3':
-            $_SESSION['course'] = "فن بیان و گویندگی";
-            $_SESSION['introduce'] = "قیمت: 6/500/000 تومان";
-            $_POST['amount'] = 65000000 ;
+            $course = "فن بیان و گویندگی";
+            $introduce = "قیمت: 6/500/000 تومان";
+            $amount = 65000000 ;
 
             break;
         case 'course4':
-            $_SESSION['course'] = "نمایش رادیویی";
-            $_SESSION['introduce'] = "قیمت: 5/500/000 تومان";
-            $_POST['amount'] = 55000000 ;
+            $course = "نمایش رادیویی";
+            $introduce = "قیمت: 5/500/000 تومان";
+            $amount = 55000000 ;
 
             break;
         case 'course5':
-            $_SESSION['course'] = "بازیگری بزرگسال";
-            $_SESSION['introduce'] = "قیمت: 8/800/000 تومان";
-            $_POST['amount'] = 88000000 ;
+            $course = "بازیگری بزرگسال";
+            $introduce = "قیمت: 8/800/000 تومان";
+            $amount = 88000000 ;
 
             break;
         case 'course6':
-            $_SESSION['course'] = "بازیگری مخصوص کودکان";
-            $_SESSION['introduce'] = "قیمت: 7/500/000 تومان";
-            $_POST['amount'] = 75000000 ;
+            $course = "بازیگری مخصوص کودکان";
+            $introduce = "قیمت: 7/500/000 تومان";
+            $amount = 75000000 ;
 
             break;
         case 'course7':
-            $_SESSION['course'] = "موشن گرافیک";
-            $_SESSION['introduce'] = "قیمت: 9/500/000 تومان";
-            $_POST['amount'] = 95000000 ;
+            $course = "موشن گرافیک";
+            $introduce = "قیمت: 9/500/000 تومان";
+            $amount = 95000000 ;
 
             break;
         case 'course8':
-            $_SESSION['course'] = "آموزش و جذب دوبلر";
-            $_SESSION['introduce'] = "قیمت: 7/500/000 تومان";
-            $_POST['amount'] = 75000000 ;
+            $course = "آموزش و جذب دوبلر";
+            $introduce = "قیمت: 7/500/000 تومان";
+            $amount = 75000000 ;
 
             break;
         case 'course9':
-            $_SESSION['course'] = "انیمیشن سازی";
-            $_SESSION['introduce'] = "قیمت: 7/900/000 تومان";
-            $_POST['amount'] = 79000000 ;
+            $course = "انیمیشن سازی";
+            $introduce = "قیمت: 7/900/000 تومان";
+            $amount = 79000000 ;
 
             break;
         case 'course10':
-            $_SESSION['course'] = "گریم سینمایی (مقدماتی)";
-            $_SESSION['introduce'] = "قیمت: 6/500/000 تومان";
-            $_POST['amount'] = 65000000 ;
+            $course = "گریم سینمایی (مقدماتی)";
+            $introduce = "قیمت: 6/500/000 تومان";
+            $amount = 65000000 ;
 
             break;
         case 'course11':
-            $_SESSION['course'] = "گریم سینمایی (پیشرفته)";
-            $_SESSION['introduce'] = "قیمت: 8/000/000 تومان";
-            $_POST['amount'] = 80000000 ;
+            $course = "گریم سینمایی (پیشرفته)";
+            $introduce = "قیمت: 8/000/000 تومان";
+            $amount = 80000000 ;
 
             break;
         case 'course12':
-            $_SESSION['course'] = "کارگردانی و فیلمسازی";
-            $_SESSION['introduce'] = "قیمت: 11/000/000 تومان";
-            $_POST['amount'] = 110000000 ;
+            $course = "کارگردانی و فیلمسازی";
+            $introduce = "قیمت: 11/000/000 تومان";
+            $amount = 110000000 ;
 
             break;
         case 'course13':
-            $_SESSION['course'] = "ورکشاپ گویندگی رادیو";
-            $_SESSION['introduce'] = "قیمت: 500/000 تومان";
-            $_POST['amount'] = 5000000 ;
+            $course = "ورکشاپ گویندگی رادیو";
+            $introduce = "قیمت: 500/000 تومان";
+            $amount = 5000000 ;
 
             break;
         case 'course14':
-            $_SESSION['course'] = "تدوین و ادیت فیلم";
-            $_SESSION['introduce'] = "قیمت: 6/500/000 تومان";
-            $_POST['amount'] = 65000000 ;
+            $course = "تدوین و ادیت فیلم";
+            $introduce = "قیمت: 6/500/000 تومان";
+            $amount = 65000000 ;
 
             break;
     }
 
     // Handle reference selection
     if (isset($_POST['reference'])) {
-        $_SESSION['reference'] = $_POST['reference'];
+        $reference = $_POST['reference'];
     } else {
-        $_SESSION['reference'] = NULL;
+        $reference = NULL;
     }
 
 
+    $sql = "INSERT INTO contacts (user_id, name, lastname, age, course, email, introduce, mobile, know, address, created_at) 
+                VALUES ('$invoiceId', '$name', '$lastname', '$age', '$course', '$email', '$introduce', '$mobile', '$reference', '$address', NOW())";
+
+    // echo $sql;
+
+    $result = $conn->query($sql);
+
+    if ($result) {
+        $new_id = $conn->insert_id;
+        
+        // echo "<script>location.href='payment_receipt';</script>";
+    } else {
+        echo 'خطا در ذخیره اطلاعات تراکنش در پایگاه داده.';
+    }
     
 
     $CallBackUrl = $CurUrl . 'back.php';	
 
     $result = Gateway::make()
         ->config($Username, $Password, $merchantConfigID, $CallBackUrl)
-        ->amount($_POST['amount'])
+        ->amount($amount)
         ->invoiceId(time())
         ->token();
 
+
+
     if ($result['code'] == 200) {	
         Gateway::redirect($result['content'], $_POST['mobile']);
+        exit();
     } else {
         if ($result['errortype']) {
             echo 
@@ -278,14 +297,10 @@ if (!empty($_POST)) {
             </div>		
         </div>';
     }
+
+
 }
 
-if ($Username == 'Your Username' || 
-    $Password == 'Your Password' || 
-    $merchantConfigID == 'Your merchantConfigID') {
-    // echo '<div align="center">
-    //         <img src="HELP.jpg" />
-    //       </div>
-    //       ';
-}
+
+
 ?>

@@ -28,7 +28,7 @@ session_start();
     include 'jalaliDate.php';
     $sdate = new SDate();
 
-    if(isset($_SESSION['new_id'])){
+    if(isset($_SESSION['invoice'])){
 
  
     ?>
