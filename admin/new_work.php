@@ -74,7 +74,7 @@ $id = $_SESSION["all_data"]['id'];
             <div class="col-md-8 mt-5">
 
               
-                <form action="" id="articleForm" method="POST" enctype="multipart/form-data">
+                <form action="" id="articleForm" method="POST" enctype="multipart/form-data" class="border p-4">
                     <div class="row">
                         <div class="col-6">
                             <label for="title">عنوان تصویر:</label>
@@ -86,8 +86,7 @@ $id = $_SESSION["all_data"]['id'];
                         </div>
                     </div>
                     
-                    <div class="summernote" id="summernote"></div> 
-                    <input type="hidden" name="content" id="content">
+                
 
                     <br>
 
@@ -120,30 +119,7 @@ $id = $_SESSION["all_data"]['id'];
 
     </script>
 
-    <<script>
-        $(document).ready(function() {
-            $('#summernote').summernote({
-                height: 300,
-                hint: {
-                    mentions: ['jayden', 'sam', 'alvin', 'david'],
-                    match: /\B@(\w*)$/,
-                    search: function(keyword, callback) {
-                        callback($.grep(this.mentions, function(item) {
-                            return item.indexOf(keyword) === 0;
-                        }));
-                    },
-                    content: function(item) {
-                        return '@' + item;
-                    }
-                }
-            });
-
-            $('#articleForm').on('submit', function(event) {
-                $('#content').val($('#summernote').summernote('code'));
-            });
-        });
-    </script>
-
+    
 
 </body>
 
@@ -155,12 +131,12 @@ include "../config.php";
 
 if (isset($_POST['submit_gallery'])) {
     $title = $_POST['title'];
-    $content = $_POST['content'];
+    // $content = $_POST['content'];
     $type = $_POST['type'];
 
     // Ensure the title, content, and type are properly escaped to prevent SQL injection
     $title = $conn->real_escape_string($title);
-    $content = $conn->real_escape_string($content);
+    // $content = $conn->real_escape_string($content);
     $type = $conn->real_escape_string($type);
 
     $imagePath = '';
@@ -186,8 +162,8 @@ if (isset($_POST['submit_gallery'])) {
     }
 
     // Use prepared statements to prevent SQL injection
-    $stmt = $conn->prepare("INSERT INTO gallery (title, images, description, created_at) VALUES (?, ?, ?, NOW())");
-    $stmt->bind_param("sss", $title, $imagePath, $content);
+    $stmt = $conn->prepare("INSERT INTO gallery (title, images, created_at) VALUES (?, ?,  NOW())");
+    $stmt->bind_param("ss", $title, $imagePath);
 
 
 

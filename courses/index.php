@@ -1,131 +1,236 @@
-<?php
-require 'API/Gateway.php';
-require 'ipgcfg.php';
+<!doctype html>
+<html lang="en" dir="rtl">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وبلاگ سیمرغ</title>
+  
+    
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet"> -->
 
 
+    <link rel="stylesheet" href="../fonts/icomoon/style.css">
 
-?>
+    <link rel="stylesheet" href="../css/owl.carousel.min.css">
+
+
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <link rel="stylesheet" href="../css/mainstyles.css">
+    
+    <link rel="icon" href="../images/logo1.ico" type="image/x-icon">
+
+
     <style>
-        body {font-family: Tahoma, Arial, Helvetica, sans-serif;}
-        * {box-sizing: border-box;}
+      /* Ensure modal is on top */
+    .modal {
+        z-index: 1050; /* Bootstrap's default value; you can increase this if needed */
+    }
 
-        input[type=text], select, textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            margin-top: 6px;
-            margin-bottom: 16px;
-			text-align:center;
-            resize: vertical;
-			font:bold 14pt Tahoma;
-			
-        }
+    /* Bold modal header and content */
+    .modal-content {
+        border: 2px solid #000; /* Add a bold border */
+        font-weight: bold; /* Make text bold */
+    }
 
-        input[type=submit] {
-            background-color: #4CAF50;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-			font:bold 14pt Tahoma;
+    /* Bold modal header */
+    .modal-header {
+        background-color: #343a40; /* Dark background for header */
+        color: white; /* White text */
+        font-weight: bold; /* Bold text */
+    }
 
-        }
+    /* Bold modal title */
+    .modal-title {
+        font-size: 1.5rem; /* Increase title size */
+        font-weight: bold; /* Bold title */
+    }
 
-        input[type=submit]:hover {
-            background-color: #45a049;
-        }
+    /* Bold modal body */
+    .modal-body {
+        font-size: 1.1rem; /* Increase body text size */
+        line-height: 1.5; /* Improve readability */
+    }
 
-        .container {
-            border-radius: 5px;
-            background-color: #f2f2f2;
-            padding: 20px;
-            max-width: 500px;
-            direction: rtl;
-			margin:50px auto;
-        }
-		
-		.error {
-			direction:rtl;
-			line-height:2;
-			text-align:center;
-			max-width:500px;
-			padding:20px; 
-			margin:30px auto; 
-			background:#ffe6e6;
-			border:2px dashed #d00;
-		}
+    /* Modal footer buttons */
+    .modal-footer .btn {
+        font-weight: bold; /* Bold buttons */
+        padding: 0.5rem 1rem; /* Add padding */
+    }
+
     </style>
-<?php
-if(!extension_loaded('curl')){
-    echo '<div class="error">
-			برای استفاده از درگاه آپ نیازمند ماژول <b>CURL</b> هستید.
-			<br>لطفا ابتدا <b>CURL</b> را روی هاست یا سرور خود نصب کنید.
-		</div>
-		';
-    die();
-}
-?>	
-<div class="container">
-    <form method="post" action="index.php">
-        <label>مبلغ : <span style="font-size:10pt; color:#666">(حداقل 12000 ریال)</label>
-        <input type="text" name="amount" value="12000" />
-        <br>
-        <label>شماره موبایل : <span style="font-size:10pt; color:#666">(اختیاری)</label></label>
-        <input type="text" name="mobile" />
-        <br>
-        <input type="submit" value="انتقال به درگاه آپ">
-    </form>
-</div>
-<?php
-if(!empty($_POST)){
-	$CurUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-	$CurUrl = substr($CurUrl,0, strrpos($CurUrl, '/')+1);
-	$CallBackUrl = $CurUrl.'back.php';	
 
-    $result = Gateway::make()
-        ->config($Username,$Password,$merchantConfigID,$CallBackUrl)
-        ->amount($_POST['amount'])
-        ->invoiceId(time())
-        ->token();
+  
+  </head>
+  <body>
 
-    if($result['code'] == 200){	
-        Gateway::redirect($result['content'],$_POST['mobile']);
+    <?php
+    include 'header.php';
+    include '../config.php';
+    include '../PersianCalendar.php';
+    include '../jalaliDate.php';
+    $sdate = new SDate();
+
+   
+    $articlesPerPage = 9;
+    
+    // Count total number of results
+    $countSql = "SELECT COUNT(*) as total FROM articles";
+    $countResult = $conn->query($countSql);
+    $totalCount = $countResult->fetch_assoc()['total'];
+    
+    // Calculate total pages
+    $totalPages = ceil($totalCount / $articlesPerPage);
+    
+    // Get current page
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    $offset = ($page - 1) * $articlesPerPage;
+    
+    // Query with LIMIT and ORDER BY for pagination and descending order
+    $sql = "SELECT * FROM courses ORDER BY id DESC LIMIT $offset, $articlesPerPage";  // Change 'id' to another column if necessary
+    $result = $conn->query($sql);
+    
+    if ($result->num_rows > 0) {
+        $articles = [];
+        while ($row = $result->fetch_assoc()) {
+            $articles[] = $row;
+        }
     }
-	else{
-		if ($result['errortype']){
-			echo 
-			'<div class="error">
-				<span style="color: #d00">خطای ماژول CURL.<br>
-				کدخطا: <b>'.$result['code'].'</b></span>
-				<p align="right">شرح خطا:</p>
-				<div style="text-align: left; direction: ltr;">
-					<span style="font:bold 11pt verdana ">'.$result['content'].'</span>
-				</div>		
-			</div>';		
-			exit();
-		}
-        echo 
-		'<div class="error">
-			<span style="color: #d00">خطا هنگام ایجاد تراکنش.<br>
-			کدخطا: <b>'.$result['code'].'</b></span>
-			<div style="text-align:right;">
-				شرح خطا:<br><span style="direction:ltr; font:bold 11pt verdana ">'.$result['content'].'</span></div>
-				<div style="text-align:justify; direction:rtl; line-height:1.4;  margin-top:30px">برای دریافت شرح کاملتر خطا با مراجعه به نشانی 
-				<a href="https://rest.asanpardakht.net" target="_blank">https://rest.asanpardakht.net</a> ، شرح خطای <b>'.$result['code'].'</b> 
-				را در متد <b>Token</b> مشاهده کنید.
-			</div>		
-		</div>';
-    }
-}
 
-if ($Username == 'Your Username' || 
-	$Password == 'Your Password' || 
-	$merchantConfigID == 'Your merchantConfigID')
-	// echo '<div align="center">
-			// <img src="HELP.jpg" />
-		  // </div>
-			// ';
-?>
+   
+    ?>
+    
+
+    
+
+
+   
+
+
+
+    <div class="container mt-5">
+      <?php if (!empty($articles)): ?>
+        <div class="row">
+            <?php foreach ($articles as $article): ?>
+              <div class="col-md-4">
+                  <div class="card mb-4 shadow-sm">
+                    <?php
+                    // Decode the JSON to access the image URLs
+                    
+                    $images = $article['images'];
+                    
+                    // Attempt to decode the JSON string
+                    $imageData = json_decode($images, true);
+                    
+                    // Check if decoding was successful (i.e., it's JSON)
+                    if (json_last_error() === JSON_ERROR_NONE && is_array($imageData)) {
+                        // It's a JSON string with multiple sizes
+                        $imageSrc = $imageData['thumb']; // Use 'thumb' or choose 'original', '300', '600', '900'
+                    } else {
+                        // It's a simple string (path to the image)
+                        $imageSrc = $images;
+                    }
+                    ?>
+                    <img class="card-img-top" src="<?php echo htmlspecialchars($imageSrc); ?>" alt="موسسه هفت هنر سیمرغ">
+                    
+                    <div class="card-body">
+                        <h5 class="card-title"><?php echo htmlspecialchars($article['title']); ?></h5>
+                        <p class="card-text"><?php echo substr($article['text'], 0, 100); ?>...</p>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#articleModal<?php echo $article['id']; ?>">مطالعه بیشتر</button>
+                    </div>
+                </div>
+              </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="articleModal<?php echo $article['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title"><?php echo htmlspecialchars($article['title']); ?></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                            <img class="card-img-top" src="<?php echo  htmlspecialchars($imageSrc); ?>" alt="موسسه هفت هنر سیمرغ">
+                                <p><?php echo "<p>". $article['text']. "</p>"; ?></p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <!-- Pagination -->
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+
+                <!-- Previous button -->
+                <?php if ($page > 1): ?>
+                    <li class="page-item">
+                        <a class="page-link" href="?page=<?php echo $page - 1; ?>" aria-label="Previous">
+                            <span aria-hidden="true">قبلی</span>
+                        </a>
+                    </li>
+                <?php endif; ?>
+
+                <!-- Page numbers -->
+                <?php
+                $startPage = max(1, $page - 1);
+                $endPage = min($totalPages, $startPage + 2);
+                for ($i = $startPage; $i <= $endPage; $i++): ?>
+                    <li class="page-item <?php if ($i == $page) echo 'active'; ?>">
+                        <a class="page-link" href="?page=<?php echo $i; ?>">
+                            <?php echo $i; ?>
+                        </a>
+                    </li>
+                <?php endfor; ?>
+
+                <!-- Next button -->
+                <?php if ($page < $totalPages): ?>
+                    <li class="page-item">
+                        <a class="page-link" href="?page=<?php echo $page + 1; ?>" aria-label="Next">
+                            <span aria-hidden="true">بعدی</span>
+                        </a>
+                    </li>
+                <?php endif; ?>
+            </ul>
+        </nav>
+        <?php else: ?>
+            <p class="text-center">No articles found.</p>
+        <?php endif; ?>
+    </div>
+
+
+
+
+
+
+   
+
+
+
+  <!-- Bootstrap CSS -->
+<!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> -->
+<!-- Bootstrap JS (Include after jQuery) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
+  
+
+
+     <?php
+      include '../footer.php';
+     ?>
+  </body>
+</html>
+

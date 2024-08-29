@@ -20,16 +20,16 @@
 
     <link rel="icon" href="/images/logo1.ico" type="image/x-icon">
   
-    <?php include 'includes.php'; ?>
+    <?php include "includes.php"; ?>
 </head>
 
   <body>
 
       <?php
-      include 'header.php';
-      include 'config.php';
-      include 'PersianCalendar.php';
-      include 'jalaliDate.php';
+      include "header.php";
+      include "config.php";
+      include "PersianCalendar.php";
+      include "jalaliDate.php";
       $sdate = new SDate();
       ?>
 
@@ -111,17 +111,17 @@
                             <div class="frontside">
                                 <div class="card">
                                     <div class="card-body text-center">
-                                        <p><img class="img-fluid" src="images/speaking.jpg" alt="card image"></p>
+                                        <p><img class="img-fluid" src="images/speaking3.jpg" alt="card image"></p>
                                         <h4 class="card-title">آموزش فن بیان و گویندگی</h4>
                                         <p class="card-text">اینجا صدایتان شنیده می‌شود!</p>
-                                        <a href="courses/speaking" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
+                                        <a href="courses/speaking_training_course" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="backside">
                                 <div class="card">
                                     <div class="card-body text-center mt-4">
-                                        <a href="courses/speaking"><h4 class="card-title">فن بیان و گویندگی (کلیک کنید)</h4></a>
+                                        <a href="courses/speaking_training_course"><h4 class="card-title">فن بیان و گویندگی (کلیک کنید)</h4></a>
                                         <p class="card-text">اگر صدای خوب یا استعداد گویندگی دارید می‌توانید در آموزشگاه رادیو سیمرغ دوره‌های آکادمیک و تجربی را بگذرانید و در ضبط برنامه‌ها حضور پیدا کنید.</p>
                                     </div>
                                 </div>
@@ -166,14 +166,14 @@
                                         <p><img class="img-fluid" src="images/acting1.jpg" alt="card image"></p>
                                         <h4 class="card-title">آموزش بازیگری</h4>
                                         <p class="card-text">آیا به دنبال ارتقاء مهارت‌های بازیگری خود هستید؟</p>
-                                        <a href="courses/acting" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
+                                        <a href="courses/acting1" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="backside">
                                 <div class="card">
                                     <div class="card-body text-center mt-4">
-                                        <a href="courses/acting"><h4 class="card-title">آموزش بازیگری (کلیک کنید)</h4></a>
+                                        <a href="courses/acting1"><h4 class="card-title">آموزش بازیگری (کلیک کنید)</h4></a>
                                         <p class="card-text">موسسه «سیمرغ»، پیشرو در آموزش بازیگری در ایران، دوره‌های تخصصی بازیگری مقدماتی و پیشرفته را ارائه می‌دهد. این دوره‌ها با هدف توسعه توانایی‌های بازیگری شما و آماده‌سازی شما برای ورود به دنیای هنر طراحی شده‌اند.</p>
                                     </div>
                                 </div>
@@ -256,114 +256,135 @@
                 </h1>
             </a>
 
-          <?php
-          $sql = "SELECT * FROM articles ORDER BY id DESC LIMIT 4";
-          $result = $conn->query($sql);
-          if ($result->num_rows > 0) {
-            $counter = 0;
-            while ($row = $result->fetch_assoc()) {
+         
+ 
 
-              if(is_object(json_decode($row['images']))){
-                $images = json_decode($row['images'], true);
-                $image_url = $images['images']['original']; 
-                $image_url = str_replace("/upload","upload", $image_url);
-              }else{
-                $image_url = $row['images']; 
-                $image_url = str_replace("../upload","upload", $image_url);
-              }
-              
-              // var_dump($image_url);
-              $body_content = preg_replace('/<p>/', '<p style="color: black !important; margin-right: 5px !important; ">', $row['body']);
-              if ($counter % 2 == 0) { 
-          ?>
+          
+            <article class="postcard light blue">
+                <a href="courses/workshop" class="postcard__img_link">
+                    <img class="postcard__img" src="images/workshop.jpg" alt="موسسه هفت هنر سیمرغ" height="400px"/>
+                </a>
+                <div class="postcard__text t-dark">
+                    <h1 class="postcard__title blue"><a href="courses/workshop">ورکشاپ گویندگی رادیو</a></h1>
+                    <div class="postcard__subtitle small">
+                    
+                        
+                    </div>
+                    <div class="postcard__bar"></div>
+                    <div class="postcard__preview-txt mr-5">
+                        <p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">تجربه ای متفاوت در رادیو سیمرغ</p><p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">همراه با گویندگان رادیو</p><p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">شماهم اگر استعداد یا علاقه ای در زمینه گویندگی دارید میتوانید روزهای پنجشنبه هرهفته با شرکت در ورکشاپ گویندگی در ضبط برنامه رادیویی حضور داشته باشید.</p>
 
-          <article class="postcard light blue">
-            <a class="postcard__img_link" href="#">
-              <img class="postcard__img" src="<?=$image_url?>" alt="موسسه هفت هنر سیمرغ" />
-            </a>
-            <div class="postcard__text t-dark">
-              <h1 class="postcard__title blue"><a href="#"><?= $row['title'] ?></a></h1>
-              <div class="postcard__subtitle small">
-                <time datetime="<?= $sdate->toShaDate($row['created_at']) ?>">
-                  <i class="fas fa-calendar-alt mr-2"></i><?= $sdate->toShaDate($row['created_at']) ?>
-                </time>
-              </div>
-              <div class="postcard__bar"></div>
-              <div class="postcard__preview-txt mr-5"><?= $body_content ?></div>
-              <ul class="postcard__tagbox">
-                <li class="tag__item"><i class="fas fa-clock mr-2"></i> پست</li>
-             
-              </ul>
-            </div>
-          </article>
+                    </div>
+                    <ul class="postcard__tagbox">
+                        <a href="courses/workshop"><li class="tag__item"><i class="fas fa-clock mr-2"></i>ادامه</li></a>
+                    </ul>
+                </div>
+            </article>
 
-          <?php 
-              } else { 
-          ?>
 
-          <article class="postcard light red">
-            <a class="postcard__img_link" href="#">
-              <img class="postcard__img" src="<?= $image_url ?>" alt="موسسه هفت هنر سیمرغ" />
-            </a>
-            <div class="postcard__text t-dark">
-              <h1 class="postcard__title red"><a href="#"><?= $row['title'] ?></a></h1>
-              <div class="postcard__subtitle small">
-                <time datetime="<?= $sdate->toShaDate($row['created_at']) ?>">
-                  <i class="fas fa-calendar-alt mr-2"></i><?= $sdate->toShaDate($row['created_at']) ?>
-                </time>
-              </div>
-              <div class="postcard__bar"></div>
-              <div class="postcard__preview-txt"><?= $body_content ?></div>
-              <ul class="postcard__tagbox">
-                <li class="tag__item"><i class="fas fa-clock mr-2"></i>پست</li>
-            
-              </ul>
-            </div>
-          </article>
 
-          <?php 
-              }
-              $counter++;
-            }
-          } else {
-            echo "0 results";
-          }
-          ?>
+
+            <article class="postcard light red">
+                <a class="postcard__img_link"  href="courses/speaking_training_course">
+                    <img class="postcard__img" src="images/speaking3.jpg" alt="موسسه هفت هنر سیمرغ" height="400px"/>
+                </a>
+                <div class="postcard__text t-dark">
+                    <h1 class="postcard__title blue"><a href="courses/speaking_training_course">دوره آموزشی فن بیان و گویندگی</a></h1>
+
+                    <div class="postcard__subtitle small">
+                        
+                    </div>
+                    <div class="postcard__bar"></div>
+                    <div class="postcard__preview-txt">
+                        <h4 class="" style="font-family: &quot;Open Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; color: rgb(33, 37, 41);"><p style="font-family: &quot;B Titr&quot;; font-size: 16px;">سرفصل های دوره</p><p style="font-family: &quot;B Titr&quot;; font-size: 16px;">❗️فن بیان و سخنوری&nbsp;</p><p style="font-family: &quot;B Titr&quot;; font-size: 16px;">❗️انواع حس ، لحن ، بیان و تنفس</p><p style="font-family: &quot;B Titr&quot;; font-size: 16px;">❗️تیزرهای تبلیغاتی و دکلمه خوانی ...</p></h4>
+
+                    </div>
+                    <ul class="postcard__tagbox">
+                        <a href="courses/speaking_training_course"><li class="tag__item"><i class="fas fa-clock mr-2"></i>ادامه</li></a>
+                    
+                    </ul>
+                </div>
+            </article>
+
+
+            <article class="postcard light blue">
+                <a href="courses/acting1" class="postcard__img_link">
+                    <img class="postcard__img" src="images/acting1.jpg" alt="موسسه هفت هنر سیمرغ" height="400px"/>
+                </a>
+                <div class="postcard__text t-dark">
+                    <h1 class="postcard__title blue"><a href="courses/acting1">دوره‌های بازیگری بزرگسال موسسه «سیمرغ» </a></h1>
+                    <div class="postcard__subtitle small">
+                    
+                        
+                    </div>
+                    <div class="postcard__bar"></div>
+                    <div class="postcard__preview-txt mr-5">
+                        <p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">سرفصل های دوره&nbsp;</p><p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">-بازیگری روی صحنه</p><p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">-بدن و بیان در بازیگری</p><p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">-فن بیان در‌ بازیگری</p><p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">-بداهه گویی و بداهه پردازی</p>
+
+                    </div>
+                    <ul class="postcard__tagbox">
+                        <a href="courses/acting1"><li class="tag__item"><i class="fas fa-clock mr-2"></i>ادامه</li></a>
+                    </ul>
+                </div>
+            </article>
+
+
+
+
+            <article class="postcard light red">
+                <a class="postcard__img_link"  href="courses/motion_graphics">
+                    <img class="postcard__img" src="images/motion.jpg" alt="موسسه هفت هنر سیمرغ" height="400px"/>
+                </a>
+                <div class="postcard__text t-dark">
+                    <h1 class="postcard__title blue"><a href="courses/motion_graphics">دوره آکادمیک و تخصصی موشن گرافیک و  تولید محتوا </a></h1>
+
+                    <div class="postcard__subtitle small">
+                        
+                    </div>
+                    <div class="postcard__bar"></div>
+                    <div class="postcard__preview-txt">
+                        <p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">آموزشگاه فرهنگی هنری و سینمایی سیمرغ</p><p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">کمتر از سه ماه با آموزش تخصصی تولید محتوا</p><p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">نرم افزارهای آموزشی</p>
+
+                    </div>
+                    <ul class="postcard__tagbox">
+                        <a href="courses/motion_graphics"><li class="tag__item"><i class="fas fa-clock mr-2"></i>ادامه</li></a>
+                    
+                    </ul>
+                </div>
+            </article>
+
+    
         </div>
       </section>
 
       <hr class="my-4">
+
+
 
       
 
 
     <section class="light">
         <div class="container py-2">
-            <a href="#">
-                <h1 class="h1 text-center text-dark" id="pageHeaderTitle">
-                آخرین اخبار
-                </h1>
-            </a>
+           
 
-            <?php
-
-            ?>
+    
 
             <div class="row">
                 <div class="col-sm-6">
-                    <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">عضویت در آرشیو گویندگان</h5>
-                        <p class="card-text"></p>
+                    <div class="card rounded-3">
+                    <div class="card-body" style="background-color: #c4afcf;">
+                        <h5 class="card-title d-flex justify-content-center">عضویت در آرشیو گویندگان</h5>
+                    
                         <a href="articles/send_voice" class="btn btn-primary">عضویت</a>
                     </div>
                     </div>
                 </div>
                 <div class="col-sm-6">
-                    <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">رادیو سیمرغ</h5>
-                        <p class="card-text">رادیو سیمرغ: مکانی جذاب برای گوش دادن</p>
+                    <div class="card rounded-3">
+                    <div class="card-body" style="background-color: #c4afcf;">
+                        <h5 class="card-title d-flex justify-content-center">رادیو سیمرغ</h5>
+                  
                         <a href="radios" class="btn btn-primary">شنیدن بیشتر</a>
                     </div>
                     </div>
@@ -385,6 +406,6 @@
 
 
 
-    <?php include 'footer.php'; ?>
+    <?php include "footer.php"; ?>
   </body>
 </html>

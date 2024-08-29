@@ -210,22 +210,12 @@
                         <li><a href="../courses/animation" class="nav-link">انیمیشن سازی</a></li>
                         <li><a href="../courses/makeup" class="nav-link">گریم سینمایی</a></li>
                         <li><a href="../courses/directing" class="nav-link">کارگردانی</a></li>
-                        <li><a href="#faq-section" class="nav-link">تدوین فیلم</a></li>
-                        <li><a href="#faq-section" class="nav-link">نقاشی</a></li>
+                        <li><a href="#faq-section" class="nav-link">تدوین تدوین و ادیت فیلم</a></li>
+                        <li><a href="../courses/workshop" class="nav-link">ورکشاپ</a></li>
                     </ul>
                 </li>
 
-                <!-- <li class="has-children">
-                    <a href="#">پکیج های آموزشی</a>
-                    <ul class="dropdown arrow-top">
-                        <li><a href="#pricing-section" class="nav-link">موشن گرافیک</a></li>
-                        <li><a href="#faq-section" class="nav-link">فن بیان</a></li>
-                        <li><a href="#faq-section" class="nav-link">انیمیشن سازی</a></li>
-                        <li><a href="#faq-section" class="nav-link">تدوین فیلم</a></li>
-                        <li><a href="#faq-section" class="nav-link">فوتوشاپ</a></li>
-                        
-                    </ul>
-                </li> -->
+      
                 
              
                 
@@ -245,6 +235,7 @@
                 
         
                 <li><a href="../articles/suggestion" class="nav-link">انتقادات و پیشنهادات</a></li>
+                <li><a href="../gallery/all" class="nav-link">نمونه کارها(گالری)</a></li>
 
             </ul>
         </nav>

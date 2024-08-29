@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!doctype html>
 <html lang="fa" dir="rtl">
 <head>
@@ -21,7 +24,6 @@
 
     <?php
 
- 
 
     include 'header.php';
     include '../config.php';
@@ -55,56 +57,35 @@
                         <!-- <img class="mx-auto d-block img-fluid" src="../images/audio.jpg" alt="ثبت گویندگی" style="width: 100%; height: auto;"> -->
                         <div class="card-body" dir="rtl" style="text-align: right;">
                             <div class="row mb-5">
-                                <div class="col-md-6">
-                                <p><h4 class=""><span style="background-color: rgb(255, 231, 156);">با سلام خدمت شما هنرمندان خوش صدا از سراسر ایران</span></h4>جهت عضویت در آرشیو گویندگان سیمرغ و کسب درآمد یکی از آیتم های مورد نظر را با صدای رسا خوانده و بصورت mp3 فایل را برای ما ارسال کنید . پس از بررسی و ادیت نهایی توسط کارشناسان سیمرغ با اسم و عکس خودتان در سایت آپلود خواهد شد.<br><br>درآمد هر پروژه بصورت درصدی به شما پرداخت خواهد شد.<br><br><span style="background-color: rgb(231, 156, 156);">هزینه عضویت یکساله در سایت<br>500/000 هزارتومان</span><br></p>
-
-
-                                <br>
-                                
-                                <form method="post" action="" class="form-group border p-1">
-                                    <label>مبلغ  : <span style="font-size:10pt; color:#666"> (حداقل 12000 ریال) </span></label>
-                                    <input type="text" class="form-control" name="amount" value="10000" /> <!-- Example: 1,000 Tomans -->
-                                    <br>
-                                    <label>شماره موبایل : <span style="font-size:10pt; color:#666"></span></label>
-                                    <input type="text" class="form-control" name="mobile" />
-                                    <br>
-                                    <input type="submit" value="انتقال به درگاه آپ">
-                                </form>
-
-
-                                </div>
                                 <div class="col-md-6 border">
-                                   <p>یکی از متن های زیر را انتخاب کنید:</p>
-                                  <p>1: (تبلیغاتی )</p><p>با انتخابی درست به محدودیت هایتان خاتمه دهید ، اینجا صدایتان شنیده میشود . با ماوهمراه شوید ، رادیو سیمرغ</p><p>2:(نریشن)</p><p>&nbsp;موسسه فرهنگی هنری و آموزشگاه سینمایی سیمرغ ، متشکل از چندین موسسه زیر مجموعه&nbsp; استودیوی صدا و تصویر ، تولید فیلم ، آموزشگاه سینمایی و رادیو هفت سیمرغ از سال ۱۳۹۸ با اهداف آموزش و اشتغال زایی ، نشر آثار هنری هنرمندان در زمینه های مختلف تاسیس و با تولید برنامه های رادیویی مداوم در جمع موسسات برتر کشور نائل آمد.&nbsp;</p><p>3: (تیزر تبلیغاتی)</p><p>در جشنواره تخفیفات میلیونی موسسه سیمرغ ، همراه با آموزش وارد بازار کار شوید ، اینجا هنرتان دیده میشود ، سیمرغ حامی هنر&nbsp;</p><p>4: (کتاب صوتی )</p><p>ته چاهی خشكیده و نیمه تاریك، نیزه‌هایی از كف رسته است. درون چاه دری قرار دارد، كه نمی‌دانیم به كجا باز می‌شود. رستم و رخش ته چاه افتاده‌اند، زخم خورده و خونین. رخش مرده و رستم بی­هوش است. رستم تكا‌نی خورده، چشم باز می­كند، از درد می‌نالد.</p><p>رستم: وای . درد... درد نشانه‌ای به زند‌‌گی­ست. چند روز گذشته؟ شبان به آرامی می‌گذرند و جان لحظه‌لحظه از تن می‌‌‌‌گریزد... وای&nbsp; درد. من با زخم آشنایم، اما این دردِ زخم نیست، چیزی بس جگرسوز‌تر می‌خلد و می‌گدازد و بر جان می‌نشیند، خلیدن پنجه­ی سردش را... آی درد... درد... تشنه‌ام؛ سخت تشنه ‌[به رخش] هی یار دیرین! تو نیز تشنه‌ای؟ رخش!</p><p>‌رخش را تكان میدهد</p><p>رخشِ من‌! [درمی‌یابد كه رخش مرده است] هی یار دیرین! اسب آهنین سُنبِ من! كجا رفت جانت؟ گراز من! سیمرغك!&nbsp;</p><p><br></p><p>5:( خبری )</p><p>پس از چند روز بحث و تبادل نظر در شورای اسلامی پیرامون وزرای پیشنهادی دکتر روحانی سرانجام ترکیب کابینه یازدهم مشخص شد. آقای روحانی با تشکر از نمایندگان ملت برای حضور منسجم در جلسات تایید صلاحیت آرزو کرد کابینه او بتواند در جهت منویات مقام معظم رهبری و خواست ملت بزرگ ایران گام بردارد</p><p>6:(تلفن گویا)</p><p>با سلام ، شما با موسسه فرهنگی هنری هفت هنر سیمرغ تماس گرفته اید</p><p>چنانچه داخلی مورد نظر خود را میدانید آن را شماره گیری نمایید و یا در غیر اینصورت جهت ارتباط با،</p><p>کلاسهای گویندگی عدد۱ ، کلاسهای بازیگری عدد ۲ استودیوی صدا و تصویر عدد۳ رادیو سیمرغ عدد۴ پکیج های آموزشی عدد ۵ و جهت ارتباط با اپراتور عدد صفر را شماره گیری نمایید ، با تشکر از تماس شما</p>
+                                    <h4 class="">به جمع گویندگان سیمرغ خوش آمدید.</h4><p>اینجا مکان کسب درآمد شماست.</p><p>دستمزد هر پروژه بصورت درصدی به شما پرداخت خواهد شد.</p><p><span style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;; background-color: rgb(231, 156, 156);">هزینه عضویت یکساله در سایت 500/000 هزارتومان</span><br></p><p>پس از پرداخت هزینه و عضویت در سایت صفحه بارگذاری و آپلود صدا باز خواهد شد.</p><p><br></p><h4 class="" style="font-family: &quot;Open Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; color: rgb(33, 37, 41);"><br></h4><p><br style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;"></p><div><span style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;; background-color: rgb(231, 156, 156);"><br></span></div><p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;"></p>
 
+                                    <br>
+                                </div>
+                                <div class="col-md-6">
+                                    <form method="post" action="" class="form-group border p-1">
+                                        <h4>فرم ثبت نام</h4>
+                                        <label> <span style="font-size:10pt; color:#666">مبلغ 5/000/000 ریال</span></label>
+                                        <input type="text" class="form-control" name="amount" value="5000000" readonly/> 
+                                        <br>
+                                        <label>شماره موبایل : <span style="font-size:10pt; color:#666"></span></label>
+                                        <input type="text" class="form-control" name="mobile" required/>
+                                        <br>
+                                        <label>نام : <span style="font-size:10pt; color:#666"></span></label>
+                                        <input type="text" class="form-control" name="name" required/>
+                                        <br>
+                                        <label>نام خانوادگی : <span style="font-size:10pt; color:#666"></span></label>
+                                        <input type="text" class="form-control" name="lastname" required/>
+                                        <br>
+                                        <label>سن <span style="font-size:10pt; color:#666"></span></label>
+                                        <input type="text" class="form-control" name="age" required/>
+                                        <br>
+                                        <input type="submit" value="انتقال به درگاه آپ">
+                                    </form>
                                 </div>
                             </div>
 
-                            <!-- <form action="" method="post" enctype="multipart/form-data">
-                                <div class="form-group">
-                                    <div class="row mt-2">
-                                        <div class="col-md-6">
-                                            <label class="control-label">نام</label>
-                                            <input type="text" name="name" class="form-control" required>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="control-label">نام خانوادگی </label>
-                                            <input type="text" name="name" class="form-control" required>
-                                        </div>
-                                    </div>
-                              
-                                    <div class="row mt-2">
-                                        <div class="col-md-6">
-                                            <label class="control-label">شماره موبایل </label>
-                                            <input type="number" name="name" class="form-control" required>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input type="file" name="audioFile" class="form-control" accept="audio/mp3" required>
-                                            <button class="btn btn-outline-info btn-block animated-button">آپلود</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form> -->
+                    
                             
                         </div>
 
@@ -145,6 +126,18 @@ require 'ipgcfg.php';
 if(!empty($_POST)){
 	$CurUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 	$CurUrl = substr($CurUrl,0, strrpos($CurUrl, '/')+1);
+
+    $invoiceId = time(); // Generate an invoice ID based on current time
+
+    // Store necessary information in session
+    $_SESSION['mobile'] = $_POST['mobile'];
+    $_SESSION['name'] = $_POST['name'];
+    $_SESSION['lastname'] = $_POST['lastname'];
+    $_SESSION['age'] = $_POST['age'];
+    $_SESSION['amount'] = $_POST['amount'];
+    $_SESSION['invoiceId'] = $invoiceId;
+
+    
 	$CallBackUrl = $CurUrl.'back.php';	
 
     $result = Gateway::make()
@@ -153,9 +146,13 @@ if(!empty($_POST)){
         ->invoiceId(time())
         ->token();
 
+
+       
+
     if($result['code'] == 200){	
         Gateway::redirect($result['content'],$_POST['mobile']);
     }
+
 	else{
 		if ($result['errortype']){
 			echo 
@@ -199,30 +196,3 @@ if ($Username == 'Your Username' ||
 <?php
 
 
-
-// Check if a file was uploaded
-// if (isset($_FILES['audioFile']) && $_FILES['audioFile']['error'] == 0) {
-//     $fileName = $_FILES['audioFile']['name'];
-//     $fileType = $_FILES['audioFile']['type'];
-//     $fileSize = $_FILES['audioFile']['size'];
-//     $fileData = file_get_contents($_FILES['audioFile']['tmp_name']);
-
-//     // Additional form fields (you need to add these fields in your form)
-//     $name = $_POST['name'];
-//     $family = $_POST['family'];
-//     $number = $_POST['number'];
-
-//     // Prepare and execute the SQL query
-//     $stmt = $conn->prepare("INSERT INTO sounds (name, family, number, file_name, file_type, file_size, file_data) VALUES (?, ?, ?, ?, ?, ?, ?)");
-//     $stmt->bind_param("sssssis", $name, $family, $number, $fileName, $fileType, $fileSize, $fileData);
-
-//     if ($stmt->execute()) {
-//         echo "File uploaded successfully.";
-//     } else {
-//         echo "Error: " . $stmt->error;
-//     }
-
-//     $stmt->close();
-// } else {
-//     echo "No file uploaded or upload error.";
-// }
