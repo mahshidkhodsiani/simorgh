@@ -243,8 +243,8 @@ if (!empty($_POST)) {
     }
 
 
-    $sql = "INSERT INTO contacts (user_id, name, lastname, age, course, email, introduce, mobile, know, address, created_at) 
-                VALUES ('$invoiceId', '$name', '$lastname', '$age', '$course', '$email', '$introduce', '$mobile', '$reference', '$address', NOW())";
+    $sql = "INSERT INTO contacts (user_id, name, lastname, age, course, email, introduce, amount, mobile, know, address, created_at) 
+                VALUES ('$invoiceId', '$name', '$lastname', '$age', '$course', '$email', '$introduce', '$amount', '$mobile', '$reference', '$address', NOW())";
 
     // echo $sql;
 

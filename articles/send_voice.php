@@ -138,8 +138,8 @@ if(!empty($_POST)){
     $amount = $_POST['amount'];
  
 
-    $sql = "INSERT INTO contacts (user_id, name, lastname, age, course, introduce, mobile, created_at) 
-        VALUES ('$invoiceID', '$name', '$lastname', '$age', 'voice','500 toman','$mobile', NOW())";
+    $sql = "INSERT INTO contacts (user_id, name, lastname, age, course, introduce, amount, mobile, created_at) 
+        VALUES ('$invoiceId', '$name', '$lastname', '$age', 'voice','500 toman', 500, '$mobile', NOW())";
 
     
 
