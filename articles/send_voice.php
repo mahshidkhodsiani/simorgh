@@ -139,7 +139,7 @@ if(!empty($_POST)){
  
 
     $sql = "INSERT INTO contacts (user_id, name, lastname, age, course, introduce, amount, mobile, created_at) 
-        VALUES ('$invoiceId', '$name', '$lastname', '$age', 'voice','500 toman', 500, '$mobile', NOW())";
+        VALUES ('$invoiceId', '$name', '$lastname', '$age', 'voice','500 toman', 500000, '$mobile', NOW())";
 
     
 

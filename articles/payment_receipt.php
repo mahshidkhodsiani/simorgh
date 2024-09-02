@@ -37,6 +37,7 @@ session_start();
             $row = $result->fetch_assoc();
         } 
 
+        $_SESSION['new_id'] = $row['id'];
  
     ?>
         <div class="container mt-4">
@@ -44,7 +45,7 @@ session_start();
                 <div class="col-12 col-md-10">
                     <div class="card border border-danger p-4 text-center">
                         <h2 style="text-align: center; " class=""><span style="background-color: rgb(107, 165, 74);">رسید پرداختی</span></h2><p>با سپاس .پرداخت شما با موفقیت انجام شد.</p><p><br></p>
-                            <p>مبلغ : <?= $row['amount']?></p>
+                            <p>مبلغ : <?= $row['amount'] . " هزار تومان" ; ?></p>
                         <p><br></p><p>در اولین فرصت همکاران ما با شما تماس خواهند گرفت.</p><p>لطفا از رسید خود عکس بگیرید</p><p><br></p>
                         <button class="btn btn-success mt-3">در حال انتقال به صفحه اصلی</button>
                     </div>
@@ -52,6 +53,7 @@ session_start();
             </div>
         </div>
 
+        
         <script>
             // Redirect to user_voice.php after 3 seconds
             setTimeout(function() {

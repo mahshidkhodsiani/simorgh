@@ -144,8 +144,63 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['audioFile'])) {
 
     $stmt->bind_param("issis",$contact_id, $fileName, $fileType, $fileSize, $fileData);
     $stmt->send_long_data(3, $fileData); // 3 is the index of the `file_data` parameter
-    if (!$stmt->execute()) {
-        die("Execute failed: " . $stmt->error);
+
+    // if (!$stmt->execute()) {
+    //     die("Execute failed: " . $stmt->error);
+    // }
+
+    if($stmt->execute()){
+          // Success Toast
+          echo "<div id='successToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 20px; right: 20px; width: 300px;'>
+          <div class='toast-header bg-success text-white'>
+              <strong class='mr-auto'>Success</strong>
+              <button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>
+                  <span aria-hidden='true'>&times;</span>
+              </button>
+          </div>
+          <div class='toast-body'>
+              صدای شما با موفقیت ارسال شد. کارشناسان ما پس از بررسی با شما تماس خواهند گرفت!
+          </div>
+        </div>
+        <script>
+        $(document).ready(function(){
+            $('#successToast').toast({
+                autohide: true,
+                delay: 3000
+            }).toast('show');
+            setTimeout(function(){
+                window.location.href = '../';
+            }, 4000);
+        });
+        </script>";
+    }else{
+        // Error Toast
+        echo "<div id='errorToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 20px; right: 20px; width: 300px;'>
+            <div class='toast-header bg-danger text-white'>
+                <strong class='mr-auto'>Error</strong>
+                <button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>
+                    <span aria-hidden='true'>&times;</span>
+                </button>
+            </div>
+            <div class='toast-body'>
+                خطایی در افزودن صدا پیش آمده لطفا دوباره تلاش کنید!
+            </div>
+            </div>
+            <script>
+            $(document).ready(function(){
+                $('#errorToast').toast({
+                    autohide: true,
+                    delay: 3000
+                }).toast('show');
+                setTimeout(function(){
+                    $('#errorToast').toast('hide');
+                }, 4000);
+            });
+            </script>";
+
+        echo "<div class='alert alert-danger mt-2' role='alert'>
+            Error: " . $sql . "<br>" . $conn->error . "
+            </div>";
     }
 
 }
