@@ -22,7 +22,7 @@ $id = $_SESSION["all_data"]['id'];
 
     <?php
     include 'includes.php';
-    // include 'config.php';
+    include '../config.php';
     // include 'functions.php';
     // include 'PersianCalendar.php';
     ?>
@@ -74,35 +74,150 @@ $id = $_SESSION["all_data"]['id'];
             <div class="col-md-8 mt-5">
 
               
-            <form action="" method="POST" id="articleForm" enctype="multipart/form-data">
-                <div class="row">
-                    <div class="col-6">
-                        <label for="title">عنوان مقاله:</label>
-                        <input type="text" id="title" name="title" class="form-control mb-2" placeholder="عنوان را اینجا وارد کنید" required>
-                    </div>
-                    <div class="col-6">
-                        <label for="image">تصویر شاخص:</label>
-                        <input type="file" name="image" class="form-control" id="inputGroupFile02" required>
-                    </div>
-                </div>
-                
-                <div class="summernote" id="summernote"></div> 
-                <input type="hidden" name="content" id="content">
-                <br>
-
-                <div class="row">
-                    <div class="col-md-2 border">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="type" value="post" required>
-                            <label class="form-check-label" for="post">پست جدید</label>
+                <form action="" method="POST" id="articleForm" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="title">عنوان مقاله:</label>
+                            <input type="text" id="title" name="title" class="form-control mb-2" placeholder="عنوان را اینجا وارد کنید" required>
+                        </div>
+                        <div class="col-6">
+                            <label for="image">تصویر شاخص:</label>
+                            <input type="file" name="image" class="form-control" id="inputGroupFile02" required>
                         </div>
                     </div>
-                    <div class="col-md-4"></div>
-                    <div class="col-md-6">
-                        <button class="btn btn-outline-success" type="submit" name="submit_post">ثبت مقاله</button>
+                    
+                    <div class="summernote" id="summernote"></div> 
+                    <input type="hidden" name="content" id="content">
+                    <br>
+
+                    <div class="row">
+                        <div class="col-md-2 border">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="type" value="post" required>
+                                <label class="form-check-label" for="post">پست جدید</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4"></div>
+                        <div class="col-md-6">
+                            <button class="btn btn-outline-success" type="submit" name="submit_post">ثبت مقاله</button>
+                        </div>
+                    </div>
+                </form>
+
+
+                <div class="row mt-5">
+                    <div class="col-md-10">
+                        <div class="table-responsive">
+                            <?php
+                            // Pagination configuration
+                            $items_per_page = 10; // Number of items per page
+                            $current_page = isset($_GET['page']) ? $_GET['page'] : 1; // Current page, default is 1
+
+                            // Calculate the offset for the SQL query
+                            $offset = ($current_page - 1) * $items_per_page;
+
+                            // SQL query to retrieve a subset of rows based on pagination
+                            $sql = "SELECT * FROM articles ORDER BY id DESC LIMIT $items_per_page OFFSET $offset";
+                            $result = $conn->query($sql);
+
+                            if ($result->num_rows > 0) {
+                                $a = ($current_page - 1) * $items_per_page + 1; // Counter for row numbers
+                            ?>
+                                <table class="table border border-4">
+                                    <h4>آخرین مقالات :</h4>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="text-center">ردیف</th>
+                                            <th scope="col" class="text-center">اسم مقاله</th>
+                                            <th scope="col" class="text-center">بدنه</th>
+                                            <th scope="col" class="text-center">عملیات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        while ($row = $result->fetch_assoc()) {
+                                            // Limit body content to 2 lines
+                                            $body_text = strip_tags($row['body']); // Remove any HTML tags
+                                            $max_length = 150; // Adjust the max length to fit approximately 2 lines
+                                            if (strlen($body_text) > $max_length) {
+                                                $body_text = substr($body_text, 0, $max_length) . '...';
+                                            }
+                                        ?>
+                                        <tr>
+                                            <th scope="row" class="text-center"><?= $a ?></th>
+                                            <td class="text-center"><?= $row['title'] ?></td>
+                                            <td class="text-center"><?= $body_text ?></td>
+                                            <td class="text-center">
+                                                <form action="" method="GET">
+                                                    <input type="hidden" value="<?= $row['id'] ?>" name="id_art">
+                                                    <!-- <a href="edit_dev.php?id_art=<?= $row['id'] ?>" class="btn btn-outline-warning btn-sm"> ویرایش</a> -->
+                                                    <button type="submit" name="delete_article" 
+                                                        class="btn btn-outline-danger btn-sm" onclick="return confirmDelete()">حذف</button>
+                                                </form>
+                                            </td>
+                                            <script>
+                                                function confirmDelete() {
+                                                    return confirm("آیا مطمئن هستید که می‌خواهید این مورد را رد کنید؟");
+                                                }
+                                            </script>
+                                        </tr>
+                                        <?php
+                                            $a++;
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                                <?php
+                                // Pagination links
+                                $sql = "SELECT COUNT(*) AS total FROM articles";
+                                $result = $conn->query($sql);
+                                $row = $result->fetch_assoc();
+                                $total_items = $row['total'];
+                                $total_pages = ceil($total_items / $items_per_page);
+
+                                $start_page = max(1, $current_page - 1); // Start at the current page - 1 or 1 if the current page is 1
+                                $end_page = min($total_pages, $start_page + 2); // Show 3 pages max
+
+                                // Ensure there are always 3 pages in the pagination unless it's at the beginning or end
+                                if ($end_page - $start_page < 2 && $start_page > 1) {
+                                    $start_page = max(1, $end_page - 2);
+                                }
+                                ?>
+
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination justify-content-center">
+                                        <!-- Previous Button -->
+                                        <li class="page-item <?= $current_page == 1 ? 'disabled' : '' ?>">
+                                            <a class="page-link" href="?page=<?= max(1, $current_page - 1) ?>">قبلی</a>
+                                        </li>
+
+                                        <?php
+                                        // Page Numbers
+                                        for ($i = $start_page; $i <= $end_page; $i++) {
+                                        ?>
+                                            <li class="page-item <?= $i == $current_page ? 'active' : '' ?>">
+                                                <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                                            </li>
+                                        <?php
+                                        }
+                                        ?>
+
+                                        <!-- Next Button -->
+                                        <li class="page-item <?= $current_page == $total_pages ? 'disabled' : '' ?>">
+                                            <a class="page-link" href="?page=<?= min($total_pages, $current_page + 1) ?>">بعدی</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+
+                            <?php
+                            } else {
+                                echo "<p>هیچ مشابهی پیدا نشد.</p>";
+                            }
+                            ?>
+                        </div>
                     </div>
                 </div>
-            </form>
+
 
                 
             </div>
@@ -151,7 +266,7 @@ $id = $_SESSION["all_data"]['id'];
 
 <?php
 
-include "../config.php";
+
 
 if (isset($_POST['submit_post'])) {
     $title = $_POST['title'];
@@ -245,4 +360,61 @@ if (isset($_POST['submit_post'])) {
 
     $stmt->close();
 }
-?>
+
+if(isset($_GET['delete_article'])){
+
+    $id_art = $_GET['id_art'];
+
+    $sql = "DELETE FROM articles WHERE id = $id_art";
+    $result = $conn->query($sql);
+    if ($result) {
+        // Use Bootstrap's toast component to show a success toast message
+        echo "<div id='successToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 0; right: 0; width: 300px;'>
+            <div class='toast-header bg-success text-white'>
+                <strong class='mr-auto'>Success</strong>
+                <button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>
+                    <span aria-hidden='true'>&times;</span>
+                </button>
+            </div>
+            <div class='toast-body'>
+                مقاله با موفقیت حذف شد!
+            </div>
+            </div>
+            <script>
+            $(document).ready(function(){
+                $('#successToast').toast('show');
+                setTimeout(function(){
+                    $('#successToast').toast('hide');
+                    // Redirect after 3 seconds
+                    setTimeout(function(){
+                        window.location.href = 'new_article';
+                    }, 1000);
+                }, 1000);
+            });
+            </script>";
+    } else {
+        // Use Bootstrap's toast component to show an error toast message
+        echo "<div id='errorToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 0; right: 0; width: 300px;'>
+                <div class='toast-header bg-danger text-white'>
+                    <strong class='mr-auto'>Error</strong>
+                    <button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>
+                        <span aria-hidden='true'>&times;</span>
+                    </button>
+                </div>
+                <div class='toast-body'>
+                    خطایی در حذف مقاله پیش آمده!
+                </div>
+              </div>
+              <script>
+                $(document).ready(function(){
+                    $('#errorToast').toast('show');
+                    setTimeout(function(){
+                        $('#errorToast').toast('hide');
+                    }, 1000);
+                });
+              </script>";
+
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+    
+}
