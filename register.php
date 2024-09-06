@@ -45,7 +45,7 @@ session_start();
                             </div>
                             <div class="form-group" style="text-align: right;">
                                 <label for="meli_code">کد ملی</label>
-                                <input type="text" class="form-control" name="meli_code" id="meli_code">
+                                <input type="text" class="form-control" name="meli_code" id="meli_code" required>
                             </div>
                             <div class="form-group" style="text-align: right;">
                                 <label for="mobile">شماره همراه</label>
@@ -57,18 +57,18 @@ session_start();
                             </div>
                             <div class="form-group" style="text-align: right;">
                                 <label for="age">سن</label>
-                                <input type="number" class="form-control" name="age" id="age">
+                                <input type="number" class="form-control" name="age" id="age" required>
                             </div>
                          
                           
                             <div class="form-group" style="text-align: right;">
                                 <label for="address">آدرس</label>
-                                <input type="text" class="form-control" name="address" id="address">
+                                <input type="text" class="form-control" name="address" id="address" required>
                             </div>
                             <h6 style="text-align: right;">اطلاعات ثبت نامی :</h6>
                             <div class="form-group" style="text-align: right;">
                                 <label for="course">دوره </label>
-                                <select class="form-control" name="course" id="course">
+                                <select class="form-control" name="course" id="course" required>
                                     <option>دوره مورد نظر را انتخاب کنید</option>
                                     <option value="course1">'گویندگی تخصصی رادیو "15 جلسه سه ساعته" - قیمت: دو قسط 6 میلیونی '</option>
                                     <option value="course2">'فن بیان کودکان "10 جلسه دو ساعته" - قیمت : 5/900/000 تومان'</option>

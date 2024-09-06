@@ -1,45 +1,77 @@
-<form action="" method="post" enctype="multipart/form-data">
-    <input type="file" name="audioFile" accept="audio/mp3" required>
-    <button type="submit">Upload</button>
-</form>
-
 <?php
+session_start();
 
-include 'config.php';
 
+require 'API/Gateway.php';
+require 'ipgcfg.php';
+include "config.php"; 
+include "includes.php";
 
-// Check if a file was uploaded
-if (isset($_FILES['audioFile']) && $_FILES['audioFile']['error'] == 0) {
-    $fileName = $_FILES['audioFile']['name'];
-    $fileType = $_FILES['audioFile']['type'];
-    $fileSize = $_FILES['audioFile']['size'];
-    $fileData = file_get_contents($_FILES['audioFile']['tmp_name']);
-
-    // Additional form fields (you need to add these fields in your form)
-    $name = $_POST['name'];
-    $family = $_POST['family'];
-    $number = $_POST['number'];
-
-    // Prepare and execute the SQL query
-    $stmt = $conn->prepare("INSERT INTO sounds (name, family, number, file_name, file_type, file_size, file_data) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssssis", $name, $family, $number, $fileName, $fileType, $fileSize, $fileData);
-
-    if ($stmt->execute()) {
-        echo "File uploaded successfully.";
-    } else {
-        echo "Error: " . $stmt->error;
-    }
-
-    $stmt->close();
-} else {
-    echo "No file uploaded or upload error.";
-}
-
-$conn->close();
 ?>
 
 
+<div class="spinner-border text-warning" role="status">
+  <span class="sr-only">Loading...</span>
+</div>
+
+<?php
+
+$invoiceID = $_REQUEST['invoice']; // Get the invoice ID from the request
+$gateway = Gateway::make()->config($Username, $Password, $merchantConfigID)->invoiceId($invoiceID);
+$result = $gateway->TranResult();
 
 
 
 
+if ($result['code'] != 200) {
+    echo 'مشکل در TranResult تراکنش';
+    echo '<br>';
+    echo 'Http Code: ' . $result['code'];
+    echo '<br>';
+    echo 'Response: ' . $result['content'];
+    exit();
+}
+
+echo 'اطلاعات تراکنش : ';
+echo '<br>';
+foreach ($result['content'] as $field => $res) {
+    echo $field . ' : ' . $res;
+    echo '<br>';
+}
+
+// Verify the transaction
+$verify = $gateway->verify($result['content']['payGateTranID']);
+if ($verify['code'] == 200) {
+    echo 'تراکنش verify شد.';
+    echo '<br>';
+
+    // Settlement
+    $settlement = $gateway->settlement($result['content']['payGateTranID']);
+    if ($settlement['code'] == 200) {
+
+
+        $sql = "UPDATE contacts SET pardakht = 1 WHERE user_id = '$invoiceID'";
+        $conn->query($sql);
+        
+      
+        $_SESSION['invoice'] = $invoiceID;
+        echo "<script>location.href='payment_receipt';</script>";
+       
+    } else {
+        echo 'مشکل در settlement تراکنش';
+        echo '<br>';
+        echo 'Http Code: ' . $settlement['code'];
+        echo '<br>';
+        echo 'Response: ' . $settlement['content'];
+    }
+} else {
+    echo 'مشکل در verify تراکنش';
+    echo '<br>';
+    echo 'Http Code: ' . $verify['code'];
+    echo '<br>';
+    echo 'Response: ' . $verify['content'];
+}
+
+
+
+?>
