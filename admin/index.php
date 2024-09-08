@@ -66,13 +66,13 @@ $id = $_SESSION["all_data"]['id'];
                             <tbody>
                             <?php
                             $a = 1;
-                            $sql = "SELECT * FROM suggestions ORDER BY id DESC LIMIT 5";
+                            $sql = "SELECT * FROM suggestions ORDER BY id DESC LIMIT 10";
                             $result = $conn->query($sql);
                             if ($result->num_rows > 0) {
                                 while ($row = $result->fetch_assoc()) {?>
                                     <tr>
                                         <th scope="row" class="text-center"><?= $a ?></th>
-                                        <td class="text-center"><?= $row['text'] ?></td>
+                                        <td class="text-center"> <?= mb_strimwidth($row['text'], 0, 50, '...') ?></td>
                                         <td class="text-center"><?= $row['type'] ?></td>
                                     </tr>
                                 <?php
@@ -94,13 +94,14 @@ $id = $_SESSION["all_data"]['id'];
                                     <th scope="col" class="text-center">ردیف</th>
                                     <th scope="col" class="text-center">نام</th>
                                     <th scope="col" class="text-center">نام خانوادگی</th>
+                                    <th scope="col" class="text-center">فیلد ثبت نامی</th>
                                     <th scope="col" class="text-center">شماره</th>
                                 </tr>
                             </thead>
                             <tbody>
                             <?php
                             $a = 1;
-                            $sql = "SELECT * FROM contacts ORDER BY id DESC LIMIT 5";
+                            $sql = "SELECT * FROM contacts ORDER BY id DESC LIMIT 10";
                             $result = $conn->query($sql);
                             if ($result->num_rows > 0) {
                                 while ($row = $result->fetch_assoc()) {?>
@@ -108,6 +109,7 @@ $id = $_SESSION["all_data"]['id'];
                                         <th scope="row" class="text-center"><?= $a ?></th>
                                         <td class="text-center"><?= $row['name'] ?></td>
                                         <td class="text-center"><?= $row['lastname'] ?></td>
+                                        <td class="text-center"><?= $row['course'] ?></td>
                                         <td class="text-center"><?= $row['mobile'] ?></td>
                                     </tr>
                                 <?php

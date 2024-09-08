@@ -1,60 +1,112 @@
 <?php
 session_start();
+
+if (!isset($_SESSION["all_data"])) {
+    header("Location: ../login.php");
+    exit();
+}
+
+$id = $_SESSION["all_data"]['id'];
+// $admin = $_SESSION["all_data"]['admin'];
 ?>
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>درباره هفت هنر سیمرغ</title>
+    <title>خانه</title>
+
+
+    <link rel="icon" href="img/logo.png" type="image/x-icon">
+
+    <?php
+    include 'includes.php';
+    include '../config.php';
+    // include 'functions.php';
+    // include 'PersianCalendar.php';
+    ?>
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="../summernote-0.8.20-dist/cdn/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="../summernote-0.8.20-dist/summernote-bs5.css" />
+
+    <script src="../summernote-0.8.20-dist/summernote-bs5.js"></script>
+
+    <link rel="stylesheet" href="../summernote-0.8.20-dist/summernote-bs4.css" />
+
+    <script src="../summernote-0.8.20-dist/summernote-bs4.js"></script>
+
+    <link rel="stylesheet" href="../summernote-0.8.20-dist/summernote.css" />
+
+    <script src="../summernote-0.8.20-dist/summernote.js"></script>
+
+    <link rel="stylesheet" href="../summernote-0.8.20-dist/summernote-lite.css" />
+
+    <script src="../summernote-0.8.20-dist/summernote-lite.js"></script>
+
+    <script src="../summernote-0.8.20-dist/lang/summernote-es-ES.js"></script>
+
+
+</head>
+
+<body>
 
    
 
-    <link rel="stylesheet" href="fonts/icomoon/style.css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/mainstyles.css">
-
-    <link rel="icon" href="images/logo1.ico" type="image/x-icon">
-</head>
-<body>
-
-    <?php
-    include 'header.php';
-    include 'config.php';
-    include 'PersianCalendar.php';
-    include 'jalaliDate.php';
-    $sdate = new SDate();
-  
+<?php include 'header.php'; ?>
+    <div class="container-fluid">
 
 
- 
-    ?>
-        <div class="container mt-4">
-            <div class="row justify-content-center">
-                <div class="col-12 col-md-10">
-                    <div class="card border border-danger p-4 text-center">
-                        <div style="text-align: center; margin : 20px ">
-                            <img src="images/tik.jpg" height="70px" width="70px" >
-                        </div>
-                        <h3 style="text-align: center; " class=""><span style="background-color: rgb(107, 165, 74);">رسید پرداختی</span></h3><p> پرداخت شما با موفقیت انجام شد.</p><p><br></p>
-                            <p>مبلغ : <?= $row['amount']. " هزار تومان" ;?></p>
-                        <p><br></p><p>به زودی کارشناسان ما در وقت اداری با شما تماس خواهند گرفت.</p><p>لطفا از رسید خود عکس بگیرید</p><p><br></p>
-                        <button class="btn btn-success mt-3">در حال انتقال به صفحه اصلی</button>
-                    </div>
-                </div>
+        <div class="row">
+            <div class="col-md-3 d-flex">
+                <?php
+                include 'sidebar.php';
+                ?>
+              
+            </div>
+
+            <div class="col-md-8 mt-5">
+
+            <?php
+              
+                // Prepare and execute the SQL query
+                $sql ="SELECT * from sounds";
+
+                $result = $conn->query($sql);
+                if ($result->num_rows > 0) {
+                    while($row = $result->fetch_assoc()) {
+                        echo '<audio controls>';
+                        echo    '<source src="data:audio/mpeg;base64,'.base64_encode($row['file_data']).'">';
+                        echo '</audio><br>';
+                    }
+                }
+
+            ?>
+                
             </div>
         </div>
+    </div>
 
+    <script>
+        $(document).ready(function() {
+            $('.nav-link').click(function() {
+                $('.nav-link').removeClass('active');
+                $(this).addClass('active');
+            });
+        });
 
+    </script>
 
-    <?php
- 
-    ?>
- 
-
-    <?php include 'footer.php'; ?>
+    
 
 </body>
+
 </html>
+
+

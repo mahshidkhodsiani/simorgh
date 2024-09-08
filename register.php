@@ -153,7 +153,7 @@ if (!empty($_POST)) {
         case 'course1':
             $course = "گویندگی تخصصی رادیو";
             $introduce = "قیمت: دو قسط 6 میلیونی";
-            $amount = 20000 ;
+            $amount = 60000000 ;
             break;
         case 'course2':
             $course = "فن بیان کودکان";

@@ -133,7 +133,7 @@ if(!empty($_POST)){
   
     $mobile = $_POST['mobile'];
     $name = $_POST['name'];
-    $lastname = $_SESSION['lastname'];
+    $lastname = $_POST['lastname'];
     $age = $_POST['age'];
     $amount = $_POST['amount'];
  
