@@ -45,9 +45,12 @@ session_start();
             <div class="row justify-content-center">
                 <div class="col-12 col-md-10">
                     <div class="card border border-danger p-4 text-center">
-                        <h2 style="text-align: center; " class=""><span style="background-color: rgb(107, 165, 74);">رسید پرداختی</span></h2><p>با سپاس .پرداخت شما با موفقیت انجام شد.</p><p><br></p>
-                            <p>مبلغ : <?= $row['amount']. " هزار تومان" ;?></p>
-                        <p><br></p><p>در اولین فرصت همکاران ما با شما تماس خواهند گرفت.</p><p>لطفا از رسید خود عکس بگیرید</p><p><br></p>
+                        <div style="text-align: center; margin : 20px ">
+                            <img src="images/tik.jpg" height="70px" width="70px" >
+                        </div>
+                        <h3 style="text-align: center; " class=""><span style="background-color: rgb(107, 165, 74);">رسید پرداختی</span></h3><p> پرداخت شما با موفقیت انجام شد.</p><p><br></p>
+                            <p>مبلغ : <?= $row['amount'];?></p>
+                        <p><br></p><p>بزودی کارشناسان ما در وقت اداری با شما تماس خواهند گرفت.</p>
                         <button class="btn btn-success mt-3">در حال انتقال به صفحه اصلی</button>
                     </div>
                 </div>

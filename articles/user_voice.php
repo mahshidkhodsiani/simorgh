@@ -166,11 +166,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['audioFile'])) {
         $(document).ready(function(){
             $('#successToast').toast({
                 autohide: true,
-                delay: 3000
+                delay: 5000
             }).toast('show');
             setTimeout(function(){
                 window.location.href = '../';
-            }, 4000);
+            }, 5000);
         });
         </script>";
     }else{

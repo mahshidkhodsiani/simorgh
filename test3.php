@@ -1,69 +1,60 @@
 <?php
-require 'API/Gateway.php';
-require 'ipgcfg.php';
-
-include "../config.php";
-
 session_start();
+?>
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>درباره هفت هنر سیمرغ</title>
 
-$invoiceID = $_REQUEST['invoice'];
+   
 
-$gateway =Gateway::make()->config($Username,$Password,$merchantConfigID)->invoiceId($invoiceID);
-$result = $gateway->TranResult();
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/mainstyles.css">
+
+    <link rel="icon" href="images/logo1.ico" type="image/x-icon">
+</head>
+<body>
+
+    <?php
+    include 'header.php';
+    include 'config.php';
+    include 'PersianCalendar.php';
+    include 'jalaliDate.php';
+    $sdate = new SDate();
+  
 
 
-$invoiceID = $_SESSION['invoiceId']; // Retrieve the invoice ID from the session
-$mobile = $_SESSION['mobile']; // Retrieve the mobile number from the session
-$amount = $_SESSION['amount']; // Retrieve the amount from the session
+ 
+    ?>
+        <div class="container mt-4">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-10">
+                    <div class="card border border-danger p-4 text-center">
+                        <div style="text-align: center; margin : 20px ">
+                            <img src="images/tik.jpg" height="70px" width="70px" >
+                        </div>
+                        <h3 style="text-align: center; " class=""><span style="background-color: rgb(107, 165, 74);">رسید پرداختی</span></h3><p> پرداخت شما با موفقیت انجام شد.</p><p><br></p>
+                            <p>مبلغ : <?= $row['amount']. " هزار تومان" ;?></p>
+                        <p><br></p><p>به زودی کارشناسان ما در وقت اداری با شما تماس خواهند گرفت.</p><p>لطفا از رسید خود عکس بگیرید</p><p><br></p>
+                        <button class="btn btn-success mt-3">در حال انتقال به صفحه اصلی</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
 
+    <?php
+ 
+    ?>
+ 
 
+    <?php include 'footer.php'; ?>
 
-	if($result['code'] != 200){
-		echo 'مشکل در TranResult تراکنش';
-		echo '<br>';
-		echo 'Http Code: '.$result['code'];
-		echo '<br>';
-		echo 'Response: '.$result['content'];
-		exit();
-	}
-    
-	echo 'اطلاعات تراکنش : ';
-    echo '<br>';
-    foreach ($result['content'] as $field=>$res){
-        echo $field.' : '.$res;
-        echo '<br>';
-    }
-	
-	//Verify 
-    $verify = $gateway->verify($result['content']['payGateTranID']);
-    if($verify['code'] == 200){
-        echo 'تراکنش verify شد.';
-        echo '<br>';
-		//Settlement
-        $settlement = $gateway->settlement($result['content']['payGateTranID']);
-        if($settlement['code'] == 200){
-
-            $stmt = $conn->prepare("INSERT INTO contacts (user_id, introduce, mobile) VALUES (?, ?, ?)");
-            $stmt->bind_param("sssssis", $name, $family, $number);
-
-            echo 'تراکنش settlement شد.';
-            echo "<script>location.href='about.php';</script>";
-            echo '<br>';
-        }
-		else{
-            echo 'مشکل در settlement تراکنش';
-            echo '<br>';
-            echo 'Http Code: '.$settlement['code'];
-            echo '<br>';
-            echo 'Response: '.$settlement['content'];
-        }
-    }
-	else{
-        echo 'مشکل در verify تراکنش';
-        echo '<br>';
-        echo 'Http Code: '.$verify['code'];
-        echo '<br>';
-        echo 'Response: '.$verify['content'];
-    }
+</body>
+</html>
