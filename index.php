@@ -372,24 +372,23 @@
 
             <div class="row">
                 <div class="col-sm-6">
-                    <div class="card rounded-3">
-                    <div class="card-body" style="background-color: #c4afcf;">
-                        <h5 class="card-title d-flex justify-content-center">عضویت در آرشیو گویندگان</h5>
-                    
-                        <a href="articles/send_voice" class="btn btn-primary">عضویت</a>
-                    </div>
+                    <div class="card rounded-3 shadow-lg">
+                        <div class="card-body" style="background-color: #c4afcf;">
+                            <h5 class="card-title d-flex justify-content-center fw-bold">عضویت در آرشیو گویندگان</h5>
+                            <a href="articles/send_voice" class="btn btn-primary w-100" style="background-color: #3b0b59; border: none;">عضویت</a>
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-6">
-                    <div class="card rounded-3">
-                    <div class="card-body" style="background-color: #c4afcf;">
-                        <h5 class="card-title d-flex justify-content-center">رادیو سیمرغ</h5>
-                  
-                        <a href="radios" class="btn btn-primary">شنیدن بیشتر</a>
-                    </div>
+                    <div class="card rounded-3 shadow-lg">
+                        <div class="card-body" style="background-color: #c4afcf;">
+                            <h5 class="card-title d-flex justify-content-center fw-bold" >رادیو سیمرغ</h5>
+                            <a href="radios" class="btn btn-primary w-100" style="background-color: #3b0b59; border: none;">شنیدن بیشتر</a>
+                        </div>
                     </div>
                 </div>
             </div>
+
 
            
         

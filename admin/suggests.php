@@ -109,7 +109,7 @@ $id = $_SESSION["all_data"]['id'];
                                         <tr>
                                             <th scope="row" class="text-center"><?= $a ?></th>
                                             <td class="text-center">
-                                                <a href="javascript:void(0);" onclick="showFullText('<?= htmlspecialchars($row['text'], ENT_QUOTES) ?>')">
+                                                <a style="text-decoration: none;" href="javascript:void(0);" onclick='showFullText(<?= json_encode($row['text']) ?>)'>
                                                     <?= mb_strimwidth($row['text'], 0, 50, '...') ?> <!-- Display a short version of the text -->
                                                 </a>
                                             </td>
@@ -153,7 +153,7 @@ $id = $_SESSION["all_data"]['id'];
                     ?>
 
                     <!-- Hidden Textarea for Full Text -->
-                    <div class="col-md-10 mt-3" id="full-text-container" style="display: none;">
+                    <div class="col-md-10 mt-3 mb-3" id="full-text-container" style="display: none;">
                         <textarea class="form-control" id="full-text" rows="5"></textarea>
                     </div>
 

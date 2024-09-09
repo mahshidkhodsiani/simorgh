@@ -8,7 +8,11 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>هفت هنر سیمرغ</title>
 
-    <?php include 'includes.php'; ?>
+    <?php 
+    include 'includes.php'; 
+    require 'API/Gateway.php';
+    require 'ipgcfg.php';
+    ?>
 
     <link rel="icon" href="images/logo1.ico" type="image/x-icon">
 
@@ -125,8 +129,7 @@ session_start();
 
 <?php
 
-require 'API/Gateway.php';
-require 'ipgcfg.php';
+
 
 if (!empty($_POST)) {
     $CurUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
@@ -233,6 +236,12 @@ if (!empty($_POST)) {
             $amount = 65000000 ;
 
             break;
+    }
+
+
+    if ($amount <= 0) {
+        // Handle error
+        die('Invalid amount.');
     }
 
     // Handle reference selection
