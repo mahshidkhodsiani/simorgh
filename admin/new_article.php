@@ -106,7 +106,7 @@ $id = $_SESSION["all_data"]['id'];
 
 
                 <div class="row mt-5">
-                    <div class="col-md-10">
+                    <div class="col-md-11">
                         <div class="table-responsive">
                             <?php
                             // Pagination configuration
@@ -150,7 +150,7 @@ $id = $_SESSION["all_data"]['id'];
                                             <td class="text-center">
                                                 <form action="" method="GET">
                                                     <input type="hidden" value="<?= $row['id'] ?>" name="id_art">
-                                                    <!-- <a href="edit_dev.php?id_art=<?= $row['id'] ?>" class="btn btn-outline-warning btn-sm"> ویرایش</a> -->
+                                                    <a href="edit_article.php?id_art=<?= $row['id'] ?>" class="btn btn-outline-warning btn-sm"> ویرایش</a>
                                                     <button type="submit" name="delete_article" 
                                                         class="btn btn-outline-danger btn-sm" onclick="return confirmDelete()">حذف</button>
                                                 </form>

@@ -86,6 +86,7 @@ $id = $_SESSION["all_data"]['id'];
                         // SQL query to retrieve a subset of rows based on pagination
                         $sql = "SELECT s.*, c.name, c.lastname FROM sounds as s
                                 LEFT JOIN contacts as c ON s.contact_id = c.id
+                                ORDER BY s.id DESC
                                 LIMIT $offset, $items_per_page"; // Use LIMIT for pagination
                         $result = $conn->query($sql);
 

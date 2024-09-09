@@ -104,6 +104,10 @@
         <img src="../images/radio.jpg" height="20px" width="20px">
         افزودن رادیوی جدید
     </a>
+    <a href="new_speaker" class="nav-link <?php if (basename($_SERVER['REQUEST_URI']) === 'new_speaker') echo 'active'; ?>">
+        <img src="../images/speaker.png" height="20px" width="20px">
+        افزودن گوینده جدید
+    </a>
 
     <!-- for dropdown :
     <a href="javascript:void(0);" class="nav-link dropdown-btn">
