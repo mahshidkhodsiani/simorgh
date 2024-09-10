@@ -1,3 +1,8 @@
+<?php
+header("Cache-Control: public, max-age=31536000"); // Cache for 1 year
+header("Pragma: cache");
+
+?>
 <!doctype html>
 <html lang="fa" dir="rtl">
 <head>
@@ -85,6 +90,21 @@
                          
 
                             <div class="table-responsive mt-5">
+                                <?php
+                                // Pagination configuration
+                                $items_per_page = 10; // Number of items per page
+                                $current_page = isset($_GET['page']) ? $_GET['page'] : 1; // Current page, default is 1
+
+                                // Calculate the offset for the SQL query
+                                $offset = ($current_page - 1) * $items_per_page;
+
+                                // SQL query to retrieve a subset of rows based on pagination
+                                $sql = "SELECT * FROM speakers ORDER BY id DESC LIMIT $items_per_page OFFSET $offset";
+                                $result = $conn->query($sql);
+
+                                if ($result->num_rows > 0) {
+                                    $a = ($current_page - 1) * $items_per_page + 1; // Counter for row numbers
+                                ?>
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
@@ -96,58 +116,81 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!-- Rows -->
+                                        <?php
+                                        while ($row = $result->fetch_assoc()) {
+                                           
+                                        ?>
                                         <tr>
-                                            <td class="text-center">1</td>
-                                            <td class="text-center">آیدا نصیری</td>
-                                            <td class="text-center">تلفن گویا</td>
-                                            <td class="text-center"> 
+                                            <th scope="row" class="text-center"><?= $a ?></th>
+                                            <td class="text-center"><?= $row['name'] ?></td>
+                                            <td class="text-center"><?= $row['kind'] ?></td>
+                                            <td class="text-center">
                                                 <audio controls>
-                                                    <source src="../upload/sounds/2024/aida-nasiri/aida-nasiri.mp3" type="audio/mpeg">
-                                                 
+                                                    <source src="data:audio/mpeg;base64,<?= base64_encode($row['mp3']) ?>" type="audio/mpeg">
                                                 </audio>
                                             </td>
                                             <td class="text-center">
-                                                <img src="../upload/sounds/2024/aida-nasiri/pro.jpg" alt="تمرین گویندگی" height="80px">
+                                                <img src="<?= $row['image']?>" height="50px" width="50px">
                                             </td>
+                                        
+                                            
                                         </tr>
-                                        <tr>
-                                            <td class="text-center">2</td>
-                                            <td class="text-center">زری راد</td>
-                                            <td class="text-center">تلفن گویا</td>
-                                            <td class="text-center"> 
-                                                <audio controls>
-                                                    <source src="../upload/sounds/2024/zari-rad/zari-rad.mp3" type="audio/mpeg">
-                                                 
-                                                </audio>
-                                            </td>
-                                            <td class="text-center">
-                                                <img src="../upload/sounds/2024/zari-rad/pro.jpg" alt="تمرین گویندگی" height="80px">
-                                            </td>
-                                        </tr>
+                                        <?php
+                                            $a++;
+                                        }
+                                        ?>
                                     </tbody>
+                                   
                                 </table>
+                                <?php
+                                // Pagination links
+                                $sql = "SELECT COUNT(*) AS total FROM articles";
+                                $result = $conn->query($sql);
+                                $row = $result->fetch_assoc();
+                                $total_items = $row['total'];
+                                $total_pages = ceil($total_items / $items_per_page);
+
+                                $start_page = max(1, $current_page - 1); // Start at the current page - 1 or 1 if the current page is 1
+                                $end_page = min($total_pages, $start_page + 2); // Show 3 pages max
+
+                                // Ensure there are always 3 pages in the pagination unless it's at the beginning or end
+                                if ($end_page - $start_page < 2 && $start_page > 1) {
+                                    $start_page = max(1, $end_page - 2);
+                                }
+                                ?>
+
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination justify-content-center">
+                                        <!-- Previous Button -->
+                                        <li class="page-item <?= $current_page == 1 ? 'disabled' : '' ?>">
+                                            <a class="page-link" href="?page=<?= max(1, $current_page - 1) ?>">قبلی</a>
+                                        </li>
+
+                                        <?php
+                                        // Page Numbers
+                                        for ($i = $start_page; $i <= $end_page; $i++) {
+                                        ?>
+                                            <li class="page-item <?= $i == $current_page ? 'active' : '' ?>">
+                                                <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                                            </li>
+                                        <?php
+                                        }
+                                        ?>
+
+                                        <!-- Next Button -->
+                                        <li class="page-item <?= $current_page == $total_pages ? 'disabled' : '' ?>">
+                                            <a class="page-link" href="?page=<?= min($total_pages, $current_page + 1) ?>">بعدی</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+
+                                <?php
+                                } else {
+                                    echo "<p>هیچ گوینده ای پیدا نشد.</p>";
+                                }
+                                ?>
                             </div>
-                            <!-- Pagination -->
-                            <nav aria-label="Table pagination">
-                                <ul class="pagination">
-                                    <li class="page-item disabled">
-                                        <a class="page-link" href="#" tabindex="-1">قبلی</a>
-                                    </li>
-                                    <li class="page-item active" aria-current="page">
-                                        <span class="page-link">1</span>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">2</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">3</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">بعدی</a>
-                                    </li>
-                                </ul>
-                            </nav>
+                            
                         </div>
                     </div>
 
