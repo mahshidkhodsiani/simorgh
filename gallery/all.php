@@ -143,11 +143,11 @@
                     }
                     ?>
 
-<img class="card-img-top" src="<?php echo $imagePath; ?>" alt="موسسه هفت هنر سیمرغ">
+                    <img class="card-img-top" src="<?php echo $imagePath; ?>" alt="موسسه هفت هنر سیمرغ">
 
                     <div class="card-body">
                         <h5 class="card-title"><?php echo htmlspecialchars($article['title']); ?></h5>
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#articleModal<?php echo $article['id']; ?>">مطالعه بیشتر</button>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#articleModal<?php echo $article['id']; ?>">دیدن بیشتر</button>
                     </div>
                 </div>
               </div>
@@ -163,7 +163,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                            <img class="card-img-top" src="<?php echo "../" . htmlspecialchars($imageSrc); ?>" alt="موسسه هفت هنر سیمرغ" width="100%">
+                            <img class="card-img-top" src="<?php echo htmlspecialchars($imageSrc); ?>" alt="موسسه هفت هنر سیمرغ" width="100%">
                             
                             </div>
                             <div class="modal-footer">

@@ -8,6 +8,10 @@ if (!isset($_SESSION["all_data"])) {
 
 $id = $_SESSION["all_data"]['id'];
 // $admin = $_SESSION["all_data"]['admin'];
+
+header("Cache-Control: public, max-age=31536000"); // Cache for 1 year
+header("Pragma: cache");
+
 ?>
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
@@ -22,7 +26,7 @@ $id = $_SESSION["all_data"]['id'];
 
     <?php
     include 'includes.php';
-    // include 'config.php';
+    include '../config.php';
     // include 'functions.php';
     // include 'PersianCalendar.php';
     ?>
@@ -104,6 +108,139 @@ $id = $_SESSION["all_data"]['id'];
                     </div>
                 </form>
 
+
+                <div class="row mt-5">
+                    <div class="col-md-11">
+                        <div class="table-responsive">
+                            <?php
+                            // Pagination configuration
+                            $items_per_page = 10; // Number of items per page
+                            $current_page = isset($_GET['page']) ? $_GET['page'] : 1; // Current page, default is 1
+
+                            // Calculate the offset for the SQL query
+                            $offset = ($current_page - 1) * $items_per_page;
+
+                            // SQL query to retrieve a subset of rows based on pagination
+                            $sql = "SELECT * FROM gallery ORDER BY id DESC LIMIT $items_per_page OFFSET $offset";
+                            $result = $conn->query($sql);
+
+                            if ($result->num_rows > 0) {
+                                $a = ($current_page - 1) * $items_per_page + 1; // Counter for row numbers
+                            ?>
+                                <table class="table border border-4">
+                                    <h4>آخرین مقالات :</h4>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="text-center">ردیف</th>
+                                            <th scope="col" class="text-center">عنوان</th>
+                                            <th scope="col" class="text-center">تصویر</th>
+                                            <th scope="col" class="text-center">عملیات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        while ($row = $result->fetch_assoc()) {
+
+                                           
+                                            $images = $row['images'];
+
+                                            // Attempt to decode the JSON string
+                                            $imageData = json_decode($images, true);
+                        
+                                            // Check if decoding was successful (i.e., it's JSON)
+                                            if (json_last_error() === JSON_ERROR_NONE && is_array($imageData)) {
+                                                // It's a JSON string with multiple sizes
+                                                $imageSrc = $imageData['thumb']; // Use 'thumb' or choose 'original', '300', '600', '900'
+                                            } else {
+                                                // It's a simple string (path to the image)
+                                                $imageSrc = $images;
+                                            }
+                        
+                                            // Add the if statement to check if the path starts with "../"
+                                            if (strpos($imageSrc, '../') === 0) {
+                                                $imagePath = htmlspecialchars($imageSrc);
+                                            } else {
+                                                $imagePath = "../" . htmlspecialchars($imageSrc);
+                                            }
+                                            ?>
+                                        
+                                            <tr>
+                                                <th scope="row" class="text-center"><?= $a ?></th>
+                                                <td class="text-center"><?= $row['title'] ?></td>
+                                                <td class="text-center">
+                                                    <img src="<?= $imagePath ?>?v=<?= filemtime($imagePath) ?>" height="50px">
+                                                </td>
+                                                <td class="text-center">
+                                                    <form action="" method="GET">
+                                                        <input type="hidden" value="<?= $row['id'] ?>" name="id_photo">
+                                                        <!-- <a href="edit_work.php?id_photo=<?= $row['id'] ?>" class="btn btn-outline-warning btn-sm"> ویرایش</a> -->
+                                                        <button type="submit" name="delete_photo" 
+                                                            class="btn btn-outline-danger btn-sm" onclick="return confirmDelete()">حذف</button>
+                                                    </form>
+                                                </td>
+                                                <script>
+                                                    function confirmDelete() {
+                                                        return confirm("آیا مطمئن هستید که می‌خواهید این مورد را رد کنید؟");
+                                                    }
+                                                </script>
+                                            </tr>
+                                        <?php
+                                            $a++;
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                                <?php
+                                // Pagination links
+                                $sql = "SELECT COUNT(*) AS total FROM gallery";
+                                $result = $conn->query($sql);
+                                $row = $result->fetch_assoc();
+                                $total_items = $row['total'];
+                                $total_pages = ceil($total_items / $items_per_page);
+
+                                $start_page = max(1, $current_page - 1); // Start at the current page - 1 or 1 if the current page is 1
+                                $end_page = min($total_pages, $start_page + 2); // Show 3 pages max
+
+                                // Ensure there are always 3 pages in the pagination unless it's at the beginning or end
+                                if ($end_page - $start_page < 2 && $start_page > 1) {
+                                    $start_page = max(1, $end_page - 2);
+                                }
+                                ?>
+
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination justify-content-center">
+                                        <!-- Previous Button -->
+                                        <li class="page-item <?= $current_page == 1 ? 'disabled' : '' ?>">
+                                            <a class="page-link" href="?page=<?= max(1, $current_page - 1) ?>">قبلی</a>
+                                        </li>
+
+                                        <?php
+                                        // Page Numbers
+                                        for ($i = $start_page; $i <= $end_page; $i++) {
+                                        ?>
+                                            <li class="page-item <?= $i == $current_page ? 'active' : '' ?>">
+                                                <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                                            </li>
+                                        <?php
+                                        }
+                                        ?>
+
+                                        <!-- Next Button -->
+                                        <li class="page-item <?= $current_page == $total_pages ? 'disabled' : '' ?>">
+                                            <a class="page-link" href="?page=<?= min($total_pages, $current_page + 1) ?>">بعدی</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+
+                            <?php
+                            } else {
+                                echo "<p>هیچ مشابهی پیدا نشد.</p>";
+                            }
+                            ?>
+                        </div>
+                    </div>
+                </div>
+
                 
             </div>
         </div>
@@ -127,7 +264,7 @@ $id = $_SESSION["all_data"]['id'];
 
 
 <?php
-include "../config.php";
+
 
 if (isset($_POST['submit_gallery'])) {
     $title = $_POST['title'];
@@ -223,4 +360,64 @@ if (isset($_POST['submit_gallery'])) {
 
     $stmt->close();
 }
-?>
+
+
+
+
+if(isset($_GET['delete_photo'])){
+
+    $id_photo = $_GET['id_photo'];
+
+    $sql = "DELETE FROM gallery WHERE id = $id_photo";
+    $result = $conn->query($sql);
+    if ($result) {
+        // Use Bootstrap's toast component to show a success toast message
+        echo "<div id='successToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 0; right: 0; width: 300px;'>
+            <div class='toast-header bg-success text-white'>
+                <strong class='mr-auto'>Success</strong>
+                <button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>
+                    <span aria-hidden='true'>&times;</span>
+                </button>
+            </div>
+            <div class='toast-body'>
+                تصویر با موفقیت حذف شد!
+            </div>
+            </div>
+            <script>
+            $(document).ready(function(){
+                $('#successToast').toast('show');
+                setTimeout(function(){
+                    $('#successToast').toast('hide');
+                    // Redirect after 3 seconds
+                    setTimeout(function(){
+                        window.location.href = 'new_work';
+                    }, 1000);
+                }, 1000);
+            });
+            </script>";
+    } else {
+        // Use Bootstrap's toast component to show an error toast message
+        echo "<div id='errorToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 0; right: 0; width: 300px;'>
+                <div class='toast-header bg-danger text-white'>
+                    <strong class='mr-auto'>Error</strong>
+                    <button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>
+                        <span aria-hidden='true'>&times;</span>
+                    </button>
+                </div>
+                <div class='toast-body'>
+                    خطایی در حذف تصویر پیش آمده!
+                </div>
+              </div>
+              <script>
+                $(document).ready(function(){
+                    $('#errorToast').toast('show');
+                    setTimeout(function(){
+                        $('#errorToast').toast('hide');
+                    }, 1000);
+                });
+              </script>";
+
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+    
+}

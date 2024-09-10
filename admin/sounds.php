@@ -7,7 +7,12 @@ if (!isset($_SESSION["all_data"])) {
 }
 
 $id = $_SESSION["all_data"]['id'];
-// $admin = $_SESSION["all_data"]['admin'];
+
+
+header("Cache-Control: public, max-age=31536000"); // Cache for 1 year
+header("Pragma: cache");
+
+
 ?>
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">

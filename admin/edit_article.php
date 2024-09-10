@@ -229,11 +229,11 @@ if (isset($_POST['submit_post'])) {
         $(document).ready(function(){
             $('#successToast').toast({
                 autohide: true,
-                delay: 3000
+                delay: 2000
             }).toast('show');
             setTimeout(function(){
                 window.location.href = 'new_article';
-            }, 3000);
+            }, 2000);
         });
         </script>";
     } else {
