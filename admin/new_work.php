@@ -9,8 +9,8 @@ if (!isset($_SESSION["all_data"])) {
 $id = $_SESSION["all_data"]['id'];
 // $admin = $_SESSION["all_data"]['admin'];
 
-header("Cache-Control: public, max-age=31536000"); // Cache for 1 year
-header("Pragma: cache");
+// header("Cache-Control: public, max-age=31536000"); // Cache for 1 year
+// header("Pragma: cache");
 
 ?>
 <!DOCTYPE html>
@@ -95,6 +95,18 @@ header("Pragma: cache");
                     <br>
 
                     <div class="row">
+                        <div class="col-md-6">
+                            <label for="image">تصویر یا ویدیو :</label>
+                            <select class="form-control" name="type">
+                                <option value="">انتخاب کنید</option>
+                                <option value="photo">عکس</option>
+                                <option value="video">ویدیو</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <br>
+                    <div class="row">
                         <div class="col-md-2 border">
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="type" value="gallery" id="gallery" required>
@@ -133,7 +145,7 @@ header("Pragma: cache");
                                         <tr>
                                             <th scope="col" class="text-center">ردیف</th>
                                             <th scope="col" class="text-center">عنوان</th>
-                                            <th scope="col" class="text-center">تصویر</th>
+                                            <th scope="col" class="text-center">رسانه</th>
                                             <th scope="col" class="text-center">عملیات</th>
                                         </tr>
                                     </thead>
@@ -141,46 +153,56 @@ header("Pragma: cache");
                                         <?php
                                         while ($row = $result->fetch_assoc()) {
 
-                                           
                                             $images = $row['images'];
 
                                             // Attempt to decode the JSON string
                                             $imageData = json_decode($images, true);
-                        
+
                                             // Check if decoding was successful (i.e., it's JSON)
                                             if (json_last_error() === JSON_ERROR_NONE && is_array($imageData)) {
-                                                // It's a JSON string with multiple sizes
-                                                $imageSrc = $imageData['thumb']; // Use 'thumb' or choose 'original', '300', '600', '900'
+                                                $mediaSrc = $imageData['thumb']; // Use 'thumb' or another size if necessary
                                             } else {
-                                                // It's a simple string (path to the image)
-                                                $imageSrc = $images;
+                                                // It's a simple string (path to the image/video)
+                                                $mediaSrc = $images;
                                             }
-                        
-                                            // Add the if statement to check if the path starts with "../"
-                                            if (strpos($imageSrc, '../') === 0) {
-                                                $imagePath = htmlspecialchars($imageSrc);
+
+                                            // Check if the path starts with "../"
+                                            if (strpos($mediaSrc, '../') === 0) {
+                                                $mediaPath = htmlspecialchars($mediaSrc);
                                             } else {
-                                                $imagePath = "../" . htmlspecialchars($imageSrc);
+                                                $mediaPath = "../" . htmlspecialchars($mediaSrc);
                                             }
+
+                                            // Determine if the media is a video or an image
+                                            $fileExtension = strtolower(pathinfo($mediaPath, PATHINFO_EXTENSION));
+                                            $isVideo = in_array($fileExtension, ['mp4', 'mov', 'avi', 'mkv']); // Add more video formats if needed
+
                                             ?>
-                                        
                                             <tr>
                                                 <th scope="row" class="text-center"><?= $a ?></th>
-                                                <td class="text-center"><?= $row['title'] ?></td>
+                                                <td class="text-center"><?= htmlspecialchars($row['title']) ?></td>
                                                 <td class="text-center">
-                                                    <img src="<?= $imagePath ?>?v=<?= filemtime($imagePath) ?>" height="50px">
+                                                    <?php if ($isVideo): ?>
+                                                        <!-- Display video if it's a video file -->
+                                                        <video height="50px" controls>
+                                                            <source src="<?= $mediaPath ?>" type="video/mp4">
+                                                            مرورگر شما از پخش ویدیو پشتیبانی نمی‌کند.
+                                                        </video>
+                                                    <?php else: ?>
+                                                        <!-- Display image if it's an image file -->
+                                                        <img src="<?= $mediaPath ?>" height="50px">
+                                                    <?php endif; ?>
                                                 </td>
                                                 <td class="text-center">
                                                     <form action="" method="GET">
                                                         <input type="hidden" value="<?= $row['id'] ?>" name="id_photo">
-                                                        <!-- <a href="edit_work.php?id_photo=<?= $row['id'] ?>" class="btn btn-outline-warning btn-sm"> ویرایش</a> -->
                                                         <button type="submit" name="delete_photo" 
                                                             class="btn btn-outline-danger btn-sm" onclick="return confirmDelete()">حذف</button>
                                                     </form>
                                                 </td>
                                                 <script>
                                                     function confirmDelete() {
-                                                        return confirm("آیا مطمئن هستید که می‌خواهید این مورد را رد کنید؟");
+                                                        return confirm("آیا مطمئن هستید که می‌خواهید این مورد را حذف کنید؟");
                                                     }
                                                 </script>
                                             </tr>
@@ -190,8 +212,9 @@ header("Pragma: cache");
                                         ?>
                                     </tbody>
                                 </table>
+
                                 <?php
-                                // Pagination links
+                                // Pagination logic
                                 $sql = "SELECT COUNT(*) AS total FROM gallery";
                                 $result = $conn->query($sql);
                                 $row = $result->fetch_assoc();
@@ -240,6 +263,9 @@ header("Pragma: cache");
                         </div>
                     </div>
                 </div>
+
+
+
 
                 
             </div>
@@ -299,8 +325,8 @@ if (isset($_POST['submit_gallery'])) {
     }
 
     // Use prepared statements to prevent SQL injection
-    $stmt = $conn->prepare("INSERT INTO gallery (title, images, created_at) VALUES (?, ?,  NOW())");
-    $stmt->bind_param("ss", $title, $imagePath);
+    $stmt = $conn->prepare("INSERT INTO gallery (title, images, type, created_at) VALUES (?, ?, ?, NOW())");
+    $stmt->bind_param("sss", $title, $imagePath, $type); // Bind all parameters including type
 
 
 
