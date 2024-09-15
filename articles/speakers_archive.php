@@ -126,7 +126,7 @@ header("Pragma: cache");
                                             <td class="text-center"><?= $row['kind'] ?></td>
                                             <td class="text-center">
                                                 <audio controls>
-                                                    <source src="data:audio/mpeg;base64,<?= base64_encode($row['mp3']) ?>" type="audio/mpeg">
+                                                    <source src="<?= $row['mp3']?>" type="audio/mpeg">
                                                 </audio>
                                             </td>
                                             <td class="text-center">

@@ -196,6 +196,7 @@ $id = $_SESSION["all_data"]['id'];
                                                 <td class="text-center">
                                                     <form action="" method="GET">
                                                         <input type="hidden" value="<?= $row['id'] ?>" name="id_photo">
+                                                        <a href="edit_work.php?id_photo=<?= $row['id'] ?>" class="btn btn-outline-warning btn-sm"> ویرایش</a>
                                                         <button type="submit" name="delete_photo" 
                                                             class="btn btn-outline-danger btn-sm" onclick="return confirmDelete()">حذف</button>
                                                     </form>
