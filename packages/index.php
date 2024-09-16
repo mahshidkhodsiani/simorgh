@@ -47,7 +47,7 @@
                         <br>
 
 
-                        <div class="row mt-4">
+                        <!-- <div class="row mt-4">
                             <div class="col-md-4">
                                 <a href="motion_graphics" class="btn mb-2 mb-md-0 btn-outline-quarternary btn-block">موشن گرافیک</a>
                             </div>
@@ -78,12 +78,48 @@
                             <div class="col-md-4">
                                 <a class="btn mb-2 mb-md-0 btn-outline-quarternary btn-block">عکاسی</a>
                             </div>
-                        </div>
+                        </div> -->
 
                         
                      
 
-                        <!-- <div class="row mt-4">
+                        <div class="row mt-4">
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <img class="card-img-top" src="../images/packages.jpg" alt="Card image cap">
+                                    <div class="card-body">
+                                        <h5 class="card-title">موشن گرافیک</h5>
+                                        <p class="card-text">
+                                            محتوای پکیج‌های آموزشی ما توسط کارشناسان و متخصصان برجسته طراحی شده است. با استفاده از منابع و متدهای آموزشی به روز، می‌توانید از یادگیری عمیق و کاربردی بهره‌مند شوید.</p>
+                                        <a href="#" class="btn btn-primary">جزئیات پکیج</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <img class="card-img-top" src="../images/packages.jpg" alt="Card image cap">
+                                    <div class="card-body">
+                                        <h5 class="card-title">انیمیشن سازی (موهو)</h5>
+                                        <p class="card-text">
+                                            محتوای پکیج‌های آموزشی ما توسط کارشناسان و متخصصان برجسته طراحی شده است. با استفاده از منابع و متدهای آموزشی به روز، می‌توانید از یادگیری عمیق و کاربردی بهره‌مند شوید.</p>
+                                        <a href="#" class="btn btn-primary">جزئیات پکیج</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <img class="card-img-top" src="../images/packages.jpg" alt="Card image cap">
+                                    <div class="card-body">
+                                        <h5 class="card-title">فتوشاپ</h5>
+                                        <p class="card-text">
+                                            محتوای پکیج‌های آموزشی ما توسط کارشناسان و متخصصان برجسته طراحی شده است. با استفاده از منابع و متدهای آموزشی به روز، می‌توانید از یادگیری عمیق و کاربردی بهره‌مند شوید.</p>
+                                        <a href="#" class="btn btn-primary">جزئیات پکیج</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
                             <div class="col-md-4">
                                 <div class="card">
                                     <img class="card-img-top" src="../images/packages.jpg" alt="Card image cap">
@@ -91,7 +127,7 @@
                                         <h5 class="card-title">پریمر (تدوین)</h5>
                                         <p class="card-text">
                                             محتوای پکیج‌های آموزشی ما توسط کارشناسان و متخصصان برجسته طراحی شده است. با استفاده از منابع و متدهای آموزشی به روز، می‌توانید از یادگیری عمیق و کاربردی بهره‌مند شوید.</p>
-                                        <a href="#" class="btn btn-primary">خرید پکیج</a>
+                                        <a href="#" class="btn btn-primary">جزئیات پکیج</a>
                                     </div>
                                 </div>
                             </div>
@@ -102,7 +138,7 @@
                                         <h5 class="card-title">ایلیستراتور</h5>
                                         <p class="card-text">
                                             محتوای پکیج‌های آموزشی ما توسط کارشناسان و متخصصان برجسته طراحی شده است. با استفاده از منابع و متدهای آموزشی به روز، می‌توانید از یادگیری عمیق و کاربردی بهره‌مند شوید.</p>
-                                        <a href="#" class="btn btn-primary">خرید پکیج</a>
+                                        <a href="#" class="btn btn-primary">جزئیات پکیج</a>
                                     </div>
                                 </div>
                             </div>
@@ -113,11 +149,37 @@
                                         <h5 class="card-title">ایندیزاین</h5>
                                         <p class="card-text">
                                             محتوای پکیج‌های آموزشی ما توسط کارشناسان و متخصصان برجسته طراحی شده است. با استفاده از منابع و متدهای آموزشی به روز، می‌توانید از یادگیری عمیق و کاربردی بهره‌مند شوید.</p>
-                                        <a href="#" class="btn btn-primary">خرید پکیج</a>
+                                        <a href="#" class="btn btn-primary">جزئیات پکیج</a>
                                     </div>
                                 </div>
                             </div>
-                        </div> -->
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <img class="card-img-top" src="../images/packages.jpg" alt="Card image cap">
+                                    <div class="card-body">
+                                        <h5 class="card-title">سینما فوری</h5>
+                                        <p class="card-text">
+                                            محتوای پکیج‌های آموزشی ما توسط کارشناسان و متخصصان برجسته طراحی شده است. با استفاده از منابع و متدهای آموزشی به روز، می‌توانید از یادگیری عمیق و کاربردی بهره‌مند شوید.</p>
+                                        <a href="#" class="btn btn-primary">جزئیات پکیج</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <img class="card-img-top" src="../images/packages.jpg" alt="Card image cap">
+                                    <div class="card-body">
+                                        <h5 class="card-title">عکاسی</h5>
+                                        <p class="card-text">
+                                            محتوای پکیج‌های آموزشی ما توسط کارشناسان و متخصصان برجسته طراحی شده است. با استفاده از منابع و متدهای آموزشی به روز، می‌توانید از یادگیری عمیق و کاربردی بهره‌مند شوید.</p>
+                                        <a href="#" class="btn btn-primary">جزئیات پکیج</a>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                        </div>
 
                      
 
