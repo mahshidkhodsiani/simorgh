@@ -212,6 +212,7 @@
                         <li><a href="directing" class="nav-link">کارگردانی</a></li>
                         <li><a href="edit_film" class="nav-link">تدوین و ادیت فیلم</a></li>
                         <li><a href="workshop" class="nav-link">ورکشاپ</a></li>
+                        <li><a href="../register2" class="nav-link">پرداخت اقساطی دوره ها *</a></li>
                     </ul>
                 </li>
 

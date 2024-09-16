@@ -95,8 +95,7 @@ $id = $_SESSION["all_data"]['id'];
                                     <th scope="col" class="text-center">نام</th>
                                     <th scope="col" class="text-center">نام خانوادگی</th>
                                     <th scope="col" class="text-center">فیلد ثبت نامی</th>
-                                    <th scope="col" class="text-center">شماره</th>
-                                    <th scope="col" class="text-center">سن</th>
+                                    <th scope="col" class="text-center">مبلغ پرداختی</th>
                                     <th scope="col" class="text-center">پرداخت</th>
 
                                 </tr>
@@ -113,8 +112,7 @@ $id = $_SESSION["all_data"]['id'];
                                         <td class="text-center"><?= $row['name'] ?></td>
                                         <td class="text-center"><?= $row['lastname'] ?></td>
                                         <td class="text-center"><?= $row['course'] ?></td>
-                                        <td class="text-center"><?= $row['mobile'] ?></td>
-                                        <td class="text-center"><?= $row['age'] ?></td>
+                                        <td class="text-center"><?= $row['amount'] ?></td>
                                         <td class="text-center">
                                             <?php
                                             if($row['pardakht'] == 1){

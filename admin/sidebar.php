@@ -133,6 +133,10 @@
         <img src="../images/suggests.png" height="20px" width="20px">
         انتقادات و پیشنهادات
     </a>
+    <a href="registered" class="nav-link <?php if (basename($_SERVER['REQUEST_URI']) === 'registered') echo 'active'; ?>">
+        <img src="../images/registered.png" height="20px" width="20px">
+        اطلاعات ثبت نامی ها
+    </a>
     <a href="sounds" class="nav-link <?php if (basename($_SERVER['REQUEST_URI']) === 'sounds') echo 'active'; ?>">
         <img src="../images/sounds.jpg" height="20px" width="20px">
         صداهای ارسالی

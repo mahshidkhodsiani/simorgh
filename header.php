@@ -243,6 +243,7 @@
                         <li><a href="courses/directing" class="nav-link">کارگردانی</a></li>
                         <li><a href="courses/edit_film" class="nav-link">تدوین و ادیت فیلم</a></li>
                         <li><a href="courses/workshop" class="nav-link">ورکشاپ</a></li>
+                        <li><a href="register2" class="nav-link">پرداخت اقساطی دوره ها *</a></li>
                     </ul>
                 </li>
 
@@ -279,6 +280,7 @@
               
                 <li><a href="articles/suggestion" class="nav-link">انتقادات و پیشنهادات</a></li>
                 <li><a href="gallery/all" class="nav-link">نمونه کارها(گالری)</a></li>
+                <!-- <li><a href="gallery/all" class="nav-link">پرداخت اقساطی دوره ها</a></li> -->
 
                 <li><a href="register" class="btn mb-2 mb-md-0 btn-outline-quarternary btn-block btn-sm">ثبت نام</a></li>
             </ul>
