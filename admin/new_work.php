@@ -175,7 +175,7 @@ $id = $_SESSION["all_data"]['id'];
 
                                             // Determine if the media is a video or an image
                                             $fileExtension = strtolower(pathinfo($mediaPath, PATHINFO_EXTENSION));
-                                            $isVideo = in_array($fileExtension, ['mp4', 'mov', 'avi', 'mkv']); // Add more video formats if needed
+                                            $isVideo = in_array($fileExtension, ['mp4', 'mov', 'avi', 'mkv', 'm4v']); // Add more video formats if needed
 
                                             ?>
                                             <tr>
