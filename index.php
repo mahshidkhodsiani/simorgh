@@ -19,6 +19,24 @@
     <title>هفت هنر سیمرغ</title>
 
     <link rel="icon" href="/images/logo1.ico" type="image/x-icon">
+
+
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "موسسه هفت هنر سیمرغ",
+            "url": "https://simorghtv.com",
+            "logo": "https://simorghtv.com/images/logo1.png",
+            "contactPoint": {
+                "@type": "ContactPoint",
+                "telephone": "+982188341652",
+                "contactType": "customer service",
+                "areaServed": "IR",
+                "availableLanguage": "Persian"
+            }
+        }
+    </script>
   
     <?php include "includes.php"; ?>
 </head>

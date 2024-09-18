@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سفارش تبلیغات</title>
+    <title>سفارش تبلیغات حرفه‌ای برای کسب‌وکار شما - موسسه هفت هنر سیمرغ</title>
+    <meta name="description" content="سفارش تبلیغات موثر برای کسب‌وکار شما. با انتخاب خدمات تبلیغاتی حرفه‌ای، برند خود را تقویت کنید و مشتریان بیشتری جذب کنید. با ما تماس بگیرید.">
+
     
    
     <link rel="stylesheet" href="../fonts/icomoon/style.css">
@@ -13,6 +15,24 @@
     <link rel="stylesheet" href="../css/mainstyles.css">
 
     <link rel="icon" href="../images/logo1.ico" type="image/x-icon">
+
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "موسسه هفت هنر سیمرغ",
+            "url": "https://simorghtv.com",
+            "logo": "https://simorghtv.com/images/logo1.png",
+            "contactPoint": {
+                "@type": "ContactPoint",
+                "telephone": "+982188341652",
+                "contactType": "customer service",
+                "areaServed": "IR",
+                "availableLanguage": "Persian"
+            }
+        }
+    </script>
+
 
 
     <style>
@@ -44,7 +64,7 @@
             <div class="row justify-content-center">
                 <div class="col-12 col-md-10">
                     <div class="card border border-danger" style="border-radius: 40px;">
-                        <img class="mx-auto d-block img-fluid" src="../images/logo2.jpg" alt="موسسه هفت هنر سیمرغ" style="max-width: 100%; height: auto;">
+                        <img class="mx-auto d-block img-fluid" src="../images/logo2.jpg" alt="موسسه هفت هنر سیمرغ - سفارش تبلیغات حرفه‌ای" style="max-width: 100%; height: auto;">
                         <div class="card-body" dir="rtl" style="text-align: right;">
                             <!-- <h4 class="card-title text-black"><?= $row[
                                 "title"
@@ -52,15 +72,15 @@
                             <br>
                             <div class="card-text custom-text">
 
-                                <h2><strong>سفارش تبلیغات موثر برای کسب‌وکار شما</strong></h2>
+                                <h1>سفارش تبلیغات موثر برای کسب‌وکار شما</h1>
 
                                 <p>آیا به دنبال راهی برای ارتقاء برند خود و جذب مشتریان بیشتر هستید؟ سفارش تبلیغات می‌تواند بهترین گزینه برای شما باشد! با انتخاب خدمات تبلیغاتی حرفه‌ای، می‌توانید به راحتی به اهداف بازاریابی خود دست یابید و تاثیر مثبتی بر روی رشد کسب‌وکارتان بگذارید.</p>
 
-                                <h3><strong>چرا تبلیغات اهمیت دارد؟</strong></h3>
+                                <h2><strong>چرا تبلیغات اهمیت دارد؟</strong></h2>
 
                                 <p>تبلیغات به شما این امکان را می‌دهد که با مخاطبان جدید ارتباط برقرار کنید، برند خود را معرفی کنید و محصولات یا خدمات خود را به نمایش بگذارید. با برنامه‌ریزی دقیق و استفاده از روش‌های تبلیغاتی مناسب، می‌توانید شانس موفقیت خود را به طور چشمگیری افزایش دهید.</p>
 
-                                <h3><strong>مزایای سفارش تبلیغات:</strong></h3>
+                                <h2><strong>مزایای سفارش تبلیغات:</strong></h2>
 
                                 <ol>
                                     <li>
@@ -74,11 +94,11 @@
                                     </li>
                                 </ol>
 
-                                <h3><strong>چگونه سفارش تبلیغات کنیم؟</strong></h3>
+                                <h2><strong>چگونه سفارش تبلیغات کنیم؟</strong></h2>
 
                                 <p>برای سفارش تبلیغات، ابتدا باید نیازها و اهداف خود را مشخص کنید. سپس، با یک تیم تبلیغاتی حرفه‌ای مشورت کنید که بتواند استراتژی‌های مناسب را برای شما طراحی کند. انتخاب کانال‌های تبلیغاتی مناسب، ایجاد محتوای جذاب و تعیین بودجه از مراحل کلیدی هستند که باید به آنها توجه کنید.</p>
 
-                                <h3><strong>نتیجه‌گیری</strong></h3>
+                                <h2><strong>نتیجه‌گیری</strong></h2>
 
                                 <p>سفارش تبلیغات یکی از مهم‌ترین قدم‌ها برای موفقیت در دنیای کسب‌وکار است. با انتخاب روش‌های تبلیغاتی مناسب و همکاری با متخصصان این حوزه، می‌توانید نتایج قابل توجهی به دست آورید. برای مشاوره و سفارش تبلیغات، با ما تماس بگیرید و گام‌های اولیه را برای رشد کسب‌وکار خود بردارید!</p>
 
