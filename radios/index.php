@@ -33,7 +33,7 @@
                         <img class="mx-auto d-block img-fluid" src="../images/radio-simorgh.jpg" alt="موسسه هفت هنر سیمرغ" style="width: 100%; height: auto;">
 
                         <div class="card-body" dir="rtl" style="text-align: right;"> <!-- Ensured text-align right for RTL text -->
-                            <h3 class="">برنامه‌های رادیویی "هفت هنر سیمرغ"</h3><p> با هدف ایجاد یک ارتباط عمیق و حسی با مخاطبان تهیه شده‌اند.
+                            <h3 class="">برنامه‌های رادیویی "رادیو سیمرغ"</h3><p> با هدف ایجاد یک ارتباط عمیق و حسی با مخاطبان تهیه شده‌اند.
                                  این برنامه‌ها، با صدای گرم و روایات جذاب، شما را به یک دنیای جدید از هنر و فرهنگ دعوت می‌کنند؛ دنیایی که هر روز با شما همراه خواهد بود.<br></p>
                         </div>
 
