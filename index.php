@@ -38,7 +38,12 @@
         }
     </script>
   
-    <?php include "includes.php"; ?>
+    <?php 
+    
+    include "includes.php";
+ 
+    
+    ?>
 </head>
 
   <body>

@@ -23,8 +23,12 @@ $id = $_SESSION["all_data"]['id'];
     <?php
     include 'includes.php';
     include '../config.php';
-    // include 'functions.php';
-    // include 'PersianCalendar.php';
+    include '../functions.php';
+    // include '../PersianCalendar.php';
+
+
+    
+
     ?>
     <!-- <link rel="stylesheet" href="styles.css"> -->
 
@@ -77,6 +81,7 @@ $id = $_SESSION["all_data"]['id'];
             <div class="row mt-4">
                 <div class="col-md-12">
                     <?php
+                    
                     // Pagination configuration
                     $items_per_page = 10; // Number of items per page
                     $current_page = isset($_GET['page']) ? $_GET['page'] : 1; // Current page, default is 1
@@ -104,6 +109,7 @@ $id = $_SESSION["all_data"]['id'];
                                         <th scope="col" class="text-center">شماره</th>
                                         <th scope="col" class="text-center">کد ملی</th>
                                         <th scope="col" class="text-center">سن</th>
+                                        <th scope="col" class="text-center">تاریخ</th>
                                         <th scope="col" class="text-center">آدرس</th>
                                         <th scope="col" class="text-center">مبلغ پرداختی</th>
                                         <th scope="col" class="text-center">پرداخت</th>
@@ -121,6 +127,9 @@ $id = $_SESSION["all_data"]['id'];
                                             <td class="text-center"><?= $row['mobile'] ?></td>
                                             <td class="text-center"><?= $row['meli_code'] ?></td>
                                             <td class="text-center"><?= $row['age'] ?></td>
+                                            <td class="text-center">
+                                                <?= mds_date("j F Y , i : H", strtotime($row['created_at'])) ?>
+                                            </td>
                                             <td class="text-center"><?= $row['address'] ?></td>
                                             <td class="text-center"><?= $row['amount'] ?></td>
                                             <td class="text-center">
