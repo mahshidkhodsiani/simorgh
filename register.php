@@ -150,9 +150,10 @@ if (!empty($_POST)) {
     $age = $_POST['age'];
     $email = $_POST['email'];
     $address = $_POST['address'];
-    if(isset($_POST['discount_code']) && $_POST['discount_code']== 'sim-t-49237'){
-        $discount = TRUE ;
-    }
+    // if(isset($_POST['discount_code']) && $_POST['discount_code']== 'sim-t-49237'){
+    //     $discount = TRUE ;
+    // }
+    $discount = NULL ;
    
     $description = isset($_POST['explain']) ? $_POST['explain'] : NULL;
  

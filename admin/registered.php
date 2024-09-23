@@ -34,27 +34,6 @@ $id = $_SESSION["all_data"]['id'];
 
 
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <script src="../summernote-0.8.20-dist/cdn/jquery.min.js"></script>
-
-    <link rel="stylesheet" href="../summernote-0.8.20-dist/summernote-bs5.css" />
-
-    <script src="../summernote-0.8.20-dist/summernote-bs5.js"></script>
-
-    <link rel="stylesheet" href="../summernote-0.8.20-dist/summernote-bs4.css" />
-
-    <script src="../summernote-0.8.20-dist/summernote-bs4.js"></script>
-
-    <link rel="stylesheet" href="../summernote-0.8.20-dist/summernote.css" />
-
-    <script src="../summernote-0.8.20-dist/summernote.js"></script>
-
-    <link rel="stylesheet" href="../summernote-0.8.20-dist/summernote-lite.css" />
-
-    <script src="../summernote-0.8.20-dist/summernote-lite.js"></script>
-
-    <script src="../summernote-0.8.20-dist/lang/summernote-es-ES.js"></script>
 
 
 </head>
@@ -113,6 +92,7 @@ $id = $_SESSION["all_data"]['id'];
                                         <th scope="col" class="text-center">آدرس</th>
                                         <th scope="col" class="text-center">مبلغ پرداختی</th>
                                         <th scope="col" class="text-center">پرداخت</th>
+                                        <th scope="col" class="text-center">عملیات</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -141,6 +121,18 @@ $id = $_SESSION["all_data"]['id'];
                                                 }
                                                 ?>
                                             </td>
+                                            <td class="text-center">
+                                                <form action="" method="GET">
+                                                    <input type="hidden" value="<?= $row['id'] ?>" name="id_reg">
+                                                    <button type="submit" name="delete_register" class="btn btn-outline-danger btn-sm" 
+                                                    onclick="return confirmDelete()">حذف</button>
+                                                </form>
+                                            </td>
+                                            <script>
+                                                function confirmDelete() {
+                                                    return confirm("آیا مطمئن هستید که می‌خواهید این مورد را حذف کنید؟");
+                                                }
+                                            </script>
                                         </tr>
                                         <?php
                                         $a++;
@@ -163,10 +155,36 @@ $id = $_SESSION["all_data"]['id'];
                         <nav aria-label="Page navigation">
                             <ul class="pagination justify-content-center">
                                 <?php
-                                for ($i = 1; $i <= $total_pages; $i++) {
+                                // Previous Button
+                                if ($current_page > 1) {
+                                    ?>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page=<?= $current_page - 1 ?>" aria-label="قبلی">
+                                            <span aria-hidden="true">&laquo; قبلی</span>
+                                        </a>
+                                    </li>
+                                    <?php
+                                }
+
+                                // Numbered links (show 3 at a time)
+                                $start = max(1, $current_page - 1); // Start page
+                                $end = min($total_pages, $current_page + 1); // End page
+
+                                for ($i = $start; $i <= $end; $i++) {
                                     ?>
                                     <li class="page-item <?= $i == $current_page ? 'active' : '' ?>">
                                         <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                                    </li>
+                                    <?php
+                                }
+
+                                // Next Button
+                                if ($current_page < $total_pages) {
+                                    ?>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page=<?= $current_page + 1 ?>" aria-label="بعدی">
+                                            <span aria-hidden="true">بعدی &raquo;</span>
+                                        </a>
                                     </li>
                                     <?php
                                 }
@@ -257,3 +275,63 @@ $id = $_SESSION["all_data"]['id'];
 </body>
 
 </html>
+
+<?php
+
+if(isset($_GET['delete_register'])){
+
+    $id_reg = $_GET['id_reg'];
+
+    $sql = "DELETE FROM contacts WHERE id = $id_reg";
+    $result = $conn->query($sql);
+    if ($result) {
+        // Use Bootstrap's toast component to show a success toast message
+        echo "<div id='successToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 0; right: 0; width: 300px;'>
+            <div class='toast-header bg-success text-white'>
+                <strong class='mr-auto'>Success</strong>
+                <button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>
+                    <span aria-hidden='true'>&times;</span>
+                </button>
+            </div>
+            <div class='toast-body'>
+                این مورد با موفقیت حذف شد!
+            </div>
+            </div>
+            <script>
+            $(document).ready(function(){
+                $('#successToast').toast('show');
+                setTimeout(function(){
+                    $('#successToast').toast('hide');
+                    // Redirect after 3 seconds
+                    setTimeout(function(){
+                        window.location.href = 'registered';
+                    }, 2000);
+                }, 2000);
+            });
+            </script>";
+    } else {
+        // Use Bootstrap's toast component to show an error toast message
+        echo "<div id='errorToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 0; right: 0; width: 300px;'>
+                <div class='toast-header bg-danger text-white'>
+                    <strong class='mr-auto'>Error</strong>
+                    <button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>
+                        <span aria-hidden='true'>&times;</span>
+                    </button>
+                </div>
+                <div class='toast-body'>
+                    خطایی در حذف این مورد پیش آمده!
+                </div>
+              </div>
+              <script>
+                $(document).ready(function(){
+                    $('#errorToast').toast('show');
+                    setTimeout(function(){
+                        $('#errorToast').toast('hide');
+                    }, 2000);
+                });
+              </script>";
+
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+    
+}
