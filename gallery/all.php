@@ -139,7 +139,7 @@
 
                             // Determine if the file is a video or an image based on its extension
                             $fileExtension = strtolower(pathinfo($mediaPath, PATHINFO_EXTENSION));
-                            $isVideo = in_array($fileExtension, ['mp4', 'mov', 'avi', 'mkv']); // Add more video formats if needed
+                            $isVideo = in_array($fileExtension, ['mp4', 'mov', 'avi', 'mkv', 'm4v']); // Add more video formats if needed
 
                             // Check the file type (video or image)
                             if ($isVideo) {
