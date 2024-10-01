@@ -223,13 +223,8 @@
                 <li class="has-children">
                     <a href="#">خدمات سیمرغ</a>
                     <ul class="dropdown arrow-top">
-                        
-                        <li class="has-children">
-                            <a href="#">طراحی سایت</a>
-                            <ul class="dropdown">
-                            <li><a href="">مقدماتی</a></li>
-                            <li><a href="">پیشرفته</a></li>
-                            </ul>
+                        <li >
+                            <a href="web_design">طراحی سایت</a>
                         </li>
                     </ul>
                 </li>
