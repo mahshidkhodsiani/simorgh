@@ -244,6 +244,7 @@
                         <li><a href="courses/edit_film" class="nav-link">تدوین و ادیت فیلم</a></li>
                         <li><a href="courses/workshop" class="nav-link">ورکشاپ</a></li>
                         <li><a href="register2" class="nav-link">پرداخت اقساطی دوره ها *</a></li>
+                        <li><a href="pardakht" class="nav-link">پرداخت به موسسه</a></li>
                     </ul>
                 </li>
 

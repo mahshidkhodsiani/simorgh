@@ -210,9 +210,10 @@
                         <li><a href="../courses/animation" class="nav-link">انیمیشن سازی</a></li>
                         <li><a href="../courses/makeup" class="nav-link">گریم سینمایی</a></li>
                         <li><a href="../courses/directing" class="nav-link">کارگردانی</a></li>
-                        <li><a href="#faq-section" class="nav-link">تدوین تدوین و ادیت فیلم</a></li>
+                        <li><a href="../courses/edit_film" class="nav-link">تدوین و ادیت فیلم</a></li>
                         <li><a href="../courses/workshop" class="nav-link">ورکشاپ</a></li>
                         <li><a href="../register2" class="nav-link">پرداخت اقساطی دوره ها *</a></li>
+                        <li><a href="../pardakht" class="nav-link">پرداخت به موسسه</a></li>
                     </ul>
                 </li>
 

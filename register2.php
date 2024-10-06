@@ -91,8 +91,8 @@ session_start();
                                 </select>
                             </div>
                             <div class="form-group" style="text-align: right;">
-                                <label for="amount">مبلغ قابل پرداخت (توجه: حداقل تا 4 میلیون باید پرداخت کنید)</label>
-                                <input type="number" class="form-control" name="amount" id="amount" required min="40000000" placeholder="به ریال وارد کنید">
+                                <label for="amount">مبلغ قابل پرداخت (توجه: حداقل تا 1/5 میلیون باید پرداخت کنید)</label>
+                                <input type="number" class="form-control" name="amount" id="amount" required min="15000000" placeholder="به ریال وارد کنید">
                             </div>
 
  
@@ -152,8 +152,8 @@ if (!empty($_POST)) {
    
     $amount = $_POST['amount'];
 
-    if($amount < 40000000){
-        echo "<h4>مبلغ وارد شده کمتر از 4 میلیون است لطفا دقت کنید!! </h4>" ;
+    if($amount < 15000000){
+        echo "<h4>مبلغ وارد شده کمتر از 1/5 میلیون است لطفا دقت کنید!! </h4>" ;
     }else{
        
         $mobile = $_POST['mobile'];
