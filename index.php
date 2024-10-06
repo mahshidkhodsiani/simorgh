@@ -421,6 +421,14 @@
                     </div>
                 </div>
             </div>
+            <div class="col-sm-6 mb-4">
+                <div class="card rounded-5 shadow-lg border-0" style="transition: transform 0.3s, box-shadow 0.3s;">
+                    <div class="card-body" style="background: linear-gradient(135deg, #c4afcf, #e4c1f9);">
+                        <h5 class="card-title d-flex justify-content-center fw-bold">پرداخت آزاد به موسسه</h5>
+                        <a href="pardakht" class="btn btn-primary w-100" style="background-color: #3b0b59; border: none;">پرداخت</a>
+                    </div>
+                </div>
+            </div>
         </div>
 
 

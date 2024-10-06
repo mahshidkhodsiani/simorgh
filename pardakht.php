@@ -82,19 +82,8 @@ session_start();
                                 <label for="discount_code">کد تخفیف : (در صورت وجود )</label>
                                 <input type="text" class="form-control" name="discount_code" id="discount_code" style="width: 100px;">
                             </div>
-                            <div class="form-group" style="text-align: right;">
-                                <p>نحوه آشنایی با موسسه :</p>
-                                <label for="internet">اینترنت</label>
-                                <input class="form-check-input" type="radio" name="reference" value="internet" id="internet">
-                                <br>
-                                <label for="relation">آشنایان</label>
-                                <input class="form-check-input" type="radio" name="reference" value="relation" id="relation">
-                                <br>
-                                <label for="others">غیره</label>
-                                <input class="form-check-input" type="radio" name="reference" value="others" id="others">
-                            </div>
-
-                            
+                    
+            
                             <input type="submit" value="انتقال به درگاه آپ" class="btn mb-2 mb-md-0 btn-outline-info btn-block">
                         </form>
 

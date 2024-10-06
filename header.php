@@ -195,7 +195,7 @@
     
 
                     
-        <nav class="site-navigation text-right ml-auto" role="navigation">
+        <nav class="site-navigation text-right ml-auto" role="navigation" aria-label="breadcrumb">
             <ul class="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
                 <li><a href="./" class="nav-link">صفحه اصلی</a></li>
                 <!-- <li><a href="articles/index.php?title=درباره موسسه" class="nav-link">درباره موسسه</a></li> -->
