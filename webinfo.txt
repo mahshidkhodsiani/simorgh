@@ -49,3 +49,8 @@ RM\#q,bPF:WRV"OG
 کد پذیرنده : 5262207
 کد کاربر : 647
 کلمه عبور : 6476
+
+
+spotplayer :
+user: 09353745107
+pass : sajadnade

@@ -131,7 +131,7 @@
 </style>
 
 <div class="sidebar">
-    <h5 class="p-4 shadow"><?= $_SESSION['all_data']['name']?></h5>
+    <h5 class="p-4 shadow"><?= $_SESSION['all_data']['name'] ." ". $_SESSION['all_data']['family']?></h5>
     <a href="index" class="nav-link <?php if (basename($_SERVER['REQUEST_URI']) === 'index') echo 'active'; ?>">
         <img src="../images/home.png" height="20px" width="20px">
         صفحه اول

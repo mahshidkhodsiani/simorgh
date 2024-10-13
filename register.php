@@ -112,7 +112,8 @@ session_start();
                             </div>
 
                             
-                            <input type="submit" value="انتقال به درگاه آپ" class="btn mb-2 mb-md-0 btn-outline-info btn-block">
+                            <input type="submit" value="انتقال به درگاه آپ"
+                            name="submit_register" class="btn mb-2 mb-md-0 btn-outline-info btn-block">
                         </form>
 
                 
@@ -135,7 +136,7 @@ session_start();
 
 
 // var_dump(empty($_POST));
-if (isset($_POST)) {
+if (isset($_POST['submit_register'])) {
     $CurUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
     $CurUrl = substr($CurUrl, 0, strrpos($CurUrl, '/') + 1);
 
