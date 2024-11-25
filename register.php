@@ -49,12 +49,27 @@ session_start();
                             </div>
                             <div class="form-group" style="text-align: right;">
                                 <label for="meli_code">کد ملی</label>
-                                <input type="text" class="form-control" name="meli_code" id="meli_code" required>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    name="meli_code" 
+                                    id="meli_code" 
+                                    pattern="\d{10}" 
+                                    title="کد ملی باید 10 رقم باشد" 
+                                    required>
                             </div>
                             <div class="form-group" style="text-align: right;">
                                 <label for="mobile">شماره همراه</label>
-                                <input type="text" class="form-control" name="mobile" id="mobile" required>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    name="mobile" 
+                                    id="mobile" 
+                                    pattern="\d{11}" 
+                                    title="شماره همراه باید 11 رقم باشد" 
+                                    required>
                             </div>
+
                             <div class="form-group" style="text-align: right;">
                                 <label for="email">ایمیل</label>
                                 <input type="email" class="form-control" name="email" id="email">
@@ -73,14 +88,14 @@ session_start();
                             <div class="form-group" style="text-align: right;">
                                 <label for="course">دوره </label>
                                 <select class="form-control" name="course" id="course" required>
-                                    <option>دوره مورد نظر را انتخاب کنید</option>
-                                    <option value="course1">'گویندگی پیشرفته رادیو "15 جلسه سه ساعته" - قیمت: 12/000/000 تومان '</option>
+                                    <option value="" disabled selected>دوره مورد نظر را انتخاب کنید</option>
+                                    <option value="course1">'گویندگی پیشرفته رادیو "15 جلسه سه ساعته" - قیمت: 8/500/000 تومان '</option>
                                     <option value="course2">'فن بیان کودکان "10 جلسه دو ساعته" - قیمت : 5/900/000 تومان'</option>
-                                    <option value="course3">'فن بیان و گویندگی "10 جلسه دو ساعته" - قیمت : 6/500/000 تومان'</option>
+                                    <option value="course3">'گویندگی رادیو "10 جلسه دو ساعته" - قیمت : 7/800/000 تومان'</option>
                                     <option value="course4">'نمایش رادیویی "8 جلسه دو ساعته" - قیمت : 5/500/000 تومان'</option>
                                     <option value="course5">'بازیگری بزرگسال "16 جلسه دو ساعته" - قیمت : 8/800/000 تومان'</option>
                                     <option value="course6">'بازیگری مخصوص کودکان "12 جلسه سه ساعته" - قیمت : 6/500/000 تومان'</option>
-                                    <option value="course7">'موشن گرافیک "16 جلسه دو ساعته" - قیمت : 9/500/000 تومان'</option>
+                                    <option value="course7">'موشن گرافیک "16 جلسه دو ساعته" - قیمت : 11/000/000 تومان'</option>
                                     <option value="course8">'دوره دوبله "10 جلسه سه ساعته" - قیمت : 7/500/000 تومان'</option>
                                     <option value="course9">'انیمیشن سازی "12 جلسه سه ساعته" - قیمت : 7/900/000 تومان'</option>
                                     <option value="course10">'گریم سینمایی (مقدماتی) "10 جلسه سه ساعته" - قیمت : 6/500/000 تومان'</option>
@@ -113,7 +128,7 @@ session_start();
 
                             
                             <input type="submit" value="انتقال به درگاه آپ"
-                            name="submit_register" class="btn mb-2 mb-md-0 btn-outline-info btn-block">
+                                name="submit_register" class="btn mb-2 mb-md-0 btn-outline-info btn-block">
                         </form>
 
                 
@@ -126,6 +141,55 @@ session_start();
  
 
     <?php include 'footer.php'; ?>
+
+    <script>
+        document.querySelectorAll('#meli_code, #mobile').forEach(input => {
+            input.addEventListener('input', function () {
+                if (this.id === 'meli_code' && !/^\d{10}$/.test(this.value)) {
+                    this.setCustomValidity('کد ملی باید 10 رقم باشد');
+                } else if (this.id === 'mobile' && !/^\d{11}$/.test(this.value)) {
+                    this.setCustomValidity('شماره همراه باید 11 رقم باشد');
+                } else {
+                    this.setCustomValidity('');
+                }
+            });
+        });
+    </script>
+    <script>
+        // Add a custom required message for all inputs
+        document.querySelectorAll('input[required]').forEach(input => {
+            input.addEventListener('invalid', function (event) {
+                if (this.validity.valueMissing) {
+                    // Show the custom Persian message for required fields
+                    this.setCustomValidity('لطفا این فیلد را پر کنید');
+                } else {
+                    this.setCustomValidity(''); // Clear message for other cases
+                }
+            });
+
+            // Clear the message when input is valid
+            input.addEventListener('input', function () {
+                this.setCustomValidity('');
+            });
+        });
+    </script>
+
+    <script>
+        // Custom required message for the select element
+        document.getElementById('course').addEventListener('invalid', function (event) {
+            if (this.validity.valueMissing) {
+                this.setCustomValidity('لطفا یک دوره را انتخاب کنید');
+            } else {
+                this.setCustomValidity(''); // Clear the message for other cases
+            }
+        });
+
+        // Clear the message when the user makes a valid selection
+        document.getElementById('course').addEventListener('change', function () {
+            this.setCustomValidity('');
+        });
+    </script>
+
 
 </body>
 </html>
@@ -151,10 +215,12 @@ if (isset($_POST['submit_register'])) {
     $age = $_POST['age'];
     $email = $_POST['email'];
     $address = $_POST['address'];
-    // if(isset($_POST['discount_code']) && $_POST['discount_code']== 'sim-t-49237'){
-    //     $discount = TRUE ;
-    // }
-    $discount = NULL ;
+
+    // این برای کد تایید هست :
+    if(isset($_POST['discount_code']) && $_POST['discount_code']== 'art_simorghtv'){
+        $discount = TRUE ;
+    }
+    // $discount = NULL ;
    
     $description = isset($_POST['explain']) ? $_POST['explain'] : NULL;
  
@@ -162,9 +228,9 @@ if (isset($_POST['submit_register'])) {
 
     switch ($_POST['course']) {
         case 'course1':
-            $course = "گویندگی تخصصی رادیو";
-            $introduce = "قیمت: دو قسط 6 میلیونی";
-            $amount = $discount ? 110000000 : 120000000;
+            $course = "گویندگی پیشرفته";
+            $introduce = "قیمت : 8/500/000";
+            $amount = $discount ? 75000000 : 85000000;
             break;
     
         case 'course2':
@@ -174,9 +240,9 @@ if (isset($_POST['submit_register'])) {
             break;
     
         case 'course3':
-            $course = "فن بیان و گویندگی";
-            $introduce = "قیمت: 6/500/000 تومان";
-            $amount = $discount ? 55000000 : 65000000;
+            $course = "گویندگی رادیو";
+            $introduce = "قیمت: 7/800/000 تومان";
+            $amount = $discount ? 68000000 : 78000000;
             break;
     
         case 'course4':
@@ -199,8 +265,8 @@ if (isset($_POST['submit_register'])) {
     
         case 'course7':
             $course = "موشن گرافیک";
-            $introduce = "قیمت: 9/500/000 تومان";
-            $amount = $discount ? 85000000 : 95000000;
+            $introduce = "قیمت: 11/000/000 تومان";
+            $amount = $discount ? 100000000 : 110000000;
             break;
     
         case 'course8':
