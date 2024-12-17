@@ -67,6 +67,10 @@
             <div class="container">
             <h5 class="section-title h1">تازه ترین ها</h5>
             <div class="row">
+                <div class="col-md-12 d-flex justify-content-center mb-2">
+                    <img src="images/yalda.jpg" class="img-fluid" alt="یلدا سیمرغ" style="max-width: 100%; height: 1000px;">
+                </div>
+
                 <!-- Team member -->
                 <div class="col-6 col-sm-4 mb-4">
                 <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
@@ -417,7 +421,49 @@
             </div>
             </div>
         </section>
+
+        
+         <hr class="my-4">
+
+        <section id="portfolio" class="mt-5">
+            <div class="container">
+            <a href="articles">
+                <h1 class="h1 text-center text-dark" id="pageHeaderTitle" title="کلیک کنید"> وبلاگ سیمرغ <img src="images/link.jpg" height="30px" width="30px" alt="آخرین مقالات" title="آخرین مقالات سیمرغ">
+                </h1>
+            </a>
+            <div class="row">
+           
+            <?php
+            
+            
+            // کوئری برای خواندن 8 مقاله آخر
+            $sql = "SELECT * FROM articles ORDER BY id DESC LIMIT 8";
+            $result = $conn->query($sql);
+            
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        ?>
+                    <!-- Card 1 -->
+                    <div class="col-6 col-sm-3">
+                        <div class="card four">
+                            <div class="card-body">
+                                <img src="<?=$row['images']?>" class="img-fluid" alt="تصویر مقاله" height="200px" width="200px">
+                                <h5 class="card-title rtl-title"><?=$row['title']?></h5>
+                                <a href="articles" class="btn mb-2 mb-md-0 btn-outline-quarternary btn-block btn-sm">مطالعه بیشتر</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <?php
+                    }
+                }
+                ?>
+          
+            </div>
+            </div>
+        </section>
         <hr class="my-4">
+        
     </div>
     <!-- End of container-fluid --> <?php include "footer.php"; ?>
   </body>

@@ -276,6 +276,7 @@
               
                 <li><a href="articles/suggestion" class="nav-link">انتقادات و پیشنهادات</a></li>
                 <li><a href="gallery/all" class="nav-link">نمونه کارها(گالری)</a></li>
+                <li><a href="articles" class="nav-link">وبلاگ سیمرغ</a></li>
                 <!-- <li><a href="gallery/all" class="nav-link">پرداخت اقساطی دوره ها</a></li> -->
 
                 <li><a href="register" class="btn mb-2 mb-md-0 btn-outline-quarternary btn-block btn-sm">ثبت نام</a></li>
