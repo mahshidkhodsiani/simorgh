@@ -28,13 +28,8 @@
     include '../jalaliDate.php';
     $sdate = new SDate();
 
-    $sql = "SELECT * FROM articles WHERE title LIKE '%درباره موسسه%'";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        $counter = 0;
-        while ($row = $result->fetch_assoc()) {
     ?>
-       <div class="container mt-4">
+        <div class="container mt-4">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-10">
                     <div class="card border border-danger" style="border-radius: 40px;">
@@ -189,10 +184,7 @@
             </div>
         </div>
 
-    <?php
-        }
-    }
-    ?>
+
 
     <?php include 'footer.php'; ?>
 

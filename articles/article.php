@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="../css/owl.carousel.min.css">
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/style.css">
-    <!-- <link rel="stylesheet" href="../css/mainstyles.css"> -->
+    <link rel="stylesheet" href="../css/mainstyles.css">
 
     <link rel="icon" href="../images/logo1.ico" type="image/x-icon">
 </head>
