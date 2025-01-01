@@ -138,8 +138,9 @@
                     
                     <div class="card-body">
                         <h5 class="card-title"><?php echo htmlspecialchars($article['title']); ?></h5>
-                        <p class="card-text"><?php echo htmlspecialchars(substr($article['description'], 0, 100)); ?>...</p>
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#articleModal<?php echo $article['id']; ?>">مطالعه بیشتر</button>
+                        <p class="card-text"><?php echo htmlspecialchars(substr($article['description'], 0, 100)); ?></p>
+                        <!-- <button class="btn btn-primary" data-toggle="modal" data-target="#articleModal<?php echo $article['id']; ?>">مطالعه بیشتر</button> -->
+                        <a class="btn btn-outline-primary" href="article?a=<?=$article['title'];?>">مطالعه بیشتر</a>
                     </div>
                 </div>
               </div>

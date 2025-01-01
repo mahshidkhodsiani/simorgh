@@ -24,11 +24,7 @@
     include '../jalaliDate.php';
     $sdate = new SDate();
 
-    $sql = "SELECT * FROM articles WHERE title LIKE '%درباره موسسه%'";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        $counter = 0;
-        while ($row = $result->fetch_assoc()) {
+
     ?>
         <div class="container mt-4">
             <div class="row justify-content-center">
@@ -44,10 +40,7 @@
                 </div>
             </div>
         </div>
-    <?php
-        }
-    }
-    ?>
+
 
     <?php include 'footer.php'; ?>
 

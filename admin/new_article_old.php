@@ -30,7 +30,27 @@ $id = $_SESSION["all_data"]['id'];
 
 
 
- 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="../summernote-0.8.20-dist/cdn/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="../summernote-0.8.20-dist/summernote-bs5.css" />
+
+    <script src="../summernote-0.8.20-dist/summernote-bs5.js"></script>
+
+    <link rel="stylesheet" href="../summernote-0.8.20-dist/summernote-bs4.css" />
+
+    <script src="../summernote-0.8.20-dist/summernote-bs4.js"></script>
+
+    <link rel="stylesheet" href="../summernote-0.8.20-dist/summernote.css" />
+
+    <script src="../summernote-0.8.20-dist/summernote.js"></script>
+
+    <link rel="stylesheet" href="../summernote-0.8.20-dist/summernote-lite.css" />
+
+    <script src="../summernote-0.8.20-dist/summernote-lite.js"></script>
+
+    <script src="../summernote-0.8.20-dist/lang/summernote-es-ES.js"></script>
 
 
     <link href="https://cdn.jsdelivr.net/npm/jodit/build/jodit.min.css" rel="stylesheet">
@@ -75,7 +95,7 @@ $id = $_SESSION["all_data"]['id'];
                     const editor = new Jodit('#editor');
                 </script>
 
-                <button type="submit" name="submit_post" class="btn btn-primary">ثبت مقاله</button>
+                <button type="submit" name="submit_post" class="btn btn-primary">Submit</button>
                 </form>
 
 
@@ -224,14 +244,14 @@ if (isset($_POST['submit_post'])) {
 
     // Escape strings to prevent SQL injection
     $title = $conn->real_escape_string($title);
-    // $content = $conn->real_escape_string($content);
+    $content = $conn->real_escape_string($content);
     $type = $conn->real_escape_string($type);
 
     $imagePath = '';
 
     // Handle the file upload
     if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
-        $uploadDir = '../upload/images/2025/';
+        $uploadDir = '../upload/images/2024/';
         $originalFileName = basename($_FILES['image']['name']);
         $uploadFile = $uploadDir . $originalFileName;
 
@@ -242,7 +262,7 @@ if (isset($_POST['submit_post'])) {
 
         // Move the uploaded file to the target directory
         if (move_uploaded_file($_FILES['image']['tmp_name'], $uploadFile)) {
-            $imagePath = "upload/images/2025/" . $originalFileName; // Save the relative path for the database entry
+            $imagePath = "upload/images/2024/" . $originalFileName; // Save the relative path for the database entry
         } else {
             echo json_encode(["status" => "error", "message" => "Failed to upload file."]);
             exit;
