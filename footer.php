@@ -48,7 +48,7 @@
      
         <div class="row">
             <div class="col-md-2">
-                <h6 class="mt-4"><a href="#"> ارتباط با ما</a></h6>
+                <h6 class="mt-4"><a href="articles/contact"> ارتباط با ما</a></h6>
                 
                 <h6 class="mt-3"><a href="#"> بهترین مقالات</a></h6>
                 

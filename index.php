@@ -67,9 +67,7 @@
             <div class="container">
             <h5 class="section-title h1">تازه ترین ها</h5>
             <div class="row">
-                <div class="col-md-12 d-flex justify-content-center mb-2">
-                    <img src="images/yalda.jpg" class="img-fluid" alt="یلدا سیمرغ" style="max-width: 100%; height: 1000px;">
-                </div>
+               
 
                 <!-- Team member -->
                 <div class="col-6 col-sm-4 mb-4">

@@ -32,7 +32,7 @@
                     <div class="card border border-danger" style="border-radius: 40px;">
                         <img class="mx-auto d-block img-fluid" src="../images/logo2.jpg" alt="موسسه هفت هنر سیمرغ" style="max-width: 100%; height: auto;">
                         <div class="card-body" dir="rtl" style="text-align: right;"> <!-- Ensured text-align right for RTL text -->
-                            <h4 class="card-title" style="color: black !important;"><?= $row['title'] ?></h4> <!-- Ensured black text color -->
+                            <h4 class="card-title" style="color: black !important;">درباره ما</h4> <!-- Ensured black text color -->
                             <br>
                             <p class="card-text custom-text"><?= $row['body'] ?></p>
                         </div>

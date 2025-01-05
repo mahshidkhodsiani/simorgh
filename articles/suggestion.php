@@ -54,7 +54,7 @@
                                 <h3>فرم انتقاد</h3>
                                 <div class="form-group">
                                     <label for="enteghad-text">می توانید متن خود را اینجا بنویسید</label>
-                                    <textarea class="form-control" id="enteghad-text" name="enteghad"></textarea>
+                                    <textarea class="form-control" id="enteghad-text" name="enteghad" required></textarea>
                                     <br>
                                     <button class="btn mb-2 mb-md-0 btn-outline-quarternary btn-block" name="enteghad_sabt">ثبت انتقاد</button>
                                 </div>
@@ -63,7 +63,7 @@
                                 <h3>فرم پیشنهاد</h3>
                                 <div class="form-group">
                                     <label for="suggest-text">می توانید پیشنهاد خود را اینجا بنویسید</label>
-                                    <textarea class="form-control" id="suggest-text" name="suggest"></textarea>
+                                    <textarea class="form-control" id="suggest-text" name="suggest" required></textarea>
                                     <br>
                                     <button class="btn mb-2 mb-md-0 btn-outline-quarternary btn-block" name="suggest_sabt">ثبت پیشنهاد</button>
                                 </div>

@@ -26,7 +26,7 @@
     ?>
 
    
-       <div class="container mt-4">
+        <div class="container mt-4">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-10">
                     <div class="card border border-danger" style="border-radius: 40px;">
@@ -101,29 +101,35 @@
                             </table>
                         </div>
 
-                        <!-- Pagination -->
+                        
                         <nav aria-label="Page navigation">
                             <ul class="pagination justify-content-center">
                                 <!-- Previous Page Link -->
                                 <li class="page-item <?php if ($page <= 1) echo 'disabled'; ?>">
                                     <a class="page-link" href="<?php if ($page > 1) echo '?page=' . ($page - 1); ?>">قبلی</a>
                                 </li>
-                                
-                                <!-- Numbered Page Links -->
+
+                                <!-- Only Three Page Links -->
                                 <?php
-                                for ($i = 1; $i <= $total_pages; $i++) {
+                                $range = 1; // Show only three pages including the current one
+                                $start = max(1, $page - $range);
+                                $end = min($total_pages, $page + $range);
+
+                                for ($i = $start; $i <= $end; $i++) {
                                     echo "<li class='page-item" . ($i == $page ? " active" : "") . "'>";
                                     echo "<a class='page-link' href='?page=" . $i . "'>" . $i . "</a>";
                                     echo "</li>";
                                 }
                                 ?>
-                                
+
                                 <!-- Next Page Link -->
                                 <li class="page-item <?php if ($page >= $total_pages) echo 'disabled'; ?>">
                                     <a class="page-link" href="<?php if ($page < $total_pages) echo '?page=' . ($page + 1); ?>">بعدی</a>
                                 </li>
                             </ul>
                         </nav>
+
+
 
                         <?php
                         // Close the connection
