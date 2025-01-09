@@ -57,9 +57,10 @@
                                 <p class="card-text"><?= $row['body'] ?></p>
 
                                 <br>
-                                <p style="color: #621e52;">جهت ثبت نام در کلاس های فرهنگی, هنری و آموزشی تماس بگیرید:</p>
-                                <p style="color: #621e52;">02188341652</p>
-                                <a href="../register.php" class="btn mb-2 mb-md-0 btn-outline-quarternary btn-sm">ثبت نام</a>
+                                <p style="color: #621e52;">جهت کسب اطلاعات بیشتر و شرکت دردوره ها با ما در ارتباط باشید.:</p>
+                                <p style="color: #621e52;">تلفن: 02188341652</p>
+                                <p style="color: #621e52;">واتساپ : 093554637055</p>
+                                <a href="../register.php" class="btn mb-2 mb-md-0 btn-outline-quarternary">ثبت نام در دوره ها</a>
                             </div>
                         </div>
                     </div>

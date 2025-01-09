@@ -30,28 +30,8 @@ $id = $_SESSION["all_data"]['id'];
 
 
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <script src="../summernote-0.8.20-dist/cdn/jquery.min.js"></script>
-
-    <link rel="stylesheet" href="../summernote-0.8.20-dist/summernote-bs5.css" />
-
-    <script src="../summernote-0.8.20-dist/summernote-bs5.js"></script>
-
-    <link rel="stylesheet" href="../summernote-0.8.20-dist/summernote-bs4.css" />
-
-    <script src="../summernote-0.8.20-dist/summernote-bs4.js"></script>
-
-    <link rel="stylesheet" href="../summernote-0.8.20-dist/summernote.css" />
-
-    <script src="../summernote-0.8.20-dist/summernote.js"></script>
-
-    <link rel="stylesheet" href="../summernote-0.8.20-dist/summernote-lite.css" />
-
-    <script src="../summernote-0.8.20-dist/summernote-lite.js"></script>
-
-    <script src="../summernote-0.8.20-dist/lang/summernote-es-ES.js"></script>
-
+    <link href="https://cdn.jsdelivr.net/npm/jodit/build/jodit.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/jodit/build/jodit.min.js"></script>
 
 </head>
 
@@ -99,11 +79,14 @@ $id = $_SESSION["all_data"]['id'];
                         </div>
                     </div>
                     
-                    <div class="summernote" id="summernote">
-                        <?= $row['body'] ?>
-                    </div> 
-                    <input type="hidden" name="content" id="content">
-                    <br>
+           
+
+                    <textarea id="editor" name="content">
+                    <?= $row['body'] ?>
+                    </textarea>
+                    <script>
+                        const editor = new Jodit('#editor');
+                    </script>
 
                     <div class="row">
                     
@@ -160,6 +143,11 @@ $id = $_SESSION["all_data"]['id'];
     </script>
 
 
+    <script>
+        $('form').submit(function() {
+        $('#editor').val(editor.getEditorValue()); // انتقال محتوا به textarea
+        });
+    </script>
 
 
 </body>
@@ -178,8 +166,6 @@ if (isset($_POST['submit_post'])) {
     // Escape strings to prevent SQL injection
     $title = $conn->real_escape_string($title);
 
-    // Don't escape \r\n, handle it properly in the output
-    $content = $conn->real_escape_string(trim($content)); // Trim to remove any unnecessary whitespace
 
     $imagePath = '';
 
