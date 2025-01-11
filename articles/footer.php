@@ -53,6 +53,43 @@
                 <h6 class="mt-3"><a href="index"> بهترین مقالات</a></h6>
                 
                 <h6 class="mt-3"><a href="#"> همکاری با ما</a></h6>
+                <ul>
+                    <li>
+                        whatsapp
+                        <a href="https://wa.me/+989354637055" target="_blank" class="ml-3 social-icon">
+                            <img src="../images/whatsapp.png" height="20px" width="20px">
+                            
+                        </a>
+                    </li>
+                    <li>
+                        telegram
+                        <a href="https://t.me/+989354637055" target="_blank" class="ml-3 social-icon">
+                            <img src="../images/telegram.png" height="25px" width="25px">
+                            
+                        </a>
+                    </li>
+                    <li>
+                        instagram
+                        <a href="https://www.instagram.com/haft_simorgh/" target="_blank" class="ml-3 social-icon">
+                            <img src="../images/instagram.png" height="19px" width="19px">
+                            
+                        </a>
+                    </li>
+                    <li>
+                        email
+                        <a href="mailto:info@simorghtv.com" class="ml-2 email-link social-icon">
+                            <img src="../images/email.png" height="20px" width="30px" alt="Email Icon">
+                            
+                        </a>
+                    </li>
+                    <li>
+                        phone
+                        <a href="tel:+989354637055" target="_blank" class="ml-3 call-link social-icon">
+                            <img src="../images/call.png" height="20px" width="20px" alt="Call Icon">
+                            
+                        </a>
+                    </li>
+                </ul>
 
             </div>
 

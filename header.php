@@ -146,53 +146,9 @@
 </div>
 
 
-<div class="top-bar">
-    <div class="container">
-        <div class="row">
-        <div class="col-5">
-        
-
-            <div class="float-right">
-                <a href="https://wa.me/+989354637055" target="_blank" class="ml-3 social-icon">
-                    <img src="images/whatsapp.png" height="20px" width="20px">
-                </a>
-                <a href="https://t.me/+989354637055" target="_blank" class="ml-3 social-icon">
-                    <img src="images/telegram.png" height="25px" width="25px">
-                </a>
-                <a href="https://www.instagram.com/haft_simorgh/" target="_blank" class="ml-3 social-icon">
-                    <img src="images/instagram.png" height="19px" width="19px">
-                </a>
-                <a href="mailto:sajadnader@yahoo.com" class="ml-2 email-link social-icon">
-                    <img src="images/email.png" height="20px" width="20px" alt="Email Icon">
-                </a>
-                <a href="tel:+989354637055" target="_blank" class="ml-3 call-link social-icon">
-                    <img src="images/call.png" height="20px" width="20px" alt="Call Icon">
-                </a>
-            </div>
-
-
-           
-
-         
-
-        </div>
-        <div class="col-7">
-            <p class="welcome-text">به سایت آموزشگاه سینمایی و موسسه هفت هنر سیمرغ خوش آمدید</p>
-        </div>
-
-
-        </div>
-
-    </div>
-</div>
 
 
 <header class="site-navbar js-sticky-header site-navbar-target" role="banner">
-
-    
-    
- 
-    
 
                     
         <nav class="site-navigation text-right ml-auto" role="navigation" aria-label="breadcrumb">
@@ -291,6 +247,10 @@
        
 
 
+        <a href="tel:+989354637055" target="_blank" class="ml-3 call-link social-icon" style="color:black">
+            <img src="images/call.png" height="20px" width="20px" alt="Call Icon">
+            09354637055
+        </a>
 
         <div class="">
             <a href="./" >

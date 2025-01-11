@@ -122,53 +122,8 @@
 </div>
 
 
-<div class="top-bar">
-    <div class="container">
-        <div class="row">
-        <div class="col-10">
-        
-
-            <div class="float-right">
-                <a href="https://wa.me/+989354637055" target="_blank" class="ml-3 social-icon">
-                    <img src="../images/whatsapp.png" height="20px" width="20px">
-                </a>
-                <a href="https://t.me/+989354637055" target="_blank" class="ml-3 social-icon">
-                    <img src="../images/telegram.png" height="25px" width="25px">
-                </a>
-                <a href="https://www.instagram.com/haft_simorgh/" target="_blank" class="ml-3 social-icon">
-                    <img src="../images/instagram.png" height="19px" width="19px">
-                </a>
-                <a href="mailto:sajadnader@yahoo.com" class="ml-2 email-link social-icon">
-                    <img src="../images/email.png" height="20px" width="20px" alt="Email Icon">
-                </a>
-                <a href="tel:+989354637055" target="_blank" class="ml-3 call-link social-icon">
-                    <img src="../images/call.png" height="20px" width="20px" alt="Call Icon">
-                </a>
-            </div>
-
-
-
-         
-
-        </div>
-        <div class="col-2">
-            <!-- <a href="../register" class="btn mb-2 mb-md-0 btn-outline-quarternary btn-block">ثبت نام</a> -->
-        </div>
-
-        </div>
-
-    </div>
-</div>
-
-
 <header class="site-navbar js-sticky-header site-navbar-target" role="banner">
-
-    
-    
- 
-    
-
-                    
+  
         <nav class="site-navigation text-right ml-auto" role="navigation">
             <ul class="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
                 <li><a href="../" class="nav-link">صفحه اصلی</a></li>
@@ -178,10 +133,10 @@
                 <li class="has-children">
                     <a href="order_ads">سفارش تبلیغات</a>
                     <ul class="dropdown arrow-top">
-                        <li><a href="motion_graphics" class="nav-link">موشن گرافیک</a></li>
-                        <li><a href="teaser" class="nav-link">تیزر ویدیویی</a></li>
-                        <li><a href="cinema" class="nav-link">سه بعدی و سینما فوری</a></li>
-                        <li><a href="chromakey" class="nav-link">کروماکی و تولید محتوا</a></li>
+                        <li><a href="../articles/motion_graphics" class="nav-link">موشن گرافیک</a></li>
+                        <li><a href="../articles/teaser" class="nav-link">تیزر ویدیویی</a></li>
+                        <li><a href="../articles/cinema" class="nav-link">سه بعدی و سینما فوری</a></li>
+                        <li><a href="../articles/chromakey" class="nav-link">کروماکی و تولید محتوا</a></li>
                     </ul>
                 </li>
 
@@ -242,6 +197,10 @@
         <div class="toggle-button d-inline-block d-lg-none"><a href="#" class="site-menu-toggle py-5 js-menu-toggle text-black"><span class="icon-menu h3"></span></a></div>
        
 
+        <a href="tel:+989354637055" target="_blank" class="ml-3 call-link social-icon" style="color:black">
+            <img src="../images/call.png" height="20px" width="20px" alt="Call Icon">
+            09354637055
+        </a>
 
         <div class="">
             <a href="../" >

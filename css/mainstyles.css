@@ -33,7 +33,7 @@ html, body {
 
 body {
     font-family: "B Titr" !important; 
-    background: #f8f9fa; /* Add background color if needed */
+    /* background: #f8f9fa; */
 }
 
 /* Main content should take up remaining space */
@@ -70,7 +70,7 @@ body {
 
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 #team {
-    background: #eee !important;
+    background: #d4c4e5 !important;
 }
 
 .btn-primary:hover,
@@ -93,7 +93,6 @@ section {
 
 section .section-title {
     text-align: center;
-    color: #4d0707;
     margin-bottom: 50px;
     text-transform: uppercase;
 }
@@ -520,4 +519,10 @@ a, a:hover {
 		}
   }
 }
+
+
+
+
+
+
 
