@@ -7,12 +7,7 @@
     <meta name="description" content="سفارش تبلیغات موثر برای کسب‌وکار شما. با انتخاب خدمات تبلیغاتی حرفه‌ای، برند خود را تقویت کنید و مشتریان بیشتری جذب کنید. با ما تماس بگیرید.">
 
     
-   
-    <link rel="stylesheet" href="../fonts/icomoon/style.css">
-    <link rel="stylesheet" href="../css/owl.carousel.min.css">
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/mainstyles.css">
+    <?php include "includes.php"; ?>
 
     <link rel="icon" href="../images/logo1.ico" type="image/x-icon">
 

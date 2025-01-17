@@ -56,6 +56,13 @@
                     <h3 style="color: red;">تولیدات رادیویی</h3>
                     <p style="color: red;">انواع برنامه های رادیویی و گویندگی.</p>
                 </div>
+
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="images/16.jpg" alt="Second slide">
+                    <div class="carousel-caption d-none d-md-block">
+                    
+                    </div>
+
                 </div>
                 <div class="carousel-item"><img class="d-block w-100" src="images/3.jpg" alt="Second slide">
                 <div class="carousel-caption d-none d-md-block"></div>
@@ -490,6 +497,6 @@
             <hr class="my-4">
             
         </div>
-        <!-- End of container-fluid --> <?php include "footer.php"; ?>
+         <?php include "footer.php"; ?>
     </body>
 </html>

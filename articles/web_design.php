@@ -4,12 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>خدمات طراحی سایت</title>
-  
-    <link rel="stylesheet" href="../fonts/icomoon/style.css">
-    <link rel="stylesheet" href="../css/owl.carousel.min.css">
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/mainstyles.css">
+    
+    <?php include "includes.php"; ?>
 
     <link rel="icon" href="../images/logo1.ico" type="image/x-icon">
 

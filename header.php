@@ -130,6 +130,8 @@
 }
 
 
+
+
 </style>
 
 
@@ -144,6 +146,10 @@
     </div>
     <div class="site-mobile-menu-body"></div>
 </div>
+
+
+<h5 style="text-align: center; background-color : #d4c4e5 ">** به موسسه فرهنگی هنری هفت هنر سیمرغ خوش آمدید **</h5>
+
 
 
 
@@ -236,7 +242,11 @@
                 <!-- <li><a href="gallery/all" class="nav-link">پرداخت اقساطی دوره ها</a></li> -->
 
                 <li><a href="register" class="btn mb-2 mb-md-0 btn-outline-quarternary btn-block btn-sm">ثبت نام</a></li>
+
+                     
+              
             </ul>
+       
 
         </nav>
 
@@ -246,16 +256,29 @@
         <div class="toggle-button d-inline-block d-lg-none"><a href="#" class="site-menu-toggle py-5 js-menu-toggle text-black"><span class="icon-menu h3"></span></a></div>
        
 
+        <div class="dropdown">
+            <button class="btn btn-outline-quarternary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                مجازی
+            </button>
+            <ul class="dropdown-menu">
+            <a href="tel:+989354637055" target="_blank" class="ml-3 call-link social-icon" style="color:black !important"><img src="images/call.png" height="20px" width="20px" alt="Call Icon"></a>
+            <a href="tel:300016343000" class="ml-3 call-link social-icon" target="_blank"><img src="images/sms.png" height="25px" width="25px" alt="Call Icon"></a>
+            <a href="https://wa.me/+989354637055" class="ml-3 call-link social-icon" target="_blank"><img src="images/whatsapp.png" height="30px" width="30px" alt="Call Icon"></a>
+            <a href="https://t.me/+989354637055" class="ml-3 call-link social-icon" target="_blank"><img src="images/telegram.png" height="30px" width="30px" alt="Call Icon"></a>
+            <a href="https://www.instagram.com/haft_simorgh/" class="ml-3 call-link social-icon" target="_blank"><img src="images/instagram.png" height="25px" width="25px" alt="Call Icon"></a>
+            <a href="mailto:info@simorghtv.com" class="ml-3 call-link social-icon" target="_blank"><img src="images/email.png" height="30px" width="30px" alt="Call Icon"></a>
+            
+            </ul>
+        </div>
 
-        <a href="tel:+989354637055" target="_blank" class="ml-3 call-link social-icon" style="color:black">
-            <img src="images/call.png" height="20px" width="20px" alt="Call Icon">
-            09354637055
-        </a>
+
+
+
+        
 
         <div class="">
             <a href="./" >
                 <img src="images/logo1.png" height="60px">
-              
             </a>
         </div>
 
