@@ -49,56 +49,34 @@
         $sdate = new SDate();
         ?>
 
-        <!-- <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
-                <div class="carousel-item active"><img class="d-block w-100" src="images/1.jpg" alt="First slide">
-                <div class="carousel-caption d-none d-md-block">
-                    <h3 style="color: red;">تولیدات رادیویی</h3>
-                    <p style="color: red;">انواع برنامه های رادیویی و گویندگی.</p>
+                <div class="carousel-item active">
+                    <img class="d-block w-100" src="images/1.jpg" alt="First slide">
                 </div>
-
                 <div class="carousel-item">
-                    <img class="d-block w-100" src="images/16.jpg" alt="Second slide">
+                    <img class="d-block w-100" src="images/15.jpg" alt="Second slide">
                     <div class="carousel-caption d-none d-md-block">
-                    
                     </div>
-
                 </div>
                 <div class="carousel-item"><img class="d-block w-100" src="images/3.jpg" alt="Second slide">
                 <div class="carousel-caption d-none d-md-block"></div>
                 </div>
-            </div><a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Previous</span></a><a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Next</span></a>
-        </div> -->
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Previous</span></a><a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Next</span></a>
+        </div>
 
+ 
 
 
         
 
         <br class="mt-5">
 
-        <div class="container-fluid mt-5">
-            <div class="row">
-                
-                <div class="col-md-6">
-                    <img src="images/banner1.png" width="100%" class="img-fluid">
-                </div>
-                <div class="col-md-6" style="text-align: center;line-height: 2.5;">
-                    <h2>درباره سیمرغ</h2>
-                    <p>
-                    موسسه فرهنگی هنری سیمرغ از سال 1398 با هدف ارتقاء سطح فرهنگی و هنری جامعه تأسیس گردیده است. این موسسه با بهره‌گیری از اساتید مجرب و حرفه‌ای در حوزه‌های مختلف هنری، توانسته است آموزش‌هایی متنوع و کارآمد ارائه دهد.
 
-                    در موسسه سیمرغ، علاقه‌مندان به هنر می‌توانند در کلاس‌های تخصصی گویندگی و فن بیان، بازیگری، موشن گرافیک و سایر رشته‌های هنری شرکت کنند. این دوره‌ها به گونه‌ای طراحی شده‌اند که با توجه به نیازهای آموزشی و هنری هر فرد، فرصت‌هایی برای رشد و پیشرفت در هر یک از این حوزه‌ها فراهم می‌آورد.
-
-                    موسسه فرهنگی هنری سیمرغ مفتخر است که به عنوان یک مرکز معتبر آموزشی، نقش موثری در شکوفایی استعدادهای جوانان ایفا کرده و به افراد کمک می‌کند تا در دنیای هنر به موفقیت‌های چشم‌گیری دست یابند.
-                    </p>
-                </div>
-            </div>
-        </div>
 
         <div class="container-fluid px-4 mt-4">
-            <!-- Add custom padding using Bootstrap classes -->
-            <!-- <p class="workshop-text"> * برگزاری ورکشاپ, کارگاه و دوره های تخصصی و آموزشی *</p> -->
-            <!-- Team -->
+         
             <section id="team" class="pb-5">
                 <div class="container">
                 <h5 class="section-title h1">تازه ترین ها</h5>
@@ -448,7 +426,7 @@
                     </div>
 
                     <div class="col-12 col-sm-6">
-                        <img class="img-fluid" src="images/14.jpg" width="100%">
+                        <img class="img-fluid" src="images/17.jpg" width="100%">
                     </div>
                 </div>
                 </div>
