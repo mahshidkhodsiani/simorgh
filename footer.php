@@ -43,92 +43,51 @@
 
 </style>
 <!-- Footer -->
-<footer class="footer mt-2 py-3">
+<footer class="footer">
     <div class="container">
-     
         <div class="row">
-            <div class="col-md-2">
-                <h6 class="mt-4"><a href="articles/contact"> ارتباط با ما</a></h6>
-                
-                <h6 class="mt-3"><a href="articles/index"> بهترین مقالات</a></h6>
-                
-                <h6 class="mt-3"><a href="#"> همکاری با ما</a></h6>
-                <ul>
-                    <li>
-                        whatsapp
-                        <a href="https://wa.me/+989354637055" target="_blank" class="ml-3 social-icon">
-                            <img src="images/whatsapp.png" height="20px" width="20px">
-                            
-                        </a>
-                    </li>
-                    <li>
-                        telegram
-                        <a href="https://t.me/+989354637055" target="_blank" class="ml-3 social-icon">
-                            <img src="./images/telegram.png" height="25px" width="25px">
-                            
-                        </a>
-                    </li>
-                    <li>
-                        instagram
-                        <a href="https://www.instagram.com/haft_simorgh/" target="_blank" class="ml-3 social-icon">
-                            <img src="./images/instagram.png" height="19px" width="19px">
-                            
-                        </a>
-                    </li>
-                    <li>
-                        email
-                        <a href="mailto:info@simorghtv.com" class="ml-2 email-link social-icon">
-                            <img src="./images/email.png" height="20px" width="30px" alt="Email Icon">
-                            
-                        </a>
-                    </li>
-                    <li>
-                        phone
-                        <a href="tel:+989354637055" target="_blank" class="ml-3 call-link social-icon">
-                            <img src="./images/call.png" height="20px" width="20px" alt="Call Icon">
-                            
-                        </a>
-                    </li>
-                </ul>
-
-
-            </div>
-
-            <div class="col-md-7">
-            <a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=514858&Code=XLHp9yPcQnRZL83Nfd3Kg9BbN4INSCXP'><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=514858&Code=XLHp9yPcQnRZL83Nfd3Kg9BbN4INSCXP' alt='' style='cursor:pointer' code='XLHp9yPcQnRZL83Nfd3Kg9BbN4INSCXP'></a>
-              
-            </div>
-
+            <!-- Links Section -->
             <div class="col-md-3">
-               
-               <div class="footer-location">
-                   <h2>آدرس</h2>
-                   <p>تهران خیابان میرزای شیرازی, پایین تر از مطهری, کوچه 15 پلاک 44, واحد 2</p>
-                   <p>تلفن: 02188341652</p>
-                   <!-- Google Map Embed -->
-                   <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12956.830332236785!2d51.416207!3d35.721113!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3f8e01f4778ac69d%3A0xf70f3be81b1e1e78!2shaft_simorgh!5e0!3m2!1sen!2sus!4v1721717006558!5m2!1sen!2sus"
-                       width="100%" height="" style="border:0;" allowfullscreen="" loading="lazy">
-                   </iframe>
-               </div>
-           </div>
-           
-           
-           
-        </div>
+                <h6>لینک‌های مفید</h6>
+                <ul class="simple-links">
+                    <li><a href="articles/contact">ارتباط با ما</a></li>
+                    <li><a href="articles/index">بهترین مقالات</a></li>
+                    <li><a href="#">همکاری با ما</a></li>
+                </ul>
+             
+            </div>
 
-        <div class="row mt-3">
-            <div class="col-md-12 d-flex justify-content-center">
-                <b>
-                    تمامی حقوق این سایت متعلق به موسسه هفت هنر سیمرغ می باشد.
-                </b>
+            <!-- Video & Certification Section -->
+            <div class="col-md-6 text-center">
+                <a href="https://trustseal.enamad.ir/?id=514858&Code=XLHp9yPcQnRZL83Nfd3Kg9BbN4INSCXP" target="_blank">
+                    <img src="https://trustseal.enamad.ir/logo.aspx?id=514858&Code=XLHp9yPcQnRZL83Nfd3Kg9BbN4INSCXP" alt="Enamad" style="cursor: pointer; max-width: 120px;">
+                </a>
+                <video autoplay loop muted style="margin-top: 15px; max-width: 100%; border-radius: 10px;">
+                    <source src="images/sms.mp4" type="video/mp4">
+                </video>
+            </div>
+
+            <!-- Address Section -->
+            <div class="col-md-3">
+                <div class="footer-location">
+                    <h6>آدرس</h6>
+                    <p>تهران، خیابان میرزای شیرازی، پایین‌تر از مطهری، کوچه 15، پلاک 44، واحد 2</p>
+                    <p>تلفن: 02188341652</p>
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12956.830332236785!2d51.416207!3d35.721113!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3f8e01f4778ac69d%3A0xf70f3be81b1e1e78!2shaft_simorgh!5e0!3m2!1sen!2sus!4v1721717006558!5m2!1sen!2sus"
+                        width="100%" height="150" style="border: 0;" allowfullscreen="" loading="lazy">
+                    </iframe>
+                </div>
             </div>
         </div>
-        
 
-        
+        <!-- Footer Bottom Section -->
+        <div class="footer-bottom" style="text-align: center;">
+            <p>تمامی حقوق این سایت متعلق به موسسه هفت هنر سیمرغ می‌باشد.</p>
+        </div>
     </div>
 </footer>
+
 
 <script src="js/jquery-3.3.1.min.js"></script>
 <script src="js/popper.min.js"></script>
