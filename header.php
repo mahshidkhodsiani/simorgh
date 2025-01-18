@@ -148,7 +148,7 @@
 </div>
 
 
-<h5 style="text-align: center; background-color : #d4c4e5 ">** به موسسه فرهنگی هنری هفت هنر سیمرغ خوش آمدید **</h5>
+<h5 style="text-align: center; background-color : #c71f1f ">** به موسسه فرهنگی هنری هفت هنر سیمرغ خوش آمدید **</h5>
 
 
 
@@ -222,26 +222,23 @@
                     </ul>
                 </li> -->
 
-             
-                
-         
-                
-                <li class="has-children">
-                    <a href="#">خدمات سیمرغ</a>
-                    <ul class="dropdown arrow-top">
-                        <li >
-                            <a href="articles/web_design">طراحی سایت</a>
-                        </li>
-                    </ul>
-                </li>
 
               
                 <li><a href="articles/suggestion" class="nav-link">انتقادات و پیشنهادات</a></li>
-                <li><a href="gallery/all" class="nav-link">نمونه کارها(گالری)</a></li>
+                <!-- <li><a href="gallery/all" class="nav-link">نمونه کارها(گالری)</a></li> -->
+
+                <li class="has-children">
+                    <a href="#">نمونه کارها</a>
+                    <ul class="dropdown arrow-top">
+                        <li><a href="#pricing-section" class="nav-link">گالری عکس</a></li>
+                        <li><a href="#faq-section" class="nav-link">ویدیوها</a></li>
+                    </ul>
+                </li>
+
                 <li><a href="articles" class="nav-link">وبلاگ سیمرغ</a></li>
                 <!-- <li><a href="gallery/all" class="nav-link">پرداخت اقساطی دوره ها</a></li> -->
 
-                <li><a href="register" class="btn mb-2 mb-md-0 btn-outline-quarternary btn-block btn-sm">ثبت نام</a></li>
+                <li><a href="register" class="btn mb-2 mb-md-0 btn-danger btn-block btn-sm">ثبت نام</a></li>
 
                      
               
@@ -258,7 +255,7 @@
 
         <div class="dropdown">
             <button class="btn btn-outline-quarternary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                مجازی
+                ارتباط با ما
             </button>
             <ul class="dropdown-menu">
             <a href="tel:+989354637055" target="_blank" class="ml-3 call-link social-icon" style="color:black !important"><img src="images/call.png" height="20px" width="20px" alt="Call Icon"></a>

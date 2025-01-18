@@ -202,7 +202,7 @@
        
         <div class="dropdown">
             <button class="btn btn-outline-quarternary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                مجازی
+                ارتباط با ما
             </button>
             <ul class="dropdown-menu">
             <a href="tel:+989354637055" target="_blank" class="ml-3 call-link social-icon" style="color:black !important"><img src="../images/call.png" height="20px" width="20px" alt="Call Icon"></a>
