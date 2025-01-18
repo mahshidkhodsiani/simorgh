@@ -173,23 +173,17 @@
                     </ul>
                 </li>
 
-       
 
-                
-             
-                
-                <li class="has-children">
-                    <a href="#">خدمات سیمرغ</a>
-                    <ul class="dropdown arrow-top">
-                        <li >
-                            <a href="../articles/web_design">طراحی سایت</a>
-                        </li>
-                    </ul>
-                </li>
                 
         
                 <li><a href="../articles/suggestion" class="nav-link">انتقادات و پیشنهادات</a></li>
-                <li><a href="all" class="nav-link">نمونه کارها(گالری)</a></li>
+                <li class="has-children">
+                    <a href="#">نمونه کارها</a>
+                    <ul class="dropdown arrow-top">
+                        <li><a href="#pricing-section" class="nav-link">گالری عکس</a></li>
+                        <li><a href="#faq-section" class="nav-link">ویدیوها</a></li>
+                    </ul>
+                </li>
                 <li><a href="./articles" class="nav-link">وبلاگ سیمرغ</a></li>
 
 
