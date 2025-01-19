@@ -59,7 +59,6 @@
                     <div class="carousel-caption d-none d-md-block">
                     </div>
                 </div>
-                <div class="carousel-item"><img class="d-block w-100" src="images/3.jpg" alt="Second slide">
                 <div class="carousel-caption d-none d-md-block"></div>
                 </div>
             </div>
@@ -278,8 +277,91 @@
                 </div>
                 </div>
             </section>
-            <!-- Team -->
+
             <hr class="my-4">
+            <section class="border">
+
+
+            
+                <div class="container">
+                    <h1 class="text-center mb-4">آخرین مطالب سیمرغ</h1>
+                    
+                    <div class="row justify-content-center">
+                      
+                        <a href="portofilo/pictures">
+                            <h3 class="p text-center text-dark" id="" title="کلیک کنید"> گالری تصاویر
+                            </h3>
+                        </a>
+                        <?php
+                        $sql = "SELECT * FROM gallery ORDER BY id DESC LIMIT 6"; // گرفتن 4 تصویر آخر
+                        $result = mysqli_query($conn, $sql);
+
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                ?>
+                                <!-- Single Image -->
+                                <div class="col-md-2 mb-4 col-6">
+                                    <div class="card four shadow-sm" style="border-radius: 10px;">
+                                        <!-- تصویر از دیتابیس -->
+                                        <img class="card-img-top" src="<?= str_replace('../', '', $row['images']) ?>" alt="<?= htmlspecialchars($row['title']) ?>" style="height: 200px; object-fit: cover; border-radius: 10px 10px 0 0;">
+
+                                        <!-- عنوان و توضیحات -->
+                                        <div class="card-body text-center">
+                                            <a href="portofilo/pictures" class="btn mb-2 mb-md-0 btn-outline-quarternary btn-block btn-sm">دیدن تصویر</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php
+                            }
+                        } else {
+                            echo "<p class='text-center'>تصویری موجود نیست.</p>";
+                        }
+                        ?>
+                    </div>
+
+
+                </div>
+
+
+                <div class="container">
+                    <a href="articles">
+                        <h3 class="p text-center text-dark" id="" title="کلیک کنید"> وبلاگ سیمرغ 
+                        </h3>
+                    </a>
+                    <div class="row">
+                
+                    <?php
+                    
+                    
+                    // کوئری برای خواندن 8 مقاله آخر
+                    $sql = "SELECT * FROM articles ORDER BY id DESC LIMIT 6";
+                    $result = $conn->query($sql);
+                    
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                ?>
+                            <!-- Card 1 -->
+                            <div class="col-md-2 mb-4 col-6">
+                                <div class="card four">
+                                    <div class="card-body">
+                                        <img src="<?=$row['images']?>" class="img-fluid" alt="تصویر مقاله" height="200px" width="200px">
+                                        <h5 class="card-title rtl-title"><?=$row['title']?></h5>
+                                        <a href="articles" class="btn mb-2 mb-md-0 btn-outline-quarternary btn-block btn-sm">مطالعه بیشتر</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <?php
+                            }
+                        }
+                        ?>
+                
+                    </div>
+                </div>
+            </section>
+            <hr class="my-4">
+
             <section class="light">
                 <div class="container py-2">
               
@@ -386,6 +468,7 @@
                 </article>
                 </div>
             </section>
+
             <hr class="my-4">
 
             <section id="portfolio" class="mt-5">
@@ -433,46 +516,7 @@
             </section>
 
             
-            <hr class="my-4">
-
-            <section id="portfolio" class="mt-5">
-                <div class="container">
-                <a href="articles">
-                    <h1 class="h1 text-center text-dark" id="pageHeaderTitle" title="کلیک کنید"> وبلاگ سیمرغ <img src="images/link.jpg" height="30px" width="30px" alt="آخرین مقالات" title="آخرین مقالات سیمرغ">
-                    </h1>
-                </a>
-                <div class="row">
-            
-                <?php
-                
-                
-                // کوئری برای خواندن 8 مقاله آخر
-                $sql = "SELECT * FROM articles ORDER BY id DESC LIMIT 8";
-                $result = $conn->query($sql);
-                
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            ?>
-                        <!-- Card 1 -->
-                        <div class="col-6 col-sm-3">
-                            <div class="card four">
-                                <div class="card-body">
-                                    <img src="<?=$row['images']?>" class="img-fluid" alt="تصویر مقاله" height="200px" width="200px">
-                                    <h5 class="card-title rtl-title"><?=$row['title']?></h5>
-                                    <a href="articles" class="btn mb-2 mb-md-0 btn-outline-quarternary btn-block btn-sm">مطالعه بیشتر</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <?php
-                        }
-                    }
-                    ?>
-            
-                </div>
-                </div>
-            </section>
-            <hr class="my-4">
+       
             
         </div>
          <?php include "footer.php"; ?>

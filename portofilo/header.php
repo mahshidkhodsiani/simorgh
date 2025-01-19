@@ -180,8 +180,8 @@
                 <li class="has-children">
                     <a href="#">نمونه کارها</a>
                     <ul class="dropdown arrow-top">
-                        <li><a href="#pricing-section" class="nav-link">گالری عکس</a></li>
-                        <li><a href="#faq-section" class="nav-link">ویدیوها</a></li>
+                        <li><a href="pictures" class="nav-link">گالری عکس</a></li>
+                        <li><a href="videos" class="nav-link">ویدیوها</a></li>
                     </ul>
                 </li>
                 <li><a href="./articles" class="nav-link">وبلاگ سیمرغ</a></li>

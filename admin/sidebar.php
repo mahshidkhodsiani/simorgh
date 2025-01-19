@@ -136,6 +136,24 @@
         <img src="../images/home.png" height="20px" width="20px">
         صفحه اول
     </a>
+
+
+    <!-- for dropdown : -->
+    <a href="javascript:void(0);" class="dropdown-btn">
+        <img src="../images/flash.png" height="20px" width="20px">
+        افزودن نمونه کار جدید
+    </a>
+    <div class="dropdown-container">
+        <a href="new_pic" class="nav-link <?php if (basename($_SERVER['REQUEST_URI']) === 'new_pic') echo 'active'; ?>">
+            <img src="../images/portofilo.png" height="20px" width="20px">
+            گالری عکس
+        </a>
+        <a href="new_video" class="nav-link <?php if (basename($_SERVER['REQUEST_URI']) === 'new_video') echo 'active'; ?>">
+            <img src="../images/portofilo.png" height="20px" width="20px">
+            ویدیوی جدید
+        </a>
+    </div>
+
     <a href="new_article" class="nav-link <?php if (basename($_SERVER['REQUEST_URI']) === 'new_article') echo 'active'; ?>">
         <img src="../images/add-article.jpg" height="20px" width="20px">
         افزودن مقاله جدید
@@ -157,21 +175,8 @@
         افزودن گوینده جدید
     </a>
 
-    <!-- for dropdown :
-    <a href="javascript:void(0);" class="dropdown-btn">
-        <img src="../images/flash.png" height="20px" width="20px">
-            سفارش تبلیغات 
-    </a>
-    <div class="dropdown-container">
-        <a href="new_motiongraphic" class="nav-link <?php if (basename($_SERVER['REQUEST_URI']) === 'new_motiongraphic') echo 'active'; ?>">
-            <img src="../images/add-article.jpg" height="20px" width="20px">
-            موشن گرافیک
-        </a>
-        <a href="clips" class="nav-link <?php if (basename($_SERVER['REQUEST_URI']) === 'clips') echo 'active'; ?>">
-            <img src="../images/add-article.jpg" height="20px" width="20px">
-            کلیپ
-        </a>
-    </div> -->
+
+    
 
     <a href="new_user" class="nav-link <?php if (basename($_SERVER['REQUEST_URI']) === 'new_user') echo 'active'; ?>">
         <img src="../images/add-user.jpg" height="20px" width="20px">

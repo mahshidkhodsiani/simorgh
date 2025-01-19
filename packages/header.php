@@ -185,8 +185,8 @@
                 <li class="has-children">
                     <a href="#">نمونه کارها</a>
                     <ul class="dropdown arrow-top">
-                        <li><a href="#pricing-section" class="nav-link">گالری عکس</a></li>
-                        <li><a href="#faq-section" class="nav-link">ویدیوها</a></li>
+                        <li><a href="../portofilo/pictures" class="nav-link">گالری عکس</a></li>
+                        <li><a href="../portofilo/videos" class="nav-link">ویدیوها</a></li>
                     </ul>
                 </li>
                 
