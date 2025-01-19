@@ -76,6 +76,117 @@
 
         <div class="container-fluid px-4 mt-4">
          
+
+            <section class="light">
+                <div class="container py-2">
+                <h5 class="section-title h1">آخرین مطالب سیمرغ</h5>
+              
+                <article class="postcard light blue">
+                    <a href="courses/workshop" class="postcard__img_link">
+                    <img class="postcard__img" src="images/workshop.jpg" alt="موسسه هفت هنر سیمرغ" height="400px" />
+                    </a>
+                    <div class="postcard__text t-dark">
+                    <h1 class="postcard__title blue">
+                        <a href="courses/workshop">ورکشاپ گویندگی رادیو</a>
+                    </h1>
+                    <div class="postcard__subtitle small"></div>
+                    <div class="postcard__bar"></div>
+                    <div class="postcard__preview-txt mr-5">
+                        <p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">تجربه ای متفاوت در رادیو سیمرغ</p>
+                        <p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">همراه با گویندگان رادیو</p>
+                        <p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">شماهم اگر استعداد یا علاقه ای در زمینه گویندگی دارید میتوانید روزهای پنجشنبه هرهفته با شرکت در ورکشاپ گویندگی در ضبط برنامه رادیویی حضور داشته باشید.</p>
+                    </div>
+                    <ul class="postcard__tagbox">
+                        <a href="courses/workshop">
+                        <li class="tag__item">
+                            <i class="fas fa-clock mr-2"></i>ادامه
+                        </li>
+                        </a>
+                    </ul>
+                    </div>
+                </article>
+                <article class="postcard light red">
+                    <a class="postcard__img_link" href="courses/speaking_training_course">
+                    <img class="postcard__img" src="images/speaking3.jpg" alt="موسسه هفت هنر سیمرغ" height="400px" />
+                    </a>
+                    <div class="postcard__text t-dark">
+                    <h1 class="postcard__title blue">
+                        <a href="courses/speaking_training_course">دوره آموزشی فن بیان و گویندگی</a>
+                    </h1>
+                    <div class="postcard__subtitle small"></div>
+                    <div class="postcard__bar"></div>
+                    <div class="postcard__preview-txt">
+                        <h4 class="" style="font-family: &quot;Open Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; color: rgb(33, 37, 41);">
+                        <p style="font-family: &quot;B Titr&quot;; font-size: 16px;">سرفصل های دوره</p>
+                        <p style="font-family: &quot;B Titr&quot;; font-size: 16px;">❗️فن بیان و سخنوری&nbsp;</p>
+                        <p style="font-family: &quot;B Titr&quot;; font-size: 16px;">❗️انواع حس ، لحن ، بیان و تنفس</p>
+                        <p style="font-family: &quot;B Titr&quot;; font-size: 16px;">❗️تیزرهای تبلیغاتی و دکلمه خوانی ...</p>
+                        </h4>
+                    </div>
+                    <ul class="postcard__tagbox">
+                        <a href="courses/speaking_training_course">
+                        <li class="tag__item">
+                            <i class="fas fa-clock mr-2"></i>ادامه
+                        </li>
+                        </a>
+                    </ul>
+                    </div>
+                </article>
+                <article class="postcard light blue">
+                    <a href="courses/acting1" class="postcard__img_link">
+                    <img class="postcard__img" src="images/acting1.jpg" alt="موسسه هفت هنر سیمرغ" height="400px" />
+                    </a>
+                    <div class="postcard__text t-dark">
+                    <h1 class="postcard__title blue">
+                        <a href="courses/acting1">دوره‌های بازیگری بزرگسال موسسه «سیمرغ» </a>
+                    </h1>
+                    <div class="postcard__subtitle small"></div>
+                    <div class="postcard__bar"></div>
+                    <div class="postcard__preview-txt mr-5">
+                        <p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">سرفصل های دوره&nbsp;</p>
+                        <p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">-بازیگری روی صحنه</p>
+                        <p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">-بدن و بیان در بازیگری</p>
+                        <p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">-فن بیان در‌ بازیگری</p>
+                        <p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">-بداهه گویی و بداهه پردازی</p>
+                    </div>
+                    <ul class="postcard__tagbox">
+                        <a href="courses/acting1">
+                        <li class="tag__item">
+                            <i class="fas fa-clock mr-2"></i>ادامه
+                        </li>
+                        </a>
+                    </ul>
+                    </div>
+                </article>
+                <article class="postcard light red">
+                    <a class="postcard__img_link" href="courses/motion_graphics">
+                    <img class="postcard__img" src="images/motion.jpg" alt="موسسه هفت هنر سیمرغ" height="400px" />
+                    </a>
+                    <div class="postcard__text t-dark">
+                    <h1 class="postcard__title blue">
+                        <a href="courses/motion_graphics">دوره آکادمیک و تخصصی موشن گرافیک و تولید محتوا </a>
+                    </h1>
+                    <div class="postcard__subtitle small"></div>
+                    <div class="postcard__bar"></div>
+                    <div class="postcard__preview-txt">
+                        <p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">آموزشگاه فرهنگی هنری و سینمایی سیمرغ</p>
+                        <p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">کمتر از سه ماه با آموزش تخصصی تولید محتوا</p>
+                        <p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">نرم افزارهای آموزشی</p>
+                    </div>
+                    <ul class="postcard__tagbox">
+                        <a href="courses/motion_graphics">
+                        <li class="tag__item">
+                            <i class="fas fa-clock mr-2"></i>ادامه
+                        </li>
+                        </a>
+                    </ul>
+                    </div>
+                </article>
+                </div>
+            </section>
+
+            <hr class="my-4">
+
             <section id="team" class="pb-5">
                 <div class="container">
                 <h5 class="section-title h1">تازه ترین ها</h5>
@@ -279,50 +390,9 @@
             </section>
 
             <hr class="my-4">
+        
+
             <section class="border">
-
-
-            
-                <div class="container">
-                    <h1 class="text-center mb-4">آخرین مطالب سیمرغ</h1>
-                    
-                    <div class="row justify-content-center">
-                      
-                        <a href="portofilo/pictures">
-                            <h3 class="p text-center text-dark" id="" title="کلیک کنید"> گالری تصاویر
-                            </h3>
-                        </a>
-                        <?php
-                        $sql = "SELECT * FROM gallery ORDER BY id DESC LIMIT 6"; // گرفتن 4 تصویر آخر
-                        $result = mysqli_query($conn, $sql);
-
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-                                ?>
-                                <!-- Single Image -->
-                                <div class="col-md-2 mb-4 col-6">
-                                    <div class="card four shadow-sm" style="border-radius: 10px;">
-                                        <!-- تصویر از دیتابیس -->
-                                        <img class="card-img-top" src="<?= str_replace('../', '', $row['images']) ?>" alt="<?= htmlspecialchars($row['title']) ?>" style="height: 200px; object-fit: cover; border-radius: 10px 10px 0 0;">
-
-                                        <!-- عنوان و توضیحات -->
-                                        <div class="card-body text-center">
-                                            <a href="portofilo/pictures" class="btn mb-2 mb-md-0 btn-outline-quarternary btn-block btn-sm">دیدن تصویر</a>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <?php
-                            }
-                        } else {
-                            echo "<p class='text-center'>تصویری موجود نیست.</p>";
-                        }
-                        ?>
-                    </div>
-
-
-                </div>
-
 
                 <div class="container">
                     <a href="articles">
@@ -330,7 +400,7 @@
                         </h3>
                     </a>
                     <div class="row">
-                
+
                     <?php
                     
                     
@@ -356,120 +426,12 @@
                             }
                         }
                         ?>
-                
+
                     </div>
                 </div>
             </section>
             <hr class="my-4">
-
-            <section class="light">
-                <div class="container py-2">
-              
-                <article class="postcard light blue">
-                    <a href="courses/workshop" class="postcard__img_link">
-                    <img class="postcard__img" src="images/workshop.jpg" alt="موسسه هفت هنر سیمرغ" height="400px" />
-                    </a>
-                    <div class="postcard__text t-dark">
-                    <h1 class="postcard__title blue">
-                        <a href="courses/workshop">ورکشاپ گویندگی رادیو</a>
-                    </h1>
-                    <div class="postcard__subtitle small"></div>
-                    <div class="postcard__bar"></div>
-                    <div class="postcard__preview-txt mr-5">
-                        <p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">تجربه ای متفاوت در رادیو سیمرغ</p>
-                        <p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">همراه با گویندگان رادیو</p>
-                        <p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">شماهم اگر استعداد یا علاقه ای در زمینه گویندگی دارید میتوانید روزهای پنجشنبه هرهفته با شرکت در ورکشاپ گویندگی در ضبط برنامه رادیویی حضور داشته باشید.</p>
-                    </div>
-                    <ul class="postcard__tagbox">
-                        <a href="courses/workshop">
-                        <li class="tag__item">
-                            <i class="fas fa-clock mr-2"></i>ادامه
-                        </li>
-                        </a>
-                    </ul>
-                    </div>
-                </article>
-                <article class="postcard light red">
-                    <a class="postcard__img_link" href="courses/speaking_training_course">
-                    <img class="postcard__img" src="images/speaking3.jpg" alt="موسسه هفت هنر سیمرغ" height="400px" />
-                    </a>
-                    <div class="postcard__text t-dark">
-                    <h1 class="postcard__title blue">
-                        <a href="courses/speaking_training_course">دوره آموزشی فن بیان و گویندگی</a>
-                    </h1>
-                    <div class="postcard__subtitle small"></div>
-                    <div class="postcard__bar"></div>
-                    <div class="postcard__preview-txt">
-                        <h4 class="" style="font-family: &quot;Open Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; color: rgb(33, 37, 41);">
-                        <p style="font-family: &quot;B Titr&quot;; font-size: 16px;">سرفصل های دوره</p>
-                        <p style="font-family: &quot;B Titr&quot;; font-size: 16px;">❗️فن بیان و سخنوری&nbsp;</p>
-                        <p style="font-family: &quot;B Titr&quot;; font-size: 16px;">❗️انواع حس ، لحن ، بیان و تنفس</p>
-                        <p style="font-family: &quot;B Titr&quot;; font-size: 16px;">❗️تیزرهای تبلیغاتی و دکلمه خوانی ...</p>
-                        </h4>
-                    </div>
-                    <ul class="postcard__tagbox">
-                        <a href="courses/speaking_training_course">
-                        <li class="tag__item">
-                            <i class="fas fa-clock mr-2"></i>ادامه
-                        </li>
-                        </a>
-                    </ul>
-                    </div>
-                </article>
-                <article class="postcard light blue">
-                    <a href="courses/acting1" class="postcard__img_link">
-                    <img class="postcard__img" src="images/acting1.jpg" alt="موسسه هفت هنر سیمرغ" height="400px" />
-                    </a>
-                    <div class="postcard__text t-dark">
-                    <h1 class="postcard__title blue">
-                        <a href="courses/acting1">دوره‌های بازیگری بزرگسال موسسه «سیمرغ» </a>
-                    </h1>
-                    <div class="postcard__subtitle small"></div>
-                    <div class="postcard__bar"></div>
-                    <div class="postcard__preview-txt mr-5">
-                        <p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">سرفصل های دوره&nbsp;</p>
-                        <p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">-بازیگری روی صحنه</p>
-                        <p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">-بدن و بیان در بازیگری</p>
-                        <p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">-فن بیان در‌ بازیگری</p>
-                        <p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">-بداهه گویی و بداهه پردازی</p>
-                    </div>
-                    <ul class="postcard__tagbox">
-                        <a href="courses/acting1">
-                        <li class="tag__item">
-                            <i class="fas fa-clock mr-2"></i>ادامه
-                        </li>
-                        </a>
-                    </ul>
-                    </div>
-                </article>
-                <article class="postcard light red">
-                    <a class="postcard__img_link" href="courses/motion_graphics">
-                    <img class="postcard__img" src="images/motion.jpg" alt="موسسه هفت هنر سیمرغ" height="400px" />
-                    </a>
-                    <div class="postcard__text t-dark">
-                    <h1 class="postcard__title blue">
-                        <a href="courses/motion_graphics">دوره آکادمیک و تخصصی موشن گرافیک و تولید محتوا </a>
-                    </h1>
-                    <div class="postcard__subtitle small"></div>
-                    <div class="postcard__bar"></div>
-                    <div class="postcard__preview-txt">
-                        <p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">آموزشگاه فرهنگی هنری و سینمایی سیمرغ</p>
-                        <p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">کمتر از سه ماه با آموزش تخصصی تولید محتوا</p>
-                        <p style="color: rgb(33, 37, 41); font-family: &quot;B Titr&quot;;">نرم افزارهای آموزشی</p>
-                    </div>
-                    <ul class="postcard__tagbox">
-                        <a href="courses/motion_graphics">
-                        <li class="tag__item">
-                            <i class="fas fa-clock mr-2"></i>ادامه
-                        </li>
-                        </a>
-                    </ul>
-                    </div>
-                </article>
-                </div>
-            </section>
-
-            <hr class="my-4">
+          
 
             <section id="portfolio" class="mt-5">
                 <div class="container">
@@ -514,6 +476,10 @@
                 </div>
                 </div>
             </section>
+
+            <hr class="my-4">
+
+
 
             
        

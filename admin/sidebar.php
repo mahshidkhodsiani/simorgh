@@ -162,10 +162,10 @@
         <img src="../images/add-article.jpg" height="20px" width="20px">
         افزودن دوره جدید
     </a>
-    <a href="new_work" class="nav-link <?php if (basename($_SERVER['REQUEST_URI']) === 'new_work') echo 'active'; ?>">
+    <!-- <a href="new_work" class="nav-link <?php if (basename($_SERVER['REQUEST_URI']) === 'new_work') echo 'active'; ?>">
         <img src="../images/add-article.jpg" height="20px" width="20px">
         افزودن نمونه کار جدید
-    </a>
+    </a> -->
     <a href="new_radio" class="nav-link <?php if (basename($_SERVER['REQUEST_URI']) === 'new_radio') echo 'active'; ?>">
         <img src="../images/radio.jpg" height="20px" width="20px">
         افزودن رادیوی جدید

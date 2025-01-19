@@ -1,134 +1,115 @@
 <!doctype html>
 <html lang="en" dir="rtl">
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>گالری تصاویر</title>
-  
-    
+    <title>گالری ویدیوها</title>
     <?php include "includes.php"; ?>
-
-    
     <link rel="icon" href="../images/logo1.ico" type="image/x-icon">
-
-
-
-  
-  </head>
-  <body>
-
+    <style>
+        .video-container {
+            display: flex;
+            flex-wrap: nowrap;
+        }
+        .video-titles {
+            flex: 1;
+            border-left: 1px solid #ddd;
+            padding: 10px;
+            overflow-y: auto;
+            max-height: 80vh; /* حداکثر ارتفاع برای اسکرول */
+        }
+        .video-display {
+            flex: 2;
+            padding: 10px;
+            text-align: center;
+        }
+        .video-title {
+            cursor: pointer;
+            margin: 5px 0;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .video-title:hover {
+            background-color: #f0f0f0;
+        }
+        .active-title {
+            background-color: #f8d7da; /* پس‌زمینه قرمز کمرنگ */
+            color: red; /* رنگ متن قرمز */
+        }
+        video {
+            width: 100%;
+            max-height: 70vh;
+        }
+    </style>
+</head>
+<body>
     <?php
     include 'header.php';
     include '../config.php';
-    include '../PersianCalendar.php';
-    include '../jalaliDate.php';
-    $sdate = new SDate();
-   
 
-    // تنظیم تعداد تصاویر در هر صفحه
-    $imagesPerPage = 12;
-
-    // گرفتن شماره صفحه فعلی از URL، اگر تنظیم نشده پیش‌فرض صفحه 1
-    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-    if ($page < 1) $page = 1; // جلوگیری از مقادیر منفی یا صفر
-
-    // محاسبه مقدار شروع تصاویر
-    $offset = ($page - 1) * $imagesPerPage;
-
-    // گرفتن کل تعداد تصاویر
-    $totalImagesQuery = "SELECT COUNT(*) as total FROM videos";
-    $totalImagesResult = $conn->query($totalImagesQuery);
-    $totalImagesRow = $totalImagesResult->fetch_assoc();
-    $totalImages = $totalImagesRow['total'];
-
-    // محاسبه تعداد صفحات
-    $totalPages = ceil($totalImages / $imagesPerPage);
-
-    // گرفتن تصاویر برای صفحه فعلی
-    $sql = "SELECT * FROM videos ORDER BY id DESC LIMIT $imagesPerPage OFFSET $offset";
+    // گرفتن ویدیوها از دیتابیس
+    $sql = "SELECT * FROM videos ORDER BY id DESC";
     $result = $conn->query($sql);
     ?>
 
     <div class="container mt-5">
-        <div class="row">
-            <?php
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    ?>
-                    <div class="col-md-3 mb-4">
-                        <div class="card shadow-sm">
-                            <!-- لینک برای نمایش ویدیو در مدال -->
-                            <a href="javascript:void(0);" class="gallery-item" 
-                                data-bs-toggle="modal" 
-                                data-bs-target="#videoModal" 
-                                data-video="<?= htmlspecialchars($row['path']) ?>" 
-                                data-title="<?= htmlspecialchars($row['title']) ?>">
-                                <!-- ویدیو در کارت -->
-                                <video class="card-img-top" style="height: 200px; object-fit: cover;" controls muted>
-                                    <source src="<?= htmlspecialchars($row['path']) ?>" type="video/mp4">
-                                    مرورگر شما از ویدیو پشتیبانی نمی‌کند.
-                                </video>
-                            </a>
-                            <div class="card-body">
-                                <h5 class="card-title text-center"><?= htmlspecialchars($row['title']) ?></h5>
-                            </div>
+        <div class="video-container">
+            <!-- ستون نمایش ویدیو -->
+            <div class="video-display">
+                <video id="mainVideo" controls muted>
+                    <source src="" type="video/mp4">
+                    مرورگر شما از ویدیو پشتیبانی نمی‌کند.
+                </video>
+                <h4 id="videoTitle">عنوان ویدیو</h4>
+            </div>
+            <!-- ستون عنوان‌ها -->
+            <div class="video-titles">
+                <?php
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) { ?>
+                        <div class="video-title" data-video="<?= htmlspecialchars($row['path']) ?>">
+                            <?= htmlspecialchars($row['title']) ?>
                         </div>
-                    </div>
-                    <?php
+                    <?php }
+                } else {
+                    echo "<p class='text-center'>ویدیویی ثبت نشده است</p>";
                 }
-            } else {
-                echo "<h2 class='text-center'>ویدیویی ثبت نشده است</h2>";
-            }
-            ?>
+                ?>
+            </div>
         </div>
     </div>
 
+    <?php include 'footer.php'; ?>
 
+    <script>
+        // انتخاب عناصر
+        const titles = document.querySelectorAll('.video-title');
+        const mainVideo = document.getElementById('mainVideo');
+        const videoTitle = document.getElementById('videoTitle');
 
+        // افزودن رویداد کلیک به هر عنوان
+        titles.forEach(title => {
+            title.addEventListener('click', function () {
+                // حذف کلاس فعال از تمام عناوین
+                titles.forEach(t => t.classList.remove('active-title'));
 
+                // افزودن کلاس فعال به عنوان کلیک‌شده
+                this.classList.add('active-title');
 
+                // تنظیم ویدیو و عنوان
+                mainVideo.src = this.getAttribute('data-video');
+                videoTitle.textContent = this.textContent;
 
-    
-    <!-- صفحه‌بندی -->
-    <nav aria-label="Page navigation">
-        <ul class="pagination justify-content-center">
-            <!-- دکمه قبلی -->
-            <li class="page-item <?= ($page <= 1) ? 'disabled' : '' ?>">
-                <a class="page-link" href="?page=<?= $page - 1 ?>" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span> قبلی
-                </a>
-            </li>
+                // پخش ویدیو
+                mainVideo.play();
+            });
+        });
 
-            <!-- شماره صفحات -->
-            <?php
-            // محاسبه محدوده صفحات برای نمایش
-            $start = max(1, $page - 1); // شروع از یکی قبل از صفحه فعلی (حداقل 1)
-            $end = min($totalPages, $page + 1); // پایان در یکی بعد از صفحه فعلی (حداکثر کل صفحات)
-
-            for ($i = $start; $i <= $end; $i++) { ?>
-                <li class="page-item <?= ($page == $i) ? 'active' : '' ?>">
-                    <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
-                </li>
-            <?php } ?>
-
-            <!-- دکمه بعدی -->
-            <li class="page-item <?= ($page >= $totalPages) ? 'disabled' : '' ?>">
-                <a class="page-link" href="?page=<?= $page + 1 ?>" aria-label="Next">
-                    بعدی <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-
-
-
-
-  
-
-
-     <?php
-      include 'footer.php';
-     ?>
-  </body>
+        // نمایش ویدیو پیش‌فرض (اولین ویدیو)
+        if (titles.length > 0) {
+            titles[0].click();
+        }
+    </script>
+</body>
 </html>
-
