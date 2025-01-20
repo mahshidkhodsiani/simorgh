@@ -23,35 +23,7 @@ $id = $_SESSION["all_data"]['id'];
     <?php
     include 'includes.php';
     include '../config.php';
-    // include 'functions.php';
-    // include 'PersianCalendar.php';
     ?>
-    <!-- <link rel="stylesheet" href="styles.css"> -->
-
-
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <script src="../summernote-0.8.20-dist/cdn/jquery.min.js"></script>
-
-    <link rel="stylesheet" href="../summernote-0.8.20-dist/summernote-bs5.css" />
-
-    <script src="../summernote-0.8.20-dist/summernote-bs5.js"></script>
-
-    <link rel="stylesheet" href="../summernote-0.8.20-dist/summernote-bs4.css" />
-
-    <script src="../summernote-0.8.20-dist/summernote-bs4.js"></script>
-
-    <link rel="stylesheet" href="../summernote-0.8.20-dist/summernote.css" />
-
-    <script src="../summernote-0.8.20-dist/summernote.js"></script>
-
-    <link rel="stylesheet" href="../summernote-0.8.20-dist/summernote-lite.css" />
-
-    <script src="../summernote-0.8.20-dist/summernote-lite.js"></script>
-
-    <script src="../summernote-0.8.20-dist/lang/summernote-es-ES.js"></script>
-
 
 </head>
 
@@ -74,9 +46,9 @@ $id = $_SESSION["all_data"]['id'];
             <div class="col-md-8 mt-5">
 
             <?php
-            if(isset($_GET['id_photo'])){
-                $id_article = $_GET['id_photo'];
-                $sql = "SELECT * FROM gallery WHERE id = $id_article";
+            if(isset($_GET['video_id'])){
+                $id_article = $_GET['video_id'];
+                $sql = "SELECT * FROM videos WHERE id = $id_article";
                 $result = $conn->query($sql);
                 if($result->num_rows > 0){
                     $row = $result->fetch_assoc();
@@ -94,15 +66,10 @@ $id = $_SESSION["all_data"]['id'];
                         <input type="text" id="title" name="title" class="form-control mb-2" value="<?= $row['title']; ?>">
                     </div>
                     <div class="col-6">
-                        <label for="image">تصویر شاخص:</label>
-                        <input type="file" name="image" class="form-control" id="inputGroupFile02">
-                        <!-- Check if there's an image in the database and display it -->
-                        <?php if (!empty($row['images'])): ?>
-                            <div class="mb-2">
-                                <img src="<?= $row['images']; ?>" alt="Current Image" class="img-thumbnail" style="max-height: 150px;">
-                            </div>
-                        <?php endif; ?>
-                        <!-- Upload new image -->
+                        <video height="50" controls>
+                            <source src="<?= htmlspecialchars($row['path']) ?>" type="video/mp4">
+                            مرورگر شما از پخش ویدیو پشتیبانی نمی‌کند.
+                        </video>
                     </div>
                 </div>
 
@@ -176,46 +143,13 @@ $id = $_SESSION["all_data"]['id'];
 
 
 if (isset($_POST['submit_post'])) {
+
     $title = $_POST['title'];
+    $sql = "UPDATE videos SET title = '$title' WHERE id = '$id_article'";
+    $result = $conn->query($sql);
    
 
-    // Escape strings to prevent SQL injection
-    $title = $conn->real_escape_string($title);
-
-
-
-    $imagePath = '';
-
-    // Handle the file upload
-    if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
-        $uploadDir = '../upload/images/2024/';
-        $originalFileName = basename($_FILES['image']['name']);
-        $uploadFile = $uploadDir . $originalFileName;
-
-        // Ensure the upload directory exists
-        if (!file_exists($uploadDir)) {
-            mkdir($uploadDir, 0777, true);
-        }
-
-        // Move the uploaded file to the target directory
-        if (move_uploaded_file($_FILES['image']['tmp_name'], $uploadFile)) {
-            $imagePath = "upload/images/2024/" . $originalFileName; // Save the relative path for the database entry
-        } else {
-            echo json_encode(["status" => "error", "message" => "Failed to upload file."]);
-            exit;
-        }
-
-        // Update query when an image is provided
-        $stmt = $conn->prepare("UPDATE gallery SET title = ?, images = ?, updated_at = NOW() WHERE id = ?");
-        $stmt->bind_param("ssi", $title,  $imagePath, $id_article);
-    } else {
-        // Update query when no image is provided
-        $stmt = $conn->prepare("UPDATE gallery SET title = ?, updated_at = NOW() WHERE id = ?");
-        $stmt->bind_param("si", $title,  $id_article);
-    }
-
-    // Execute the query
-    if ($stmt->execute()) {
+    if ($result) {
         // Success Toast
         echo "<div id='successToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 20px; right: 20px; width: 300px;'>
           <div class='toast-header bg-success text-white'>
@@ -235,7 +169,7 @@ if (isset($_POST['submit_post'])) {
                 delay: 2000
             }).toast('show');
             setTimeout(function(){
-                window.location.href = 'new_work';
+                window.location.href = 'new_video';
             }, 2000);
         });
         </script>";
@@ -269,7 +203,7 @@ if (isset($_POST['submit_post'])) {
             </div>";
     }
 
-    $stmt->close();
+
 }
 
 
