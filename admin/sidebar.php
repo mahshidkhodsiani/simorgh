@@ -136,6 +136,14 @@
         <img src="../images/home.png" height="20px" width="20px">
         صفحه اول
     </a>
+    <a href="code_takhfif" class="nav-link <?php if (basename($_SERVER['REQUEST_URI']) === 'code_takhfif') echo 'active'; ?>">
+        <img src="../images/code.png" height="20px" width="20px">
+        وارد کردن کد تخفیف  
+    </a>
+    <a href="new_matlab" class="nav-link <?php if (basename($_SERVER['REQUEST_URI']) === 'new_matlab') echo 'active'; ?>">
+        <img src="../images/content.jpg" height="20px" width="20px">
+        افزودن مطلب و دوره  
+    </a>
 
 
     <!-- for dropdown : -->
@@ -156,16 +164,9 @@
 
     <a href="new_article" class="nav-link <?php if (basename($_SERVER['REQUEST_URI']) === 'new_article') echo 'active'; ?>">
         <img src="../images/add-article.jpg" height="20px" width="20px">
-        افزودن مقاله جدید
+        افزودن مقاله(وبلاگ) جدید
     </a>
-    <a href="new_course" class="nav-link <?php if (basename($_SERVER['REQUEST_URI']) === 'new_course') echo 'active'; ?>">
-        <img src="../images/add-article.jpg" height="20px" width="20px">
-        افزودن دوره جدید
-    </a>
-    <!-- <a href="new_work" class="nav-link <?php if (basename($_SERVER['REQUEST_URI']) === 'new_work') echo 'active'; ?>">
-        <img src="../images/add-article.jpg" height="20px" width="20px">
-        افزودن نمونه کار جدید
-    </a> -->
+
     <a href="new_radio" class="nav-link <?php if (basename($_SERVER['REQUEST_URI']) === 'new_radio') echo 'active'; ?>">
         <img src="../images/radio.jpg" height="20px" width="20px">
         افزودن رادیوی جدید
