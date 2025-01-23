@@ -179,7 +179,7 @@
                     <a href="courses">دوره های آموزشی</a>
                     <ul class="dropdown arrow-top">
 
-                    <?php
+                        <?php
                         // فرض بر این است که اتصال به دیتابیس در اینجا برقرار شده است (با استفاده از $conn)
                         include 'config.php'; // فایل کانفیگ که اتصال به دیتابیس را شامل می‌شود.
 
@@ -195,8 +195,6 @@
                                 // درست کردن لینک برای صفحه دوره
                                 echo '<li><a href="courses/course.php?slug=' . urlencode($course['slug']) . '" class="nav-link">' . htmlspecialchars($course['title']) . '</a></li>';
                             }
-                        } else {
-                            echo '<li><a href="#" class="nav-link">دوره‌ای یافت نشد</a></li>';
                         }
 
                         

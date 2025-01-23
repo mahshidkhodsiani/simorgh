@@ -60,7 +60,7 @@ $id = $_SESSION["all_data"]['id'];
                 <h5>***دقت کنید هرآنچه اینجا وارد کنید در سایت اصلی اولین مطلب می آید. ***</h5>
                 <hr>
                 <br>
-                <form action="" method="post" enctype='multipart/form-data'>
+                <form action="" method="post" enctype='multipart/form-data' novalidate>
                 
                 <div class="row">
                     <div class="col-6">
@@ -101,7 +101,7 @@ $id = $_SESSION["all_data"]['id'];
                 
                 <br>
 
-                <button type="submit" name="submit_post" class="btn btn-primary">ثبت </button>
+                <button name="submit_post" class="btn btn-primary">ثبت </button>
                 </form>
 
 

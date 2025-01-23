@@ -122,30 +122,50 @@
 </div>
 
 
+
 <header class="site-navbar js-sticky-header site-navbar-target" role="banner">
 
-
+    
+                    
         <nav class="site-navigation text-right ml-auto" role="navigation">
             <ul class="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
                 <li><a href="../" class="nav-link">صفحه اصلی</a></li>
                 <!-- <li><a href="articles/index.php?title=درباره موسسه" class="nav-link">درباره موسسه</a></li> -->
-                <li><a href="about" class="nav-link">درباره موسسه</a></li>
+                <li><a href="../articles/about" class="nav-link">درباره موسسه</a></li>
                
                 <li class="has-children">
-                    <a href="order_ads">سفارش تبلیغات</a>
+                    <a href="../articles/about">سفارش تبلیغات</a>
                     <ul class="dropdown arrow-top">
-                        <li><a href="motion_graphics" class="nav-link">موشن گرافیک</a></li>
-                        <li><a href="teaser" class="nav-link">تیزر ویدیویی</a></li>
-                        <li><a href="cinema" class="nav-link">سه بعدی و سینما فوری</a></li>
-                        <li><a href="chromakey" class="nav-link">کروماکی و تولید محتوا</a></li>
+                        <li><a href="../articles/motion_graphics" class="nav-link">موشن گرافیک</a></li>
+                        <li><a href="../articles/teaser" class="nav-link">تیزر ویدیویی</a></li>
+                        <li><a href="../articles/cinema" class="nav-link">سه بعدی و سینما فوری</a></li>
+                        <li><a href="../articles/chromakey" class="nav-link">کروماکی و تولید محتوا</a></li>
                     </ul>
                 </li>
 
                 <li class="has-children">
                     <a href="#">دوره های آموزشی</a>
                     <ul class="dropdown arrow-top">
+                        <?php
+                        // فرض بر این است که اتصال به دیتابیس در اینجا برقرار شده است (با استفاده از $conn)
+                        include '../config.php'; // فایل کانفیگ که اتصال به دیتابیس را شامل می‌شود.
+
+                        // پرس و جو برای دریافت دوره‌های آموزشی که show_header = 1 دارند.
+                        $sql = "SELECT * FROM courses WHERE show_header = 1";
+                        $result = $conn->query($sql);
+
+                        
+                       // چک کردن اینکه آیا نتایج در دیتابیس وجود دارند
+                        if ($result->num_rows > 0) {
+                            // نمایش هر دوره آموزشی
+                            while($course = $result->fetch_assoc()) {
+                                // درست کردن لینک برای صفحه دوره
+                                echo '<li><a href="../courses/course.php?slug=' . urlencode($course['slug']) . '" class="nav-link">' . htmlspecialchars($course['title']) . '</a></li>';
+                            }
+                        }
+                        ?>
                         <li class="has-children">
-                            <a href="">فن بیان و گویندگی</a>
+                            <a href="speaking">فن بیان و گویندگی</a>
                             <ul class="dropdown">
                             <li><a href="../courses/radio_announcer_course">دوره تخصصی گویندگی رادیو</a></li>
                             <li><a href="../courses/children_speech_course">فن بیان و گویندگی کودکان</a></li>
@@ -173,9 +193,10 @@
                     </ul>
                 </li>
 
+             
 
-                
-        
+
+             
                 <li><a href="../articles/suggestion" class="nav-link">انتقادات و پیشنهادات</a></li>
                 <li class="has-children">
                     <a href="#">نمونه کارها</a>
@@ -184,7 +205,7 @@
                         <li><a href="videos" class="nav-link">ویدیوها</a></li>
                     </ul>
                 </li>
-                <li><a href="./articles" class="nav-link">وبلاگ سیمرغ</a></li>
+                <li><a href="../articles" class="nav-link">وبلاگ سیمرغ</a></li>
 
 
             </ul>
@@ -194,9 +215,11 @@
 
         <div class="toggle-button d-inline-block d-lg-none"><a href="#" class="site-menu-toggle py-5 js-menu-toggle text-black"><span class="icon-menu h3"></span></a></div>
        
-        <div class="dropdown">
+
+
+         <div class="dropdown">
             <button class="btn btn-outline-quarternary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                ارتباط با ما
+                ارتباط با ما 
             </button>
             <ul class="dropdown-menu">
             <a href="tel:+989354637055" target="_blank" class="ml-3 call-link social-icon" style="color:black !important"><img src="../images/call.png" height="20px" width="20px" alt="Call Icon"></a>
@@ -208,7 +231,6 @@
             
             </ul>
         </div>
-
 
         <div class="">
             <a href="../" >
