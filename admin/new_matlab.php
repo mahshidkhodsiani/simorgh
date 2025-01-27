@@ -175,7 +175,8 @@ $id = $_SESSION["all_data"]['id'];
                                                                 }
                                                             }
                                                          ?>
-                                                        </button>
+                                                    </button>
+                                                    <a href="edit_matlab.php?id_matlab=<?=$row['id']?>" class="btn btn-outline-info">ادیت مطلب</a>
                                                 </form>
                                             </td>
                                             <script>
@@ -369,7 +370,7 @@ if (isset($_POST['submit_post'])) {
 
 if(isset($_POST['delete_article'])){
 
-    $id_art = $_GET['id_art'];
+    $id_art = $_POST['id_art'];
 
     $sql = "DELETE FROM courses WHERE id = $id_art";
     $result = $conn->query($sql);
