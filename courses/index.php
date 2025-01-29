@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>وبلاگ سیمرغ</title>
+    <title>دوره ها و مطالب جدید سیمرغ</title>
   
     
     <?php include "includes.php"; ?>
@@ -52,46 +52,11 @@
     ?>
     
 
-    
     <div class="container mt-5">
-
-    <div class="container mt-5">
-    <div class="row">
-        <div class="col-12 col-md-4 mb-4"> <!-- هر مقاله یک ستون -->
-            <div class="card shadow-sm">
-                <img class="card-img-top" src="image.jpg" alt="Image">
-                <div class="card-body">
-                    <h5 class="card-title">عنوان مقاله</h5>
-                    <p class="card-text">متن مقاله</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-md-4 mb-4"> <!-- هر مقاله یک ستون -->
-            <div class="card shadow-sm">
-                <img class="card-img-top" src="image.jpg" alt="Image">
-                <div class="card-body">
-                    <h5 class="card-title">عنوان مقاله</h5>
-                    <p class="card-text">متن مقاله</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-md-4 mb-4"> <!-- هر مقاله یک ستون -->
-            <div class="card shadow-sm">
-                <img class="card-img-top" src="image.jpg" alt="Image">
-                <div class="card-body">
-                    <h5 class="card-title">عنوان مقاله</h5>
-                    <p class="card-text">متن مقاله</p>
-                </div>
-            </div>
-        </div>
-        <!-- ادامه مقالات -->
-    </div>
-</div>
-
         <?php if (!empty($articles)): ?>
             <div class="row"> <!-- ردیف برای مقالات -->
             <?php foreach ($articles as $article): ?>
-                <div class="col-sm-4"> <!-- هر مقاله یک ستون، در اندازه‌های مختلف ۳ ستون -->
+                <div class="col-12 col-sm-6 col-md-4 mb-4"> <!-- هر مقاله یک ستون -->
                     <div class="card shadow-sm">
                         <?php
                         $images = $article['images'];
@@ -107,32 +72,14 @@
                             <h5 class="card-title"><?php echo htmlspecialchars($article['title']); ?></h5>
                             <p class="card-text"><?php echo substr($article['text'], 0, 100); ?>...</p>
                             <!-- Button to trigger modal -->
-                            <button class="btn btn-outline-primary" data-toggle="modal" data-target="#articleModal<?= $article['id']; ?>">مطالعه بیشتر</button>
+                                <button class="btn btn-outline-primary">
+                                        <a href="course.php?slug=<?=$article['title']?>" class="text-decoration-none text-primary">مطالعه بیشتر</a>
+                                </button>
+
                         </div>
                     </div>
                 </div>
 
-                <!-- Modal for each article -->
-                <div class="modal fade" id="articleModal<?= $article['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="articleModalLabel<?= $article['id']; ?>" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <h5 class="modal-title" id="articleModalLabel<?= $article['id']; ?>">
-                            <?php echo htmlspecialchars($article['title']); ?></h5>
-                            <p><?php echo nl2br($article['text']); ?></p>
-                            <img class="img-fluid" src="../<?= $imageSrc ?>" alt="Article Image">
-                        </div>
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
-                        </div>
-                    </div>
-                </div>
-                </div>
 
             <?php endforeach; ?>
             </div>
@@ -171,7 +118,6 @@
             <p class="text-center">مقاله‌ای یافت نشد.</p>
         <?php endif; ?>
     </div>
-
 
 
 

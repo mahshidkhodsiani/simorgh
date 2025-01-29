@@ -55,6 +55,8 @@ $id = $_SESSION["all_data"]['id'];
             
               
             <form id="articleForm" enctype="multipart/form-data" method="POST" class="border p-2">
+            <h4>دقت کنید: هربار فقط و فقط یک کد تخفیف بگذارید. با تشکر **</h4>
+
                 <div class="row">
                     <div class="col-6">
                         <label for="title">کد تخفیف:</label>

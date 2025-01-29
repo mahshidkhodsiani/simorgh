@@ -81,7 +81,7 @@ $id = $_SESSION["all_data"]['id'];
 
                     <div class="col-6" id="courseOption" style="display: none;" >
                         <label>اسم دوره:</label>
-                        <input placeholder="اسم دوره جهت ذخیره در دیتابیس" class="form-control" name="course">
+                        <input placeholder="اسم دوره جهت ذخیره در دیتابیس" class="form-control" name="courseName">
 
                         <label for="courseHeader">نمایش در فهرست دوره ها سایت اصلی</label>
                         <select name="courseHeader" class="form-control">
@@ -89,7 +89,7 @@ $id = $_SESSION["all_data"]['id'];
                             <option value="1">بله</option>
                         </select>
 
-                        <label>قیمت دوره</label>
+                        <label>قیمت دوره (ریال)</label>
                         <input type="text" name="coursePrice" class="form-control mb-2" placeholder="قیمت را اینجا وارد کنید" required>
 
 
@@ -295,6 +295,7 @@ if (isset($_POST['submit_post'])) {
     $content = $_POST['content'];
     $type = $_POST['category'];
     $amount = $_POST['coursePrice'];
+    $courseName = $_POST['courseName'];
     if($_POST['courseHeader'] == 1){
         $courseHeader = 1;
     }else{
@@ -334,8 +335,8 @@ if (isset($_POST['submit_post'])) {
         $relativePath = str_replace('../', '', $finalPath); // مسیر نسبی برای ذخیره در دیتابیس
 
         // Use prepared statements to prevent SQL injection
-        $stmt = $conn->prepare("INSERT INTO courses (title, slug, text, amount, category, show_header, images, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())");
-        $stmt->bind_param("sssssss", $title, $title, $content, $amount, $type, $courseHeader, $relativePath);
+        $stmt = $conn->prepare("INSERT INTO courses (title, slug, text, amount, category, course, show_header, images, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())");
+        $stmt->bind_param("ssssssss", $title, $title, $content, $amount, $type, $courseName, $courseHeader, $relativePath);
 
         if ($stmt->execute()) {
             // Success Toast

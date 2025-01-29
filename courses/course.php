@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دوره های گویندگی</title>
+    <title><?=$_GET['slug']?></title>
 
     <?php include "includes.php"; ?>
 
@@ -23,17 +23,18 @@
 
  
     $slug = isset($_GET['slug']) ? $_GET['slug'] : '';
-
+    
 
     // اگر slug موجود باشد، دوره را جستجو کنیم
     if ($slug) {
         // پرس و جوی SQL برای جستجوی دوره بر اساس slug
-        $sql = "SELECT * FROM courses WHERE slug = '$slug' AND show_header = 1 LIMIT 1";
+        $sql = "SELECT * FROM courses WHERE slug = '$slug' LIMIT 1";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
             // دریافت اطلاعات دوره
             $row = $result->fetch_assoc();
+            $category = $row['category'];
         } else {
             // اگر دوره‌ای پیدا نشد
             echo "<p>دوره‌ای با این مشخصات پیدا نشد.</p>";
@@ -56,13 +57,32 @@
             <div class="row justify-content-center" style="margin-top: 100px; ">
                 <div class="col-12 col-md-10">
                     <div class="card border border-danger" style="border-radius: 40px;">
-                        <h2 class="d-flex justify-content-center mt-2">نام دوره : <?=$row['title'] ?></h2>
+                        <?php
+                        if($category== 'matlab'){
+                        ?>
+                            <h2 class="d-flex justify-content-center mt-2"><?=$row['title'] ?></h2>
+                        <?php
+                        }else{
+                        ?>
+                            <h2 class="d-flex justify-content-center mt-2">نام دوره : <?=$row['title'] ?></h2>
+                           
                   
+                        <?php
+                            }
+                        ?>
                         <img src="../<?=$row['images']?>" class="img-fluid" alt="وبلاگ موسسسه فرهنگی هنری سیمرغ">
                         <br>
 
                         <div class="card-body">
                             <p>تاریخ انتشار: <?= mds_date("l j F Y", strtotime($row['created_at'])) ?></p>
+                            <?php
+                                if($category== 'course'){
+                            ?>
+                                <p>قیمت دوره : <?=number_format($row['amount'])?> ریال</p>
+                            <?php
+                            }
+                            ?>
+
                             <div class="card-text custom-text" style="text-align: center;">             
                                 <p class="card-text"><?= $row['text'] ?></p>
 

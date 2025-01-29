@@ -94,8 +94,9 @@ session_start();
                                     $result1 = $conn->query($sql1);
                                     if($result1->num_rows>0){
                                         while($row1 = $result1->fetch_assoc()){
+                                       
                                         ?>
-                                        <option value="<?=$row1['course']?>"><?=$row1['course'] ." به قیمت : ".$row1['amount']?></option>
+                                        <option value="<?=$row1['course']?>">دوره <?=$row1['course'] ." به قیمت : ".$row1['amount']?></option>
                                         <?php
                                         }
                                     }
@@ -104,6 +105,7 @@ session_start();
 
 
                                 </select>
+
                             </div>
                             <div class="form-group" style="text-align: right;">
                                 <label for="explain">توضیحات</label>

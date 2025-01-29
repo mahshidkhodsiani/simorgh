@@ -128,19 +128,7 @@
                             <div class="postcard__bar"></div>
                             <div class="postcard__preview-txt mr-5"><?= $body_content ?></div>
                             <ul class="postcard__tagbox">
-                            <?php
-                            if($row['category']== "course"){?>
                             <a href="courses/course.php?slug=<?=$row['title']?>">
-
-                            <?php
-                            }
-                            else{
-                                ?>
-                            <a href="courses">
-
-                            <?php
-                            }
-                            ?>
                             <li class="tag__item"><i class="fas fa-clock mr-2"></i>ادامه مطلب</li>
                             </a>
 
@@ -169,19 +157,7 @@
                     <div class="postcard__bar"></div>
                     <div class="postcard__preview-txt"><?= $body_content ?></div>
                     <ul class="postcard__tagbox">
-                        <?php
-                            if($row['category']== "course"){?>
-                            <a href="courses/course.php?slug=<?=$row['title']?>">
-
-                            <?php
-                            }
-                            else{
-                                ?>
-                            <a href="courses">
-
-                            <?php
-                            }
-                            ?>
+                        <a href="courses/course.php?slug=<?=$row['title']?>">
                         <li class="tag__item"><i class="fas fa-clock mr-2"></i>ادامه مطلب</li>
                         </a>
                     
@@ -465,8 +441,8 @@
                         <br>
                         <div class="card four" style="width: 350px;background-color:#d4c4e5">
                             <div class="card-body" style="display: flex;">
-                            <p class="card-title rtl-title">رادیو سیمرغ</p>
-                            <a href="radios" class="btn btn-outline-quarternary mr-4">شنیدن بیشتر</a>
+                            <p class="card-title rtl-title">انتقاد و پیشنهاد به سیمرغ</p>
+                            <a href="articles/suggestion" class="btn btn-outline-quarternary mr-4">رفتن به صفحه</a>
                             </div>
                         </div>
                         <br>
@@ -485,6 +461,9 @@
                             <a href="pardakht" class="btn btn-outline-quarternary mr-4">پرداخت</a>
                             </div>
                         </div>
+                        <br>
+
+                        
                     </div>
 
                     <div class="col-12 col-sm-6">
