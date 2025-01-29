@@ -80,6 +80,9 @@ $id = $_SESSION["all_data"]['id'];
                     </div>
 
                     <div class="col-6" id="courseOption" style="display: none;" >
+                        <label>اسم دوره:</label>
+                        <input placeholder="اسم دوره جهت ذخیره در دیتابیس" class="form-control" name="course">
+
                         <label for="courseHeader">نمایش در فهرست دوره ها سایت اصلی</label>
                         <select name="courseHeader" class="form-control">
                             <option value="0">خیر</option>
@@ -88,6 +91,8 @@ $id = $_SESSION["all_data"]['id'];
 
                         <label>قیمت دوره</label>
                         <input type="text" name="coursePrice" class="form-control mb-2" placeholder="قیمت را اینجا وارد کنید" required>
+
+
                     </div>
 
                 </div>

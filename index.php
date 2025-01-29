@@ -107,11 +107,7 @@
                     }
 
                     $body_content = preg_replace('/<p>/', '<p style="color: black !important; margin-right: 5px !important; font-family: \'B Titr\' !important; font-size: 16px !important;">', $row['text']);
-                    if($row['category'] == 'matlab') {
-                        $post = "مطلب جدید";
-                    }else{
-                        $post = "دوره جدید";
-                    }
+                 
                     if ($counter % 2 == 0) { 
                     ?>
 
@@ -132,7 +128,22 @@
                             <div class="postcard__bar"></div>
                             <div class="postcard__preview-txt mr-5"><?= $body_content ?></div>
                             <ul class="postcard__tagbox">
-                            <li class="tag__item"><i class="fas fa-clock mr-2"></i><?=$post?></li>
+                            <?php
+                            if($row['category']== "course"){?>
+                            <a href="courses/course.php?slug=<?=$row['title']?>">
+
+                            <?php
+                            }
+                            else{
+                                ?>
+                            <a href="courses">
+
+                            <?php
+                            }
+                            ?>
+                            <li class="tag__item"><i class="fas fa-clock mr-2"></i>ادامه مطلب</li>
+                            </a>
+
                             </ul>
                         </div>
                     </article>
@@ -158,7 +169,21 @@
                     <div class="postcard__bar"></div>
                     <div class="postcard__preview-txt"><?= $body_content ?></div>
                     <ul class="postcard__tagbox">
-                        <li class="tag__item"><i class="fas fa-clock mr-2"></i><?=$post?></li>
+                        <?php
+                            if($row['category']== "course"){?>
+                            <a href="courses/course.php?slug=<?=$row['title']?>">
+
+                            <?php
+                            }
+                            else{
+                                ?>
+                            <a href="courses">
+
+                            <?php
+                            }
+                            ?>
+                        <li class="tag__item"><i class="fas fa-clock mr-2"></i>ادامه مطلب</li>
+                        </a>
                     
                     </ul>
                     </div>

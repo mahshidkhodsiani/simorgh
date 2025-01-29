@@ -87,22 +87,21 @@ session_start();
                             <h6 style="text-align: right;">اطلاعات ثبت نامی :</h6>
                             <div class="form-group" style="text-align: right;">
                                 <label for="course">دوره </label>
-                                <select class="form-control" name="course" id="course" required>
-                                    <option value="" disabled selected>دوره مورد نظر را انتخاب کنید</option>
-                                    <option value="course1">'گویندگی پیشرفته رادیو "15 جلسه سه ساعته" - قیمت: 8/500/000 تومان '</option>
-                                    <option value="course2">'فن بیان کودکان "10 جلسه دو ساعته" - قیمت : 5/900/000 تومان'</option>
-                                    <option value="course3">'گویندگی رادیو "10 جلسه دو ساعته" - قیمت : 7/800/000 تومان'</option>
-                                    <option value="course4">'نمایش رادیویی "8 جلسه دو ساعته" - قیمت : 5/500/000 تومان'</option>
-                                    <option value="course5">'بازیگری بزرگسال "16 جلسه دو ساعته" - قیمت : 8/800/000 تومان'</option>
-                                    <option value="course6">'بازیگری مخصوص کودکان "12 جلسه سه ساعته" - قیمت : 6/500/000 تومان'</option>
-                                    <option value="course7">'موشن گرافیک "16 جلسه دو ساعته" - قیمت : 11/000/000 تومان'</option>
-                                    <option value="course8">'دوره دوبله "10 جلسه سه ساعته" - قیمت : 7/500/000 تومان'</option>
-                                    <option value="course9">'انیمیشن سازی "12 جلسه سه ساعته" - قیمت : 7/900/000 تومان'</option>
-                                    <option value="course10">'گریم سینمایی (مقدماتی) "10 جلسه سه ساعته" - قیمت : 6/500/000 تومان'</option>
-                                    <option value="course11">'گریم سینمایی (پیشرفته) "10 جلسه سه ساعته" - قیمت : 8/000/000 تومان'</option>
-                                    <option value="course12">'کارگردانی و فیلمسازی "12 جلسه سه ساعته" - قیمت : 11/000/000 تومان'</option>
-                                    <option value="course13">'ورکشاپ گویندگی - قیمت : 500/000 تومان'</option>
-                                    <option value="course14">'تدوین و ادیت فیلم "10 جلسه دو ساعته" - قیمت : 6/500/000 تومان'</option>
+                                <select class="form-control" name="name_course" id="name_course" required>
+                                    <?php
+                                    $sql1="SELECT * FROM courses WHERE category = 'course'";
+                                    
+                                    $result1 = $conn->query($sql1);
+                                    if($result1->num_rows>0){
+                                        while($row1 = $result1->fetch_assoc()){
+                                        ?>
+                                        <option value="<?=$row1['course']?>"><?=$row1['course'] ." به قیمت : ".$row1['amount']?></option>
+                                        <?php
+                                        }
+                                    }
+                                    ?>
+
+
 
                                 </select>
                             </div>
@@ -216,101 +215,45 @@ if (isset($_POST['submit_register'])) {
     $email = $_POST['email'];
     $address = $_POST['address'];
 
-    // این برای کد تایید هست :
-    if(isset($_POST['discount_code']) && $_POST['discount_code']== 'art_simorghtv'){
-        $discount = TRUE ;
-    }
-    // $discount = NULL ;
+ 
    
     $description = isset($_POST['explain']) ? $_POST['explain'] : NULL;
  
 
-
-    switch ($_POST['course']) {
-        case 'course1':
-            $course = "گویندگی پیشرفته";
-            $introduce = "قیمت : 8/500/000";
-            $amount = $discount ? 75000000 : 85000000;
-            break;
-    
-        case 'course2':
-            $course = "فن بیان کودکان";
-            $introduce = "قیمت: 5/900/000 تومان";
-            $amount = $discount ? 49000000 : 59000000;
-            break;
-    
-        case 'course3':
-            $course = "گویندگی رادیو";
-            $introduce = "قیمت: 7/800/000 تومان";
-            $amount = $discount ? 68000000 : 78000000;
-            break;
-    
-        case 'course4':
-            $course = "نمایش رادیویی";
-            $introduce = "قیمت: 5/500/000 تومان";
-            $amount = $discount ? 45000000 : 55000000;
-            break;
-    
-        case 'course5':
-            $course = "بازیگری بزرگسال";
-            $introduce = "قیمت: 8/800/000 تومان";
-            $amount = $discount ? 78000000 : 88000000;
-            break;
-    
-        case 'course6':
-            $course = "بازیگری مخصوص کودکان";
-            $introduce = "قیمت: 7/500/000 تومان";
-            $amount = $discount ? 55000000 : 65000000;
-            break;
-    
-        case 'course7':
-            $course = "موشن گرافیک";
-            $introduce = "قیمت: 11/000/000 تومان";
-            $amount = $discount ? 100000000 : 110000000;
-            break;
-    
-        case 'course8':
-            $course = "آموزش و جذب دوبلر";
-            $introduce = "قیمت: 7/500/000 تومان";
-            $amount = $discount ? 65000000 : 75000000;
-            break;
-    
-        case 'course9':
-            $course = "انیمیشن سازی";
-            $introduce = "قیمت: 7/900/000 تومان";
-            $amount = $discount ? 69000000 : 79000000;
-            break;
-    
-        case 'course10':
-            $course = "گریم سینمایی (مقدماتی)";
-            $introduce = "قیمت: 6/500/000 تومان";
-            $amount = $discount ? 55000000 : 65000000;
-            break;
-    
-        case 'course11':
-            $course = "گریم سینمایی (پیشرفته)";
-            $introduce = "قیمت: 8/000/000 تومان";
-            $amount = $discount ? 70000000 : 80000000;
-            break;
-    
-        case 'course12':
-            $course = "کارگردانی و فیلمسازی";
-            $introduce = "قیمت: 11/000/000 تومان";
-            $amount = $discount ? 100000000 : 110000000;
-            break;
-    
-        case 'course13':
-            $course = "ورکشاپ گویندگی رادیو";
-            $introduce = "قیمت: 500/000 تومان";
-            $amount =  5000000;
-            break;
-    
-        case 'course14':
-            $course = "تدوین و ادیت فیلم";
-            $introduce = "قیمت: 6/500/000 تومان";
-            $amount = $discount ? 55000000 : 65000000;
-            break;
+    $takhfifs = "SELECT * FROM codes";
+    $result_takhfif = $conn->query($takhfifs);
+    if($result_takhfif->num_rows >0){
+        $takhfif = $result_takhfif->fetch_assoc();
+        $code = $takhfif['code'];
+        if(isset($_POST['discount_code']) && $_POST['discount_code']== "$code"){
+            $discount = TRUE ;
+        }else{
+            $discount = NULL ;
+        }
+    }else{
+        $discount = NULL ;
     }
+
+
+
+    $name_course = $_POST['name_course'];
+
+    $amounts = "SELECT * FROM courses WHERE category= 'course' AND (course LIKE '%$name_course%' OR title LIKE '%$name_course%')";
+    $result_courses = $conn->query($amounts);
+    
+    // ذخیره داده‌های دوره‌ها در آرایه
+    $courses = [];
+    if ($result_courses->num_rows > 0) {
+        while ($row2 = $result_courses->fetch_assoc()) {
+         
+            $course= $row2['course'];
+            $amount= isset($discount) && $discount ? $row2['amount'] - 10000000 : $row2['amount'];
+            $introduce = $row2['introduce'];
+        }
+    }
+
+   
+
 
 
 
