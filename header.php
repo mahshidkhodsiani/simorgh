@@ -184,7 +184,7 @@
                         include 'config.php'; // فایل کانفیگ که اتصال به دیتابیس را شامل می‌شود.
 
                         // پرس و جو برای دریافت دوره‌های آموزشی که show_header = 1 دارند.
-                        $sql = "SELECT * FROM courses WHERE show_header = 1";
+                        $sql = "SELECT * FROM courses WHERE show_header = 1 ORDER BY id DESC";
                         $result = $conn->query($sql);
 
                         

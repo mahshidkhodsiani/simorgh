@@ -62,6 +62,8 @@ $id = $_SESSION["all_data"]['id'];
                         <label for="title">کد تخفیف:</label>
                         <input type="text" id="code_takhfif" name="code_takhfif" class="form-control mb-2" placeholder="کد را اینجا وارد کنید" required>
 
+                        <label>مقدار تخفیف :</label>
+                        <input type="number" placeholder="مقدار تخفیف به ریال لطفا" name="takhfif_amount" class="form-control">
                     </div>
           
                 </div>
@@ -103,6 +105,7 @@ $id = $_SESSION["all_data"]['id'];
                                     <tr>
                                         <th scope="col" class="text-center">ردیف</th>
                                         <th scope="col" class="text-center">عنوان</th>
+                                        <th scope="col" class="text-center">مبلغ(ریال)</th>
                                         <th scope="col" class="text-center">عملیات</th>
                                     </tr>
                                 </thead>
@@ -114,6 +117,7 @@ $id = $_SESSION["all_data"]['id'];
                                         <tr>
                                             <th scope="row" class="text-center"><?= $a ?></th>
                                             <td class="text-center"><?= htmlspecialchars($row['code']) ?></td>
+                                            <td class="text-center"><?= htmlspecialchars(number_format($row['takhfif_amount'])) ?></td>
                                         
                                             <td class="text-center">
                                                 <form action="" method="GET">
@@ -225,9 +229,10 @@ $id = $_SESSION["all_data"]['id'];
 if (isset($_POST['submit_codes'])) {
 
     $code_takhfif = $_POST['code_takhfif'];
+    $takhfif_amount = $_POST['takhfif_amount'];
 
 
-    $sql = "INSERT INTO codes (code) VALUES('$code_takhfif')";
+    $sql = "INSERT INTO codes (code, takhfif_amount) VALUES('$code_takhfif', $takhfif_amount)";
 
     $result = $conn->query($sql);
 

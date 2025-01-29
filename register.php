@@ -89,14 +89,14 @@ session_start();
                                 <label for="course">دوره </label>
                                 <select class="form-control" name="name_course" id="name_course" required>
                                     <?php
-                                    $sql1="SELECT * FROM courses WHERE category = 'course'";
+                                    $sql1="SELECT * FROM courses WHERE category = 'course' ORDER BY id DESC ";
                                     
                                     $result1 = $conn->query($sql1);
                                     if($result1->num_rows>0){
                                         while($row1 = $result1->fetch_assoc()){
                                        
                                         ?>
-                                        <option value="<?=$row1['course']?>">دوره <?=$row1['course'] ." به قیمت : ".$row1['amount']?></option>
+                                        <option value="<?=$row1['course']?>">دوره <?=$row1['course'] ." به قیمت : ".number_format($row1['amount']) . "ریال"?></option>
                                         <?php
                                         }
                                     }
@@ -227,6 +227,7 @@ if (isset($_POST['submit_register'])) {
     if($result_takhfif->num_rows >0){
         $takhfif = $result_takhfif->fetch_assoc();
         $code = $takhfif['code'];
+        $takhfif_amount = $takhfif['takhfif_amount'];
         if(isset($_POST['discount_code']) && $_POST['discount_code']== "$code"){
             $discount = TRUE ;
         }else{
@@ -249,7 +250,7 @@ if (isset($_POST['submit_register'])) {
         while ($row2 = $result_courses->fetch_assoc()) {
          
             $course= $row2['course'];
-            $amount= isset($discount) && $discount ? $row2['amount'] - 10000000 : $row2['amount'];
+            $amount= isset($discount) && $discount ? $row2['amount'] - $takhfif_amount : $row2['amount'];
             $introduce = $row2['introduce'];
         }
     }
