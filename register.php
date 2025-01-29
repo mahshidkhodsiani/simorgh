@@ -88,6 +88,7 @@ session_start();
                             <div class="form-group" style="text-align: right;">
                                 <label for="course">دوره </label>
                                 <select class="form-control" name="name_course" id="name_course" required>
+                                    <option value="">دوره مورد نظر خودرا انتخاب کنید:</option>
                                     <?php
                                     $sql1="SELECT * FROM courses WHERE category = 'course' ORDER BY id DESC ";
                                     
@@ -239,7 +240,11 @@ if (isset($_POST['submit_register'])) {
 
 
 
+    if (empty($_POST['name_course'])) {
+        die("لطفاً یک دوره را انتخاب کنید.");
+    }
     $name_course = $_POST['name_course'];
+    
 
     $amounts = "SELECT * FROM courses WHERE category= 'course' AND (course LIKE '%$name_course%' OR title LIKE '%$name_course%')";
     $result_courses = $conn->query($amounts);

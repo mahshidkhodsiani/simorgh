@@ -88,7 +88,7 @@
                 </a>
 
             <?php
-            $sql = "SELECT * FROM courses ORDER BY id DESC LIMIT 4";
+            $sql = "SELECT * FROM courses WHERE show_index =1 ORDER BY id DESC LIMIT 4";
             $result = $conn->query($sql);
             if ($result->num_rows > 0) {
                 $counter = 0;

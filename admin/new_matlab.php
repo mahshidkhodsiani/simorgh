@@ -168,8 +168,8 @@ $id = $_SESSION["all_data"]['id'];
                                                          <?php
                                                             if($row['category'] == 'course'){
                                                                 if($row['show_header']){?>
-                                                                <button class="btn btn-outline-warning btn-sm" name="no_show"
-                                                                onclick="return confirmDelete()">عدم نمایش در فهرست </button>
+                                                                    <button class="btn btn-outline-warning btn-sm" name="no_show"
+                                                                    onclick="return confirmDelete()">عدم نمایش در فهرست </button>
                                                                 <?php
                                                                 }else{
                                                                 
@@ -178,6 +178,18 @@ $id = $_SESSION["all_data"]['id'];
                                                                     onclick="return confirmDelete()"> نمایش در فهرست </button>
                                                                 <?php
                                                                 }
+                                                            }
+
+                                                            if($row['show_index']==1){?>
+                                                                <button class="btn btn-outline-dark btn-sm" name="no_index"
+                                                                onclick="return confirmDelete()">عدم نمایش در صقحه اصلی </button>
+                                                            <?php
+                                                            }else{
+                                                            
+                                                                ?>
+                                                                <button class="btn btn-outline-dark btn-sm" name="yes_index"
+                                                                onclick="return confirmDelete()"> نمایش در صفحه اصلی </button>
+                                                            <?php
                                                             }
                                                          ?>
                                                     </button>
@@ -469,6 +481,74 @@ if (isset($_POST['no_show'])){
 if(isset($_POST['yes_show'])){
     $id_art = $_POST['id_art'];
     $sql = "UPDATE courses SET show_header = 1 WHERE id = $id_art";
+    $result = $conn->query($sql);
+    if ($result) {
+        // Success Toast
+            echo "<div id='successToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 20px; right: 20px; width: 300px;'>
+            <div class='toast-header bg-success text-white'>
+                <strong class='mr-auto'>Success</strong>
+                <button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>
+                    <span aria-hidden='true'>&times;</span>
+                </button>
+            </div>
+            <div class='toast-body'>
+                پست شما با موفقیت ثبت شد!
+            </div>
+            </div>
+            <script>
+            $(document).ready(function(){
+            $('#successToast').toast({
+                autohide: true,
+                delay: 3000
+            }).toast('show');
+            setTimeout(function(){
+                window.location.href = 'new_matlab';
+            }, 3000);
+            });
+            </script>";
+        } else {
+        echo "خطا در ذخیره پست!";
+        }
+
+}
+
+if (isset($_POST['no_index'])){
+    $id_art = $_POST['id_art'];
+    $sql = "UPDATE courses SET show_index = 0 WHERE id = $id_art";
+    $result = $conn->query($sql);
+    if ($result) {
+    // Success Toast
+        echo "<div id='successToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 20px; right: 20px; width: 300px;'>
+        <div class='toast-header bg-success text-white'>
+            <strong class='mr-auto'>Success</strong>
+            <button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>
+                <span aria-hidden='true'>&times;</span>
+            </button>
+        </div>
+        <div class='toast-body'>
+            پست شما با موفقیت ثبت شد!
+        </div>
+        </div>
+        <script>
+        $(document).ready(function(){
+        $('#successToast').toast({
+            autohide: true,
+            delay: 3000
+        }).toast('show');
+        setTimeout(function(){
+            window.location.href = 'new_matlab';
+        }, 3000);
+        });
+        </script>";
+    } else {
+    echo "خطا در ذخیره پست!";
+    }
+
+}
+
+if(isset($_POST['yes_index'])){
+    $id_art = $_POST['id_art'];
+    $sql = "UPDATE courses SET show_index = 1 WHERE id = $id_art";
     $result = $conn->query($sql);
     if ($result) {
         // Success Toast
