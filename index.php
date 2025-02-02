@@ -39,6 +39,7 @@
     
         
         ?>
+
     </head>
     <body> 
         <?php
@@ -65,7 +66,34 @@
             <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Previous</span></a><a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Next</span></a>
         </div>
 
- 
+        <!-- <br class="mt-5"> -->
+
+        <div class="container-fluid px-4 mt-4">
+            <style>
+               
+            </style>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="search-wrapper">
+                        <div class="search-bubble"></div>
+                        <div class="input-group search-box">
+                            <input type="text" id="searchInput" name="search_word" class="form-control" placeholder="دوره مورد نظر خود را جستجو کنید..." autocomplete="off">
+                        </div>
+                        <div id="suggestionsList" class="suggestions-list"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
 
 
         
@@ -78,102 +106,102 @@
          
 
           
-        <section class="light">
-            <div class="container py-2">
-                <a href="articles">
-                    <h1 class="h1 text-center text-dark" id="pageHeaderTitle" title="کلیک کنید">
-                    آخرین مطالب سیمرغ
-                    <img src="images/link.jpg" height="30px" width="30px" alt="آخرین مقالات" title="آخرین مقالات سیمرغ">
-                    </h1>
-                </a>
+            <section class="light">
+                <div class="container py-2">
+                    <a href="articles">
+                        <h1 class="h1 text-center text-dark" id="pageHeaderTitle" title="کلیک کنید">
+                        آخرین مطالب سیمرغ
+                        <img src="images/link.jpg" height="30px" width="30px" alt="آخرین مقالات" title="آخرین مقالات سیمرغ">
+                        </h1>
+                    </a>
 
-            <?php
-            $sql = "SELECT * FROM courses WHERE show_index =1 ORDER BY id DESC LIMIT 4";
-            $result = $conn->query($sql);
-            if ($result->num_rows > 0) {
-                $counter = 0;
-                while ($row = $result->fetch_assoc()) {
-                    if (is_object(json_decode($row["images"]))) {
-                        $images = json_decode($row["images"], true);
-                        $image_url = $images["images"]["original"];
-                        $image_url = str_replace("/upload", "upload", $image_url);
-                    } else {
-                        $image_url = $row["images"];
-                        $image_url = str_replace(
-                            "../upload",
-                            "upload",
-                            $image_url
-                        );
-                    }
+                <?php
+                $sql = "SELECT * FROM courses WHERE show_index =1 ORDER BY id DESC LIMIT 4";
+                $result = $conn->query($sql);
+                if ($result->num_rows > 0) {
+                    $counter = 0;
+                    while ($row = $result->fetch_assoc()) {
+                        if (is_object(json_decode($row["images"]))) {
+                            $images = json_decode($row["images"], true);
+                            $image_url = $images["images"]["original"];
+                            $image_url = str_replace("/upload", "upload", $image_url);
+                        } else {
+                            $image_url = $row["images"];
+                            $image_url = str_replace(
+                                "../upload",
+                                "upload",
+                                $image_url
+                            );
+                        }
 
-                    $body_content = preg_replace('/<p>/', '<p style="color: black !important; margin-right: 5px !important; font-family: \'B Titr\' !important; font-size: 16px !important;">', $row['text']);
-                 
-                    if ($counter % 2 == 0) { 
-                    ?>
+                        $body_content = preg_replace('/<p>/', '<p style="color: black !important; margin-right: 5px !important; font-family: \'B Titr\' !important; font-size: 16px !important;">', $row['text']);
+                    
+                        if ($counter % 2 == 0) { 
+                        ?>
 
-            
-                    <article class="postcard light blue">
+                
+                        <article class="postcard light blue">
+                            <a class="postcard__img_link" href="courses">
+                                <img class="postcard__img" src="<?= $image_url ?>" alt="موسسه هفت هنر سیمرغ" />
+                            </a>
+                            <div class="postcard__text t-dark">
+                                <h1 class="postcard__title blue"><a href="courses"><?= $row["title"] ?></a></h1>
+                                <div class="postcard__subtitle small">
+                                <time datetime="<?= $sdate->toShaDate($row["created_at"]) ?>">
+                                    <i class="fas fa-calendar-alt mr-2"></i><?= $sdate->toShaDate(
+                                        $row["created_at"]
+                                    ) ?>
+                                </time>
+                                </div>
+                                <div class="postcard__bar"></div>
+                                <div class="postcard__preview-txt mr-5"><?= $body_content ?></div>
+                                <ul class="postcard__tagbox">
+                                <a href="courses/course.php?slug=<?=$row['title']?>">
+                                <li class="tag__item"><i class="fas fa-clock mr-2"></i>ادامه مطلب</li>
+                                </a>
+
+                                </ul>
+                            </div>
+                        </article>
+
+
+                <?php } else { ?>
+
+                    <article class="postcard light red">
                         <a class="postcard__img_link" href="courses">
-                            <img class="postcard__img" src="<?= $image_url ?>" alt="موسسه هفت هنر سیمرغ" />
+                        <img class="postcard__img" src="<?= $image_url ?>" alt="موسسه هفت هنر سیمرغ" />
                         </a>
                         <div class="postcard__text t-dark">
-                            <h1 class="postcard__title blue"><a href="courses"><?= $row["title"] ?></a></h1>
-                            <div class="postcard__subtitle small">
+                        <h1 class="postcard__title red"><a href="courses"><?= $row[
+                            "title"
+                        ] ?></a></h1>
+                        <div class="postcard__subtitle small">
                             <time datetime="<?= $sdate->toShaDate($row["created_at"]) ?>">
-                                <i class="fas fa-calendar-alt mr-2"></i><?= $sdate->toShaDate(
-                                    $row["created_at"]
-                                ) ?>
+                            <i class="fas fa-calendar-alt mr-2"></i><?= $sdate->toShaDate(
+                                $row["created_at"]
+                            ) ?>
                             </time>
-                            </div>
-                            <div class="postcard__bar"></div>
-                            <div class="postcard__preview-txt mr-5"><?= $body_content ?></div>
-                            <ul class="postcard__tagbox">
+                        </div>
+                        <div class="postcard__bar"></div>
+                        <div class="postcard__preview-txt"><?= $body_content ?></div>
+                        <ul class="postcard__tagbox">
                             <a href="courses/course.php?slug=<?=$row['title']?>">
                             <li class="tag__item"><i class="fas fa-clock mr-2"></i>ادامه مطلب</li>
                             </a>
-
-                            </ul>
+                        
+                        </ul>
                         </div>
                     </article>
 
-
-            <?php } else { ?>
-
-                <article class="postcard light red">
-                    <a class="postcard__img_link" href="courses">
-                    <img class="postcard__img" src="<?= $image_url ?>" alt="موسسه هفت هنر سیمرغ" />
-                    </a>
-                    <div class="postcard__text t-dark">
-                    <h1 class="postcard__title red"><a href="courses"><?= $row[
-                        "title"
-                    ] ?></a></h1>
-                    <div class="postcard__subtitle small">
-                        <time datetime="<?= $sdate->toShaDate($row["created_at"]) ?>">
-                        <i class="fas fa-calendar-alt mr-2"></i><?= $sdate->toShaDate(
-                            $row["created_at"]
-                        ) ?>
-                        </time>
-                    </div>
-                    <div class="postcard__bar"></div>
-                    <div class="postcard__preview-txt"><?= $body_content ?></div>
-                    <ul class="postcard__tagbox">
-                        <a href="courses/course.php?slug=<?=$row['title']?>">
-                        <li class="tag__item"><i class="fas fa-clock mr-2"></i>ادامه مطلب</li>
-                        </a>
-                    
-                    </ul>
-                    </div>
-                </article>
-
-            <?php }
-                    $counter++;
+                <?php }
+                        $counter++;
+                    }
+                } else {
+                    echo "0 results";
                 }
-            } else {
-                echo "0 results";
-            }
-            ?>
-            </div>
-        </section>
+                ?>
+                </div>
+            </section>
 
 
             <hr class="my-4">
@@ -477,6 +505,56 @@
 
 
 
+            
+        <script>
+            $(document).ready(function(){
+                let timer;
+
+                $("#searchInput").on("keyup", function(){
+                    clearTimeout(timer);
+                    let search_word = $(this).val().trim();
+
+                    if (search_word.length > 0) {
+                        timer = setTimeout(function() {
+                            $.ajax({
+                                url: "search_box.php",
+                                type: "POST",
+                                data: { search_word: search_word },
+                                dataType: "html", // اطمینان از دریافت پاسخ HTML
+                                success: function(response){
+                                    console.log("Response received:", response); // ✅ نمایش پاسخ در کنسول
+                                    
+                                    if (response.trim().length > 0) {
+                                        $("#suggestionsList").html(response).show(); // نمایش لیست پیشنهادات
+                                    } else {
+                                        $("#suggestionsList").hide(); // در صورت خالی بودن نتیجه، لیست پنهان شود
+                                    }
+                                },
+                                error: function(xhr, status, error) {
+                                    console.error("AJAX Error:", error);
+                                }
+                            });
+                        }, 300);
+                    } else {
+                        $("#suggestionsList").hide();
+                    }
+                });
+
+                // انتخاب پیشنهادات با کلیک
+                $(document).on("click", ".suggestion-item", function() {
+                    let selectedText = $(this).text();
+                    $("#searchInput").val(selectedText);
+                    $("#suggestionsList").hide();
+                });
+
+                // بستن پیشنهادات هنگام کلیک بیرون
+                $(document).on("click", function(e) {
+                    if (!$(e.target).closest(".search-wrapper").length) {
+                        $("#suggestionsList").hide();
+                    }
+                });
+            });
+        </script>
             
        
             
