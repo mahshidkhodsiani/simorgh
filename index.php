@@ -1,3 +1,8 @@
+<?php
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+?>
 <!doctype html>
 <html lang="en" dir="rtl">
     <head>
@@ -68,6 +73,9 @@
 
         <!-- <br class="mt-5"> -->
 
+
+
+
         <div class="container-fluid px-4 mt-4">
             <style>
                
@@ -79,6 +87,7 @@
                         <div class="search-bubble"></div>
                         <div class="input-group search-box">
                             <input type="text" id="searchInput" name="search_word" class="form-control" placeholder="دوره مورد نظر خود را جستجو کنید..." autocomplete="off">
+                            <img src="images/search.png" width="40px" height="40px">
                         </div>
                         <div id="suggestionsList" class="suggestions-list"></div>
                     </div>
