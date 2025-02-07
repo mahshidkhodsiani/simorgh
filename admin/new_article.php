@@ -104,6 +104,7 @@ $id = $_SESSION["all_data"]['id'];
                                             <th scope="col" class="text-center">ردیف</th>
                                             <th scope="col" class="text-center">اسم مقاله</th>
                                             <th scope="col" class="text-center">بدنه</th>
+                                            <th scope="col" class="text-center">بازدید</th>
                                             <th scope="col" class="text-center">عملیات</th>
                                         </tr>
                                     </thead>
@@ -121,6 +122,7 @@ $id = $_SESSION["all_data"]['id'];
                                             <th scope="row" class="text-center"><?= $a ?></th>
                                             <td class="text-center"><?= $row['title'] ?></td>
                                             <td class="text-center"><?= $body_text ?></td>
+                                            <td class="text-center"><?= $row['views'] ?></td>
                                             <td class="text-center">
                                                 <form action="" method="GET">
                                                     <input type="hidden" value="<?= $row['id'] ?>" name="id_art">
