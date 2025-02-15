@@ -45,6 +45,10 @@ error_reporting(E_ALL);
         
         ?>
 
+        <style> 
+
+        </style>
+
     </head>
     <body> 
         <?php
@@ -118,7 +122,7 @@ error_reporting(E_ALL);
             <section class="light">
                 <div class="container py-2">
                     <a href="articles">
-                        <h1 class="h1 text-center text-dark" id="pageHeaderTitle" title="کلیک کنید">
+                        <h1 class="h1 text-center text-dark fw-bold" id="pageHeaderTitle" title="کلیک کنید">
                         آخرین مطالب سیمرغ
                         <img src="images/link.jpg" height="30px" width="30px" alt="آخرین مقالات" title="آخرین مقالات سیمرغ">
                         </h1>
@@ -163,7 +167,7 @@ error_reporting(E_ALL);
                                 </time>
                                 </div>
                                 <div class="postcard__bar"></div>
-                                <div class="postcard__preview-txt mr-5"><?= $body_content ?></div>
+                                <div class="postcard__preview-txt mr-5 fw-bold"><?= $body_content ?></div>
                                 <ul class="postcard__tagbox">
                                 <a href="courses/course.php?slug=<?=$row['title']?>">
                                 <li class="tag__item"><i class="fas fa-clock mr-2"></i>ادامه مطلب</li>
@@ -192,7 +196,7 @@ error_reporting(E_ALL);
                             </time>
                         </div>
                         <div class="postcard__bar"></div>
-                        <div class="postcard__preview-txt"><?= $body_content ?></div>
+                        <div class="postcard__preview-txt fw-bold"><?= $body_content ?></div>
                         <ul class="postcard__tagbox">
                             <a href="courses/course.php?slug=<?=$row['title']?>">
                             <li class="tag__item"><i class="fas fa-clock mr-2"></i>ادامه مطلب</li>
@@ -219,7 +223,7 @@ error_reporting(E_ALL);
 
             <section id="team" class="pb-5">
                 <div class="container">
-                <h5 class="section-title h1">تازه ترین ها</h5>
+                <h5 class="section-title h1 fw-bold">تازه ترین ها</h5>
                 <div class="row">
                 
 
@@ -233,8 +237,8 @@ error_reporting(E_ALL);
                                 <p>
                                 <img class="img-fluid" src="images/audio.jpg" alt="card image">
                                 </p>
-                                <h4 class="card-title">آرشیو گویندگان</h4>
-                                <p class="card-text">اگر دنبال صداهای جذاب با گوینده های متنوع هستید کلیک کنید.</p>
+                                <h4 class="card-title fw-bold">آرشیو گویندگان</h4>
+                                <p class="card-text fw-bold">اگر دنبال صداهای جذاب با گوینده های متنوع هستید کلیک کنید.</p>
                                 <a href="articles/speakers_archive" class="btn btn-primary btn-sm">
                                 <i class="fa fa-plus"></i>
                                 </a>
@@ -245,9 +249,9 @@ error_reporting(E_ALL);
                             <div class="card">
                             <div class="card-body text-center mt-4">
                                 <a href="articles/speakers_archive">
-                                <h4 class="card-title">سفارش صدا (کلیک کنید)</h4>
+                                <h4 class="card-title fw-bold">سفارش صدا (کلیک کنید)</h4>
                                 </a>
-                                <p class="card-text">آرشیو بهترین گویندگان با صداهای متنوع تیزر تبلیغاتی، موشن گرافیک ، دوبلوری، پادکست ، کتاب صوتی و هرصدایی که بخواهید میتوانید ایجا برای آن گوینده پیدا کنید </p>
+                                <p class="card-text fw-bold">آرشیو بهترین گویندگان با صداهای متنوع تیزر تبلیغاتی، موشن گرافیک ، دوبلوری، پادکست ، کتاب صوتی و هرصدایی که بخواهید میتوانید ایجا برای آن گوینده پیدا کنید </p>
                             </div>
                             </div>
                         </div>
@@ -265,8 +269,8 @@ error_reporting(E_ALL);
                                 <p>
                                 <img class="img-fluid" src="images/speaking3.jpg" alt="card image">
                                 </p>
-                                <h4 class="card-title">آموزش فن بیان و گویندگی</h4>
-                                <p class="card-text">اینجا صدایتان شنیده می‌شود!</p>
+                                <h4 class="card-title fw-bold">آموزش فن بیان و گویندگی</h4>
+                                <p class="card-text fw-bold">اینجا صدایتان شنیده می‌شود!</p>
                                 <a href="courses/speaking_training_course" class="btn btn-primary btn-sm">
                                 <i class="fa fa-plus"></i>
                                 </a>
@@ -277,9 +281,9 @@ error_reporting(E_ALL);
                             <div class="card">
                             <div class="card-body text-center mt-4">
                                 <a href="courses/speaking_training_course">
-                                <h4 class="card-title">فن بیان و گویندگی (کلیک کنید)</h4>
+                                <h4 class="card-title fw-bold">فن بیان و گویندگی (کلیک کنید)</h4>
                                 </a>
-                                <p class="card-text">اگر صدای خوب یا استعداد گویندگی دارید می‌توانید در آموزشگاه رادیو سیمرغ دوره‌های آکادمیک و تجربی را بگذرانید و در ضبط برنامه‌ها حضور پیدا کنید.</p>
+                                <p class="card-text fw-bold">اگر صدای خوب یا استعداد گویندگی دارید می‌توانید در آموزشگاه رادیو سیمرغ دوره‌های آکادمیک و تجربی را بگذرانید و در ضبط برنامه‌ها حضور پیدا کنید.</p>
                             </div>
                             </div>
                         </div>
@@ -297,8 +301,8 @@ error_reporting(E_ALL);
                                 <p>
                                 <img class="img-fluid" src="images/packages.jpg" alt="card image">
                                 </p>
-                                <h4 class="card-title">پکیج‌های آموزشی</h4>
-                                <p class="card-text">پکیج‌های آموزشی موسسه سیمرغ، راهی نوین برای یادگیری و پیشرفت</p>
+                                <h4 class="card-title fw-bold">پکیج‌های آموزشی</h4>
+                                <p class="card-text fw-bold">پکیج‌های آموزشی موسسه سیمرغ، راهی نوین برای یادگیری و پیشرفت</p>
                                 <a href="packages" class="btn btn-primary btn-sm">
                                 <i class="fa fa-plus"></i>
                                 </a>
@@ -309,9 +313,9 @@ error_reporting(E_ALL);
                             <div class="card">
                             <div class="card-body text-center mt-4">
                                 <a href="packages">
-                                <h4 class="card-title">پکیج‌های آموزشی (کلیک کنید)</h4>
+                                <h4 class="card-title fw-bold">پکیج‌های آموزشی (کلیک کنید)</h4>
                                 </a>
-                                <p class="card-text">اگر به دنبال پکیج‌های آموزشی جامع و کاربردی برای ارتقاء مهارت‌های خود هستید، موسسه سیمرغ بهترین گزینه برای شماست</p>
+                                <p class="card-text fw-bold">اگر به دنبال پکیج‌های آموزشی جامع و کاربردی برای ارتقاء مهارت‌های خود هستید، موسسه سیمرغ بهترین گزینه برای شماست</p>
                             </div>
                             </div>
                         </div>
@@ -329,8 +333,8 @@ error_reporting(E_ALL);
                                 <p>
                                 <img class="img-fluid" src="images/acting1.jpg" alt="card image">
                                 </p>
-                                <h4 class="card-title">آموزش بازیگری</h4>
-                                <p class="card-text">آیا به دنبال ارتقاء مهارت‌های بازیگری خود هستید؟</p>
+                                <h4 class="card-title fw-bold">آموزش بازیگری</h4>
+                                <p class="card-text fw-bold">آیا به دنبال ارتقاء مهارت‌های بازیگری خود هستید؟</p>
                                 <a href="courses/acting1" class="btn btn-primary btn-sm">
                                 <i class="fa fa-plus"></i>
                                 </a>
@@ -341,9 +345,9 @@ error_reporting(E_ALL);
                             <div class="card">
                             <div class="card-body text-center mt-4">
                                 <a href="courses/acting1">
-                                <h4 class="card-title">آموزش بازیگری (کلیک کنید)</h4>
+                                <h4 class="card-title fw-bold">آموزش بازیگری (کلیک کنید)</h4>
                                 </a>
-                                <p class="card-text">موسسه «سیمرغ»، پیشرو در آموزش بازیگری در ایران، دوره‌های تخصصی بازیگری مقدماتی و پیشرفته را ارائه می‌دهد. این دوره‌ها با هدف توسعه توانایی‌های بازیگری شما و آماده‌سازی شما برای ورود به دنیای هنر طراحی شده‌اند.</p>
+                                <p class="card-text fw-bold">موسسه «سیمرغ»، پیشرو در آموزش بازیگری در ایران، دوره‌های تخصصی بازیگری مقدماتی و پیشرفته را ارائه می‌دهد. این دوره‌ها با هدف توسعه توانایی‌های بازیگری شما و آماده‌سازی شما برای ورود به دنیای هنر طراحی شده‌اند.</p>
                             </div>
                             </div>
                         </div>
@@ -361,8 +365,8 @@ error_reporting(E_ALL);
                                 <p>
                                 <img class="img-fluid" src="images/ordering.jpg" alt="card image">
                                 </p>
-                                <h4 class="card-title">سفارش تبلیغات شما</h4>
-                                <p class="card-text">اینجا کسب و کارتان دیده می‌شود</p>
+                                <h4 class="card-title fw-bold">سفارش تبلیغات شما</h4>
+                                <p class="card-text fw-bold">اینجا کسب و کارتان دیده می‌شود</p>
                                 <a href="articles/order_ads" class="btn btn-primary btn-sm">
                                 <i class="fa fa-plus"></i>
                                 </a>
@@ -373,9 +377,9 @@ error_reporting(E_ALL);
                             <div class="card">
                             <div class="card-body text-center mt-4">
                                 <a href="articles/order_ads">
-                                <h4 class="card-title">سفارش تبلیغات (کلیک کنید)</h4>
+                                <h4 class="card-title fw-bold">سفارش تبلیغات (کلیک کنید)</h4>
                                 </a>
-                                <p class="card-text">آیا به دنبال راهی برای ارتقاء برند خود و جذب مشتریان بیشتر هستید؟ سفارش تبلیغات می‌تواند بهترین گزینه برای شما باشد!</p>
+                                <p class="card-text fw-bold">آیا به دنبال راهی برای ارتقاء برند خود و جذب مشتریان بیشتر هستید؟ سفارش تبلیغات می‌تواند بهترین گزینه برای شما باشد!</p>
                             </div>
                             </div>
                         </div>
@@ -393,8 +397,8 @@ error_reporting(E_ALL);
                                 <p>
                                 <img class="img-fluid" src="images/radio-simorgh.jpg" alt="رادیو سیمرغ">
                                 </p>
-                                <h4 class="card-title">رادیو سیمرغ</h4>
-                                <p class="card-text"> سفری شنیدنی در دنیای فرهنگ و هنر</p>
+                                <h4 class="card-title fw-bold">رادیو سیمرغ</h4>
+                                <p class="card-text fw-bold"> سفری شنیدنی در دنیای فرهنگ و هنر</p>
                                 <a href="radios" class="btn btn-primary btn-sm">
                                 <i class="fa fa-plus"></i>
                                 </a>
@@ -405,9 +409,9 @@ error_reporting(E_ALL);
                             <div class="card">
                             <div class="card-body text-center mt-4">
                                 <a href="radios">
-                                <h4 class="card-title">برنامه های رادیویی (کلیک کنید)</h4>
+                                <h4 class="card-title fw-bold">برنامه های رادیویی (کلیک کنید)</h4>
                                 </a>
-                                <p class="card-text">با گوش سپردن به برنامه‌های رادیویی موسسه "هفت هنر سیمرغ"، می‌توانید به یک ماجراجویی شنیدنی در دنیای هنر و فرهنگ قدم بگذارید</p>
+                                <p class="card-text fw-bold">با گوش سپردن به برنامه‌های رادیویی موسسه "هفت هنر سیمرغ"، می‌توانید به یک ماجراجویی شنیدنی در دنیای هنر و فرهنگ قدم بگذارید</p>
                             </div>
                             </div>
                         </div>
@@ -426,7 +430,7 @@ error_reporting(E_ALL);
 
                 <div class="container">
                     <a href="articles">
-                        <h3 class="p text-center text-dark" id="" title="کلیک کنید"> وبلاگ سیمرغ 
+                        <h3 class="p text-center text-dark fw-bold" id="" title="کلیک کنید"> وبلاگ سیمرغ 
                         </h3>
                     </a>
                     <div class="row">
@@ -446,8 +450,8 @@ error_reporting(E_ALL);
                                 <div class="card four">
                                     <div class="card-body">
                                         <img src="<?=$row['images']?>" class="img-fluid" alt="تصویر مقاله" height="200px" width="200px">
-                                        <h5 class="card-title rtl-title"><?=$row['title']?></h5>
-                                        <a href="articles" class="btn mb-2 mb-md-0 btn-outline-quarternary btn-block btn-sm">مطالعه بیشتر</a>
+                                        <h5 class="card-title rtl-title fw-bold"><?=$row['title']?></h5>
+                                        <a href="articles" class="btn mb-2 mb-md-0 btn-outline-quarternary btn-block btn-sm fw-bold">مطالعه بیشتر</a>
                                     </div>
                                 </div>
                             </div>
@@ -471,31 +475,31 @@ error_reporting(E_ALL);
                     <div class="col-12 col-sm-6">
                         <div class="card four" style="width: 350px; background-color:#d4c4e5">
                             <div class="card-body" style="display: flex;">
-                            <p class="card-title rtl-title">عضویت در آرشیو گویندگان</p>
-                            <a href="articles/send_voice" class="btn btn-outline-quarternary mr-4">عضویت</a>
+                            <p class="card-title rtl-title fw-bold">عضویت در آرشیو گویندگان</p>
+                            <a href="articles/send_voice" class="btn btn-outline-quarternary mr-4 fw-bold">عضویت</a>
                             </div>
                         </div>
                         <br>
                         <div class="card four" style="width: 350px;background-color:#d4c4e5">
                             <div class="card-body" style="display: flex;">
-                            <p class="card-title rtl-title">انتقاد و پیشنهاد به سیمرغ</p>
-                            <a href="articles/suggestion" class="btn btn-outline-quarternary mr-4">رفتن به صفحه</a>
-                            </div>
-                        </div>
-                        <br>
-
-                        <div class="card four" style="width: 350px;background-color:#d4c4e5">
-                            <div class="card-body" style="display: flex;">
-                            <p class="card-title rtl-title">پرداخت اقساطی دوره ها</p>
-                            <a href="register2" class="btn btn-outline-quarternary mr-4">ثبت نام</a>
+                            <p class="card-title rtl-title fw-bold">انتقاد و پیشنهاد به سیمرغ</p>
+                            <a href="articles/suggestion" class="btn btn-outline-quarternary mr-4 fw-bold">رفتن به صفحه</a>
                             </div>
                         </div>
                         <br>
 
                         <div class="card four" style="width: 350px;background-color:#d4c4e5">
                             <div class="card-body" style="display: flex;">
-                            <p class="card-title rtl-title">پرداخت آزاد به موسسه</p>
-                            <a href="pardakht" class="btn btn-outline-quarternary mr-4">پرداخت</a>
+                            <p class="card-title rtl-title fw-bold">پرداخت اقساطی دوره ها</p>
+                            <a href="register2" class="btn btn-outline-quarternary mr-4 fw-bold">ثبت نام</a>
+                            </div>
+                        </div>
+                        <br>
+
+                        <div class="card four" style="width: 350px;background-color:#d4c4e5">
+                            <div class="card-body" style="display: flex;">
+                            <p class="card-title rtl-title fw-bold">پرداخت آزاد به موسسه</p>
+                            <a href="pardakht" class="btn btn-outline-quarternary mr-4 fw-bold">پرداخت</a>
                             </div>
                         </div>
                         <br>

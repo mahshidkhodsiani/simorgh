@@ -108,6 +108,7 @@
 
 li {
     font-weight:600;
+    font-size: 19px;
 }
 
 </style>

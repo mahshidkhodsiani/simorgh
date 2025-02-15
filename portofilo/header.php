@@ -106,8 +106,10 @@
     border-color: #621e52;
 }
 
+
 li {
     font-weight:600;
+    font-size: 19px;
 }
 
 </style>

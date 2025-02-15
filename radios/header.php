@@ -108,6 +108,7 @@
 
 li {
     font-weight:600;
+    font-size: 19px;
 }
 
 </style>
@@ -183,7 +184,7 @@ li {
                         <li><a href="../portofilo/videos" class="nav-link">ویدیوها</a></li>
                     </ul>
                 </li>
-                <li><a href="./articles" class="nav-link">وبلاگ سیمرغ</a></li>
+                <li><a href="../articles" class="nav-link">وبلاگ سیمرغ</a></li>
 
 
             </ul>

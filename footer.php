@@ -48,7 +48,7 @@
         <div class="row">
             <!-- Links Section -->
             <div class="col-md-3">
-                <h6>لینک‌های مفید</h6>
+                <h6 class="fw-bold">لینک‌های مفید</h6>
                 <ul class="simple-links">
                     <li><a href="articles/contact">ارتباط با ما</a></li>
                     <li><a href="articles/index">بهترین مقالات</a></li>

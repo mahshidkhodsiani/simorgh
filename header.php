@@ -129,6 +129,7 @@
 
 li {
     font-weight:600;
+    font-size: 19px;
 }
 
 
@@ -233,7 +234,7 @@ li {
                 <li><a href="articles" class="nav-link">وبلاگ سیمرغ</a></li>
                 <!-- <li><a href="gallery/all" class="nav-link">پرداخت اقساطی دوره ها</a></li> -->
 
-                <li><a href="register" class="btn mb-2 mb-md-0 btn-danger btn-block btn-sm">ثبت نام</a></li>
+                <li><a href="register" class="btn mb-2 mb-md-0 btn-danger btn-block btn-sm fw-bold">ثبت نام</a></li>
 
                      
               
@@ -249,7 +250,7 @@ li {
        
 
         <div class="dropdown">
-            <button class="btn btn-outline-quarternary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="btn btn-outline-quarternary dropdown-toggle fw-bold" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 ارتباط با ما
             </button>
             <ul class="dropdown-menu">

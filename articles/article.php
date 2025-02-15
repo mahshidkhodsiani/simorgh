@@ -15,7 +15,7 @@
     <link rel="icon" href="../images/logo1.ico" type="image/x-icon">
 
     <style>
-        @font-face {
+        /* @font-face {
             font-family: 'estedad';
             src: url('../variable/Estedad-FD[KSHD,wght].ttf') format('truetype');
         }
@@ -23,7 +23,7 @@
         body {
             font-family: 'estedad', sans-serif !important;
             line-height: 2 !important;
-        }
+        } */
     </style>
 
 </head>

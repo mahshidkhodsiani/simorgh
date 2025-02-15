@@ -252,8 +252,8 @@ if (isset($_POST['submit_post'])) {
     }
 
     // Use prepared statements to prevent SQL injection
-    $stmt = $conn->prepare("INSERT INTO articles (title, body, type, images, created_at) VALUES (?, ?, ?, ?, NOW())");
-    $stmt->bind_param("ssss", $title, $content, $type, $imagePath);
+    $stmt = $conn->prepare("INSERT INTO articles (title, slug, body, type, images, created_at) VALUES (?, ?, ?, ?, ?, NOW())");
+    $stmt->bind_param("sssss", $title, $title, $content, $type, $imagePath);
 
     if ($stmt->execute()) {
           // Success Toast
