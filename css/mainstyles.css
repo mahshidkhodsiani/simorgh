@@ -1,27 +1,21 @@
 
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap");
-
 
 @font-face {
-  font-family: 'Dana-FaNum';
-  src: url('../../../fonts/Dana-FaNum-Bold.ttf') format('truetype'),
-       url('../../../fonts/Dana-FaNum-BoldItalic.ttf') format('truetype'),
-       url('../../../fonts/Dana-FaNum-Regular.ttf') format('truetype'),
-       url('../../../fonts/Dana-FaNum-RegularItalic.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'B Titr';
-  src: url('../fonts/B_Tir_YasDL.com.ttf') format('ttf'),
-       url('../fonts/B_Titr_Bold_0.ttf') format('ttf');
+  font-family: 'BNazanin';
+  src: url('../fonts/fonts/BNazanin.woff2') format('woff2'),
+       url('../fonts/fonts/BNazanin.woff') format('woff'),
+       url('../fonts/fonts/BNazanin.ttf') format('truetype'),
+       url('../fonts/fonts/BNazaninB.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
-
+/* استفاده از فونت در بخش‌های مختلف سایت */
 body {
-    font-family: "B Titr"  !important; 
+  font-family: 'BNazanin' !important;
 }
+
+
 
 
 html, body {
@@ -31,10 +25,7 @@ html, body {
     flex-direction: column;
 }
 
-body {
-    font-family: "B Titr" !important; 
-    /* background: #f8f9fa; */
-}
+
 
 /* Main content should take up remaining space */
 .main-content {

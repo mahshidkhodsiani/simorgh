@@ -1,5 +1,3 @@
-<link href="https://fonts.googleapis.com/css2?family=Titr:wght@400;700&display=swap" rel="stylesheet">
-
 
 <style>
 .social-icon img {
@@ -114,7 +112,7 @@
 .welcome-text {
     color: #d9534f; /* A soft red color */
     font-size: 14px; /* Larger font size for prominence */
-    font-family: "B Titr"  !important; 
+    font-family: "BNaznnBd"  !important; 
     left: 0;
     font-weight: bold; /* Make the font bold */
     margin-bottom: 10px; /* Add space below the paragraph */
@@ -125,11 +123,13 @@
     color: #d9534f; /* Match the color with the welcome text */
     font-size: 22px; /* Slightly smaller font size */
     text-align: right;
-    font-family: "B Titr"  !important; 
+    font-family: "BNaznnBd"  !important; 
     font-weight: bold; /* Regular font weight */
 }
 
-
+li {
+    font-weight:600;
+}
 
 
 </style>

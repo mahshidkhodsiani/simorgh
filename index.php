@@ -143,7 +143,7 @@ error_reporting(E_ALL);
                             );
                         }
 
-                        $body_content = preg_replace('/<p>/', '<p style="color: black !important; margin-right: 5px !important; font-family: \'B Titr\' !important; font-size: 16px !important;">', $row['text']);
+                        $body_content = preg_replace('/<p>/', '<p style="color: black !important; margin-right: 5px !important; font-size: 16px !important;">', $row['text']);
                     
                         if ($counter % 2 == 0) { 
                         ?>
