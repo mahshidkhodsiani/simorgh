@@ -38,8 +38,8 @@
 
 
 
-    if (isset($_GET['a']) AND $_GET['a'] != '') {
-        $a = $_GET['a'];
+    if (isset($_GET['slug']) AND $_GET['slug'] != '') {
+        $a = $_GET['slug'];
     
         // افزایش تعداد بازدید
         $stmt = $conn->prepare("UPDATE articles SET views = views + 1 WHERE title = ?");
