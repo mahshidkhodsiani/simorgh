@@ -1,46 +1,45 @@
 <style>
-
-/* Footer */
-.footer {
-    background-color: #343a40;
-    color: #ffffff;
-    padding: 10px 0;
-    font-size: 14px;
-    position: relative;
-    width: 100%;
-}
-
-.footer a {
-    color: #ffffff;
-    text-decoration: none;
-}
-
-.footer a:hover {
-    color: #f8f9fa;
-    text-decoration: underline;
-}
-
-.footer .list-inline-item {
-    margin: 0 10px;
-}
-
-.footer p,
-.footer ul {
-    margin: 0;
-}
-
-.footer ul {
-    padding: 0;
-    list-style: none;
-}
-
-@media (max-width: 767.98px) {
-    .footer .text-md-left,
-    .footer .text-md-right {
-        text-align: center !important;
+    /* Footer */
+    .footer {
+        background-color: #343a40;
+        color: #ffffff;
+        padding: 10px 0;
+        font-size: 14px;
+        position: relative;
+        width: 100%;
     }
-}
 
+    .footer a {
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .footer a:hover {
+        color: #f8f9fa;
+        text-decoration: underline;
+    }
+
+    .footer .list-inline-item {
+        margin: 0 10px;
+    }
+
+    .footer p,
+    .footer ul {
+        margin: 0;
+    }
+
+    .footer ul {
+        padding: 0;
+        list-style: none;
+    }
+
+    @media (max-width: 767.98px) {
+
+        .footer .text-md-left,
+        .footer .text-md-right {
+            text-align: center !important;
+        }
+    }
 </style>
 <!-- Footer -->
 <footer class="footer">
@@ -54,7 +53,7 @@
                     <li><a href="articles/index">بهترین مقالات</a></li>
                     <li><a href="#">همکاری با ما</a></li>
                 </ul>
-             
+
             </div>
 
             <!-- Video & Certification Section -->
@@ -67,16 +66,25 @@
                 </video>
             </div>
 
-            <!-- Address Section -->
             <div class="col-md-3">
                 <div class="footer-location">
                     <h6>آدرس</h6>
-                    <p>تهران، خیابان میرزای شیرازی، پایین‌تر از مطهری، کوچه 15، پلاک 44، واحد 2</p>
-                    <p>تلفن: 02188341652</p>
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12956.830332236785!2d51.416207!3d35.721113!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3f8e01f4778ac69d%3A0xf70f3be81b1e1e78!2shaft_simorgh!5e0!3m2!1sen!2sus!4v1721717006558!5m2!1sen!2sus"
-                        width="100%" height="150" style="border: 0;" allowfullscreen="" loading="lazy">
-                    </iframe>
+                    <p>
+                        تهران،
+                        پل کریمخان ، میرزای شیرازی ، روبروی داروخانه ایثار پلاک ۶۸ واحد۳
+                    </p>
+                    <p>تلفن: 021-91300517</p>
+
+                    <!-- Responsive Google Map -->
+                    <div class="ratio ratio-16x9">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3239.34702733371!2d51.415934!3d35.717683!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzXCsDQzJzAzLjciTiA1McKwMjQnNTcuNCJF!5e0!3m2!1sen!2s!4v1747397440274!5m2!1sen!2s"
+                            style="border:0;"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
                 </div>
             </div>
         </div>
