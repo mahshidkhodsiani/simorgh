@@ -133,6 +133,21 @@ li {
 }
 
 
+
+@media (max-width: 991px) {
+    .toggle-button {
+        display: inline-block;
+        /* افزایش اندازه آیکون */
+        font-size: 2.5rem; /* مثلاً 2.5 برابر اندازه پیش‌فرض */
+        /* افزایش فضای قابل کلیک */
+        padding: 15px; /* فضای اطراف آیکون برای راحتی کلیک */
+        border: 1px solid #ccc; /* افزودن یک کادر برای برجسته‌سازی */
+        border-radius: 5px; /* گوشه‌های گرد برای زیبایی */
+        background-color: #f8f8f8; /* یک پس‌زمینه روشن */
+    }
+}
+
+
 </style>
 
 

@@ -40,23 +40,51 @@
             text-align: center !important;
         }
     }
+
+    /* Remove specific margin/font size for .design-credit since it will be in footer-bottom */
+    /* .design-credit {
+        margin-top: 15px;
+        font-size: 13px;
+        color: #bbb;
+    } */
+
+    .design-credit a {
+        color: #fff;
+        font-weight: bold;
+    }
+
+    /* Style for footer-bottom to handle both texts */
+    .footer-bottom {
+        padding-top: 15px; /* Add some padding above the bottom content */
+        border-top: 1px solid rgba(255, 255, 255, 0.1); /* Optional: a subtle line above it */
+        margin-top: 20px; /* Space from the content above */
+        display: flex; /* Use flexbox for alignment */
+        flex-direction: column; /* Stack items vertically by default */
+        align-items: center; /* Center items horizontally */
+        text-align: center; /* Ensure text is centered for smaller screens */
+    }
+
+    /* Adjust layout for larger screens */
+    @media (min-width: 768px) {
+        .footer-bottom {
+            flex-direction: row; /* Arrange items in a row on larger screens */
+            justify-content: space-between; /* Space out items */
+        }
+    }
+
 </style>
-<!-- Footer -->
 <footer class="footer">
     <div class="container">
         <div class="row">
-            <!-- Links Section -->
             <div class="col-md-3">
-                <h6>لینک‌های مفید</h6>
                 <ul class="simple-links">
+                    <h5>لینک های مفید</h5>
                     <li><a href="../articles/contact">ارتباط با ما</a></li>
                     <li><a href="../articles/index">بهترین مقالات</a></li>
-                    <li><a href="#">همکاری با ما</a></li>
+                    <li><a href="../articles/work_us">همکاری با ما</a></li>
                 </ul>
-
             </div>
 
-            <!-- Video & Certification Section -->
             <div class="col-md-6 text-center">
                 <a href="https://trustseal.enamad.ir/?id=514858&Code=XLHp9yPcQnRZL83Nfd3Kg9BbN4INSCXP" target="_blank">
                     <img src="https://trustseal.enamad.ir/logo.aspx?id=514858&Code=XLHp9yPcQnRZL83Nfd3Kg9BbN4INSCXP" alt="Enamad" style="cursor: pointer; max-width: 120px;">
@@ -75,7 +103,6 @@
                     </p>
                     <p>تلفن: 021-91300517</p>
 
-                    <!-- Responsive Google Map -->
                     <div class="ratio ratio-16x9">
                         <iframe
                             src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3239.34702733371!2d51.415934!3d35.717683!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzXCsDQzJzAzLjciTiA1McKwMjQnNTcuNCJF!5e0!3m2!1sen!2s!4v1747397440274!5m2!1sen!2s"
@@ -89,9 +116,11 @@
             </div>
         </div>
 
-        <!-- Footer Bottom Section -->
-        <div class="footer-bottom" style="text-align: center;">
+        <div class="footer-bottom">
             <p>تمامی حقوق این سایت متعلق به موسسه هفت هنر سیمرغ می‌باشد.</p>
+            <p class="design-credit">
+                طراحی و توسعه وب‌سایت توسط: <a href="http://moonshid.ir" target="_blank" rel="noopener noreferrer">moonshid.ir</a>
+            </p>
         </div>
     </div>
 </footer>
