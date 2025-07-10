@@ -60,7 +60,10 @@ body {
 
 @import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
 #team {
-  background: #d4c4e5 !important;
+  /* background: #d4c4e5 !important; */
+  background: #ddd22b !important;
+
+ 
 }
 
 .btn-primary:hover,

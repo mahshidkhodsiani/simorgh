@@ -236,7 +236,7 @@
             ارتباط با ما
         </button>
         <ul class="dropdown-menu">
-            <a href="tel:+989354637055" target="_blank" class="ml-3 call-link social-icon" style="color:black !important"><img src="../images/call.png" height="20px" width="20px" alt="Call Icon"></a>
+            <a href="tel:+982191300517" target="_blank" class="ml-3 call-link social-icon" style="color:black !important"><img src="../images/call.png" height="20px" width="20px" alt="Call Icon"></a>
             <a href="tel:300016343000" class="ml-3 call-link social-icon" target="_blank"><img src="../images/sms.png" height="25px" width="25px" alt="Call Icon"></a>
             <a href="https://wa.me/+989354637055" class="ml-3 call-link social-icon" target="_blank"><img src="../images/whatsapp.png" height="30px" width="30px" alt="Call Icon"></a>
             <a href="https://t.me/+989354637055" class="ml-3 call-link social-icon" target="_blank"><img src="../images/telegram.png" height="30px" width="30px" alt="Call Icon"></a>

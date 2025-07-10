@@ -66,17 +66,24 @@ error_reporting(E_ALL);
     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img class="d-block w-100" src="images/1.jpg" alt="First slide">
+                <img class="d-block w-100" src="images/1.jpg" alt="استادیوم">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>استودیو صدا</h5>
                     <p>بهترین استادیوی صدا برای ضبط کلاسها</p>
                 </div>
             </div>
             <div class="carousel-item">
-                <img class="d-block w-100" src="images/15.jpg" alt="Second slide">
+                <img class="d-block w-100" src="images/15.jpg" alt="رادیو سیمرغ">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>رادیو سیمرغ</h5>
                     <p>برنامه های جدید و جذاب</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="images/19.jpeg" alt="معه های سیمرغی">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>حمعه های سیمرغی</h5>
+                    <p>در جمعه های سیمرغی با شما هستیم </p>
                 </div>
             </div>
         </div>
@@ -94,7 +101,7 @@ error_reporting(E_ALL);
 
 
     <div class="container-fluid px-4 mt-4">
-     
+
 
         <div class="row">
             <div class="col-md-4">
@@ -121,36 +128,50 @@ error_reporting(E_ALL);
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-md-6 order-2 order-md-1">
-                        <div class="card four mb-3" style="background-color:#f95074">
+                        <div class="card four mb-4 mt-4" style="background-color:#f95074">
                             <div class="card-body d-flex justify-content-between align-items-center">
                                 <p class="card-title rtl-title fw-bold mb-0 desktop-font-size">پرداخت اقساطی دوره ها</p>
                                 <a href="register2" class="btn btn-outline-quarternary fw-bold">ثبت نام</a>
                             </div>
                         </div>
 
-                        <div class="card four mb-3" style="background-color:#f95074">
+                        <div class="card four mb-4" style="background-color:#f95074">
                             <div class="card-body d-flex justify-content-between align-items-center">
                                 <p class="card-title rtl-title fw-bold mb-0 desktop-font-size">پرداخت آزاد به موسسه</p>
                                 <a href="pardakht" class="btn btn-outline-quarternary fw-bold">پرداخت</a>
                             </div>
                         </div>
-                        <div class="card four mb-3" style="background-color:#f95074">
+                        <div class="card four mb-4" style="background-color:#f95074">
                             <div class="card-body d-flex justify-content-between align-items-center">
-                                <p class="card-title rtl-title fw-bold mb-0 desktop-font-size">عضویت در آرشیو گویندگان</p>
-                                <a href="articles/send_voice" class="btn btn-outline-quarternary fw-bold">عضویت</a>
+                                <p class="card-title rtl-title fw-bold mb-0 desktop-font-size">گویندگان رادیو سیمرغ</p>
+                                <a href="articles/speakers_archive" class="btn btn-outline-quarternary fw-bold">رفتن به صفحه</a>
                             </div>
                         </div>
 
-                        <div class="card four mb-3" style="background-color:#f95074">
+                        <div class="card four mb-4" style="background-color:#f95074">
                             <div class="card-body d-flex justify-content-between align-items-center">
                                 <p class="card-title rtl-title fw-bold mb-0 desktop-font-size">انتقاد و پیشنهاد به سیمرغ</p>
                                 <a href="articles/suggestion" class="btn btn-outline-quarternary fw-bold">رفتن به صفحه</a>
                             </div>
                         </div>
+
+                        <div class="card four mb-4" style="background-color:#f95074">
+                            <div class="card-body d-flex justify-content-between align-items-center">
+                                <p class="card-title rtl-title fw-bold mb-0 desktop-font-size">گالری و نمونه کارها</p>
+                                <a href="portofilo/pictures" class="btn btn-outline-quarternary fw-bold">رفتن به صفحه</a>
+                            </div>
+                        </div>
+
+                        <div class="card four mb-4" style="background-color:#f95074">
+                            <div class="card-body d-flex justify-content-between align-items-center">
+                                <p class="card-title rtl-title fw-bold mb-0 desktop-font-size">ویدیوهای نمونه کار</p>
+                                <a href="portofilo/videos" class="btn btn-outline-quarternary fw-bold">رفتن به صفحه</a>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="col-12 col-md-6">
-                        <img class="img-fluid" src="images/18.png" alt="تصویر سیمرغ">
+                        <img class="img-fluid" src="images/20.jpeg" alt="تصویر سیمرغ" style="max-height: 600px;">
                     </div>
                 </div>
             </div>
@@ -158,7 +179,7 @@ error_reporting(E_ALL);
 
 
 
-        <hr >
+        <hr>
 
 
         <section class="light">
@@ -277,7 +298,7 @@ error_reporting(E_ALL);
                                             <p>
                                                 <img class="img-fluid" src="images/audio.jpg" alt="card image">
                                             </p>
-                                            <h4 class="card-title fw-bold">آرشیو گویندگان</h4>
+                                            <h4 class="card-title fw-bold">گویندگان سیمرغ</h4>
                                             <p class="card-text fw-bold">اگر دنبال صداهای جذاب با گوینده های متنوع هستید کلیک کنید.</p>
                                             <a href="articles/speakers_archive" class="btn btn-primary btn-sm">
                                                 <i class="fa fa-plus"></i>
