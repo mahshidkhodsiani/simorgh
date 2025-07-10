@@ -1,0 +1,17 @@
+{
+    "name": "mahshid/simorgh",
+    "autoload": {
+        "psr-4": {
+            "Mahshid\\Simorgh\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "mahshidkhodsiani",
+            "email": "mahshidkhodsiani2@email.com"
+        }
+    ],
+    "require": {
+        "samdark/sitemap": "^2.4"
+    }
+}

@@ -30,7 +30,7 @@ $id = $_SESSION["all_data"]['id'];
 
 
 
- 
+
 
 
     <link href="https://cdn.jsdelivr.net/npm/jodit/build/jodit.min.css" rel="stylesheet">
@@ -41,9 +41,9 @@ $id = $_SESSION["all_data"]['id'];
 
 <body>
 
-   
 
-<?php include 'header.php'; ?>
+
+    <?php include 'header.php'; ?>
     <div class="container-fluid">
 
 
@@ -52,7 +52,7 @@ $id = $_SESSION["all_data"]['id'];
                 <?php
                 include 'sidebar.php';
                 ?>
-              
+
             </div>
 
             <div class="col-md-8 mt-5">
@@ -61,52 +61,52 @@ $id = $_SESSION["all_data"]['id'];
                 <hr>
                 <br>
                 <form action="" method="post" enctype='multipart/form-data' novalidate>
-                
-                <div class="row">
-                    <div class="col-6">
-                        <label for="title">عنوان مطلب:</label>
-                        <input type="text" id="title" name="title" class="form-control mb-2" placeholder="عنوان را اینجا وارد کنید" required>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="title">عنوان مطلب:</label>
+                            <input type="text" id="title" name="title" class="form-control mb-2" placeholder="عنوان را اینجا وارد کنید" required>
+                        </div>
+                        <div class="col-6">
+                            <label for="image">تصویر شاخص:</label>
+                            <input type="file" name="image" class="form-control" id="inputGroupFile02" required>
+                        </div>
+                        <div class="col-6">
+                            <label for="category">انتخاب کنید</label>
+                            <select name="category" id="category" class="form-control">
+                                <option value="matlab">مطلب جدید</option>
+                                <option value="course">دوره جدید</option>
+                            </select>
+                        </div>
+
+                        <div class="col-6" id="courseOption" style="display: none;">
+                            <label>اسم دوره:</label>
+                            <input placeholder="اسم دوره جهت ذخیره در دیتابیس" class="form-control" name="courseName">
+
+                            <label for="courseHeader">نمایش در فهرست دوره ها سایت اصلی</label>
+                            <select name="courseHeader" class="form-control">
+                                <option value="0">خیر</option>
+                                <option value="1">بله</option>
+                            </select>
+
+                            <label>قیمت دوره (ریال)</label>
+                            <input type="text" name="coursePrice" class="form-control mb-2" placeholder="قیمت را اینجا وارد کنید" required>
+
+
+                        </div>
+
                     </div>
-                    <div class="col-6">
-                        <label for="image">تصویر شاخص:</label>
-                        <input type="file" name="image" class="form-control" id="inputGroupFile02" required>
-                    </div>
-                    <div class="col-6">
-                        <label for="category">انتخاب کنید</label>
-                        <select name="category" id="category" class="form-control">
-                            <option value="matlab">مطلب جدید</option>
-                            <option value="course">دوره جدید</option>
-                        </select>
-                    </div>
+                    <br>
 
-                    <div class="col-6" id="courseOption" style="display: none;" >
-                        <label>اسم دوره:</label>
-                        <input placeholder="اسم دوره جهت ذخیره در دیتابیس" class="form-control" name="courseName">
-
-                        <label for="courseHeader">نمایش در فهرست دوره ها سایت اصلی</label>
-                        <select name="courseHeader" class="form-control">
-                            <option value="0">خیر</option>
-                            <option value="1">بله</option>
-                        </select>
-
-                        <label>قیمت دوره (ریال)</label>
-                        <input type="text" name="coursePrice" class="form-control mb-2" placeholder="قیمت را اینجا وارد کنید" required>
+                    <textarea id="editor" name="content"></textarea>
+                    <script>
+                        const editor = new Jodit('#editor');
+                    </script>
 
 
-                    </div>
+                    <br>
 
-                </div>
-                <br>
-
-                <textarea id="editor" name="content"></textarea>
-                <script>
-                    const editor = new Jodit('#editor');
-                </script>
-
-                
-                <br>
-
-                <button name="submit_post" class="btn btn-primary">ثبت </button>
+                    <button name="submit_post" class="btn btn-primary">ثبت </button>
                 </form>
 
 
@@ -148,60 +148,60 @@ $id = $_SESSION["all_data"]['id'];
                                             if (strlen($body_text) > $max_length) {
                                                 $body_text = substr($body_text, 0, $max_length) . '...';
                                             }
-                                            if($row['show_header']==1){
-                                                $show ="بله";
-                                            }else{
-                                                 $show ="خیر";
+                                            if ($row['show_header'] == 1) {
+                                                $show = "بله";
+                                            } else {
+                                                $show = "خیر";
                                             }
                                         ?>
-                                        <tr>
-                                            <th scope="row" class="text-center"><?= $a ?></th>
-                                            <td class="text-center"><?= $row['title'] ?></td>
-                                            <td class="text-center"><?= $body_text ?></td>
-                                            <td class="text-center"><?= $show ?></td>
-                                            <td class="text-center">
-                                                <form action="" method="POST">
-                                                    <input type="hidden" value="<?= $row['id'] ?>" name="id_art">
-                                                    <button type="submit" name="delete_article" 
-                                                        class="btn btn-outline-danger btn-sm" onclick="return confirmDelete()">حذف</button>
-                                                    
-                                                         <?php
-                                                            if($row['category'] == 'course'){
-                                                                if($row['show_header']){?>
-                                                                    <button class="btn btn-outline-warning btn-sm" name="no_show"
-                                                                    onclick="return confirmDelete()">عدم نمایش در فهرست </button>
-                                                                <?php
-                                                                }else{
-                                                                
-                                                                    ?>
-                                                                    <button class="btn btn-outline-warning btn-sm" name="yes_show"
-                                                                    onclick="return confirmDelete()"> نمایش در فهرست </button>
-                                                                <?php
-                                                                }
-                                                            }
+                                            <tr>
+                                                <th scope="row" class="text-center"><?= $a ?></th>
+                                                <td class="text-center"><?= $row['title'] ?></td>
+                                                <td class="text-center"><?= $body_text ?></td>
+                                                <td class="text-center"><?= $show ?></td>
+                                                <td class="text-center">
+                                                    <form action="" method="POST">
+                                                        <input type="hidden" value="<?= $row['id'] ?>" name="id_art">
+                                                        <button type="submit" name="delete_article"
+                                                            class="btn btn-outline-danger btn-sm" onclick="return confirmDelete()">حذف</button>
 
-                                                            if($row['show_index']==1){?>
-                                                                <button class="btn btn-outline-dark btn-sm" name="no_index"
-                                                                onclick="return confirmDelete()">عدم نمایش در صقحه اصلی </button>
+                                                        <?php
+                                                        if ($row['category'] == 'course') {
+                                                            if ($row['show_header']) { ?>
+                                                                <button class="btn btn-outline-warning btn-sm" name="no_show"
+                                                                    onclick="return confirmDelete()">عدم نمایش در فهرست </button>
                                                             <?php
-                                                            }else{
-                                                            
-                                                                ?>
-                                                                <button class="btn btn-outline-dark btn-sm" name="yes_index"
-                                                                onclick="return confirmDelete()"> نمایش در صفحه اصلی </button>
+                                                            } else {
+
+                                                            ?>
+                                                                <button class="btn btn-outline-warning btn-sm" name="yes_show"
+                                                                    onclick="return confirmDelete()"> نمایش در فهرست </button>
                                                             <?php
                                                             }
-                                                         ?>
-                                                    </button>
-                                                    <a href="edit_matlab.php?id_matlab=<?=$row['id']?>" class="btn btn-outline-info">ادیت مطلب</a>
-                                                </form>
-                                            </td>
-                                            <script>
-                                                function confirmDelete() {
-                                                    return confirm("آیا مطمئن هستید ؟ ");
-                                                }
-                                            </script>
-                                        </tr>
+                                                        }
+
+                                                        if ($row['show_index'] == 1) { ?>
+                                                            <button class="btn btn-outline-dark btn-sm" name="no_index"
+                                                                onclick="return confirmDelete()">عدم نمایش در صقحه اصلی </button>
+                                                        <?php
+                                                        } else {
+
+                                                        ?>
+                                                            <button class="btn btn-outline-dark btn-sm" name="yes_index"
+                                                                onclick="return confirmDelete()"> نمایش در صفحه اصلی </button>
+                                                        <?php
+                                                        }
+                                                        ?>
+                                                        </button>
+                                                        <a href="edit_matlab.php?id_matlab=<?= $row['id'] ?>" class="btn btn-outline-info">ادیت مطلب</a>
+                                                    </form>
+                                                </td>
+                                                <script>
+                                                    function confirmDelete() {
+                                                        return confirm("آیا مطمئن هستید ؟ ");
+                                                    }
+                                                </script>
+                                            </tr>
                                         <?php
                                             $a++;
                                         }
@@ -261,7 +261,7 @@ $id = $_SESSION["all_data"]['id'];
 
 
 
-                
+
             </div>
         </div>
     </div>
@@ -269,7 +269,7 @@ $id = $_SESSION["all_data"]['id'];
 
     <script>
         $('form').submit(function() {
-        $('#editor').val(editor.getEditorValue()); // انتقال محتوا به textarea
+            $('#editor').val(editor.getEditorValue()); // انتقال محتوا به textarea
         });
 
 
@@ -286,7 +286,6 @@ $id = $_SESSION["all_data"]['id'];
                 courseOption.style.display = 'none';
             }
         });
-
     </script>
 
 
@@ -308,12 +307,12 @@ if (isset($_POST['submit_post'])) {
     $type = $_POST['category'];
     $amount = $_POST['coursePrice'];
     $courseName = $_POST['courseName'];
-    if($_POST['courseHeader'] == 1){
+    if ($_POST['courseHeader'] == 1) {
         $courseHeader = 1;
-    }else{
+    } else {
         $courseHeader = 0;
     }
-   
+
 
     // Escape strings to prevent SQL injection
     $title = $conn->real_escape_string($title);
@@ -386,7 +385,7 @@ if (isset($_POST['submit_post'])) {
 
 
 
-if(isset($_POST['delete_article'])){
+if (isset($_POST['delete_article'])) {
 
     $id_art = $_POST['id_art'];
 
@@ -441,15 +440,14 @@ if(isset($_POST['delete_article'])){
 
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
-    
 }
 
-if (isset($_POST['no_show'])){
+if (isset($_POST['no_show'])) {
     $id_art = $_POST['id_art'];
     $sql = "UPDATE courses SET show_header = 0 WHERE id = $id_art";
     $result = $conn->query($sql);
     if ($result) {
-    // Success Toast
+        // Success Toast
         echo "<div id='successToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 20px; right: 20px; width: 300px;'>
         <div class='toast-header bg-success text-white'>
             <strong class='mr-auto'>Success</strong>
@@ -473,18 +471,17 @@ if (isset($_POST['no_show'])){
         });
         </script>";
     } else {
-    echo "خطا در ذخیره پست!";
+        echo "خطا در ذخیره پست!";
     }
-
 }
 
-if(isset($_POST['yes_show'])){
+if (isset($_POST['yes_show'])) {
     $id_art = $_POST['id_art'];
     $sql = "UPDATE courses SET show_header = 1 WHERE id = $id_art";
     $result = $conn->query($sql);
     if ($result) {
         // Success Toast
-            echo "<div id='successToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 20px; right: 20px; width: 300px;'>
+        echo "<div id='successToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 20px; right: 20px; width: 300px;'>
             <div class='toast-header bg-success text-white'>
                 <strong class='mr-auto'>Success</strong>
                 <button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>
@@ -506,18 +503,17 @@ if(isset($_POST['yes_show'])){
             }, 3000);
             });
             </script>";
-        } else {
+    } else {
         echo "خطا در ذخیره پست!";
-        }
-
+    }
 }
 
-if (isset($_POST['no_index'])){
+if (isset($_POST['no_index'])) {
     $id_art = $_POST['id_art'];
     $sql = "UPDATE courses SET show_index = 0 WHERE id = $id_art";
     $result = $conn->query($sql);
     if ($result) {
-    // Success Toast
+        // Success Toast
         echo "<div id='successToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 20px; right: 20px; width: 300px;'>
         <div class='toast-header bg-success text-white'>
             <strong class='mr-auto'>Success</strong>
@@ -541,18 +537,17 @@ if (isset($_POST['no_index'])){
         });
         </script>";
     } else {
-    echo "خطا در ذخیره پست!";
+        echo "خطا در ذخیره پست!";
     }
-
 }
 
-if(isset($_POST['yes_index'])){
+if (isset($_POST['yes_index'])) {
     $id_art = $_POST['id_art'];
     $sql = "UPDATE courses SET show_index = 1 WHERE id = $id_art";
     $result = $conn->query($sql);
     if ($result) {
         // Success Toast
-            echo "<div id='successToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 20px; right: 20px; width: 300px;'>
+        echo "<div id='successToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 20px; right: 20px; width: 300px;'>
             <div class='toast-header bg-success text-white'>
                 <strong class='mr-auto'>Success</strong>
                 <button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>
@@ -574,8 +569,7 @@ if(isset($_POST['yes_index'])){
             }, 3000);
             });
             </script>";
-        } else {
+    } else {
         echo "خطا در ذخیره پست!";
-        }
-
+    }
 }
