@@ -27,7 +27,7 @@ header("Pragma: cache");
 
         .speaker-img {
             width: 100%;
-            height: 200px;
+            height: 350px;
             object-fit: cover;
         }
 

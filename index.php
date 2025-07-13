@@ -135,6 +135,21 @@ error_reporting(E_ALL);
                             </div>
                         </div>
 
+
+                        <div class="card four mb-4" style="background-color:#f95074">
+                            <div class="card-body d-flex justify-content-between align-items-center">
+                                <p class="card-title rtl-title fw-bold mb-0 desktop-font-size">گالری و نمونه کارها</p>
+                                <a href="portofilo/pictures" class="btn btn-outline-quarternary fw-bold">رفتن به صفحه</a>
+                            </div>
+                        </div>
+
+                        <div class="card four mb-4" style="background-color:#f95074">
+                            <div class="card-body d-flex justify-content-between align-items-center">
+                                <p class="card-title rtl-title fw-bold mb-0 desktop-font-size">ویدیوهای نمونه کار</p>
+                                <a href="portofilo/videos" class="btn btn-outline-quarternary fw-bold">رفتن به صفحه</a>
+                            </div>
+                        </div>
+
                         <div class="card four mb-4" style="background-color:#f95074">
                             <div class="card-body d-flex justify-content-between align-items-center">
                                 <p class="card-title rtl-title fw-bold mb-0 desktop-font-size">پرداخت آزاد به موسسه</p>
@@ -155,19 +170,7 @@ error_reporting(E_ALL);
                             </div>
                         </div>
 
-                        <div class="card four mb-4" style="background-color:#f95074">
-                            <div class="card-body d-flex justify-content-between align-items-center">
-                                <p class="card-title rtl-title fw-bold mb-0 desktop-font-size">گالری و نمونه کارها</p>
-                                <a href="portofilo/pictures" class="btn btn-outline-quarternary fw-bold">رفتن به صفحه</a>
-                            </div>
-                        </div>
 
-                        <div class="card four mb-4" style="background-color:#f95074">
-                            <div class="card-body d-flex justify-content-between align-items-center">
-                                <p class="card-title rtl-title fw-bold mb-0 desktop-font-size">ویدیوهای نمونه کار</p>
-                                <a href="portofilo/videos" class="btn btn-outline-quarternary fw-bold">رفتن به صفحه</a>
-                            </div>
-                        </div>
                     </div>
 
                     <div class="col-12 col-md-6">
