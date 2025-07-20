@@ -3,20 +3,34 @@ session_start();
 ?>
 <!doctype html>
 <html lang="fa" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>هفت هنر سیمرغ</title>
 
-    <?php 
-    include 'includes.php'; 
+    <?php
+    include 'includes.php';
     require 'API/Gateway.php';
     require 'ipgcfg.php';
     ?>
 
     <link rel="icon" href="images/logo1.ico" type="image/x-icon">
 
+    <style>
+        body {
+            font-weight: bold;
+        }
+
+        a,
+        p,
+        label,
+        h6 {
+            font-weight: bold;
+        }
+    </style>
 </head>
+
 <body>
 
     <?php
@@ -25,117 +39,116 @@ session_start();
     include 'PersianCalendar.php';
     include 'jalaliDate.php';
     $sdate = new SDate();
-    
-   ?>
 
-        
-        <div class="container mt-4">
-            <div class="row justify-content-center">
-                <div class="col-md-7 col-sm-12 border">
-                 
+    ?>
 
-                
 
-                        <form class="p-2" action="" method="POST">
-                            <h2 style="text-align: center;">فرم ثبت نام</h2>
-                            <h6 style="text-align: right;">اطلاعات شما :</h6>
-                            <div class="form-group" style="text-align: right;">
-                                <label for="name">نام</label>
-                                <input type="text" class="form-control" name="name" id="name" required>
-                            </div>
-                            <div class="form-group" style="text-align: right;">
-                                <label for="lastname">نام خانوادگی</label>
-                                <input type="text" class="form-control" name="lastname" id="lastname" required>
-                            </div>
-                            <div class="form-group" style="text-align: right;">
-                                <label for="meli_code">کد ملی</label>
-                                <input type="text" class="form-control" name="meli_code" id="meli_code" required>
-                            </div>
-                            <div class="form-group" style="text-align: right;">
-                                <label for="mobile">شماره همراه</label>
-                                <input type="text" class="form-control" name="mobile" id="mobile" required>
-                            </div>
-                            <div class="form-group" style="text-align: right;">
-                                <label for="email">ایمیل</label>
-                                <input type="email" class="form-control" name="email" id="email">
-                            </div>
-                            <div class="form-group" style="text-align: right;">
-                                <label for="age">سن</label>
-                                <input type="number" class="form-control" name="age" id="age" required>
-                            </div>
-                            <div class="form-group" style="text-align: right;">
-                                <label for="address">آدرس</label>
-                                <input type="text" class="form-control" name="address" id="address" required>
-                            </div>
-
-                            <h6 style="text-align: right;">اطلاعات ثبت نامی :</h6>
-                            <div class="form-group" style="text-align: right;">
-                                <label for="course">دوره </label>
-                                <select class="form-control" name="name_course" id="name_course" required>
-                                    <option value="">دوره مورد نظر خودرا انتخاب کنید:</option>
-                                    <?php
-                                    $sql1="SELECT * FROM courses WHERE category = 'course' ORDER BY id DESC ";
-                                    
-                                    $result1 = $conn->query($sql1);
-                                    if($result1->num_rows>0){
-                                        while($row1 = $result1->fetch_assoc()){
-                                       
-                                        ?>
-                                        <option value="<?=$row1['course']?>">دوره <?=$row1['course'] ." به قیمت : ".number_format($row1['amount']) . "ریال"?></option>
-                                        <?php
-                                        }
-                                    }
-                                    ?>
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-7 col-sm-12 border">
 
 
 
-                                </select>
 
-                            </div>
-                            <div class="form-group" style="text-align: right;">
-                                <label for="amount">مبلغ قابل پرداخت (توجه: حداقل تا 1/5 میلیون باید پرداخت کنید)</label>
-                                <input type="number" class="form-control" name="amount" id="amount" required min="15000000" placeholder="به ریال وارد کنید">
-                            </div>
+                <form class="p-2" action="" method="POST">
+                    <h2 style="text-align: center;">فرم ثبت نام</h2>
+                    <h6 style="text-align: right;">اطلاعات شما :</h6>
+                    <div class="form-group" style="text-align: right;">
+                        <label for="name">نام</label>
+                        <input type="text" class="form-control" name="name" id="name" required>
+                    </div>
+                    <div class="form-group" style="text-align: right;">
+                        <label for="lastname">نام خانوادگی</label>
+                        <input type="text" class="form-control" name="lastname" id="lastname" required>
+                    </div>
+                    <div class="form-group" style="text-align: right;">
+                        <label for="meli_code">کد ملی</label>
+                        <input type="text" class="form-control" name="meli_code" id="meli_code" required>
+                    </div>
+                    <div class="form-group" style="text-align: right;">
+                        <label for="mobile">شماره همراه</label>
+                        <input type="text" class="form-control" name="mobile" id="mobile" required>
+                    </div>
+                    <div class="form-group" style="text-align: right;">
+                        <label for="email">ایمیل</label>
+                        <input type="email" class="form-control" name="email" id="email">
+                    </div>
+                    <div class="form-group" style="text-align: right;">
+                        <label for="age">سن</label>
+                        <input type="number" class="form-control" name="age" id="age" required>
+                    </div>
+                    <div class="form-group" style="text-align: right;">
+                        <label for="address">آدرس</label>
+                        <input type="text" class="form-control" name="address" id="address" required>
+                    </div>
 
- 
+                    <h6 style="text-align: right;">اطلاعات ثبت نامی :</h6>
+                    <div class="form-group" style="text-align: right;">
+                        <label for="course">دوره </label>
+                        <select class="form-control" name="name_course" id="name_course" required>
+                            <option value="">دوره مورد نظر خودرا انتخاب کنید:</option>
+                            <?php
+                            $sql1 = "SELECT * FROM courses WHERE category = 'course' ORDER BY id DESC ";
 
-                         
-                          
-                            
-                           
-                          
-                            <div class="form-group" style="text-align: right;">
-                                <label for="explain">توضیحات</label>
-                                <textarea class="form-control" name="explain" id="explain"></textarea>
-                            </div>
-                            <div class="form-group" style="text-align: right;">
-                                <p>نحوه آشنایی با موسسه :</p>
-                                <label for="internet">اینترنت</label>
-                                <input class="form-check-input" type="radio" name="reference" value="internet" id="internet">
-                                <br>
-                                <label for="relation">آشنایان</label>
-                                <input class="form-check-input" type="radio" name="reference" value="relation" id="relation">
-                                <br>
-                                <label for="others">غیره</label>
-                                <input class="form-check-input" type="radio" name="reference" value="others" id="others">
-                            </div>
+                            $result1 = $conn->query($sql1);
+                            if ($result1->num_rows > 0) {
+                                while ($row1 = $result1->fetch_assoc()) {
 
-                            
-                            <input type="submit" value="انتقال به درگاه آپ" class="btn mb-2 mb-md-0 btn-outline-info btn-block">
-                        </form>
+                            ?>
+                                    <option value="<?= $row1['course'] ?>">دوره <?= $row1['course'] . " به قیمت : " . number_format($row1['amount']) . "ریال" ?></option>
+                            <?php
+                                }
+                            }
+                            ?>
 
-                
-                    
-                   
 
-                </div>
+
+                        </select>
+
+                    </div>
+
+                    <br>
+
+                    <div class="form-group" style="text-align: right;">
+                        <label for="amount">مبلغ قابل پرداخت (توجه: حداقل باید بین2/5 تا 4 میلیون پرداخت کنید تا ثبت نام شما انجام شود)</label>
+                        <input type="number" class="form-control" name="amount" id="amount" required min="25000000" placeholder="به ریال وارد کنید">
+                    </div>
+
+
+
+                    <div class="form-group" style="text-align: right;">
+                        <label for="explain">توضیحات</label>
+                        <textarea class="form-control" name="explain" id="explain"></textarea>
+                    </div>
+                    <div class="form-group" style="text-align: right;">
+                        <p>نحوه آشنایی با موسسه :</p>
+                        <label for="internet">اینترنت</label>
+                        <input class="form-check-input" type="radio" name="reference" value="internet" id="internet">
+                        <br>
+                        <label for="relation">آشنایان</label>
+                        <input class="form-check-input" type="radio" name="reference" value="relation" id="relation">
+                        <br>
+                        <label for="others">غیره</label>
+                        <input class="form-check-input" type="radio" name="reference" value="others" id="others">
+                    </div>
+
+
+                    <input type="submit" value="انتقال به درگاه آپ" class="btn mb-2 mb-md-0 btn-outline-info btn-block">
+                </form>
+
+
+
+
+
             </div>
         </div>
- 
+    </div>
+
 
     <?php include 'footer.php'; ?>
 
 </body>
+
 </html>
 
 
@@ -149,15 +162,15 @@ if (!empty($_POST)) {
     $CurUrl = substr($CurUrl, 0, strrpos($CurUrl, '/') + 1);
 
 
-    $invoiceId = time(); 
+    $invoiceId = time();
 
-   
+
     $amount = $_POST['amount'];
 
-    if($amount < 15000000){
-        echo "<h4>مبلغ وارد شده کمتر از 1/5 میلیون است لطفا دقت کنید!! </h4>" ;
-    }else{
-       
+    if ($amount < 25000000 || $amount > 40000000) {
+        echo "<h4>مبلغ وارد شده کمتر از 2/5 میلیون است لطفا دقت کنید!! </h4>";
+    } else {
+
         $mobile = $_POST['mobile'];
         $name = $_POST['name'];
         $lastname = $_POST['lastname'];
@@ -165,31 +178,29 @@ if (!empty($_POST)) {
         $age = $_POST['age'];
         $email = $_POST['email'];
         $address = $_POST['address'];
-    
+
         $description = isset($_POST['explain']) ? $_POST['explain'] : NULL;
-    
+
 
         if (empty($_POST['name_course'])) {
             die("لطفاً یک دوره را انتخاب کنید.");
         }
         $name_course = $_POST['name_course'];
-        
-    
+
+
         $amounts = "SELECT * FROM courses WHERE category= 'course' AND (course LIKE '%$name_course%' OR title LIKE '%$name_course%')";
         $result_courses = $conn->query($amounts);
-        
-        // ذخیره داده‌های دوره‌ها در آرایه
-        $courses = [];
+
         if ($result_courses->num_rows > 0) {
             while ($row2 = $result_courses->fetch_assoc()) {
-             
-                $course= $row2['course'];
-                $amount= isset($discount) && $discount ? $row2['amount'] - $takhfif_amount : $row2['amount'];
+                $course = $row2['course'];
+                // ❌ دیگه amount رو اینجا تغییر نده
+                // ✅ فقط introduce رو بردار
                 $introduce = $row2['introduce'];
             }
         }
-    
-       
+
+
 
 
         if ($amount <= 0) {
@@ -214,14 +225,14 @@ if (!empty($_POST)) {
 
         if ($result) {
             $new_id = $conn->insert_id;
-            
+
             // echo "<script>location.href='payment_receipt';</script>";
         } else {
             echo 'خطا در ذخیره اطلاعات تراکنش در پایگاه داده.';
         }
-        
 
-        $CallBackUrl = $CurUrl . 'back.php';	
+
+        $CallBackUrl = $CurUrl . 'back.php';
 
         $result = Gateway::make()
             ->config($Username, $Password, $merchantConfigID, $CallBackUrl)
@@ -231,12 +242,12 @@ if (!empty($_POST)) {
 
 
 
-        if ($result['code'] == 200) {	
+        if ($result['code'] == 200) {
             Gateway::redirect($result['content'], $_POST['mobile']);
             exit();
         } else {
             if ($result['errortype']) {
-                echo 
+                echo
                 '<div class="error">
                     <span style="color: #d00">خطای ماژول CURL.<br>
                     کدخطا: <b>' . $result['code'] . '</b></span>
@@ -244,10 +255,10 @@ if (!empty($_POST)) {
                     <div style="text-align: left; direction: ltr;">
                         <span style="font:bold 11pt verdana ">' . $result['content'] . '</span>
                     </div>		
-                </div>';		
+                </div>';
                 exit();
             }
-            echo 
+            echo
             '<div class="error">
                 <span style="color: #d00">خطا هنگام ایجاد تراکنش.<br>
                 کدخطا: <b>' . $result['code'] . '</b></span>
@@ -259,7 +270,6 @@ if (!empty($_POST)) {
                 </div>		
             </div>';
         }
-
     }
 }
 

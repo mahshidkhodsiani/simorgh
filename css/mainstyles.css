@@ -1,3 +1,4 @@
+/* --- فونت و استایل پایه --- */
 @font-face {
   font-family: "BNazanin";
   src: url("../fonts/fonts/BNazanin.woff2") format("woff2"),
@@ -8,7 +9,6 @@
   font-style: normal;
 }
 
-/* استفاده از فونت در بخش‌های مختلف سایت */
 body {
   font-family: "BNazanin" !important;
 }
@@ -26,6 +26,161 @@ body {
   flex: 1;
 }
 
+/* --- استایل های عمومی --- */
+section {
+  padding: 60px 0;
+}
+
+section .section-title {
+  text-align: center;
+  margin-bottom: 50px;
+  text-transform: uppercase;
+}
+
+a,
+a:hover {
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+/* --- دکمه ها --- */
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: #7a0d31;
+  border-color: #7a0d31;
+  box-shadow: none;
+  outline: none;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #4d0707;
+  border-color: #4d0707;
+}
+
+/* --- بخش وبلاگ سیمرغ (مقالات) --- */
+.card-four {
+  position: relative; /* برای موقعیت‌دهی صحیح عنوان روی تصویر */
+  border-radius: 8px;
+  overflow: hidden;
+
+  /* این سه خاصیت برای چیدمان محتوا در صورت نیاز است و می‌توانید آنها را نگه دارید */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* برای قرار گرفتن عنوان در پایین */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* انیمیشن هاور روی کل کارت */
+}
+
+/* این کلاس img-fluid و w-100 از بوت استرپ است که به خوبی کار می‌کند. */
+/* hover-zoom را با card-img ترکیب می‌کنیم تا یکپارچه باشد. */
+.card-four img {
+  width: 100%;
+  height: 200px; /* ارتفاع ثابت برای تصاویر مقالات */
+  object-fit: cover;
+  transition: transform 0.5s ease; /* انیمیشن زوم روی تصویر */
+}
+
+.card-four .card-img {
+  position: absolute; /* تصویر کل کادر را می‌پوشاند */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* اطمینان از پوشش کامل بدون کشیدگی */
+  transition: transform 0.5s ease; /* انیمیشن زوم روی تصویر */
+}
+
+.card-four:hover .card-img {
+  transform: scale(1.08); /* زوم شدن تصویر با هاور */
+}
+
+.card-body {
+  padding: 0; /* padding داخلی card-body را حذف کنید تا تصویر کل کادر را بگیرد */
+}
+
+.title-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  /* اینجا تغییرات اصلی را اعمال می‌کنیم */
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8),
+    transparent
+  ); /* گرادیانت تیره از پایین */
+  color: white;
+  padding: 15px;
+  text-align: right; /* راست‌چین برای زبان فارسی */
+  opacity: 1; /* **همیشه قابل مشاهده** */
+  transform: translateY(0); /* **همیشه در موقعیت اصلی** */
+  transition: none; /* **حذف انیمیشن هاور برای نمایش/مخفی کردن** */
+  z-index: 1; /* اطمینان از قرار گرفتن روی تصویر */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* محتوا را به پایین بچسباند */
+  height: auto; /* ارتفاع بر اساس محتوا تنظیم شود */
+  min-height: 80px; /* حداقل ارتفاع برای نمایش عنوان */
+}
+
+/* این بخش هاور را حذف می‌کنیم چون نمی‌خواهیم با هاور تغییری در opacity و transform رخ دهد */
+/* .card-four:hover .title-overlay {
+  opacity: 1;
+  transform: translateY(0);
+} */
+
+.title-overlay h5 {
+  margin-bottom: 5px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: white; /* اطمینان از رنگ سفید */
+  padding: 0; /* padding داخلی p در HTML قبلاً 2px بود، اینجا حذف شده. */
+}
+
+.title-overlay .card-text {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: rgba(
+    255,
+    255,
+    255,
+    0.9
+  ); /* رنگ کمی ملایم‌تر برای متن توضیحات (اگر اضافه شود) */
+  margin-bottom: 0; /* اگر توضیحاتی نباشد، margin-bottom هم نیازی نیست */
+}
+
+.card-four:hover .title-overlay {
+  opacity: 1; /* با هاور نمایش داده شود */
+  transform: translateY(0); /* به موقعیت اصلی برگردد */
+}
+
+.title-overlay .btn {
+  margin-top: 10px;
+  display: inline-block; /* برای اینکه دکمه اندازه محتوایش باشد */
+  align-self: flex-end; /* برای راست چین کردن دکمه در فلکس باکس */
+}
+
+/* استایل دکمه مطالعه بیشتر */
+.btn-outline-quarternary {
+  color: white; /* رنگ متن دکمه */
+  border-color: white; /* رنگ border دکمه */
+  font-weight: bold;
+}
+
+.btn-outline-quarternary:hover {
+  background-color: white; /* رنگ پس‌زمینه با هاور */
+  color: #4d0707 !important; /* رنگ متن با هاور (مثلاً رنگ اصلی دکمه‌های دیگرتان) */
+  box-shadow: none; /* حذف سایه اضافه احتمالی */
+}
+
+/* اصلاحات برای کلاس های موجود برای اطمینان از ظاهر صحیح */
+.rtl-title {
+  direction: rtl; /* Ensures the text is right-to-left */
+  text-align: right;
+}
+
+/* --- استایل های بخش های دیگر (حفظ شده از کد شما) --- */
 .postcard__preview-txt {
   display: -webkit-box;
   -webkit-line-clamp: 4; /* Limits the content to 4 lines */
@@ -51,43 +206,11 @@ body {
   transition: transform 0.1s ease !important;
 }
 
-.rtl-title {
-  direction: rtl; /* Ensures the text is right-to-left */
-  text-align: right;
-}
-
 /* FontAwesome for working BootSnippet :> */
-
 @import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
 #team {
   /* background: #d4c4e5 !important; */
   background: #ddd22b !important;
-
- 
-}
-
-.btn-primary:hover,
-.btn-primary:focus {
-  background-color: #7a0d31;
-  border-color: #7a0d31;
-  box-shadow: none;
-  outline: none;
-}
-
-.btn-primary {
-  color: #fff;
-  background-color: #4d0707;
-  border-color: #4d0707;
-}
-
-section {
-  padding: 60px 0;
-}
-
-section .section-title {
-  text-align: center;
-  margin-bottom: 50px;
-  text-transform: uppercase;
 }
 
 #team .card {
@@ -333,12 +456,6 @@ hr {
   background: #f3f5f7;
 }
 
-a,
-a:hover {
-  text-decoration: none;
-  transition: color 0.3s ease-in-out;
-}
-
 #pageHeaderTitle {
   margin: 2rem 0;
   text-transform: uppercase;
@@ -350,233 +467,233 @@ a:hover {
 .postcard {
   flex-wrap: wrap;
   display: flex;
-
   box-shadow: 0 4px 21px -12px rgba(0, 0, 0, 0.66);
   border-radius: 10px;
   margin: 0 0 2rem 0;
   overflow: hidden;
   position: relative;
   color: #ffffff;
-
-  &.dark {
-    background-color: #18151f;
-  }
-  &.light {
-    background-color: #e1e5ea;
-  }
-
-  .t-dark {
-    color: #18151f;
-  }
-
-  a {
-    color: inherit;
-  }
-
-  h1,
-  .h1 {
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-    line-height: 1.2;
-  }
-
-  .small {
-    font-size: 80%;
-  }
-
-  .postcard__title {
-    font-size: 1.75rem;
-  }
-
-  .postcard__img {
-    max-height: 180px;
-    width: 100%;
-    object-fit: cover;
-    position: relative;
-  }
-
-  .postcard__img_link {
-    display: contents;
-  }
-
-  .postcard__bar {
-    width: 50px;
-    height: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
-    background-color: #424242;
-    transition: width 0.2s ease;
-  }
-
-  .postcard__text {
-    padding: 1.5rem;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .postcard__preview-txt {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-align: justify;
-    height: 100%;
-  }
-
-  .postcard__tagbox {
-    display: flex;
-    flex-flow: row wrap;
-    font-size: 14px;
-    margin: 20px 0 0 0;
-    padding: 0;
-    justify-content: center;
-
-    .tag__item {
-      display: inline-block;
-      background: rgba(83, 83, 83, 0.4);
-      border-radius: 3px;
-      padding: 2.5px 10px;
-      margin: 0 5px 5px 0;
-      cursor: default;
-      user-select: none;
-      transition: background-color 0.3s;
-
-      &:hover {
-        background: rgba(83, 83, 83, 0.8);
-      }
-    }
-  }
-
-  &:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-image: linear-gradient(-70deg, #424242, transparent 50%);
-    opacity: 1;
-    border-radius: 10px;
-  }
-
-  &:hover .postcard__bar {
-    width: 100px;
-  }
+}
+.postcard.dark {
+  background-color: #18151f;
+}
+.postcard.light {
+  background-color: #e1e5ea;
+}
+.postcard .t-dark {
+  color: #18151f;
+}
+.postcard a {
+  color: inherit;
+}
+.postcard h1,
+.postcard .h1 {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+.postcard .small {
+  font-size: 80%;
+}
+.postcard .postcard__title {
+  font-size: 1.75rem;
+}
+.postcard .postcard__img {
+  max-height: 180px;
+  width: 100%;
+  object-fit: cover;
+  position: relative;
+}
+.postcard .postcard__img_link {
+  display: contents;
+}
+.postcard .postcard__bar {
+  width: 50px;
+  height: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  background-color: #424242;
+  transition: width 0.2s ease;
+}
+.postcard .postcard__text {
+  padding: 1.5rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.postcard .postcard__preview-txt {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: justify;
+  height: 100%;
+}
+.postcard .postcard__tagbox {
+  display: flex;
+  flex-flow: row wrap;
+  font-size: 14px;
+  margin: 20px 0 0 0;
+  padding: 0;
+  justify-content: center;
+}
+.postcard .postcard__tagbox .tag__item {
+  display: inline-block;
+  background: rgba(83, 83, 83, 0.4);
+  border-radius: 3px;
+  padding: 2.5px 10px;
+  margin: 0 5px 5px 0;
+  cursor: default;
+  user-select: none;
+  transition: background-color 0.3s;
+}
+.postcard .postcard__tagbox .tag__item:hover {
+  background: rgba(83, 83, 83, 0.8);
+}
+.postcard:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: linear-gradient(-70deg, #424242, transparent 50%);
+  opacity: 1;
+  border-radius: 10px;
+}
+.postcard:hover .postcard__bar {
+  width: 100px;
 }
 
 @media screen and (min-width: 769px) {
   .postcard {
     flex-wrap: inherit;
-
-    .postcard__title {
-      font-size: 2rem;
-    }
-
-    .postcard__tagbox {
-      justify-content: start;
-    }
-
-    .postcard__img {
-      max-width: 300px;
-      max-height: 100%;
-      transition: transform 0.3s ease;
-    }
-
-    .postcard__text {
-      padding: 3rem;
-      width: 100%;
-    }
-
-    .media.postcard__text:before {
-      content: "";
-      position: absolute;
-      display: block;
-      background: #18151f;
-      top: -20%;
-      height: 130%;
-      width: 55px;
-    }
-
-    &:hover .postcard__img {
-      transform: scale(1.1);
-    }
-
-    &:nth-child(2n + 1) {
-      flex-direction: row;
-    }
-
-    &:nth-child(2n + 0) {
-      flex-direction: row-reverse;
-    }
-
-    &:nth-child(2n + 1) .postcard__text::before {
-      left: -12px !important;
-      transform: rotate(4deg);
-    }
-
-    &:nth-child(2n + 0) .postcard__text::before {
-      right: -12px !important;
-      transform: rotate(-4deg);
-    }
+  }
+  .postcard .postcard__title {
+    font-size: 2rem;
+  }
+  .postcard .postcard__tagbox {
+    justify-content: start;
+  }
+  .postcard .postcard__img {
+    max-width: 300px;
+    max-height: 100%;
+    transition: transform 0.3s ease;
+  }
+  .postcard .postcard__text {
+    padding: 3rem;
+    width: 100%;
+  }
+  .postcard .media.postcard__text:before {
+    content: "";
+    position: absolute;
+    display: block;
+    background: #18151f;
+    top: -20%;
+    height: 130%;
+    width: 55px;
+  }
+  .postcard:hover .postcard__img {
+    transform: scale(1.1);
+  }
+  .postcard:nth-child(2n + 1) {
+    flex-direction: row;
+  }
+  .postcard:nth-child(2n + 0) {
+    flex-direction: row-reverse;
+  }
+  .postcard:nth-child(2n + 1) .postcard__text::before {
+    left: -12px !important;
+    transform: rotate(4deg);
+  }
+  .postcard:nth-child(2n + 0) .postcard__text::before {
+    right: -12px !important;
+    transform: rotate(-4deg);
   }
 }
 @media screen and (min-width: 1024px) {
   .postcard__text {
     padding: 2rem 3.5rem;
   }
-
   .postcard__text:before {
     content: "";
     position: absolute;
     display: block;
-
     top: -20%;
     height: 130%;
     width: 55px;
   }
-
-  .postcard.dark {
-    .postcard__text:before {
-      background: #18151f;
-    }
+  .postcard.dark .postcard__text:before {
+    background: #18151f;
   }
-  .postcard.light {
-    .postcard__text:before {
-      background: #e1e5ea;
-    }
+  .postcard.light .postcard__text:before {
+    background: #e1e5ea;
   }
 }
 
 /* Custom CSS for the carousel */
 .carousel-item img {
-  height: 400px;
-  /* ارتفاع پیش‌فرض برای دسکتاپ و تبلت */
-  object-fit: cover;
-  /* اطمینان از پوشش کامل تصویر بدون کشیدگی */
+  height: 400px; /* ارتفاع پیش‌فرض برای دسکتاپ و تبلت */
+  object-fit: cover; /* اطمینان از پوشش کامل تصویر بدون کشیدگی */
 }
 
 .carousel-caption {
-  background-color: rgba(0, 0, 0, 0.5);
-  /* پس‌زمینه نیمه‌شفاف برای خوانایی بهتر */
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.5
+  ); /* پس‌زمینه نیمه‌شفاف برای خوانایی بهتر */
   padding: 15px;
   border-radius: 5px;
 }
 
 /* Media Query برای صفحه‌نمایش‌های کوچک (موبایل) */
 @media (max-width: 767.98px) {
-  /* این breakpoint برای دستگاه‌های کوچک‌تر از 768px است */
   .carousel-item img {
-    height: 250px;
-    /* ارتفاع کمتر برای موبایل */
+    height: 250px; /* ارتفاع کمتر برای موبایل */
   }
 
   .carousel-caption {
-    font-size: 0.8em;
-    /* کاهش اندازه فونت کپشن برای موبایل */
+    font-size: 0.8em; /* کاهش اندازه فونت کپشن برای موبایل */
     padding: 10px;
   }
+}
 
-  /* اگر می‌خواهید کپشن در موبایل پنهان شود، می‌توانید از کد زیر استفاده کنید: */
-  /* .carousel-caption {
-            display: none !important;
-        } */
+/* CSS برای بخش پارالاکس */
+.parallax-section {
+  background-image: url("../images/21.jpg"); /* تصویر پس‌زمینه پارالاکس */
+  min-height: 500px; /* حداقل ارتفاع بخش */
+  background-attachment: fixed; /* ایجاد افکت پارالاکس */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white; /* رنگ متن روی پس‌زمینه پارالاکس */
+  position: relative;
+  z-index: 1; /* اطمینان از قرار گرفتن روی محتوای دیگر */
+}
+
+.parallax-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* لایه تاریک برای خوانایی بیشتر متن */
+  z-index: -1; /* قرار گرفتن زیر متن */
+}
+
+.parallax-content h2 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.parallax-content p {
+  font-size: 1.2rem;
+  max-width: 800px;
+  margin: 0 auto;
 }

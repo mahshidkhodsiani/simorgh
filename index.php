@@ -39,16 +39,14 @@ error_reporting(E_ALL);
                 "availableLanguage": "Persian"
             }
         }
-    </script> <?php
+    </script>
 
-                include "includes.php";
+    <?php
+    include "includes.php";
+
+    ?>
 
 
-                ?>
-
-    <style>
-
-    </style>
 
 </head>
 
@@ -80,9 +78,9 @@ error_reporting(E_ALL);
                 </div>
             </div>
             <div class="carousel-item">
-                <img class="d-block w-100" src="images/19.jpeg" alt="معه های سیمرغی">
+                <img class="d-block w-100" src="images/23.jpg" alt="معه های سیمرغی">
                 <div class="carousel-caption d-none d-md-block">
-                    <h5>حمعه های سیمرغی</h5>
+                    <h5>جمعه های سیمرغی</h5>
                     <p>در جمعه های سیمرغی با شما هستیم </p>
                 </div>
             </div>
@@ -291,7 +289,6 @@ error_reporting(E_ALL);
                 <div class="row">
 
 
-                    <!-- Team member -->
                     <div class="col-6 col-sm-4 mb-4">
                         <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
                             <div class="mainflip">
@@ -322,8 +319,6 @@ error_reporting(E_ALL);
                             </div>
                         </div>
                     </div>
-                    <!-- ./Team member -->
-                    <!-- Team member -->
                     <div class="col-6 col-sm-4 mb-4">
                         <div class="image-flip">
                             <div class="mainflip flip-0">
@@ -354,8 +349,6 @@ error_reporting(E_ALL);
                             </div>
                         </div>
                     </div>
-                    <!-- ./Team member -->
-                    <!-- Team member -->
                     <div class="col-6 col-sm-4 mb-4">
                         <div class="image-flip">
                             <div class="mainflip flip-0">
@@ -386,8 +379,6 @@ error_reporting(E_ALL);
                             </div>
                         </div>
                     </div>
-                    <!-- ./Team member -->
-                    <!-- Team member -->
                     <div class="col-6 col-sm-4 mb-4">
                         <div class="image-flip">
                             <div class="mainflip flip-0">
@@ -418,8 +409,6 @@ error_reporting(E_ALL);
                             </div>
                         </div>
                     </div>
-                    <!-- ./Team member -->
-                    <!-- Team member -->
                     <div class="col-6 col-sm-4 mb-4">
                         <div class="image-flip">
                             <div class="mainflip flip-0">
@@ -450,8 +439,6 @@ error_reporting(E_ALL);
                             </div>
                         </div>
                     </div>
-                    <!-- ./Team member -->
-                    <!-- Team member -->
                     <div class="col-6 col-sm-4 mb-4">
                         <div class="image-flip">
                             <div class="mainflip flip-0">
@@ -482,7 +469,6 @@ error_reporting(E_ALL);
                             </div>
                         </div>
                     </div>
-                    <!-- ./Team member -->
                 </div>
             </div>
         </section>
@@ -491,51 +477,57 @@ error_reporting(E_ALL);
 
 
         <section class="border">
-
             <div class="container">
                 <a href="articles">
-                    <h3 class="p text-center text-dark fw-bold" id="" title="کلیک کنید"> وبلاگ سیمرغ
-                    </h3>
+                    <h3 class="p text-center text-dark fw-bold" title="کلیک کنید">وبلاگ سیمرغ</h3>
                 </a>
                 <div class="row">
-
                     <?php
-
-
-                    // کوئری برای خواندن 8 مقاله آخر
                     $sql = "SELECT * FROM articles ORDER BY id DESC LIMIT 4";
                     $result = $conn->query($sql);
 
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
                     ?>
-                            <!-- Card 1 -->
+                            
                             <div class="col-md-3 mb-4 col-6">
-                                <div class="card four">
-                                    <div class="card-body">
-                                        <img src="<?= $row['images'] ?>" class="img-fluid" alt="تصویر مقاله" height="200px" width="200px">
-                                        <h5 class="card-title rtl-title fw-bold"><?= $row['title'] ?></h5>
-                                        <a href="articles" class="btn mb-2 mb-md-0 btn-outline-quarternary btn-block btn-sm fw-bold">مطالعه بیشتر</a>
-                                    </div>
+                                <div class="card-four position-relative overflow-hidden">
+                                    <a href="articles" class="d-block">
+                                        <img src="<?= $row['images'] ?>" class="img-fluid w-100 hover-zoom" alt="تصویر مقاله" style="height: 200px; object-fit: cover;">
+                                        <div class="title-overlay">
+                                            <h5 class="card-title text-white fw-bold p-2"><?= $row['title'] ?></h5>
+                                        </div>
+                                    </a>
                                 </div>
                             </div>
-
                     <?php
                         }
                     }
                     ?>
-
                 </div>
             </div>
         </section>
+
+        <style>
+
+        </style>
+
+
+
         <hr class="my-4">
 
 
+        <section class="parallax-section">
+            <div class="parallax-content">
+                <h2>دنیای هنر در دستان شماست!</h2>
+                <p>با دوره‌های تخصصی موسسه هفت هنر سیمرغ، استعدادهای خود را کشف و شکوفا کنید و به جمع هنرمندان حرفه‌ای بپیوندید.</p>
+                <a href="register2" class="btn btn-light btn-lg mt-4 fw-bold">همین حالا ثبت نام کنید</a>
+            </div>
+        </section>
 
 
 
-
-
+        <hr class="my-4">
         <script>
             $(document).ready(function() {
                 let timer;
