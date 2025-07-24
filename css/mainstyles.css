@@ -206,8 +206,8 @@ a:hover {
   transition: transform 0.1s ease !important;
 }
 
-/* FontAwesome for working BootSnippet :> */
-@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
+
+
 #team {
   /* background: #d4c4e5 !important; */
   background: #ddd22b !important;
@@ -633,6 +633,7 @@ hr {
 .carousel-item img {
   height: 400px; /* ارتفاع پیش‌فرض برای دسکتاپ و تبلت */
   object-fit: cover; /* اطمینان از پوشش کامل تصویر بدون کشیدگی */
+  height: auto; /* اجازه می‌دهد تا ارتفاع تصویر بر اساس عرض آن تنظیم شود */
 }
 
 .carousel-caption {

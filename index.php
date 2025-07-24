@@ -64,27 +64,36 @@ error_reporting(E_ALL);
     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img class="d-block w-100" src="images/1.jpg" alt="استادیوم">
-                <div class="carousel-caption d-none d-md-block">
+                <img class="d-block w-100" src="images/25.jpg" alt="سیمرغ">
+                <!-- <div class="carousel-caption d-none d-md-block">
                     <h5>استودیو صدا</h5>
                     <p>بهترین استادیوی صدا برای ضبط کلاسها</p>
-                </div>
+                </div> -->
             </div>
             <div class="carousel-item">
-                <img class="d-block w-100" src="images/15.jpg" alt="رادیو سیمرغ">
-                <div class="carousel-caption d-none d-md-block">
+                <img class="d-block w-100" src="images/27.jpg" alt="سیمرغ">
+                <!-- <div class="carousel-caption d-none d-md-block">
                     <h5>رادیو سیمرغ</h5>
                     <p>برنامه های جدید و جذاب</p>
-                </div>
+                </div> -->
             </div>
             <div class="carousel-item">
-                <img class="d-block w-100" src="images/23.jpg" alt="معه های سیمرغی">
-                <div class="carousel-caption d-none d-md-block">
+                <img class="d-block w-100" src="images/26.jpg" alt="سیمرغ">
+                <!-- <div class="carousel-caption d-none d-md-block">
                     <h5>جمعه های سیمرغی</h5>
                     <p>در جمعه های سیمرغی با شما هستیم </p>
-                </div>
+                </div> -->
+            </div>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="images/28.jpg" alt="سیمرغ">
+                <!-- <div class="carousel-caption d-none d-md-block">
+                    <h5>جمعه های سیمرغی</h5>
+                    <p>در جمعه های سیمرغی با شما هستیم </p>
+                </div> -->
             </div>
         </div>
+
+
         <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="sr-only">Previous</span>
@@ -97,7 +106,6 @@ error_reporting(E_ALL);
 
 
 
-
     <div class="container-fluid px-4 mt-4">
 
 
@@ -107,14 +115,22 @@ error_reporting(E_ALL);
                     <div class="search-bubble"></div>
                     <div class="input-group search-box">
                         <input type="text" id="searchInput" name="search_word" class="form-control" placeholder="دوره مورد نظر خود را جستجو کنید..." autocomplete="off">
-                        <img src="images/search.png" width="40px" height="40px">
+                        <span class="input-group-text">
+                            <i class="fas fa-magnifying-glass"></i>
+                        </span>
                     </div>
                     <div id="suggestionsList" class="suggestions-list"></div>
                 </div>
             </div>
+
+            <div class="col-md-8">
+                <h3 class="alert-heading"><b>موسسه هفت هنر سیمرغ</b></h3>
+                <p>اگر به هنر، گویندگی و سینما علاقه‌مند هستید، اینجا جایی‌ست که می‌توانید استعدادهای خود را شکوفا کرده، مهارت‌های لازم را بیاموزید و با راهنمایی اساتید مجرب، قدم به دنیای حرفه‌ای هنر بگذارید.</p>
+                <hr>
+
+            </div>
         </div>
     </div>
-
 
 
 
@@ -185,7 +201,7 @@ error_reporting(E_ALL);
 
         <section class="light">
             <div class="container py-2">
-                <a href="articles">
+                <a href="courses">
                     <h1 class="h1 text-center text-dark fw-bold" id="pageHeaderTitle" title="کلیک کنید">
                         آخرین مطالب سیمرغ
                         <img src="images/link.jpg" height="30px" width="30px" alt="آخرین مقالات" title="آخرین مقالات سیمرغ">
@@ -489,7 +505,7 @@ error_reporting(E_ALL);
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
                     ?>
-                            
+
                             <div class="col-md-3 mb-4 col-6">
                                 <div class="card-four position-relative overflow-hidden">
                                     <a href="articles" class="d-block">
