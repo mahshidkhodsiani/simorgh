@@ -138,65 +138,105 @@ error_reporting(E_ALL);
     <div class="container-fluid px-4 mt-4">
 
 
-        <section id="portfolio">
+
+        <section id="portfolio" class="py-5">
             <div class="container">
-                <div class="row">
-                    <div class="col-12 col-md-6 order-2 order-md-1">
-                        <div class="card four mb-4 mt-4" style="background-color:#f95074">
-                            <div class="card-body d-flex justify-content-between align-items-center">
-                                <p class="card-title rtl-title fw-bold mb-0 desktop-font-size">پرداخت اقساطی دوره ها</p>
-                                <a href="register2" class="btn btn-outline-quarternary fw-bold">ثبت نام</a>
-                            </div>
-                        </div>
+                <div class="row align-items-center">
 
-
-                        <div class="card four mb-4" style="background-color:#f95074">
-                            <div class="card-body d-flex justify-content-between align-items-center">
-                                <p class="card-title rtl-title fw-bold mb-0 desktop-font-size">گالری و نمونه کارها</p>
-                                <a href="portofilo/pictures" class="btn btn-outline-quarternary fw-bold">رفتن به صفحه</a>
-                            </div>
-                        </div>
-
-                        <div class="card four mb-4" style="background-color:#f95074">
-                            <div class="card-body d-flex justify-content-between align-items-center">
-                                <p class="card-title rtl-title fw-bold mb-0 desktop-font-size">ویدیوهای نمونه کار</p>
-                                <a href="portofilo/videos" class="btn btn-outline-quarternary fw-bold">رفتن به صفحه</a>
-                            </div>
-                        </div>
-
-                        <div class="card four mb-4" style="background-color:#f95074">
-                            <div class="card-body d-flex justify-content-between align-items-center">
-                                <p class="card-title rtl-title fw-bold mb-0 desktop-font-size">پرداخت آزاد به موسسه</p>
-                                <a href="pardakht" class="btn btn-outline-quarternary fw-bold">پرداخت</a>
-                            </div>
-                        </div>
-                        <div class="card four mb-4" style="background-color:#f95074">
-                            <div class="card-body d-flex justify-content-between align-items-center">
-                                <p class="card-title rtl-title fw-bold mb-0 desktop-font-size">گویندگان رادیو سیمرغ</p>
-                                <a href="articles/speakers_archive" class="btn btn-outline-quarternary fw-bold">رفتن به صفحه</a>
-                            </div>
-                        </div>
-
-                        <div class="card four mb-4" style="background-color:#f95074">
-                            <div class="card-body d-flex justify-content-between align-items-center">
-                                <p class="card-title rtl-title fw-bold mb-0 desktop-font-size">انتقاد و پیشنهاد به سیمرغ</p>
-                                <a href="articles/suggestion" class="btn btn-outline-quarternary fw-bold">رفتن به صفحه</a>
-                            </div>
-                        </div>
-
-
+                    <div class="col-md-5 col-lg-4 text-center mb-4 mb-md-0">
+                        <img class="img-fluid rounded shadow-lg" src="images/20.jpeg" alt="تصویر سیمرغ" style="max-height: 650px; object-fit: cover;">
                     </div>
 
-                    <div class="col-12 col-md-6">
-                        <img class="img-fluid" src="images/20.jpeg" alt="تصویر سیمرغ" style="max-height: 600px;">
+                    <div class="col-md-7 col-lg-8">
+                        <div class="row">
+                            <div class="col-6 col-md-6 mb-4 card-spacing">
+                                <div class="card h-100 shadow-sm border-0 animated-card" style="background-color:#d85353;">
+                                    <div class="card-body d-flex flex-column justify-content-between align-items-start p-4">
+                                        <h4 class="card-title rtl-title fw-bold text-dark">پرداخت اقساطی دوره ها</h4>
+                                        <a href="register2" class="btn btn-outline-quarternary fw-bold align-self-end">ثبت نام &rarr;</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-6 col-md-6 mb-4 card-spacing">
+                                <div class="card h-100 shadow-sm border-0 animated-card" style="background-color:#d85353;">
+                                    <div class="card-body d-flex flex-column justify-content-between align-items-start p-4">
+                                        <h4 class="card-title rtl-title fw-bold text-dark">پرداخت نقدی دوره ها با تخفیف</h4>
+                                        <a href="pardakht_discount" class="btn btn-outline-quarternary fw-bold align-self-end">رفتن به صفحه &rarr;</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-6 col-md-6 mb-4 card-spacing">
+                                <div class="card h-100 shadow-sm border-0 animated-card" style="background-color:#d85353;">
+                                    <div class="card-body d-flex flex-column justify-content-between align-items-start p-4">
+                                        <h4 class="card-title rtl-title fw-bold text-dark">پرداخت آزاد به موسسه</h4>
+                                        <a href="pardakht" class="btn btn-outline-quarternary fw-bold align-self-end">پرداخت &rarr;</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-6 col-md-6 mb-4 card-spacing">
+                                <div class="card h-100 shadow-sm border-0 animated-card" style="background-color:#d85353;">
+                                    <div class="card-body d-flex flex-column justify-content-between align-items-start p-4">
+                                        <h4 class="card-title rtl-title fw-bold text-dark">پکیج های آموزشی</h4>
+                                        <a href="#" class="btn btn-outline-quarternary fw-bold align-self-end">ثبت نام &rarr;</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-6 col-md-6 mb-4 card-spacing">
+                                <div class="card h-100 shadow-sm border-0 animated-card" style="background-color:#d85353;">
+                                    <div class="card-body d-flex flex-column justify-content-between align-items-start p-4">
+                                        <h4 class="card-title rtl-title fw-bold text-dark">گالری و نمونه کارها</h4>
+                                        <a href="portofilo/pictures" class="btn btn-outline-quarternary fw-bold align-self-end">رفتن به صفحه &rarr;</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-6 col-md-6 mb-4 card-spacing">
+                                <div class="card h-100 shadow-sm border-0 animated-card" style="background-color:#d85353;">
+                                    <div class="card-body d-flex flex-column justify-content-between align-items-start p-4">
+                                        <h4 class="card-title rtl-title fw-bold text-dark">ویدیوهای نمونه کار</h4>
+                                        <a href="portofilo/videos" class="btn btn-outline-quarternary fw-bold align-self-end">رفتن به صفحه &rarr;</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-6 col-md-6 mb-4 card-spacing">
+                                <div class="card h-100 shadow-sm border-0 animated-card" style="background-color:#d85353;">
+                                    <div class="card-body d-flex flex-column justify-content-between align-items-start p-4">
+                                        <h4 class="card-title rtl-title fw-bold text-dark">گویندگان رادیو سیمرغ</h4>
+                                        <a href="articles/speakers_archive" class="btn btn-outline-quarternary fw-bold align-self-end">رفتن به صفحه &rarr;</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-6 col-md-6 mb-4 card-spacing">
+                                <div class="card h-100 shadow-sm border-0 animated-card" style="background-color:#d85353;">
+                                    <div class="card-body d-flex flex-column justify-content-between align-items-start p-4">
+                                        <h4 class="card-title rtl-title fw-bold text-dark">انتقاد و پیشنهاد به سیمرغ</h4>
+                                        <a href="articles/suggestion" class="btn btn-outline-quarternary fw-bold align-self-end">رفتن به صفحه &rarr;</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
 
-
         <hr>
+
+
+
+
+
+
+
+
 
 
         <section class="light">

@@ -206,8 +206,6 @@ a:hover {
   transition: transform 0.1s ease !important;
 }
 
-
-
 #team {
   /* background: #d4c4e5 !important; */
   background: #ddd22b !important;
@@ -697,4 +695,56 @@ hr {
   font-size: 1.2rem;
   max-width: 800px;
   margin: 0 auto;
+}
+
+
+
+.animated-card {
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  border-radius: 12px;
+}
+
+.animated-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.btn-primary-custom {
+  background-color: #f95074;
+  border-color: #f95074;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-primary-custom:hover {
+  background-color: #d13d5e;
+  border-color: #d13d5e;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.rtl-title {
+  text-align: right;
+  direction: rtl;
+}
+
+/* استایل‌های جدید برای card-spacing */
+.card-spacing {
+  padding-left: 0.5rem;
+  /* فاصله از چپ برای دو ستون در موبایل */
+  padding-right: 0.5rem;
+  /* فاصله از راست برای دو ستون در موبایل */
+}
+
+@media (min-width: 768px) {
+  /* برای صفحه نمایش های md به بالا */
+  .card-spacing {
+    padding-left: 0.75rem;
+    /* g-4 معادل 1.5rem gap است، پس هر سمت 0.75rem */
+    padding-right: 0.75rem;
+  }
+
+  /* اگر still cards are too close, add more margin here */
 }
