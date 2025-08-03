@@ -31,7 +31,7 @@
                 <div class="card border border-danger" style="border-radius: 40px;">
                     <img class="mx-auto d-block img-fluid" src="../images/logo2.jpg" alt="موسسه هفت هنر سیمرغ" style="max-width: 100%; height: auto;">
                     <div class="card-body" dir="rtl" style="text-align: right;"> <!-- Ensured text-align right for RTL text -->
-                     
+
 
                         <h2><strong>درباره موسسه فرهنگی هنری هفت هنر سیمرغ</strong></h2>
                         <p><br></p>
@@ -113,7 +113,7 @@
 
                         <br>
                         <p style="color: #621e52;">جهت کسب اطلاعات بیشتر و شرکت دردوره ها با ما در ارتباط باشید.:</p>
-                        <p style="color: #621e52;">تلفن : 02191300517021</p>
+                        <p style="color: #621e52;">تلفن : 021-91300517</p>
                         <p style="color: #621e52;">واتساپ : 093554637055</p>
                         <a href="../register.php" class="btn mb-2 mb-md-0 btn-outline-quarternary">ثبت نام در دوره ها</a>
 

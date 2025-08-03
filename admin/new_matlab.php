@@ -182,7 +182,7 @@ $id = $_SESSION["all_data"]['id'];
 
                                                         if ($row['show_index'] == 1) { ?>
                                                             <button class="btn btn-outline-dark btn-sm" name="no_index"
-                                                                onclick="return confirmDelete()">عدم نمایش در صقحه اصلی </button>
+                                                                onclick="return confirmDelete()">عدم نمایش در صفحه اصلی </button>
                                                         <?php
                                                         } else {
 
