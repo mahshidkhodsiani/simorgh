@@ -21,7 +21,7 @@
             "logo": "https://simorghtv.com/images/logo1.png",
             "contactPoint": {
                 "@type": "ContactPoint",
-                "telephone": "+982188341652",
+                "telephone": "+02191300517",
                 "contactType": "customer service",
                 "areaServed": "IR",
                 "availableLanguage": "Persian"
