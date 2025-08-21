@@ -1,5 +1,6 @@
 <?php
 session_start();
+include '../config.php';
 
 if (!isset($_SESSION["all_data"])) {
     header("Location: ../login.php");
@@ -7,343 +8,275 @@ if (!isset($_SESSION["all_data"])) {
 }
 
 $id = $_SESSION["all_data"]['id'];
-// $admin = $_SESSION["all_data"]['admin'];
+
+// منطق پردازش فرم آپلود ویدیو - باید در ابتدای فایل باشد
+if (isset($_POST['submit_video'])) {
+    $title = $_POST['title'];
+    $new_video = $_FILES['new_video']['name'];
+    $tmp_name = $_FILES['new_video']['tmp_name'];
+
+    $baseDir = '../uploads/video/';
+    $folderIndex = 1;
+    while (is_dir($baseDir . $folderIndex)) {
+        $folderIndex++;
+    }
+    $uploadDir = $baseDir . $folderIndex;
+
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0777, true);
+    }
+
+    $path = $uploadDir . '/' . $new_video;
+
+    if (move_uploaded_file($tmp_name, $path)) {
+        $stmt = $conn->prepare("INSERT INTO videos (title, path, created_at) VALUES (?, ?, NOW())");
+        $stmt->bind_param("ss", $title, $path);
+
+        if ($stmt->execute()) {
+            header("Location: new_video.php?status=success");
+            exit();
+        } else {
+            header("Location: new_video.php?status=error&msg=" . urlencode($stmt->error));
+            exit();
+        }
+    } else {
+        header("Location: new_video.php?status=error&msg=خطا در آپلود فایل!");
+        exit();
+    }
+}
+
+// منطق حذف ویدیو - باید در ابتدای فایل باشد
+if (isset($_GET['delete_video'])) {
+    $video_id = intval($_GET['video_id']);
+
+    $stmt_fetch = $conn->prepare("SELECT path FROM videos WHERE id = ?");
+    $stmt_fetch->bind_param("i", $video_id);
+    $stmt_fetch->execute();
+    $result_fetch = $stmt_fetch->get_result();
+    $row_fetch = $result_fetch->fetch_assoc();
+    $filePath = $row_fetch['path'];
+    $stmt_fetch->close();
+
+    $stmt_delete = $conn->prepare("DELETE FROM videos WHERE id = ?");
+    $stmt_delete->bind_param("i", $video_id);
+
+    if ($stmt_delete->execute()) {
+        if (file_exists($filePath)) {
+            unlink($filePath);
+        }
+        header("Location: new_video.php?status=success");
+        exit();
+    } else {
+        header("Location: new_video.php?status=error&msg=خطا در حذف ویدیو!");
+        exit();
+    }
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خانه</title>
-
-
+    <title>مدیریت ویدیوها</title>
     <link rel="icon" href="../images/logo1.ico" type="image/x-icon">
+    <?php include 'includes.php'; ?>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            background-color: #f0f2f5;
+            font-family: 'Vazirmatn', sans-serif;
+        }
 
-    <?php
-    include 'includes.php';
-    include '../config.php';
+        .main-content {
+            padding: 20px;
+        }
 
-    ?>
+        .card-form,
+        .table-section {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+            margin-bottom: 30px;
+            border: none;
+        }
 
+        .table-header {
+            background-color: #4a5d73;
+            color: white;
+            padding: 10px;
+            border-radius: 8px 8px 0 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
 
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: rgba(0, 0, 0, 0.03);
+        }
 
-
-
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1050;
+        }
+    </style>
 </head>
 
 <body>
-
-   
-
-<?php include 'header.php'; ?>
+    <?php include 'header.php'; ?>
     <div class="container-fluid">
-
-
         <div class="row">
             <div class="col-md-3 d-flex">
-                <?php
-                include 'sidebar.php';
-                ?>
-              
+                <?php include 'sidebar.php'; ?>
             </div>
 
-            <div class="col-md-8 mt-5">
-
-            <h2>افزودن ویدیوی جدید</h2>
-              
-            <form action="" enctype="multipart/form-data" method="POST" class="border p-2">
-                <div class="row">
-                    <div class="col-6">
-                        <label for="title">عنوان ویدیو:</label>
-                        <input type="text" id="title" name="title" class="form-control mb-2" placeholder="عنوان را اینجا وارد کنید" required>
-
-                    
-                    </div>
-                    <div class="col-6">
-                        <label for="new_video">اپلود فایل صوتی:</label>
-                        <input type="file" name="new_video" class="form-control" id="" required>
-                    </div>
-                  
+            <div class="col-md-9 main-content">
+                <h3 class="text-center mb-4">مدیریت ویدیوها</h3>
+                <div class="card-form">
+                    <h5 class="mb-3">افزودن ویدیوی جدید</h5>
+                    <form action="" enctype="multipart/form-data" method="POST" novalidate>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="title" class="form-label">عنوان ویدیو:</label>
+                                <input type="text" id="title" name="title" class="form-control" placeholder="عنوان را اینجا وارد کنید" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="new_video" class="form-label">آپلود ویدیو:</label>
+                                <input type="file" name="new_video" class="form-control" id="new_video" required>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center mt-4">
+                            <button class="btn btn-outline-success" type="submit" name="submit_video">
+                                <i class="fas fa-plus-circle me-2"></i>ثبت در ویدیوها
+                            </button>
+                        </div>
+                    </form>
                 </div>
 
-                <br>
+                <div class="table-section">
+                    <div class="table-header">
+                        <i class="fas fa-list-alt me-2"></i>لیست ویدیوها
+                    </div>
+                    <div class="table-responsive mt-3">
+                        <?php
+                        $items_per_page = 10;
+                        $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+                        $offset = ($current_page - 1) * $items_per_page;
 
-                <div class="row">
-                    <div class="col-md-4"></div>
-                    <div class="col-md-6">
-                        <button class="btn btn-outline-success" type="submit" name="submit_video">ثبت در ویدیوها</button>
+                        $sql = "SELECT * FROM videos ORDER BY id DESC LIMIT ? OFFSET ?";
+                        $stmt = $conn->prepare($sql);
+                        $stmt->bind_param("ii", $items_per_page, $offset);
+                        $stmt->execute();
+                        $result = $stmt->get_result();
+
+                        if ($result->num_rows > 0) {
+                            $a = ($current_page - 1) * $items_per_page + 1;
+                        ?>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="text-center">#</th>
+                                        <th scope="col" class="text-center">عنوان</th>
+                                        <th scope="col" class="text-center">پخش ویدیو</th>
+                                        <th scope="col" class="text-center">عملیات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php while ($row = $result->fetch_assoc()) { ?>
+                                        <tr>
+                                            <th scope="row" class="text-center"><?= $a ?></th>
+                                            <td class="text-center"><?= htmlspecialchars($row['title']) ?></td>
+                                            <td class="text-center">
+                                                <video height="50px" controls>
+                                                    <source src="<?= htmlspecialchars($row['path']) ?>" type="video/mp4">
+                                                    مرورگر شما از پخش ویدیو پشتیبانی نمی‌کند.
+                                                </video>
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="edit_video.php?video_id=<?= $row['id'] ?>" class="btn btn-outline-warning btn-sm me-2">
+                                                    <i class="fas fa-edit me-1"></i>ویرایش
+                                                </a>
+                                                <a href="?delete_video=1&video_id=<?= $row['id'] ?>" class="btn btn-outline-danger btn-sm" onclick="return confirm('آیا از حذف این ویدیو مطمئن هستید؟')">
+                                                    <i class="fas fa-trash-alt me-1"></i>حذف
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <?php $a++;
+                                    } ?>
+                                </tbody>
+                            </table>
+                            <?php
+                            $sql_count = "SELECT COUNT(*) AS total FROM videos";
+                            $result_count = $conn->query($sql_count);
+                            $row_count = $result_count->fetch_assoc();
+                            $total_items = $row_count['total'];
+                            $total_pages = ceil($total_items / $items_per_page);
+                            ?>
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item <?= $current_page == 1 ? 'disabled' : '' ?>">
+                                        <a class="page-link" href="?page=<?= max(1, $current_page - 1) ?>">قبلی</a>
+                                    </li>
+                                    <?php for ($i = 1; $i <= $total_pages; $i++) { ?>
+                                        <li class="page-item <?= $i == $current_page ? 'active' : '' ?>">
+                                            <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                                        </li>
+                                    <?php } ?>
+                                    <li class="page-item <?= $current_page == $total_pages ? 'disabled' : '' ?>">
+                                        <a class="page-link" href="?page=<?= min($total_pages, $current_page + 1) ?>">بعدی</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        <?php } else { ?>
+                            <div class="alert alert-warning text-center" role="alert">
+                                <i class="fas fa-exclamation-triangle me-2"></i>هیچ ویدیویی در گالری وجود ندارد.
+                            </div>
+                        <?php } ?>
                     </div>
                 </div>
-            </form>
-
-            <br>
-
-
-            <div class="table-responsive mt-4">
-                <?php
-                // صفحه‌بندی ویدیوها
-                $items_per_page = 10; // تعداد ویدیو در هر صفحه
-                $current_page = isset($_GET['page']) ? intval($_GET['page']) : 1; // صفحه فعلی
-                $offset = ($current_page - 1) * $items_per_page;
-
-                // کوئری برای گرفتن ویدیوها
-                $sql = "SELECT * FROM videos ORDER BY id DESC LIMIT $items_per_page OFFSET $offset";
-                $result = $conn->query($sql);
-
-                if ($result->num_rows > 0) {
-                    $a = ($current_page - 1) * $items_per_page + 1; // شمارنده ردیف‌ها
-                ?>
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th class="text-center">ردیف</th>
-                                <th class="text-center">عنوان</th>
-                                <th class="text-center">پخش ویدیو</th>
-                                <th class="text-center">عملیات</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php while ($row = $result->fetch_assoc()) { ?>
-                                <tr>
-                                    <td class="text-center"><?= $a ?></td>
-                                    <td class="text-center"><?= htmlspecialchars($row['title']) ?></td>
-                                    <td class="text-center">
-                                        <video height="50" controls>
-                                            <source src="<?= htmlspecialchars($row['path']) ?>" type="video/mp4">
-                                            مرورگر شما از پخش ویدیو پشتیبانی نمی‌کند.
-                                        </video>
-                                    </td>
-                                    <td class="text-center">
-                                        <form action="" method="GET">
-                                            <input type="hidden" name="video_id" value="<?= $row['id'] ?>">
-                                            <input type="hidden" value="<?= $row['id'] ?>" name="id_photo">
-                                                    <a href="edit_video.php?video_id=<?= $row['id'] ?>" class="btn btn-outline-warning btn-sm"> ویرایش</a>
-                                                    
-                                            <button type="submit" name="delete_video" class="btn btn-outline-danger btn-sm" onclick="return confirm('آیا از حذف این ویدیو مطمئن هستید؟')">حذف</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            <?php $a++; } ?>
-                        </tbody>
-                    </table>
-
-                    <?php
-                    // محاسبه تعداد کل صفحات
-                    $sql = "SELECT COUNT(*) AS total FROM videos";
-                    $result = $conn->query($sql);
-                    $row = $result->fetch_assoc();
-                    $total_pages = ceil($row['total'] / $items_per_page);
-                    ?>
-
-                    <!-- نمایش صفحه‌بندی -->
-                    <nav>
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item <?= $current_page == 1 ? 'disabled' : '' ?>">
-                                <a class="page-link" href="?page=<?= $current_page - 1 ?>">قبلی</a>
-                            </li>
-                            <?php for ($i = 1; $i <= $total_pages; $i++) { ?>
-                                <li class="page-item <?= $i == $current_page ? 'active' : '' ?>">
-                                    <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
-                                </li>
-                            <?php } ?>
-                            <li class="page-item <?= $current_page == $total_pages ? 'disabled' : '' ?>">
-                                <a class="page-link" href="?page=<?= $current_page + 1 ?>">بعدی</a>
-                            </li>
-                        </ul>
-                    </nav>
-                <?php
-                } else {
-                    echo "<p>هیچ ویدیویی یافت نشد.</p>";
-                }
-                ?>
-            </div>
-
-
-
-
-
-                
             </div>
         </div>
     </div>
 
-    <script>
-        $(document).ready(function() {
-            $('.nav-link').click(function() {
-                $('.nav-link').removeClass('active');
-                $(this).addClass('active');
-            });
-        });
+    <div class="toast-container">
+        <div id="successToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
+            <div class="toast-header bg-success text-white">
+                <strong class="me-auto">موفقیت</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                عملیات با موفقیت انجام شد!
+            </div>
+        </div>
+        <div id="errorToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
+            <div class="toast-header bg-danger text-white">
+                <strong class="me-auto">خطا</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                خطایی در انجام عملیات رخ داد!
+            </div>
+        </div>
+    </div>
 
-    </script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        function toggleCheckbox(checkedId, uncheckedId) {
-            var checkedBox = document.getElementById(checkedId);
-            var uncheckedBox = document.getElementById(uncheckedId);
-            if (checkedBox.checked) {
-                uncheckedBox.checked = false;
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('status') === 'success') {
+                const successToast = new bootstrap.Toast(document.getElementById('successToast'));
+                successToast.show();
+            } else if (urlParams.get('status') === 'error') {
+                const errorToast = new bootstrap.Toast(document.getElementById('errorToast'));
+                errorToast.show();
             }
-        }
+        });
     </script>
-
-
-
-
 </body>
 
 </html>
-
-<?php
-if (isset($_POST['submit_video'])) {
-    $title = $_POST['title'];
-    $new_video = $_FILES['new_video']['name'];
-    $tmp_name = $_FILES['new_video']['tmp_name'];
-
-    // مسیر پایه پوشه
-    $baseDir = '../uploads/video/';
-    $uploadDir = $baseDir . '1'; // شروع از پوشه 1
-
-    // پیدا کردن شماره پوشه بعدی
-    $folderIndex = 1;
-    while (is_dir($uploadDir)) {
-        $folderIndex++;
-        $uploadDir = $baseDir . $folderIndex;
-    }
-
-    // ساخت پوشه جدید
-    if (!is_dir($uploadDir)) {
-        mkdir($uploadDir, 0777, true);
-    }
-
-    // مسیر نهایی فایل ویدیو
-    $path = $uploadDir . '/' . $new_video;
-
-    // آپلود فایل
-    if (move_uploaded_file($tmp_name, $path)) {
-        // ذخیره اطلاعات ویدیو در دیتابیس
-        $stmt = $conn->prepare("INSERT INTO videos (title, path, created_at) VALUES (?, ?, NOW())");
-        $stmt->bind_param("ss", $title, $path);
-
-        if ($stmt->execute()) {
-            echo "<div id='successToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; top: 20px; right: 20px; width: 300px; z-index: 1055;'>
-            <div class='toast-header bg-success text-white'>
-                <strong class='mr-auto'>Success</strong>
-            </div>
-            <div class='toast-body'>
-                ویدیو با موفقیت آپلود شد!
-            </div>
-            </div>
-            <script>
-                $(document).ready(function(){
-                    $('#successToast').toast({
-                        autohide: true,
-                        delay: 3000
-                    }).toast('show');
-                    setTimeout(function(){
-                        window.location.href = 'new_video';
-                    }, 3000);
-                });
-            </script>";
-        } else {
-            echo "<div id='errorToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; top: 20px; right: 20px; width: 300px; z-index: 1055;'>
-            <div class='toast-header bg-danger text-white'>
-                <strong class='mr-auto'>Error</strong>
-            </div>
-            <div class='toast-body'>
-                خطایی رخ داده، دوباره امتحان کنید!<br>Error: " . htmlspecialchars($stmt->error) . "
-            </div>
-            </div>
-            <script>
-                $(document).ready(function(){
-                    $('#errorToast').toast({
-                        autohide: true,
-                        delay: 3000
-                    }).toast('show');
-                    setTimeout(function(){
-                        window.location.href = 'new_video';
-                    }, 3000);
-                });
-            </script>";
-        }
-
-        $stmt->close();
-    } else {
-        echo "<div id='errorToast' class='toast'>خطا در آپلود ویدیو!</div>";
-    }
-}
-
-
-// بخش حذف ویدیو
-if (isset($_GET['delete_video'])) {
-    $video_id = intval($_GET['video_id']); // اطمینان از نوع عددی ID
-
-    // ابتدا مسیر فایل ویدیو را از دیتابیس دریافت کنید
-    $stmt = $conn->prepare("SELECT path FROM videos WHERE id = ?");
-    $stmt->bind_param("i", $video_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $filePath = '../' . $row['path']; // مسیر فایل ویدیو
-
-        // حذف رکورد از دیتابیس
-        $stmt = $conn->prepare("DELETE FROM videos WHERE id = ?");
-        $stmt->bind_param("i", $video_id);
-
-        if ($stmt->execute()) {
-            // حذف فایل ویدیو از سرور
-            if (file_exists($filePath)) {
-                unlink($filePath);
-            }
-
-            // پیام موفقیت
-            echo "<div id='successToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 20px; right: 20px; width: 300px;'>
-                <div class='toast-header bg-success text-white'>
-                    <strong class='mr-auto'>Success</strong>
-                    <button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>
-                        <span aria-hidden='true'>&times;</span>
-                    </button>
-                </div>
-                <div class='toast-body'>
-                    ویدیو با موفقیت حذف شد!
-                </div>
-            </div>
-            <script>
-                $(document).ready(function(){
-                    $('#successToast').toast('show');
-                    setTimeout(function(){
-                        window.location.href = 'new_video';
-                    }, 3000);
-                });
-            </script>";
-        } else {
-            // پیام خطا
-            echo "<div id='errorToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 20px; right: 20px; width: 300px;'>
-                <div class='toast-header bg-danger text-white'>
-                    <strong class='mr-auto'>Error</strong>
-                    <button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>
-                        <span aria-hidden='true'>&times;</span>
-                    </button>
-                </div>
-                <div class='toast-body'>
-                    خطایی در حذف ویدیو پیش آمد!
-                </div>
-            </div>";
-        }
-    } else {
-        echo "<div id='errorToast' class='toast'>
-            <div class='toast-header bg-warning text-white'>
-                <strong class='mr-auto'>Error</strong>
-            </div>
-            <div class='toast-body'>
-                ویدیو یافت نشد.
-            </div>
-        </div>";
-    }
-
-    $stmt->close();
-}
-?>

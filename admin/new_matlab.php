@@ -7,7 +7,6 @@ if (!isset($_SESSION["all_data"])) {
 }
 
 $id = $_SESSION["all_data"]['id'];
-// $admin = $_SESSION["all_data"]['admin'];
 ?>
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
@@ -15,571 +14,389 @@ $id = $_SESSION["all_data"]['id'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خانه</title>
-
-
+    <title>مدیریت مقالات و دوره‌ها</title>
     <link rel="icon" href="img/logo.png" type="image/x-icon">
-
     <?php
     include 'includes.php';
     include '../config.php';
-    // include 'functions.php';
-    // include 'PersianCalendar.php';
     ?>
-    <!-- <link rel="stylesheet" href="styles.css"> -->
-
-
-
-
-
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/jodit/build/jodit.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/jodit/build/jodit.min.js"></script>
 
+    <style>
+        body {
+            background-color: #f0f2f5;
+        }
 
+        .main-content {
+            padding: 20px;
+        }
+
+        .card-form,
+        .table-section {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+            margin-bottom: 30px;
+            border: none;
+        }
+
+        .table-header {
+            background-color: #4a5d73;
+            color: white;
+            padding: 10px;
+            border-radius: 8px 8px 0 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: rgba(0, 0, 0, 0.03);
+        }
+
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1050;
+        }
+    </style>
 </head>
 
 <body>
-
-
-
     <?php include 'header.php'; ?>
     <div class="container-fluid">
-
-
         <div class="row">
             <div class="col-md-3 d-flex">
-                <?php
-                include 'sidebar.php';
-                ?>
-
+                <?php include 'sidebar.php'; ?>
             </div>
+            <div class="col-md-9 main-content">
+                <h3 class="text-center mb-4">مدیریت مقالات و دوره‌ها</h3>
 
-            <div class="col-md-8 mt-5">
-
-                <h5>***دقت کنید هرآنچه اینجا وارد کنید در سایت اصلی اولین مطلب می آید. ***</h5>
-                <hr>
-                <br>
-                <form action="" method="post" enctype='multipart/form-data' novalidate>
-
-                    <div class="row">
-                        <div class="col-6">
-                            <label for="title">عنوان مطلب:</label>
-                            <input type="text" id="title" name="title" class="form-control mb-2" placeholder="عنوان را اینجا وارد کنید" required>
+                <div class="card-form">
+                    <form action="" method="post" enctype='multipart/form-data' novalidate>
+                        <div class="alert alert-info text-center" role="alert">
+                            <i class="fas fa-info-circle me-2"></i><strong>دقت کنید:</strong> هر آنچه اینجا وارد کنید در سایت اصلی اولین مطلب می آید.
                         </div>
-                        <div class="col-6">
-                            <label for="image">تصویر شاخص:</label>
-                            <input type="file" name="image" class="form-control" id="inputGroupFile02" required>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="title" class="form-label">عنوان مطلب:</label>
+                                <input type="text" id="title" name="title" class="form-control" placeholder="عنوان را اینجا وارد کنید" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="image" class="form-label">تصویر شاخص:</label>
+                                <input type="file" name="image" class="form-control" id="inputGroupFile02" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="category" class="form-label">نوع محتوا:</label>
+                                <select name="category" id="category" class="form-control">
+                                    <option value="matlab">مطلب جدید</option>
+                                    <option value="course">دوره جدید</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3" id="courseOption" style="display: none;">
+                                <label for="courseName" class="form-label">اسم دوره:</label>
+                                <input placeholder="اسم دوره جهت ذخیره در دیتابیس" class="form-control mb-2" name="courseName" id="courseName">
+                                <label for="courseHeader" class="form-label">نمایش در فهرست دوره‌ها:</label>
+                                <select name="courseHeader" id="courseHeader" class="form-control mb-2">
+                                    <option value="0">خیر</option>
+                                    <option value="1">بله</option>
+                                </select>
+                                <label for="coursePrice" class="form-label">قیمت دوره (ریال):</label>
+                                <input type="text" name="coursePrice" id="coursePrice" class="form-control" placeholder="قیمت را اینجا وارد کنید">
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="keywords" class="form-label">کلمات کلیدی:</label>
+                                <input type="text" id="keywords" name="keywords" class="form-control" placeholder="کلمات کلیدی را با کاما جدا کنید" required>
+                            </div>
                         </div>
-                        <div class="col-6">
-                            <label for="category">انتخاب کنید</label>
-                            <select name="category" id="category" class="form-control">
-                                <option value="matlab">مطلب جدید</option>
-                                <option value="course">دوره جدید</option>
-                            </select>
+                        <div class="mb-3">
+                            <label for="editor" class="form-label">محتوای اصلی:</label>
+                            <textarea id="editor" name="content" class="form-control"></textarea>
                         </div>
-
-                        <div class="col-6" id="courseOption" style="display: none;">
-                            <label>اسم دوره:</label>
-                            <input placeholder="اسم دوره جهت ذخیره در دیتابیس" class="form-control" name="courseName">
-
-                            <label for="courseHeader">نمایش در فهرست دوره ها سایت اصلی</label>
-                            <select name="courseHeader" class="form-control">
-                                <option value="0">خیر</option>
-                                <option value="1">بله</option>
-                            </select>
-
-                            <label>قیمت دوره (ریال)</label>
-                            <input type="text" name="coursePrice" class="form-control mb-2" placeholder="قیمت را اینجا وارد کنید" required>
-
-
+                        <div class="d-flex justify-content-center mt-4">
+                            <button name="submit_post" class="btn btn-outline-success">
+                                <i class="fas fa-plus-circle me-2"></i>ثبت محتوای جدید
+                            </button>
                         </div>
-
-                        <div class="col-6">
-                            <label for="keywords">کلمات کلیدی:</label>
-                            <input type="text" id="keywords" name="keywords" class="form-control mb-2" placeholder="کلمات کلیدی را با کاما جدا کنید" required>
-                        </div>
-
-                    </div>
-                    <br>
-
-                    <textarea id="editor" name="content"></textarea>
-                    <script>
-                        const editor = new Jodit('#editor');
-                    </script>
-
-
-                    <br>
-
-                    <button name="submit_post" class="btn btn-primary">ثبت </button>
-                </form>
-
-
-                <div class="row mt-5">
-                    <div class="col-md-11">
-                        <div class="table-responsive">
-                            <?php
-                            // Pagination configuration
-                            $items_per_page = 10; // Number of items per page
-                            $current_page = isset($_GET['page']) ? $_GET['page'] : 1; // Current page, default is 1
-
-                            // Calculate the offset for the SQL query
-                            $offset = ($current_page - 1) * $items_per_page;
-
-                            // SQL query to retrieve a subset of rows based on pagination
-                            $sql = "SELECT * FROM courses ORDER BY id DESC LIMIT $items_per_page OFFSET $offset";
-                            $result = $conn->query($sql);
-
-                            if ($result->num_rows > 0) {
-                                $a = ($current_page - 1) * $items_per_page + 1; // Counter for row numbers
-                            ?>
-                                <table class="table border border-4">
-                                    <h4>آخرین مقالات :</h4>
-                                    <thead>
-                                        <tr>
-                                            <th scope="col" class="text-center">ردیف</th>
-                                            <th scope="col" class="text-center">اسم مقاله</th>
-                                            <th scope="col" class="text-center">بدنه</th>
-                                            <th scope="col" class="text-center">نمایش در فهرست</th>
-                                            <th scope="col" class="text-center">عملیات</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                        while ($row = $result->fetch_assoc()) {
-                                            // Limit body content to 2 lines
-                                            $body_text = strip_tags($row['text']); // Remove any HTML tags
-                                            $max_length = 150; // Adjust the max length to fit approximately 2 lines
-                                            if (strlen($body_text) > $max_length) {
-                                                $body_text = substr($body_text, 0, $max_length) . '...';
-                                            }
-                                            if ($row['show_header'] == 1) {
-                                                $show = "بله";
-                                            } else {
-                                                $show = "خیر";
-                                            }
-                                        ?>
-                                            <tr>
-                                                <th scope="row" class="text-center"><?= $a ?></th>
-                                                <td class="text-center"><?= $row['title'] ?></td>
-                                                <td class="text-center"><?= $body_text ?></td>
-                                                <td class="text-center"><?= $show ?></td>
-                                                <td class="text-center">
-                                                    <form action="" method="POST">
-                                                        <input type="hidden" value="<?= $row['id'] ?>" name="id_art">
-                                                        <button type="submit" name="delete_article"
-                                                            class="btn btn-outline-danger btn-sm" onclick="return confirmDelete()">حذف</button>
-
-                                                        <?php
-                                                        if ($row['category'] == 'course') {
-                                                            if ($row['show_header']) { ?>
-                                                                <button class="btn btn-outline-warning btn-sm" name="no_show"
-                                                                    onclick="return confirmDelete()">عدم نمایش در فهرست </button>
-                                                            <?php
-                                                            } else {
-
-                                                            ?>
-                                                                <button class="btn btn-outline-warning btn-sm" name="yes_show"
-                                                                    onclick="return confirmDelete()"> نمایش در فهرست </button>
-                                                            <?php
-                                                            }
-                                                        }
-
-                                                        if ($row['show_index'] == 1) { ?>
-                                                            <button class="btn btn-outline-dark btn-sm" name="no_index"
-                                                                onclick="return confirmDelete()">عدم نمایش در صفحه اصلی </button>
-                                                        <?php
-                                                        } else {
-
-                                                        ?>
-                                                            <button class="btn btn-outline-dark btn-sm" name="yes_index"
-                                                                onclick="return confirmDelete()"> نمایش در صفحه اصلی </button>
-                                                        <?php
-                                                        }
-                                                        ?>
-                                                        </button>
-                                                        <a href="edit_matlab.php?id_matlab=<?= $row['id'] ?>" class="btn btn-outline-info">ادیت مطلب</a>
-                                                    </form>
-                                                </td>
-                                                <script>
-                                                    function confirmDelete() {
-                                                        return confirm("آیا مطمئن هستید ؟ ");
-                                                    }
-                                                </script>
-                                            </tr>
-                                        <?php
-                                            $a++;
-                                        }
-                                        ?>
-                                    </tbody>
-                                </table>
-                                <?php
-                                // Pagination links
-                                $sql = "SELECT COUNT(*) AS total FROM courses";
-                                $result = $conn->query($sql);
-                                $row = $result->fetch_assoc();
-                                $total_items = $row['total'];
-                                $total_pages = ceil($total_items / $items_per_page);
-
-                                $start_page = max(1, $current_page - 1); // Start at the current page - 1 or 1 if the current page is 1
-                                $end_page = min($total_pages, $start_page + 2); // Show 3 pages max
-
-                                // Ensure there are always 3 pages in the pagination unless it's at the beginning or end
-                                if ($end_page - $start_page < 2 && $start_page > 1) {
-                                    $start_page = max(1, $end_page - 2);
-                                }
-                                ?>
-
-                                <nav aria-label="Page navigation">
-                                    <ul class="pagination justify-content-center">
-                                        <!-- Previous Button -->
-                                        <li class="page-item <?= $current_page == 1 ? 'disabled' : '' ?>">
-                                            <a class="page-link" href="?page=<?= max(1, $current_page - 1) ?>">قبلی</a>
-                                        </li>
-
-                                        <?php
-                                        // Page Numbers
-                                        for ($i = $start_page; $i <= $end_page; $i++) {
-                                        ?>
-                                            <li class="page-item <?= $i == $current_page ? 'active' : '' ?>">
-                                                <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
-                                            </li>
-                                        <?php
-                                        }
-                                        ?>
-
-                                        <!-- Next Button -->
-                                        <li class="page-item <?= $current_page == $total_pages ? 'disabled' : '' ?>">
-                                            <a class="page-link" href="?page=<?= min($total_pages, $current_page + 1) ?>">بعدی</a>
-                                        </li>
-                                    </ul>
-                                </nav>
-
-                            <?php
-                            } else {
-                                echo "<p>هیچ مشابهی پیدا نشد.</p>";
-                            }
-                            ?>
-                        </div>
-                    </div>
+                    </form>
                 </div>
 
+                <div class="table-section">
+                    <div class="table-header">
+                        <i class="fas fa-list-alt me-2"></i>لیست آخرین مقالات و دوره‌ها
+                    </div>
+                    <div class="table-responsive mt-3">
+                        <?php
+                        $items_per_page = 10;
+                        $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+                        $offset = ($current_page - 1) * $items_per_page;
 
+                        $sql = "SELECT * FROM courses ORDER BY id DESC LIMIT $items_per_page OFFSET $offset";
+                        $result = $conn->query($sql);
 
-
+                        if ($result->num_rows > 0) {
+                            $a = ($current_page - 1) * $items_per_page + 1;
+                        ?>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="text-center">#</th>
+                                        <th scope="col" class="text-center">عنوان</th>
+                                        <th scope="col" class="text-center">نوع</th>
+                                        <th scope="col" class="text-center">عملیات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php while ($row = $result->fetch_assoc()) {
+                                        $type = ($row['category'] == 'course') ? 'دوره' : 'مطلب';
+                                    ?>
+                                        <tr>
+                                            <th scope="row" class="text-center"><?= $a ?></th>
+                                            <td class="text-center"><?= htmlspecialchars($row['title']) ?></td>
+                                            <td class="text-center"><?= $type ?></td>
+                                            <td class="text-center">
+                                                <form action="" method="POST" style="display:inline;">
+                                                    <input type="hidden" value="<?= $row['id'] ?>" name="id_art">
+                                                    <button type="submit" name="delete_article" class="btn btn-outline-danger btn-sm" onclick="return confirmDelete()">
+                                                        <i class="fas fa-trash-alt me-1"></i>حذف
+                                                    </button>
+                                                    <?php if ($row['category'] == 'course') { ?>
+                                                        <button type="submit" class="btn btn-outline-warning btn-sm" name="<?= $row['show_header'] ? 'no_show' : 'yes_show' ?>" onclick="return confirmChange()">
+                                                            <i class="fas fa-<?= $row['show_header'] ? 'eye-slash' : 'eye' ?> me-1"></i>
+                                                            <?= $row['show_header'] ? 'عدم نمایش در فهرست' : 'نمایش در فهرست' ?>
+                                                        </button>
+                                                    <?php } ?>
+                                                    <button type="submit" class="btn btn-outline-dark btn-sm" name="<?= $row['show_index'] ? 'no_index' : 'yes_index' ?>" onclick="return confirmChange()">
+                                                        <i class="fas fa-<?= $row['show_index'] ? 'ban' : 'home' ?> me-1"></i>
+                                                        <?= $row['show_index'] ? 'عدم نمایش در صفحه اصلی' : 'نمایش در صفحه اصلی' ?>
+                                                    </button>
+                                                    <a href="edit_matlab.php?id_matlab=<?= $row['id'] ?>" class="btn btn-outline-info btn-sm">
+                                                        <i class="fas fa-edit me-1"></i>ویرایش
+                                                    </a>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    <?php $a++;
+                                    } ?>
+                                </tbody>
+                            </table>
+                            <?php
+                            $sql_count = "SELECT COUNT(*) AS total FROM courses";
+                            $result_count = $conn->query($sql_count);
+                            $row_count = $result_count->fetch_assoc();
+                            $total_items = $row_count['total'];
+                            $total_pages = ceil($total_items / $items_per_page);
+                            ?>
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item <?= $current_page == 1 ? 'disabled' : '' ?>">
+                                        <a class="page-link" href="?page=<?= max(1, $current_page - 1) ?>">قبلی</a>
+                                    </li>
+                                    <?php for ($i = 1; $i <= $total_pages; $i++) { ?>
+                                        <li class="page-item <?= $i == $current_page ? 'active' : '' ?>">
+                                            <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                                        </li>
+                                    <?php } ?>
+                                    <li class="page-item <?= $current_page == $total_pages ? 'disabled' : '' ?>">
+                                        <a class="page-link" href="?page=<?= min($total_pages, $current_page + 1) ?>">بعدی</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        <?php } else { ?>
+                            <div class="alert alert-warning text-center" role="alert">
+                                هیچ محتوایی در پایگاه داده وجود ندارد.
+                            </div>
+                        <?php } ?>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
+    <div class="toast-container">
+        <div id="successToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
+            <div class="toast-header bg-success text-white">
+                <strong class="me-auto">موفقیت</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                عملیات با موفقیت انجام شد!
+            </div>
+        </div>
+        <div id="errorToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
+            <div class="toast-header bg-danger text-white">
+                <strong class="me-auto">خطا</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                خطایی در انجام عملیات رخ داد!
+            </div>
+        </div>
+    </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        const editor = new Jodit('#editor');
+
         $('form').submit(function() {
-            $('#editor').val(editor.getEditorValue()); // انتقال محتوا به textarea
+            $('#editor').val(editor.getEditorValue());
         });
 
-
-
-        // وقتی که انتخاب کاربر تغییر می‌کند
         document.getElementById('category').addEventListener('change', function() {
-            var category = this.value; // دریافت مقدار انتخابی
-            var courseOption = document.getElementById('courseOption'); // بخش مربوط به دوره جدید
-
-            // اگر "دوره جدید" انتخاب شود نمایش داده شود، در غیر اینصورت مخفی شود
+            var category = this.value;
+            var courseOption = document.getElementById('courseOption');
             if (category === 'course') {
                 courseOption.style.display = 'block';
             } else {
                 courseOption.style.display = 'none';
             }
         });
+
+        function confirmDelete() {
+            return confirm("آیا مطمئن هستید که می‌خواهید این مورد را حذف کنید؟");
+        }
+
+        function confirmChange() {
+            return confirm("آیا مطمئن هستید؟");
+        }
     </script>
-
-
-
-
-
 </body>
 
 </html>
-
-
 <?php
-
-
-
 if (isset($_POST['submit_post'])) {
     $title = $_POST['title'];
     $content = $_POST['content'];
     $type = $_POST['category'];
-    $amount = $_POST['coursePrice'];
-    $courseName = $_POST['courseName'];
-    $keywords = $_POST['keywords']; // اضافه کردن این خط
+    $amount = ($type == 'course' && isset($_POST['coursePrice'])) ? $_POST['coursePrice'] : null;
+    $courseName = ($type == 'course' && isset($_POST['courseName'])) ? $_POST['courseName'] : null;
+    $keywords = $_POST['keywords'];
+    $courseHeader = ($type == 'course' && isset($_POST['courseHeader'])) ? $_POST['courseHeader'] : 0;
 
-    if ($_POST['courseHeader'] == 1) {
-        $courseHeader = 1;
-    } else {
-        $courseHeader = 0;
-    }
-
-
-    // Escape strings to prevent SQL injection
     $title = $conn->real_escape_string($title);
     $type = $conn->real_escape_string($type);
 
     $image = $_FILES['image'];
-
-    // تعیین مسیر پایه پوشه
     $baseDir = '../uploads/course/';
-    $uploadDir = $baseDir . '1'; // شروع از پوشه 1
-
-    // پیدا کردن شماره پوشه بعدی
     $folderIndex = 1;
-    while (is_dir($uploadDir)) {
+    while (is_dir($baseDir . $folderIndex)) {
         $folderIndex++;
-        $uploadDir = $baseDir . $folderIndex;
     }
+    $uploadDir = $baseDir . $folderIndex;
 
-    // ساخت پوشه جدید
     if (!is_dir($uploadDir)) {
         mkdir($uploadDir, 0777, true);
     }
 
-    // پردازش فایل آپلود شده
-    $originalFileName = basename($image['name']); // نام اصلی فایل
-    $extension = pathinfo($originalFileName, PATHINFO_EXTENSION); // استخراج پسوند فایل
-    $uniqueFileName = uniqid() . '.' . $extension; // نام یکتا برای فایل
-    $finalPath = $uploadDir . '/' . $uniqueFileName; // مسیر کامل فایل
+    $originalFileName = basename($image['name']);
+    $extension = pathinfo($originalFileName, PATHINFO_EXTENSION);
+    $uniqueFileName = uniqid() . '.' . $extension;
+    $finalPath = $uploadDir . '/' . $uniqueFileName;
 
     if (move_uploaded_file($image['tmp_name'], $finalPath)) {
-        $relativePath = str_replace('../', '', $finalPath); // مسیر نسبی برای ذخیره در دیتابیس
+        $relativePath = str_replace('../', '', $finalPath);
 
-     
-        
         $stmt = $conn->prepare("INSERT INTO courses (title, slug, text, amount, category, course, show_header, images, keywords, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())");
         $stmt->bind_param("sssssssss", $title, $title, $content, $amount, $type, $courseName, $courseHeader, $relativePath, $keywords);
 
-
-
         if ($stmt->execute()) {
-            // Success Toast
-            echo "<div id='successToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 20px; right: 20px; width: 300px;'>
-                    <div class='toast-header bg-success text-white'>
-                        <strong class='mr-auto'>Success</strong>
-                        <button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>
-                            <span aria-hidden='true'>&times;</span>
-                        </button>
-                    </div>
-                    <div class='toast-body'>
-                        پست شما با موفقیت ثبت شد!
-                    </div>
-                  </div>
-                  <script>
-                  $(document).ready(function(){
-                      $('#successToast').toast({
-                          autohide: true,
-                          delay: 3000
-                      }).toast('show');
-                      setTimeout(function(){
-                          window.location.href = 'new_matlab';
-                      }, 3000);
-                  });
-                  </script>";
+            echo "<script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var successToast = new bootstrap.Toast(document.getElementById('successToast'));
+                    successToast.show();
+                    setTimeout(function(){ window.location.href = 'new_matlab'; }, 3000);
+                });
+                </script>";
         } else {
-            echo "خطا در ذخیره پست!";
+            echo "<script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var errorToast = new bootstrap.Toast(document.getElementById('errorToast'));
+                    errorToast.show();
+                });
+                </script>";
         }
-
         $stmt->close();
     } else {
-        echo "خطا در آپلود تصویر!";
+        echo "<script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var errorToast = new bootstrap.Toast(document.getElementById('errorToast'));
+                var toastBody = errorToast._element.querySelector('.toast-body');
+                toastBody.innerText = 'خطا در آپلود تصویر!';
+                errorToast.show();
+            });
+            </script>";
     }
 }
-
-
 
 if (isset($_POST['delete_article'])) {
-
     $id_art = $_POST['id_art'];
-
-    $sql = "DELETE FROM courses WHERE id = $id_art";
-    $result = $conn->query($sql);
-    if ($result) {
-        // Use Bootstrap's toast component to show a success toast message
-        echo "<div id='successToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 0; right: 0; width: 300px;'>
-            <div class='toast-header bg-success text-white'>
-                <strong class='mr-auto'>Success</strong>
-                <button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>
-                    <span aria-hidden='true'>&times;</span>
-                </button>
-            </div>
-            <div class='toast-body'>
-                مقاله با موفقیت حذف شد!
-            </div>
-            </div>
-            <script>
-            $(document).ready(function(){
-                $('#successToast').toast('show');
-                setTimeout(function(){
-                    $('#successToast').toast('hide');
-                    // Redirect after 3 seconds
-                    setTimeout(function(){
-                        window.location.href = 'new_matlab';
-                    }, 1000);
-                }, 1000);
+    $sql = "DELETE FROM courses WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id_art);
+    if ($stmt->execute()) {
+        echo "<script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var successToast = new bootstrap.Toast(document.getElementById('successToast'));
+                successToast.show();
+                setTimeout(function(){ window.location.href = 'new_matlab'; }, 3000);
             });
             </script>";
     } else {
-        // Use Bootstrap's toast component to show an error toast message
-        echo "<div id='errorToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 0; right: 0; width: 300px;'>
-                <div class='toast-header bg-danger text-white'>
-                    <strong class='mr-auto'>Error</strong>
-                    <button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>
-                        <span aria-hidden='true'>&times;</span>
-                    </button>
-                </div>
-                <div class='toast-body'>
-                    خطایی در حذف مقاله پیش آمده!
-                </div>
-              </div>
-              <script>
-                $(document).ready(function(){
-                    $('#errorToast').toast('show');
-                    setTimeout(function(){
-                        $('#errorToast').toast('hide');
-                    }, 1000);
-                });
-              </script>";
-
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "<script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var errorToast = new bootstrap.Toast(document.getElementById('errorToast'));
+                errorToast.show();
+            });
+            </script>";
     }
+    $stmt->close();
 }
 
-if (isset($_POST['no_show'])) {
+if (isset($_POST['no_show']) || isset($_POST['yes_show']) || isset($_POST['no_index']) || isset($_POST['yes_index'])) {
     $id_art = $_POST['id_art'];
-    $sql = "UPDATE courses SET show_header = 0 WHERE id = $id_art";
-    $result = $conn->query($sql);
-    if ($result) {
-        // Success Toast
-        echo "<div id='successToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 20px; right: 20px; width: 300px;'>
-        <div class='toast-header bg-success text-white'>
-            <strong class='mr-auto'>Success</strong>
-            <button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>
-                <span aria-hidden='true'>&times;</span>
-            </button>
-        </div>
-        <div class='toast-body'>
-            پست شما با موفقیت ثبت شد!
-        </div>
-        </div>
-        <script>
-        $(document).ready(function(){
-        $('#successToast').toast({
-            autohide: true,
-            delay: 3000
-        }).toast('show');
-        setTimeout(function(){
-            window.location.href = 'new_matlab';
-        }, 3000);
-        });
-        </script>";
-    } else {
-        echo "خطا در ذخیره پست!";
+    $field = '';
+    $value = '';
+    if (isset($_POST['no_show'])) {
+        $field = 'show_header';
+        $value = 0;
     }
-}
+    if (isset($_POST['yes_show'])) {
+        $field = 'show_header';
+        $value = 1;
+    }
+    if (isset($_POST['no_index'])) {
+        $field = 'show_index';
+        $value = 0;
+    }
+    if (isset($_POST['yes_index'])) {
+        $field = 'show_index';
+        $value = 1;
+    }
 
-if (isset($_POST['yes_show'])) {
-    $id_art = $_POST['id_art'];
-    $sql = "UPDATE courses SET show_header = 1 WHERE id = $id_art";
-    $result = $conn->query($sql);
-    if ($result) {
-        // Success Toast
-        echo "<div id='successToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 20px; right: 20px; width: 300px;'>
-            <div class='toast-header bg-success text-white'>
-                <strong class='mr-auto'>Success</strong>
-                <button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>
-                    <span aria-hidden='true'>&times;</span>
-                </button>
-            </div>
-            <div class='toast-body'>
-                پست شما با موفقیت ثبت شد!
-            </div>
-            </div>
-            <script>
-            $(document).ready(function(){
-            $('#successToast').toast({
-                autohide: true,
-                delay: 3000
-            }).toast('show');
-            setTimeout(function(){
-                window.location.href = 'new_matlab';
-            }, 3000);
+    $sql = "UPDATE courses SET $field = ? WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ii", $value, $id_art);
+    if ($stmt->execute()) {
+        echo "<script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var successToast = new bootstrap.Toast(document.getElementById('successToast'));
+                successToast.show();
+                setTimeout(function(){ window.location.href = 'new_matlab'; }, 3000);
             });
             </script>";
     } else {
-        echo "خطا در ذخیره پست!";
-    }
-}
-
-if (isset($_POST['no_index'])) {
-    $id_art = $_POST['id_art'];
-    $sql = "UPDATE courses SET show_index = 0 WHERE id = $id_art";
-    $result = $conn->query($sql);
-    if ($result) {
-        // Success Toast
-        echo "<div id='successToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 20px; right: 20px; width: 300px;'>
-        <div class='toast-header bg-success text-white'>
-            <strong class='mr-auto'>Success</strong>
-            <button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>
-                <span aria-hidden='true'>&times;</span>
-            </button>
-        </div>
-        <div class='toast-body'>
-            پست شما با موفقیت ثبت شد!
-        </div>
-        </div>
-        <script>
-        $(document).ready(function(){
-        $('#successToast').toast({
-            autohide: true,
-            delay: 3000
-        }).toast('show');
-        setTimeout(function(){
-            window.location.href = 'new_matlab';
-        }, 3000);
-        });
-        </script>";
-    } else {
-        echo "خطا در ذخیره پست!";
-    }
-}
-
-if (isset($_POST['yes_index'])) {
-    $id_art = $_POST['id_art'];
-    $sql = "UPDATE courses SET show_index = 1 WHERE id = $id_art";
-    $result = $conn->query($sql);
-    if ($result) {
-        // Success Toast
-        echo "<div id='successToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 20px; right: 20px; width: 300px;'>
-            <div class='toast-header bg-success text-white'>
-                <strong class='mr-auto'>Success</strong>
-                <button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>
-                    <span aria-hidden='true'>&times;</span>
-                </button>
-            </div>
-            <div class='toast-body'>
-                پست شما با موفقیت ثبت شد!
-            </div>
-            </div>
-            <script>
-            $(document).ready(function(){
-            $('#successToast').toast({
-                autohide: true,
-                delay: 3000
-            }).toast('show');
-            setTimeout(function(){
-                window.location.href = 'new_matlab';
-            }, 3000);
+        echo "<script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var errorToast = new bootstrap.Toast(document.getElementById('errorToast'));
+                errorToast.show();
             });
             </script>";
-    } else {
-        echo "خطا در ذخیره پست!";
     }
+    $stmt->close();
 }
+?>
