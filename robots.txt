@@ -1,1 +1,3 @@
+User-agent: *
+Allow: /
 Sitemap: https://simorghtv.com/sitemap.xml

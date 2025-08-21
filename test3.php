@@ -1,112 +1,350 @@
-<?php
-session_start();
-
-if (!isset($_SESSION["all_data"])) {
-    header("Location: ../login.php");
-    exit();
-}
-
-$id = $_SESSION["all_data"]['id'];
-// $admin = $_SESSION["all_data"]['admin'];
-?>
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خانه</title>
+    <title>نمایش ویدیوی حفاظت شده</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #4e73df;
+            --secondary-color: #f8f9fc;
+        }
 
+        body {
+            font-family: 'Vazir', 'Tanha', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e7ec 100%);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-    <link rel="icon" href="img/logo.png" type="image/x-icon">
+        .container {
+            max-width: 900px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
 
-    <?php
-    include 'includes.php';
-    include '../config.php';
-    // include 'functions.php';
-    // include 'PersianCalendar.php';
-    ?>
-    <!-- <link rel="stylesheet" href="styles.css"> -->
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #224abe 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
 
+        .video-container {
+            position: relative;
+            padding: 20px;
+            background: #000;
+        }
 
+        video {
+            width: 100%;
+            height: auto;
+            max-height: 500px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        .protection-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 16px;
+            background: rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transition: opacity 0.3s;
+            border-radius: 10px;
+        }
 
-    <script src="../summernote-0.8.20-dist/cdn/jquery.min.js"></script>
+        .video-container:hover .protection-overlay {
+            opacity: 1;
+        }
 
-    <link rel="stylesheet" href="../summernote-0.8.20-dist/summernote-bs5.css" />
+        .protection-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+        }
 
-    <script src="../summernote-0.8.20-dist/summernote-bs5.js"></script>
+        .controls {
+            padding: 15px 20px;
+            background: #f8f9fc;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
 
-    <link rel="stylesheet" href="../summernote-0.8.20-dist/summernote-bs4.css" />
+        .btn {
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
 
-    <script src="../summernote-0.8.20-dist/summernote-bs4.js"></script>
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #224abe 100%);
+            border: none;
+        }
 
-    <link rel="stylesheet" href="../summernote-0.8.20-dist/summernote.css" />
+        .security-features {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #e3e6f0;
+        }
 
-    <script src="../summernote-0.8.20-dist/summernote.js"></script>
+        .feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f8f9fc;
+            border-radius: 10px;
+        }
 
-    <link rel="stylesheet" href="../summernote-0.8.20-dist/summernote-lite.css" />
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-left: 15px;
+            flex-shrink: 0;
+        }
 
-    <script src="../summernote-0.8.20-dist/summernote-lite.js"></script>
+        .message {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #e74c3c;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
 
-    <script src="../summernote-0.8.20-dist/lang/summernote-es-ES.js"></script>
+        .watermark {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 18px;
+            pointer-events: none;
+        }
 
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
 
+            .container {
+                border-radius: 15px;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 
 <body>
+    <div class="container">
+        <div class="header">
+            <h2><i class="bi bi-shield-lock"></i> ویدیوی حفاظت شده</h2>
+            <p class="mb-0">امکان دانلود این ویدیو غیرفعال شده است</p>
+        </div>
 
-   
-
-<?php include 'header.php'; ?>
-    <div class="container-fluid">
-
-
-        <div class="row">
-            <div class="col-md-3 d-flex">
-                <?php
-                include 'sidebar.php';
-                ?>
-              
+        <div class="video-container">
+            <div class="protection-badge">
+                <span class="badge bg-danger"><i class="bi bi-shield-check"></i> حفاظت شده</span>
             </div>
 
-            <div class="col-md-8 mt-5">
+            <video id="myVideo" controls controlsList="nodownload" oncontextmenu="return false;">
+                <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+                مرورگر شما از تگ ویدیو پشتیبانی نمی‌کند.
+            </video>
 
-            <?php
-              
-                // Prepare and execute the SQL query
-                $sql ="SELECT * from sounds";
+            <div class="protection-overlay">
+                <div class="text-center">
+                    <i class="bi bi-shield-lock" style="font-size: 48px;"></i>
+                    <p>این ویدیو در برابر دانلود محافظت شده است</p>
+                </div>
+            </div>
 
-                $result = $conn->query($sql);
-                if ($result->num_rows > 0) {
-                    while($row = $result->fetch_assoc()) {
-                        echo '<audio controls>';
-                        echo    '<source src="data:audio/mpeg;base64,'.base64_encode($row['file_data']).'">';
-                        echo '</audio><br>';
-                    }
-                }
+            <div class="watermark" id="watermark">کاربر: مهمان - تاریخ: 1402/08/15</div>
+        </div>
 
-            ?>
-                
+        <div class="controls">
+            <button class="btn btn-primary" onclick="playVideo()">
+                <i class="bi bi-play-fill"></i> پخش
+            </button>
+            <button class="btn btn-primary" onclick="pauseVideo()">
+                <i class="bi bi-pause-fill"></i> توقف
+            </button>
+            <button class="btn btn-primary" onclick="toggleMute()">
+                <i class="bi bi-volume-mute-fill"></i> قطع صدا
+            </button>
+            <button class="btn btn-primary" onclick="toggleFullscreen()">
+                <i class="bi bi-arrows-fullscreen"></i> تمام صفحه
+            </button>
+        </div>
+
+        <div class="security-features">
+            <h4><i class="bi bi-shield-check"></i> ویژگی‌های امنیتی فعال شده:</h4>
+
+            <div class="feature">
+                <div class="feature-icon">
+                    <i class="bi bi-mouse"></i>
+                </div>
+                <div>
+                    <h5 class="mb-1">غیرفعال کردن کلیک راست</h5>
+                    <p class="mb-0">امکان ذخیره ویدیو از طریق منوی context غیرفعال شده است.</p>
+                </div>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">
+                    <i class="bi bi-download"></i>
+                </div>
+                <div>
+                    <h5 class="mb-1">حذف دکمه دانلود</h5>
+                    <p class="mb-0">دکمه دانلود از پخش‌کننده ویدیو حذف شده است.</p>
+                </div>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">
+                    <i class="bi bi-keyboard"></i>
+                </div>
+                <div>
+                    <h5 class="mb-1">مسدود کردن کلیدهای ترکیبی</h5>
+                    <p class="mb-0">کلیدهای Ctrl+S, Ctrl+U و F12 مسدود شده‌اند.</p>
+                </div>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">
+                    <i class="bi bi-droplet"></i>
+                </div>
+                <div>
+                    <h5 class="mb-1">واترمارک پویا</h5>
+                    <p class="mb-0">اطلاعات کاربر و تاریخ به صورت واترمارک روی ویدیو نمایش داده می‌شود.</p>
+                </div>
             </div>
         </div>
     </div>
 
+    <div class="message" id="message"></div>
+
     <script>
-        $(document).ready(function() {
-            $('.nav-link').click(function() {
-                $('.nav-link').removeClass('active');
-                $(this).addClass('active');
+        const video = document.getElementById('myVideo');
+        const message = document.getElementById('message');
+
+        // نمایش پیام به کاربر
+        function showMessage(text) {
+            message.textContent = text;
+            message.style.opacity = '1';
+
+            setTimeout(() => {
+                message.style.opacity = '0';
+            }, 2000);
+        }
+
+        // کنترل‌های ویدیو
+        function playVideo() {
+            video.play();
+            showMessage('ویدیو در حال پخش است');
+        }
+
+        function pauseVideo() {
+            video.pause();
+            showMessage('ویدیو متوقف شد');
+        }
+
+        function toggleMute() {
+            video.muted = !video.muted;
+            showMessage(video.muted ? 'صدا قطع شد' : 'صدا روشن شد');
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                video.requestFullscreen().catch(err => {
+                    console.error('خطا در حالت تمام صفحه:', err);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        // جلوگیری از دانلود
+        document.addEventListener('DOMContentLoaded', function() {
+            // جلوگیری از کلیک راست
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                showMessage('امکان ذخیره ویدیو وجود ندارد');
             });
+
+            // جلوگیری از کشیدن و رها کردن ویدیو
+            document.addEventListener('dragstart', function(e) {
+                if (e.target.tagName === 'VIDEO') {
+                    e.preventDefault();
+                    showMessage('امکان ذخیره ویدیو وجود ندارد');
+                }
+            });
+
+            // جلوگیری از کلیدهای ذخیره
+            document.addEventListener('keydown', function(e) {
+                // Ctrl+S, Ctrl+U, F12
+                if ((e.ctrlKey && e.key === 's') || (e.ctrlKey && e.key === 'u') || e.key === 'F12') {
+                    e.preventDefault();
+                    showMessage('این عمل مجاز نیست');
+                }
+            });
+
+            // اضافه کردن واترمارک پویا
+            updateWatermark();
+            setInterval(updateWatermark, 60000); // بروزرسانی واترمارک هر 1 دقیقه
         });
 
+        // تابع بروزرسانی واترمارک
+        function updateWatermark() {
+            const now = new Date();
+            const dateString = now.toLocaleDateString('fa-IR');
+            const timeString = now.toLocaleTimeString('fa-IR');
+            document.getElementById('watermark').textContent = `کاربر: مهمان - تاریخ: ${dateString} - زمان: ${timeString}`;
+        }
     </script>
-
-    
-
 </body>
 
 </html>
-
-

@@ -1,391 +1,356 @@
-<?php
-session_start();
-?>
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>هفت هنر سیمرغ</title>
+    <title>جلوگیری از دانلود ویدیو - راهکارهای امنیتی</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #4e73df;
+            --secondary-color: #f8f9fc;
+        }
 
-    <?php 
-    include 'includes.php'; 
-    require 'API/Gateway.php';
-    require 'ipgcfg.php';
-    ?>
+        body {
+            font-family: 'Vazir', 'Tanha', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fc;
+            color: #333;
+            line-height: 1.6;
+        }
 
-    <link rel="icon" href="images/logo1.ico" type="image/x-icon">
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #224abe 100%);
+            color: white;
+            padding: 30px 0;
+            margin-bottom: 30px;
+            border-radius: 0 0 20px 20px;
+        }
 
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+            border: none;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #224abe 100%);
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+            font-weight: 700;
+        }
+
+        .solution-card {
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .prevention-item {
+            padding: 15px;
+            border-radius: 10px;
+            background-color: #f8f9fc;
+            margin-bottom: 15px;
+            border: 1px solid #e3e6f0;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #224abe 100%);
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+        }
+
+        .badge {
+            font-size: 0.9em;
+            padding: 8px 15px;
+            border-radius: 10px;
+        }
+
+        .implementation-steps {
+            counter-reset: step-counter;
+        }
+
+        .step {
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+        .step:before {
+            counter-increment: step-counter;
+            content: counter(step-counter);
+            position: absolute;
+            right: -10px;
+            top: -10px;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #224abe 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-demo {
+            background-color: #000;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .protection-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 100;
+        }
+
+        .code-block {
+            background-color: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
 </head>
+
 <body>
+    <div class="header">
+        <div class="container">
+            <h1 class="text-center"><i class="bi bi-shield-lock"></i> راهکارهای جلوگیری از دانلود ویدیو</h1>
+            <p class="text-center lead">امنیت محتوای ویدیویی در سایت‌های PHP و Bootstrap</p>
+        </div>
+    </div>
 
-    <?php
-    include 'header.php';
-    include 'config.php';
-    include 'PersianCalendar.php';
-    include 'jalaliDate.php';
-    $sdate = new SDate();
-    
-   ?>
-
-        
-        <div class="container mt-4">
-            <div class="row justify-content-center">
-                <div class="col-md-7 col-sm-12 border">
-                 
-
-                
-
-                        <form class="p-2" action="" method="POST">
-                            <h2 style="text-align: center;">فرم ثبت نام</h2>
-                            <h6 style="text-align: right;">اطلاعات شما :</h6>
-                            <div class="form-group" style="text-align: right;">
-                                <label for="name">نام</label>
-                                <input type="text" class="form-control" name="name" id="name" required>
-                            </div>
-                            <div class="form-group" style="text-align: right;">
-                                <label for="lastname">نام خانوادگی</label>
-                                <input type="text" class="form-control" name="lastname" id="lastname" required>
-                            </div>
-                            <div class="form-group" style="text-align: right;">
-                                <label for="meli_code">کد ملی</label>
-                                <input 
-                                    type="text" 
-                                    class="form-control" 
-                                    name="meli_code" 
-                                    id="meli_code" 
-                                    pattern="\d{10}" 
-                                    title="کد ملی باید 10 رقم باشد" 
-                                    required>
-                            </div>
-                            <div class="form-group" style="text-align: right;">
-                                <label for="mobile">شماره همراه</label>
-                                <input 
-                                    type="text" 
-                                    class="form-control" 
-                                    name="mobile" 
-                                    id="mobile" 
-                                    pattern="\d{11}" 
-                                    title="شماره همراه باید 11 رقم باشد" 
-                                    required>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="bi bi-lightbulb"></i> راهکارهای فنی جلوگیری از دانلود</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="implementation-steps">
+                            <div class="step">
+                                <h4>استفاده از سرویس‌های میزبان ویدیو</h4>
+                                <p>سرویس‌هایی مانند Vimeo Pro یا Wistia امکان غیرفعال کردن دانلود را فراهم می‌کنند.</p>
+                                <span class="badge bg-primary">موثر</span>
+                                <span class="badge bg-success">پیشنهادی</span>
                             </div>
 
-                            <div class="form-group" style="text-align: right;">
-                                <label for="email">ایمیل</label>
-                                <input type="email" class="form-control" name="email" id="email">
-                            </div>
-                            <div class="form-group" style="text-align: right;">
-                                <label for="age">سن</label>
-                                <input type="number" class="form-control" name="age" id="age" required>
-                            </div>
-                         
-                          
-                            <div class="form-group" style="text-align: right;">
-                                <label for="address">آدرس</label>
-                                <input type="text" class="form-control" name="address" id="address" required>
-                            </div>
-                            <h6 style="text-align: right;">اطلاعات ثبت نامی :</h6>
-                            <div class="form-group" style="text-align: right;">
-                                <label for="course">دوره </label>
-                                <select class="form-control" name="course" id="course" required>
-                                    <option value="" disabled selected>دوره مورد نظر را انتخاب کنید</option>
-                                    <option value="course1">'گویندگی پیشرفته رادیو "15 جلسه سه ساعته" - قیمت: 8/500/000 تومان '</option>
-                                    <option value="course2">'فن بیان کودکان "10 جلسه دو ساعته" - قیمت : 5/900/000 تومان'</option>
-                                    <option value="course3">'گویندگی رادیو "10 جلسه دو ساعته" - قیمت : 7/800/000 تومان'</option>
-                                    <option value="course4">'نمایش رادیویی "8 جلسه دو ساعته" - قیمت : 5/500/000 تومان'</option>
-                                    <option value="course5">'بازیگری بزرگسال "16 جلسه دو ساعته" - قیمت : 8/800/000 تومان'</option>
-                                    <option value="course6">'بازیگری مخصوص کودکان "12 جلسه سه ساعته" - قیمت : 6/500/000 تومان'</option>
-                                    <option value="course7">'موشن گرافیک "16 جلسه دو ساعته" - قیمت : 11/000/000 تومان'</option>
-                                    <option value="course8">'دوره دوبله "10 جلسه سه ساعته" - قیمت : 7/500/000 تومان'</option>
-                                    <option value="course9">'انیمیشن سازی "12 جلسه سه ساعته" - قیمت : 7/900/000 تومان'</option>
-                                    <option value="course10">'گریم سینمایی (مقدماتی) "10 جلسه سه ساعته" - قیمت : 6/500/000 تومان'</option>
-                                    <option value="course11">'گریم سینمایی (پیشرفته) "10 جلسه سه ساعته" - قیمت : 8/000/000 تومان'</option>
-                                    <option value="course12">'کارگردانی و فیلمسازی "12 جلسه سه ساعته" - قیمت : 11/000/000 تومان'</option>
-                                    <option value="course13">'ورکشاپ گویندگی - قیمت : 500/000 تومان'</option>
-                                    <option value="course14">'تدوین و ادیت فیلم "10 جلسه دو ساعته" - قیمت : 6/500/000 تومان'</option>
-
-                                </select>
-                            </div>
-                            <div class="form-group" style="text-align: right;">
-                                <label for="explain">توضیحات</label>
-                                <textarea class="form-control" name="explain" id="explain"></textarea>
-                            </div>
-                            <div class="form-group" style="text-align: right;">
-                                <label for="discount_code">کد تخفیف : (در صورت وجود )</label>
-                                <input type="text" class="form-control" name="discount_code" id="discount_code" style="width: 100px;">
-                            </div>
-                            <div class="form-group" style="text-align: right;">
-                                <p>نحوه آشنایی با موسسه :</p>
-                                <label for="internet">اینترنت</label>
-                                <input class="form-check-input" type="radio" name="reference" value="internet" id="internet">
-                                <br>
-                                <label for="relation">آشنایان</label>
-                                <input class="form-check-input" type="radio" name="reference" value="relation" id="relation">
-                                <br>
-                                <label for="others">غیره</label>
-                                <input class="form-check-input" type="radio" name="reference" value="others" id="others">
+                            <div class="step">
+                                <h4>تقسیم ویدیو به تکه‌های کوچک (HLS)</h4>
+                                <p>استفاده از فناوری HLS که ویدیو را به تکه‌های کوچک تقسیم می‌کند و دانلود آن را سخت می‌کند.</p>
+                                <div class="code-block">
+                                    // مثال با PHP<br>
+                                    $video_path = 'videos/secret_video.mp4';<br>
+                                    $video_url = 'videos/secret_video.m3u8'; // فایل HLS
+                                </div>
+                                <span class="badge bg-warning">متوسط</span>
                             </div>
 
-                            
-                            <input type="submit" value="انتقال به درگاه آپ"
-                                name="submit_register" class="btn mb-2 mb-md-0 btn-outline-info btn-block">
-                        </form>
+                            <div class="step">
+                                <h4>غیرفعال کردن کلیک راست و کلیدهای ترکیبی</h4>
+                                <p>جلوگیری از دسترسی به منوی context برای ذخیره ویدیو</p>
+                                <div class="code-block">
+                                    document.addEventListener('contextmenu', function(e) {<br>
+                                    &nbsp;&nbsp;e.preventDefault();<br>
+                                    &nbsp;&nbsp;alert('امکان ذخیره ویدیو وجود ندارد.');<br>
+                                    });
+                                </div>
+                                <span class="badge bg-primary">آسان</span>
+                            </div>
 
-                
-                    
-                   
+                            <div class="step">
+                                <h4>رمزگذاری ویدیوها</h4>
+                                <p>استفاده از رمزگذاری DRM برای ویدیوها که فقط در پلیر خاصی قابل پخش هستند.</p>
+                                <span class="badge bg-danger">پیشرفته</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="bi bi-code-slash"></i> پیاده‌سازی در PHP</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>نمونه کد PHP برای سرویس دادن ویدیو به صورت امن:</p>
+                        <div class="code-block">
+                            &lt;?php<br>
+                            // بررسی آیا کاربر لاگین کرده است<br>
+                            session_start();<br>
+                            if (!isset($_SESSION['user_id'])) {<br>
+                            &nbsp;&nbsp;header('HTTP/1.0 403 Forbidden');<br>
+                            &nbsp;&nbsp;die('دسترسی غیرمجاز');<br>
+                            }<br>
+                            <br>
+                            // بررسی ارجاع (Referer) برای اطمینان از嵌入 ویدیو در سایت خودتان<br>
+                            if (isset($_SERVER['HTTP_REFERER'])) {<br>
+                            &nbsp;&nbsp;$referer = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);<br>
+                            &nbsp;&nbsp;if ($referer != 'yourdomain.com') {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;header('HTTP/1.0 403 Forbidden');<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;die('دسترسی غیرمجاز');<br>
+                            &nbsp;&nbsp;}<br>
+                            }<br>
+                            <br>
+                            // ارسال ویدیو<br>
+                            $file = 'protected/videos/'.$_GET['vid'];<br>
+                            if (file_exists($file)) {<br>
+                            &nbsp;&nbsp;header('Content-Type: video/mp4');<br>
+                            &nbsp;&nbsp;header('Content-Disposition: inline; filename="video.mp4"');<br>
+                            &nbsp;&nbsp;readfile($file);<br>
+                            } else {<br>
+                            &nbsp;&nbsp;header('HTTP/1.0 404 Not Found');<br>
+                            }<br>
+                            ?&gt;
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="bi bi-shield-check"></i> راهکارهای امنیتی</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="prevention-item">
+                            <h5><i class="bi bi-check-circle"></i> احراز هویت کاربران</h5>
+                            <p>اجباری کردن ثبت‌نام و لاگین برای دسترسی به ویدیوها</p>
+                        </div>
+
+                        <div class="prevention-item">
+                            <h5><i class="bi bi-check-circle"></i> محدودیت دسترسی بر اساس IP</h5>
+                            <p>اجازه دسترسی فقط از IPهای خاص یا محدود کردن تعداد دستگاه‌های همزمان</p>
+                        </div>
+
+                        <div class="prevention-item">
+                            <h5><i class="bi bi-check-circle"></i> منقضی شدن لینک‌ها</h5>
+                            <p>تولید لینک‌های موقت که پس از مدت زمان مشخص منقضی می‌شوند</p>
+                        </div>
+
+                        <div class="prevention-item">
+                            <h5><i class="bi bi-check-circle"></i> واترمارک گذاری ویدیو</h5>
+                            <p>اضافه کردن واترمارک حاوی نام کاربر یا اطلاعات session به ویدیو</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="bi bi-card-checklist"></i> مراحل پیاده‌سازی</h3>
+                    </div>
+                    <div class="card-body">
+                        <ol>
+                            <li>تنظیم سیستم احراز هویت کاربران در PHP</li>
+                            <li>آپلود ویدیوها در پوشه‌ای خارج از root</li>
+                            <li>ایجاد اسکریپت PHP برای سرویس دادن ویدیوها</li>
+                            <li>پیاده‌سازی کنترل‌های امنیتی در front-end</li>
+                            <li>تست سیستم و رفع اشکالات</li>
+                        </ol>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary"><i class="bi bi-download"></i> دریافت کدهای نمونه</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="bi bi-collection-play"></i> دموی ویدیوی امن</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="video-demo">
+                            <div class="protection-badge">
+                                <span class="badge bg-danger">حفاظت شده</span>
+                            </div>
+                            <video controls style="width: 100%" controlsList="nodownload" oncontextmenu="return false;">
+                                <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+                                مرورگر شما از تگ ویدیو پشتیبانی نمی‌کند.
+                            </video>
+                        </div>
+                        <p class="text-muted small mt-2">این ویدیو با قابلیت‌های حفاظتی نمونه نمایش داده می‌شود.</p>
+                    </div>
                 </div>
             </div>
         </div>
- 
 
-    <?php include 'footer.php'; ?>
+        <div class="card mt-4">
+            <div class="card-header">
+                <h3 class="card-title"><i class="bi bi-question-circle"></i> سوالات متداول</h3>
+            </div>
+            <div class="card-body">
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                آیا این راهکارها ۱۰۰٪ از دانلود جلوگیری می‌کنند؟
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                هیچ راهکار ۱۰۰٪ قطعی وجود ندارد، اما با ترکیب چندین روش می‌توانید دانلود را برای اکثر کاربران غیرفنی بسیار سخت کنید. کاربران بسیار ماهر ممکن است راهی برای دور زدن این محدودیت‌ها پیدا کنند.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                کدام روش برای سایت من مناسب‌تر است؟
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                اگر بودجه کافی دارید، استفاده از سرویس‌های میزبان ویدیو مانند Vimeo Pro بهترین گزینه است. در غیر این صورت، ترکیبی از روش‌های فنی و امنیتی در PHP می‌تواند راهکار مناسبی باشد.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.querySelectorAll('#meli_code, #mobile').forEach(input => {
-            input.addEventListener('input', function () {
-                if (this.id === 'meli_code' && !/^\d{10}$/.test(this.value)) {
-                    this.setCustomValidity('کد ملی باید 10 رقم باشد');
-                } else if (this.id === 'mobile' && !/^\d{11}$/.test(this.value)) {
-                    this.setCustomValidity('شماره همراه باید 11 رقم باشد');
-                } else {
-                    this.setCustomValidity('');
+        // کدهای JavaScript برای جلوگیری از دانلود
+        document.addEventListener('DOMContentLoaded', function() {
+            // جلوگیری از کلیک راست
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                alert('امکان ذخیره ویدیو وجود ندارد.');
+            });
+
+            // جلوگیری از کشیدن و رها کردن
+            document.addEventListener('dragstart', function(e) {
+                if (e.target.tagName === 'VIDEO') {
+                    e.preventDefault();
+                }
+            });
+
+            // جلوگیری از کلیدهای ذخیره
+            document.addEventListener('keydown', function(e) {
+                // Ctrl+S, Ctrl+U, F12
+                if ((e.ctrlKey && e.key === 's') || (e.ctrlKey && e.key === 'u') || e.key === 'F12') {
+                    e.preventDefault();
+                    alert('این عمل مجاز نیست.');
                 }
             });
         });
     </script>
-    <script>
-        // Add a custom required message for all inputs
-        document.querySelectorAll('input[required]').forEach(input => {
-            input.addEventListener('invalid', function (event) {
-                if (this.validity.valueMissing) {
-                    // Show the custom Persian message for required fields
-                    this.setCustomValidity('لطفا این فیلد را پر کنید');
-                } else {
-                    this.setCustomValidity(''); // Clear message for other cases
-                }
-            });
-
-            // Clear the message when input is valid
-            input.addEventListener('input', function () {
-                this.setCustomValidity('');
-            });
-        });
-    </script>
-
-    <script>
-        // Custom required message for the select element
-        document.getElementById('course').addEventListener('invalid', function (event) {
-            if (this.validity.valueMissing) {
-                this.setCustomValidity('لطفا یک دوره را انتخاب کنید');
-            } else {
-                this.setCustomValidity(''); // Clear the message for other cases
-            }
-        });
-
-        // Clear the message when the user makes a valid selection
-        document.getElementById('course').addEventListener('change', function () {
-            this.setCustomValidity('');
-        });
-    </script>
-
-
 </body>
+
 </html>
-
-
-
-<?php
-
-
-// var_dump(empty($_POST));
-if (isset($_POST['submit_register'])) {
-    $CurUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-    $CurUrl = substr($CurUrl, 0, strrpos($CurUrl, '/') + 1);
-
-
-    $invoiceId = time(); 
-
-
-    $mobile = $_POST['mobile'];
-    $name = $_POST['name'];
-    $lastname = $_POST['lastname'];
-    $meli_code = $_POST['meli_code'];
-    $age = $_POST['age'];
-    $email = $_POST['email'];
-    $address = $_POST['address'];
-
-    // این برای کد تایید هست :
-    if(isset($_POST['discount_code']) && $_POST['discount_code']== 'art_simorghtv'){
-        $discount = TRUE ;
-    }
-    // $discount = NULL ;
-   
-    $description = isset($_POST['explain']) ? $_POST['explain'] : NULL;
- 
-
-
-    switch ($_POST['course']) {
-        case 'course1':
-            $course = "گویندگی پیشرفته";
-            $introduce = "قیمت : 8/500/000";
-            $amount = $discount ? 75000000 : 85000000;
-            break;
-    
-        case 'course2':
-            $course = "فن بیان کودکان";
-            $introduce = "قیمت: 5/900/000 تومان";
-            $amount = $discount ? 49000000 : 59000000;
-            break;
-    
-        case 'course3':
-            $course = "گویندگی رادیو";
-            $introduce = "قیمت: 7/800/000 تومان";
-            $amount = $discount ? 68000000 : 78000000;
-            break;
-    
-        case 'course4':
-            $course = "نمایش رادیویی";
-            $introduce = "قیمت: 5/500/000 تومان";
-            $amount = $discount ? 45000000 : 55000000;
-            break;
-    
-        case 'course5':
-            $course = "بازیگری بزرگسال";
-            $introduce = "قیمت: 8/800/000 تومان";
-            $amount = $discount ? 78000000 : 88000000;
-            break;
-    
-        case 'course6':
-            $course = "بازیگری مخصوص کودکان";
-            $introduce = "قیمت: 7/500/000 تومان";
-            $amount = $discount ? 55000000 : 65000000;
-            break;
-    
-        case 'course7':
-            $course = "موشن گرافیک";
-            $introduce = "قیمت: 11/000/000 تومان";
-            $amount = $discount ? 100000000 : 110000000;
-            break;
-    
-        case 'course8':
-            $course = "آموزش و جذب دوبلر";
-            $introduce = "قیمت: 7/500/000 تومان";
-            $amount = $discount ? 65000000 : 75000000;
-            break;
-    
-        case 'course9':
-            $course = "انیمیشن سازی";
-            $introduce = "قیمت: 7/900/000 تومان";
-            $amount = $discount ? 69000000 : 79000000;
-            break;
-    
-        case 'course10':
-            $course = "گریم سینمایی (مقدماتی)";
-            $introduce = "قیمت: 6/500/000 تومان";
-            $amount = $discount ? 55000000 : 65000000;
-            break;
-    
-        case 'course11':
-            $course = "گریم سینمایی (پیشرفته)";
-            $introduce = "قیمت: 8/000/000 تومان";
-            $amount = $discount ? 70000000 : 80000000;
-            break;
-    
-        case 'course12':
-            $course = "کارگردانی و فیلمسازی";
-            $introduce = "قیمت: 11/000/000 تومان";
-            $amount = $discount ? 100000000 : 110000000;
-            break;
-    
-        case 'course13':
-            $course = "ورکشاپ گویندگی رادیو";
-            $introduce = "قیمت: 500/000 تومان";
-            $amount =  5000000;
-            break;
-    
-        case 'course14':
-            $course = "تدوین و ادیت فیلم";
-            $introduce = "قیمت: 6/500/000 تومان";
-            $amount = $discount ? 55000000 : 65000000;
-            break;
-    }
-
-
-
-
-    if ($amount <= 0) {
-        // Handle error
-        die('Invalid amount.');
-    }
-
-    // Handle reference selection
-    if (isset($_POST['reference'])) {
-        $reference = $_POST['reference'];
-    } else {
-        $reference = NULL;
-    }
-
-
-    $sql = "INSERT INTO contacts (user_id, name, lastname, age, course,  email, introduce, meli_code, amount, mobile, know, address, created_at) 
-                VALUES ('$invoiceId', '$name', '$lastname', '$age', '$course', '$email', '$introduce', '$meli_code', '$amount', '$mobile', '$reference', '$address', NOW())";
-
-    // echo $sql;
-
-    $result = $conn->query($sql);
-
-    if ($result) {
-        $new_id = $conn->insert_id;
-        
-        // echo "<script>location.href='payment_receipt';</script>";
-    } else {
-        echo 'خطا در ذخیره اطلاعات تراکنش در پایگاه داده.';
-    }
-    
-
-    $CallBackUrl = $CurUrl . 'back.php';	
-
-    $result = Gateway::make()
-        ->config($Username, $Password, $merchantConfigID, $CallBackUrl)
-        ->amount($amount)
-        ->invoiceId(time())
-        ->token();
-
-
-
-    if ($result['code'] == 200) {	
-        Gateway::redirect($result['content'], $_POST['mobile']);
-        exit();
-    } else {
-        if ($result['errortype']) {
-            echo 
-            '<div class="error">
-                <span style="color: #d00">خطای ماژول CURL.<br>
-                کدخطا: <b>' . $result['code'] . '</b></span>
-                <p align="right">شرح خطا:</p>
-                <div style="text-align: left; direction: ltr;">
-                    <span style="font:bold 11pt verdana ">' . $result['content'] . '</span>
-                </div>		
-            </div>';		
-            exit();
-        }
-        echo 
-        '<div class="error">
-            <span style="color: #d00">خطا هنگام ایجاد تراکنش.<br>
-            کدخطا: <b>' . $result['code'] . '</b></span>
-            <div style="text-align:right;">
-                شرح خطا:<br><span style="direction:ltr; font:bold 11pt verdana ">' . $result['content'] . '</span></div>
-                <div style="text-align:justify; direction:rtl; line-height:1.4;  margin-top:30px">برای دریافت شرح کاملتر خطا با مراجعه به نشانی 
-                <a href="https://rest.asanpardakht.net" target="_blank">https://rest.asanpardakht.net</a> ، شرح خطای <b>' . $result['code'] . '</b> 
-                را در متد <b>Token</b> مشاهده کنید.
-            </div>		
-        </div>';
-    }
-
-
-}
-
-
-
-?>

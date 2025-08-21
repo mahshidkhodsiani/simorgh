@@ -95,6 +95,11 @@ $id = $_SESSION["all_data"]['id'];
 
                         </div>
 
+                        <div class="col-6">
+                            <label for="keywords">کلمات کلیدی:</label>
+                            <input type="text" id="keywords" name="keywords" class="form-control mb-2" placeholder="کلمات کلیدی را با کاما جدا کنید" required>
+                        </div>
+
                     </div>
                     <br>
 
@@ -307,6 +312,8 @@ if (isset($_POST['submit_post'])) {
     $type = $_POST['category'];
     $amount = $_POST['coursePrice'];
     $courseName = $_POST['courseName'];
+    $keywords = $_POST['keywords']; // اضافه کردن این خط
+
     if ($_POST['courseHeader'] == 1) {
         $courseHeader = 1;
     } else {
@@ -345,9 +352,12 @@ if (isset($_POST['submit_post'])) {
     if (move_uploaded_file($image['tmp_name'], $finalPath)) {
         $relativePath = str_replace('../', '', $finalPath); // مسیر نسبی برای ذخیره در دیتابیس
 
-        // Use prepared statements to prevent SQL injection
-        $stmt = $conn->prepare("INSERT INTO courses (title, slug, text, amount, category, course, show_header, images, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())");
-        $stmt->bind_param("ssssssss", $title, $title, $content, $amount, $type, $courseName, $courseHeader, $relativePath);
+     
+        
+        $stmt = $conn->prepare("INSERT INTO courses (title, slug, text, amount, category, course, show_header, images, keywords, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())");
+        $stmt->bind_param("sssssssss", $title, $title, $content, $amount, $type, $courseName, $courseHeader, $relativePath, $keywords);
+
+
 
         if ($stmt->execute()) {
             // Success Toast

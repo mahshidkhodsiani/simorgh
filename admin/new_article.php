@@ -26,13 +26,6 @@ $id = $_SESSION["all_data"]['id'];
     // include 'functions.php';
     // include 'PersianCalendar.php';
     ?>
-    <!-- <link rel="stylesheet" href="styles.css"> -->
-
-
-
- 
-
-
     <link href="https://cdn.jsdelivr.net/npm/jodit/build/jodit.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/jodit/build/jodit.min.js"></script>
 
@@ -41,9 +34,9 @@ $id = $_SESSION["all_data"]['id'];
 
 <body>
 
-   
 
-<?php include 'header.php'; ?>
+
+    <?php include 'header.php'; ?>
     <div class="container-fluid">
 
 
@@ -52,30 +45,34 @@ $id = $_SESSION["all_data"]['id'];
                 <?php
                 include 'sidebar.php';
                 ?>
-              
+
             </div>
 
             <div class="col-md-8 mt-5">
 
-              
-                <form action="" method="post" enctype='multipart/form-data'>
-                
-                <div class="row">
-                    <div class="col-6">
-                        <label for="title">عنوان مقاله:</label>
-                        <input type="text" id="title" name="title" class="form-control mb-2" placeholder="عنوان را اینجا وارد کنید" required>
-                    </div>
-                    <div class="col-6">
-                        <label for="image">تصویر شاخص:</label>
-                        <input type="file" name="image" class="form-control" id="inputGroupFile02" required>
-                    </div>
-                </div>
-                <textarea id="editor" name="content"></textarea>
-                <script>
-                    const editor = new Jodit('#editor');
-                </script>
 
-                <button type="submit" name="submit_post" class="btn btn-primary">ثبت مقاله</button>
+                <form action="" method="post" enctype='multipart/form-data'>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="title">عنوان مقاله:</label>
+                            <input type="text" id="title" name="title" class="form-control mb-2" placeholder="عنوان را اینجا وارد کنید" required>
+                        </div>
+                        <div class="col-6">
+                            <label for="image">تصویر شاخص:</label>
+                            <input type="file" name="image" class="form-control" id="inputGroupFile02" required>
+                        </div>
+                        <div class="col-6">
+                            <label for="keywords">کلمات کلیدی:</label>
+                            <input type="text" id="keywords" name="keywords" class="form-control mb-2" placeholder="کلمات کلیدی را با کاما جدا کنید" required>
+                        </div>
+                    </div>
+                    <textarea id="editor" name="content"></textarea>
+                    <script>
+                        const editor = new Jodit('#editor');
+                    </script>
+
+                    <button type="submit" name="submit_post" class="btn btn-primary">ثبت مقاله</button>
                 </form>
 
 
@@ -104,6 +101,7 @@ $id = $_SESSION["all_data"]['id'];
                                             <th scope="col" class="text-center">ردیف</th>
                                             <th scope="col" class="text-center">اسم مقاله</th>
                                             <th scope="col" class="text-center">بدنه</th>
+                                            <th scope="col" class="text-center">کلمات کلیدی</th>
                                             <th scope="col" class="text-center">بازدید</th>
                                             <th scope="col" class="text-center">عملیات</th>
                                         </tr>
@@ -118,25 +116,26 @@ $id = $_SESSION["all_data"]['id'];
                                                 $body_text = substr($body_text, 0, $max_length) . '...';
                                             }
                                         ?>
-                                        <tr>
-                                            <th scope="row" class="text-center"><?= $a ?></th>
-                                            <td class="text-center"><?= $row['title'] ?></td>
-                                            <td class="text-center"><?= $body_text ?></td>
-                                            <td class="text-center"><?= $row['views'] ?></td>
-                                            <td class="text-center">
-                                                <form action="" method="GET">
-                                                    <input type="hidden" value="<?= $row['id'] ?>" name="id_art">
-                                                    <a href="edit_article.php?id_art=<?= $row['id'] ?>" class="btn btn-outline-warning btn-sm"> ویرایش</a>
-                                                    <button type="submit" name="delete_article" 
-                                                        class="btn btn-outline-danger btn-sm" onclick="return confirmDelete()">حذف</button>
-                                                </form>
-                                            </td>
-                                            <script>
-                                                function confirmDelete() {
-                                                    return confirm("آیا مطمئن هستید که می‌خواهید این مورد را رد کنید؟");
-                                                }
-                                            </script>
-                                        </tr>
+                                            <tr>
+                                                <th scope="row" class="text-center"><?= $a ?></th>
+                                                <td class="text-center"><?= $row['title'] ?></td>
+                                                <td class="text-center"><?= $body_text ?></td>
+                                                <td class="text-center"><?= $row['keywords'] ?></td>
+                                                <td class="text-center"><?= $row['views'] ?></td>
+                                                <td class="text-center">
+                                                    <form action="" method="GET">
+                                                        <input type="hidden" value="<?= $row['id'] ?>" name="id_art">
+                                                        <a href="edit_article.php?id_art=<?= $row['id'] ?>" class="btn btn-outline-warning btn-sm"> ویرایش</a>
+                                                        <button type="submit" name="delete_article"
+                                                            class="btn btn-outline-danger btn-sm" onclick="return confirmDelete()">حذف</button>
+                                                    </form>
+                                                </td>
+                                                <script>
+                                                    function confirmDelete() {
+                                                        return confirm("آیا مطمئن هستید که می‌خواهید این مورد را رد کنید؟");
+                                                    }
+                                                </script>
+                                            </tr>
                                         <?php
                                             $a++;
                                         }
@@ -162,7 +161,6 @@ $id = $_SESSION["all_data"]['id'];
 
                                 <nav aria-label="Page navigation">
                                     <ul class="pagination justify-content-center">
-                                        <!-- Previous Button -->
                                         <li class="page-item <?= $current_page == 1 ? 'disabled' : '' ?>">
                                             <a class="page-link" href="?page=<?= max(1, $current_page - 1) ?>">قبلی</a>
                                         </li>
@@ -178,7 +176,6 @@ $id = $_SESSION["all_data"]['id'];
                                         }
                                         ?>
 
-                                        <!-- Next Button -->
                                         <li class="page-item <?= $current_page == $total_pages ? 'disabled' : '' ?>">
                                             <a class="page-link" href="?page=<?= min($total_pages, $current_page + 1) ?>">بعدی</a>
                                         </li>
@@ -195,7 +192,7 @@ $id = $_SESSION["all_data"]['id'];
                 </div>
 
 
-                
+
             </div>
         </div>
     </div>
@@ -203,7 +200,7 @@ $id = $_SESSION["all_data"]['id'];
 
     <script>
         $('form').submit(function() {
-        $('#editor').val(editor.getEditorValue()); // انتقال محتوا به textarea
+            $('#editor').val(editor.getEditorValue()); // انتقال محتوا به textarea
         });
     </script>
 
@@ -222,12 +219,12 @@ $id = $_SESSION["all_data"]['id'];
 if (isset($_POST['submit_post'])) {
     $title = $_POST['title'];
     $content = $_POST['content'];
-    $type = $_POST['type'];
+    // $type = $_POST['type']; // این خط در کد اصلی وجود نداشت، احتمالا باید از فایل matlab.php کپی می‌شد
+    $keywords = $_POST['keywords']; // اضافه کردن فیلد کلمات کلیدی
 
     // Escape strings to prevent SQL injection
     $title = $conn->real_escape_string($title);
-    // $content = $conn->real_escape_string($content);
-    $type = $conn->real_escape_string($type);
+    $keywords = $conn->real_escape_string($keywords);
 
     $imagePath = '';
 
@@ -252,12 +249,13 @@ if (isset($_POST['submit_post'])) {
     }
 
     // Use prepared statements to prevent SQL injection
-    $stmt = $conn->prepare("INSERT INTO articles (title, slug, body, type, images, created_at) VALUES (?, ?, ?, ?, ?, NOW())");
-    $stmt->bind_param("sssss", $title, $title, $content, $type, $imagePath);
+    $stmt = $conn->prepare("INSERT INTO articles (title, slug, body, images, keywords, created_at) VALUES (?, ?, ?, ?, ?, NOW())");
+    $stmt->bind_param("sssss", $title, $title, $content, $imagePath, $keywords);
+
 
     if ($stmt->execute()) {
-          // Success Toast
-          echo "<div id='successToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 20px; right: 20px; width: 300px;'>
+        // Success Toast
+        echo "<div id='successToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 20px; right: 20px; width: 300px;'>
           <div class='toast-header bg-success text-white'>
               <strong class='mr-auto'>Success</strong>
               <button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>
@@ -312,7 +310,7 @@ if (isset($_POST['submit_post'])) {
     $stmt->close();
 }
 
-if(isset($_GET['delete_article'])){
+if (isset($_GET['delete_article'])) {
 
     $id_art = $_GET['id_art'];
 
@@ -367,5 +365,4 @@ if(isset($_GET['delete_article'])){
 
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
-    
 }
