@@ -161,7 +161,7 @@ error_reporting(E_ALL);
                             <div class="col-6 col-md-6 mb-4 card-spacing">
                                 <div class="card h-100 shadow-sm border-0 animated-card" style="background-color:#d85353;">
                                     <div class="card-body d-flex flex-column justify-content-between align-items-start p-4">
-                                        <h4 class="card-title rtl-title fw-bold text-dark">پرداخت نقدی دوره ها با تخفیف</h4>
+                                        <h4 class="card-title rtl-title fw-bold text-dark">پرداخت نقدی دوره ها </h4>
                                         <a href="pardakht_discount" class="btn btn-outline-quarternary fw-bold align-self-end">رفتن به صفحه &rarr;</a>
                                     </div>
                                 </div>

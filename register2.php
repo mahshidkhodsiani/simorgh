@@ -95,7 +95,16 @@ session_start();
                                 while ($row1 = $result1->fetch_assoc()) {
 
                             ?>
-                                    <option value="<?= $row1['course'] ?>">دوره <?= $row1['course'] . " به قیمت : " . number_format($row1['amount']) . "ریال" ?></option>
+
+
+                                    <?php
+                                    $final_amount = $row1['amount'] + 15000000; // افزایش 50%
+                                    ?>
+                                    <option value="<?= $row1['course'] ?>">
+                                        دوره <?= $row1['course'] . " به قیمت : " . number_format($final_amount) . " ریال (اقساطی)" ?>
+                                    </option>
+
+
                             <?php
                                 }
                             }
@@ -110,8 +119,8 @@ session_start();
                     <br>
 
                     <div class="form-group" style="text-align: right;">
-                        <label for="amount">مبلغ قابل پرداخت (توجه: حداقل باید بین2/5 تا 4 میلیون پرداخت کنید تا ثبت نام شما انجام شود)</label>
-                        <input type="number" class="form-control" name="amount" id="amount" required min="25000000" placeholder="به ریال وارد کنید">
+                        <label for="amount">مبلغ قابل پرداخت (توجه: حداقل باید 5 میلیون پرداخت کنید تا ثبت نام شما انجام شود)</label>
+                        <input type="number" class="form-control" name="amount" id="amount" required min="50000000" placeholder="به ریال وارد کنید">
                     </div>
 
 
@@ -167,8 +176,8 @@ if (!empty($_POST)) {
 
     $amount = $_POST['amount'];
 
-    if ($amount < 25000000 || $amount > 40000000) {
-        echo "<h4>مبلغ وارد شده کمتر از 2/5 میلیون است لطفا دقت کنید!! </h4>";
+    if ($amount < 50000000) {
+        echo "<h4>مبلغ وارد شده کمتر از 5 میلیون است لطفا دقت کنید!! </h4>";
     } else {
 
         $mobile = $_POST['mobile'];
@@ -197,6 +206,8 @@ if (!empty($_POST)) {
                 // ❌ دیگه amount رو اینجا تغییر نده
                 // ✅ فقط introduce رو بردار
                 $introduce = $row2['introduce'];
+
+                $amount = $row2['amount'] + 15000000; // محاسبه نهایی مبلغ اقساطی
             }
         }
 

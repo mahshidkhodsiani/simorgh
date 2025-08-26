@@ -99,13 +99,15 @@ session_start();
                                 while ($row1 = $result1->fetch_assoc()) {
 
                             ?>
-                                <option value="<?= $row1['course'] ?>">دوره <?= $row1['course'] . " به قیمت : " . number_format($row1['amount'] - 15000000) . " ریال (قیمت اصلی : " . number_format($row1['amount']) . " ریال)" ?></option>
+
+                                <option value="<?= $row1['course'] ?>">
+                                    دوره <?= $row1['course'] . " به قیمت : " . number_format($row1['amount']) . " ریال" ?>
+                                </option>
 
                             <?php
                                 }
                             }
                             ?>
-
 
 
                         </select>
@@ -260,7 +262,7 @@ if (isset($_POST['submit_register'])) {
 
             $course = $row2['course'];
             $amount = isset($discount) && $discount ? $row2['amount'] - $takhfif_amount : $row2['amount'];
-            $amount_main = $amount - 15000000;
+            $amount_main = $amount;
             $introduce = $row2['introduce'];
         }
     }
