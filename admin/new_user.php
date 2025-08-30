@@ -214,7 +214,8 @@ if(isset($_POST['enter'])){
     $name = $_POST['name'];
     $family = $_POST['family'];
     $username = $_POST['username'];
-    $password = $_POST['password'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    //  password_hash($mobile, PASSWORD_DEFAULT);
     if(isset($_POST['isAdmin'])){
         $isAdmin = 1 ;
     }else{

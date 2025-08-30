@@ -15,12 +15,6 @@ session_start();
     require 'ipgcfg.php';
     ?>
 
-    <style>
-        body {
-            font-weight: bold;
-        }
-    </style>
-
     <link rel="icon" href="images/logo1.ico" type="image/x-icon">
 
 </head>
@@ -130,20 +124,6 @@ session_start();
                         <input class="form-check-input" type="radio" name="reference" value="others" id="others">
                     </div>
 
-                    <h6 style="text-align: right;">آپلود مدارک :</h6>
-                    <div class="form-group" style="text-align: right;">
-                        <label for="photo">آپلود عکس ۳ در ۴</label>
-                        <input type="file" class="form-control" name="photo" id="photo" required>
-                    </div>
-                    <div class="form-group" style="text-align: right;">
-                        <label for="birth_cert">آپلود صفحه اول شناسنامه</label>
-                        <input type="file" class="form-control" name="birth_cert" id="birth_cert" required>
-                    </div>
-                    <div class="form-group" style="text-align: right;">
-                        <label for="id_card">آپلود کارت ملی</label>
-                        <input type="file" class="form-control" name="id_card" id="id_card" required>
-                    </div>
-
                     <p class="mt-4" style="text-align: center; color: red;">
                         توجه: لطفاً فرم ثبت نام را با دقت پر کنید، اطلاعات این فرم در گواهینامه پایان دوره ثبت خواهد شد.
                     </p>
@@ -213,66 +193,24 @@ session_start();
 </html>
 
 
-
 <?php
-
-
-// var_dump(empty($_POST));
 if (isset($_POST['submit_register'])) {
     $CurUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
     $CurUrl = substr($CurUrl, 0, strrpos($CurUrl, '/') + 1);
-
-
-    $invoiceId = time();
 
 
     $mobile = $_POST['mobile'];
     $name = $_POST['name'];
     $lastname = $_POST['lastname'];
     $meli_code = $_POST['meli_code'];
-    // $age = $_POST['age']; // فیلد سن حذف شد
-    // $email = $_POST['email']; // فیلد ایمیل حذف شد
     $address = $_POST['address'];
 
-    // اطلاعات جدید
     $father_name = $_POST['father_name'];
     $birth_date = $_POST['birth_date'];
     $issue_location = $_POST['issue_location'];
 
 
     $description = isset($_POST['explain']) ? $_POST['explain'] : NULL;
-
-    // بررسی و آپلود فایل‌ها
-    $photo_path = '';
-    $birth_cert_path = '';
-    $id_card_path = '';
-
-    // مسیر جدید برای ذخیره فایل‌ها: contacts/meli_code
-    $upload_dir = 'contacts/' . $meli_code . '/';
-
-    // اگر دایرکتوری وجود نداره، ایجادش کن
-    if (!is_dir($upload_dir)) {
-        mkdir($upload_dir, 0777, true);
-    }
-
-    // آپلود عکس ۳x۴
-    if (isset($_FILES['photo']) && $_FILES['photo']['error'] == 0) {
-        $photo_path = $upload_dir . basename($_FILES['photo']['name']);
-        move_uploaded_file($_FILES['photo']['tmp_name'], $photo_path);
-    }
-
-    // آپلود صفحه اول شناسنامه
-    if (isset($_FILES['birth_cert']) && $_FILES['birth_cert']['error'] == 0) {
-        $birth_cert_path = $upload_dir . basename($_FILES['birth_cert']['name']);
-        move_uploaded_file($_FILES['birth_cert']['tmp_name'], $birth_cert_path);
-    }
-
-    // آپلود کارت ملی
-    if (isset($_FILES['id_card']) && $_FILES['id_card']['error'] == 0) {
-        $id_card_path = $upload_dir . basename($_FILES['id_card']['name']);
-        move_uploaded_file($_FILES['id_card']['tmp_name'], $id_card_path);
-    }
-
 
     $takhfifs = "SELECT * FROM codes";
     $result_takhfif = $conn->query($takhfifs);
@@ -289,57 +227,66 @@ if (isset($_POST['submit_register'])) {
         $discount = NULL;
     }
 
-
-
     if (empty($_POST['name_course'])) {
         die("لطفاً یک دوره را انتخاب کنید.");
     }
     $name_course = $_POST['name_course'];
 
-
     $amounts = "SELECT * FROM courses WHERE category= 'course' AND (course LIKE '%$name_course%' OR title LIKE '%$name_course%')";
     $result_courses = $conn->query($amounts);
 
-    // ذخیره داده‌های دوره‌ها در آرایه
     $courses = [];
     if ($result_courses->num_rows > 0) {
         while ($row2 = $result_courses->fetch_assoc()) {
-
             $course = $row2['course'];
             $amount = isset($discount) && $discount ? $row2['amount'] - $takhfif_amount : $row2['amount'];
             $introduce = $row2['introduce'];
         }
     }
 
-
     if ($amount <= 0) {
-        // Handle error
         die('Invalid amount.');
     }
 
-    // Handle reference selection
     if (isset($_POST['reference'])) {
         $reference = $_POST['reference'];
     } else {
         $reference = NULL;
     }
 
+    // منطق بررسی و ایجاد کاربر جدید
+    $user_id_from_db = NULL;
+    $sql_check_user = "SELECT id FROM users WHERE username = '$mobile'";
+    $result_check_user = $conn->query($sql_check_user);
 
-    $sql = "INSERT INTO contacts (user_id, name, lastname, meli_code, father_name, birth_date, issue_location, course, introduce, amount, mobile, address, know, description, created_at, photo_path, birth_cert_path, id_card_path)
-             VALUES ('$invoiceId', '$name', '$lastname', '$meli_code', '$father_name', '$birth_date', '$issue_location', '$course', '$introduce', '$amount', '$mobile', '$address', '$reference', '$description', NOW(), '$photo_path', '$birth_cert_path', '$id_card_path')";
+    if ($result_check_user->num_rows > 0) {
+        $row_user = $result_check_user->fetch_assoc();
+        $user_id_from_db = $row_user['id'];
+    } else {
+        $password = password_hash($mobile, PASSWORD_DEFAULT);
+        $sql_insert_user = "INSERT INTO users (username, password) VALUES ('$mobile', '$password')";
+        
+        if ($conn->query($sql_insert_user)) {
+            $user_id_from_db = $conn->insert_id;
+        } else {
+            die("خطا در ایجاد کاربر جدید: " . $conn->error);
+        }
+    }
 
-    // echo $sql;
+
+    $sql = "INSERT INTO contacts (user_id, name, lastname, meli_code, father_name, birth_date, 
+    issue_location, course, introduce, amount, mobile, address, know, description, created_at)
+    VALUES ('$user_id_from_db', '$name', '$lastname', '$meli_code', '$father_name', '$birth_date', 
+    '$issue_location', '$course', '$introduce', '$amount', '$mobile', '$address', 
+    '$reference', '$description', NOW())";
 
     $result = $conn->query($sql);
 
     if ($result) {
-        $new_id = $conn->insert_id;
-
-        // echo "<script>location.href='payment_receipt';</script>";
+        // ... بقیه کد شما برای پرداخت
     } else {
         echo 'خطا در ذخیره اطلاعات تراکنش در پایگاه داده.';
     }
-
 
     $CallBackUrl = $CurUrl . 'back.php';
 
@@ -348,8 +295,6 @@ if (isset($_POST['submit_register'])) {
         ->amount($amount)
         ->invoiceId(time())
         ->token();
-
-
 
     if ($result['code'] == 200) {
         Gateway::redirect($result['content'], $_POST['mobile']);
@@ -380,5 +325,4 @@ if (isset($_POST['submit_register'])) {
         </div>';
     }
 }
-
 ?>

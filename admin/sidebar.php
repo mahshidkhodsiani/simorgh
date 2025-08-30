@@ -188,8 +188,13 @@
     <a href="registered" class="<?php if (basename($_SERVER['REQUEST_URI']) === 'registered') echo 'active'; ?>">
         <i class="fas fa-clipboard-list"></i> اطلاعات ثبت نامی
     </a>
+
     <a href="sounds" class="<?php if (basename($_SERVER['REQUEST_URI']) === 'sounds') echo 'active'; ?>">
         <i class="fas fa-music"></i> صداهای ارسالی
+    </a>
+
+    <a href="registered_search" class="<?php if (basename($_SERVER['REQUEST_URI']) === 'registered_search') echo 'active'; ?>">
+        <i class="fas fa-search"></i> جستجوی اطلاعات ثبت نامی
     </a>
 </div>
 

@@ -21,6 +21,13 @@ session_start();
         body {
             font-weight: bold;
         }
+
+        a,
+        p,
+        label,
+        h6 {
+            font-weight: bold;
+        }
     </style>
 </head>
 
@@ -143,19 +150,9 @@ session_start();
                         <input class="form-check-input" type="radio" name="reference" value="others" id="others">
                     </div>
 
-                    <h6 style="text-align: right;">آپلود مدارک :</h6>
-                    <div class="form-group" style="text-align: right;">
-                        <label for="photo">آپلود عکس ۳ در ۴</label>
-                        <input type="file" class="form-control" name="photo" id="photo" required>
-                    </div>
-                    <div class="form-group" style="text-align: right;">
-                        <label for="birth_cert">آپلود صفحه اول شناسنامه</label>
-                        <input type="file" class="form-control" name="birth_cert" id="birth_cert" required>
-                    </div>
-                    <div class="form-group" style="text-align: right;">
-                        <label for="id_card">آپلود کارت ملی</label>
-                        <input type="file" class="form-control" name="id_card" id="id_card" required>
-                    </div>
+                    <p class="mt-4" style="text-align: center; color: red;">
+                        توجه: لطفاً فرم ثبت نام را با دقت پر کنید، اطلاعات این فرم در گواهینامه پایان دوره ثبت خواهد شد.
+                    </p>
 
                     <input type="submit" value="انتقال به درگاه آپ" name="submit_register" class="btn mb-2 mb-md-0 btn-outline-info btn-block">
                 </form>
@@ -246,31 +243,7 @@ if (isset($_POST['submit_register'])) {
 
     $description = isset($_POST['explain']) ? $_POST['explain'] : NULL;
 
-    $photo_path = '';
-    $birth_cert_path = '';
-    $id_card_path = '';
-
-    $upload_dir = 'contacts/' . $meli_code . '/';
-
-    if (!is_dir($upload_dir)) {
-        mkdir($upload_dir, 0777, true);
-    }
-
-    if (isset($_FILES['photo']) && $_FILES['photo']['error'] == 0) {
-        $photo_path = $upload_dir . basename($_FILES['photo']['name']);
-        move_uploaded_file($_FILES['photo']['tmp_name'], $photo_path);
-    }
-
-    if (isset($_FILES['birth_cert']) && $_FILES['birth_cert']['error'] == 0) {
-        $birth_cert_path = $upload_dir . basename($_FILES['birth_cert']['name']);
-        move_uploaded_file($_FILES['birth_cert']['tmp_name'], $birth_cert_path);
-    }
-
-    if (isset($_FILES['id_card']) && $_FILES['id_card']['error'] == 0) {
-        $id_card_path = $upload_dir . basename($_FILES['id_card']['name']);
-        move_uploaded_file($_FILES['id_card']['tmp_name'], $id_card_path);
-    }
-
+    // کدهای آپلود فایل‌ها حذف شدند
 
     $takhfifs = "SELECT * FROM codes";
     $result_takhfif = $conn->query($takhfifs);
@@ -316,8 +289,12 @@ if (isset($_POST['submit_register'])) {
     }
 
 
-    $sql = "INSERT INTO contacts (user_id, name, lastname, meli_code, father_name, birth_date, issue_location, course, introduce, amount, mobile, address, know, description, created_at, photo_path, birth_cert_path, id_card_path)
-                     VALUES ('$invoiceId', '$name', '$lastname', '$meli_code', '$father_name', '$birth_date', '$issue_location', '$course', '$introduce', '$amount', '$mobile', '$address', '$reference', '$description', NOW(), '$photo_path', '$birth_cert_path', '$id_card_path')";
+    $sql = "INSERT INTO contacts (user_id, name, lastname, meli_code, father_name, birth_date, 
+    issue_location, course, introduce, amount, mobile, address, know, description, created_at, username, password)
+                     VALUES ('$invoiceId', '$name', '$lastname', '$meli_code', '$father_name', 
+                     '$birth_date', '$issue_location', '$course', '$introduce', '$amount', '$mobile', '$address', 
+                     '$reference', '$description', NOW(), '$mobile', '$mobile')";
+
 
     $result = $conn->query($sql);
 
@@ -368,3 +345,4 @@ if (isset($_POST['submit_register'])) {
                 </div>';
     }
 }
+?>
