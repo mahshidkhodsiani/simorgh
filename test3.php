@@ -220,49 +220,7 @@
             </button>
         </div>
 
-        <div class="security-features">
-            <h4><i class="bi bi-shield-check"></i> ویژگی‌های امنیتی فعال شده:</h4>
-
-            <div class="feature">
-                <div class="feature-icon">
-                    <i class="bi bi-mouse"></i>
-                </div>
-                <div>
-                    <h5 class="mb-1">غیرفعال کردن کلیک راست</h5>
-                    <p class="mb-0">امکان ذخیره ویدیو از طریق منوی context غیرفعال شده است.</p>
-                </div>
-            </div>
-
-            <div class="feature">
-                <div class="feature-icon">
-                    <i class="bi bi-download"></i>
-                </div>
-                <div>
-                    <h5 class="mb-1">حذف دکمه دانلود</h5>
-                    <p class="mb-0">دکمه دانلود از پخش‌کننده ویدیو حذف شده است.</p>
-                </div>
-            </div>
-
-            <div class="feature">
-                <div class="feature-icon">
-                    <i class="bi bi-keyboard"></i>
-                </div>
-                <div>
-                    <h5 class="mb-1">مسدود کردن کلیدهای ترکیبی</h5>
-                    <p class="mb-0">کلیدهای Ctrl+S, Ctrl+U و F12 مسدود شده‌اند.</p>
-                </div>
-            </div>
-
-            <div class="feature">
-                <div class="feature-icon">
-                    <i class="bi bi-droplet"></i>
-                </div>
-                <div>
-                    <h5 class="mb-1">واترمارک پویا</h5>
-                    <p class="mb-0">اطلاعات کاربر و تاریخ به صورت واترمارک روی ویدیو نمایش داده می‌شود.</p>
-                </div>
-            </div>
-        </div>
+     
     </div>
 
     <div class="message" id="message"></div>
