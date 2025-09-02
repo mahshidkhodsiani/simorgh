@@ -28,29 +28,26 @@ session_start();
     include 'jalaliDate.php';
     $sdate = new SDate();
 
-    // نمایش پیام خطا در صورت وجود
-    if (isset($_SESSION['error_message'])) {
-        echo '<div class="alert alert-danger text-center">' . $_SESSION['error_message'] . '</div>';
-        unset($_SESSION['error_message']);
-    }
     ?>
+
 
     <div class="container mt-4">
         <div class="row justify-content-center">
             <div class="col-md-7 col-sm-12 border">
 
-                <form class="p-2" action="" method="POST" enctype="multipart/form-data">
+
+
+
+                <form class="p-2" action="" method="POST">
                     <h2 style="text-align: center;">فرم ثبت نام</h2>
                     <h6 style="text-align: right;">اطلاعات شما :</h6>
                     <div class="form-group" style="text-align: right;">
                         <label for="name">نام</label>
-                        <input type="text" class="form-control" name="name" id="name" required
-                            value="<?php echo isset($_POST['name']) ? htmlspecialchars($_POST['name']) : ''; ?>">
+                        <input type="text" class="form-control" name="name" id="name" required>
                     </div>
                     <div class="form-group" style="text-align: right;">
                         <label for="lastname">نام خانوادگی</label>
-                        <input type="text" class="form-control" name="lastname" id="lastname" required
-                            value="<?php echo isset($_POST['lastname']) ? htmlspecialchars($_POST['lastname']) : ''; ?>">
+                        <input type="text" class="form-control" name="lastname" id="lastname" required>
                     </div>
                     <div class="form-group" style="text-align: right;">
                         <label for="meli_code">کد ملی</label>
@@ -61,23 +58,7 @@ session_start();
                             id="meli_code"
                             pattern="\d{10}"
                             title="کد ملی باید 10 رقم باشد"
-                            required
-                            value="<?php echo isset($_POST['meli_code']) ? htmlspecialchars($_POST['meli_code']) : ''; ?>">
-                    </div>
-                    <div class="form-group" style="text-align: right;">
-                        <label for="father_name">نام پدر</label>
-                        <input type="text" class="form-control" name="father_name" id="father_name" required
-                            value="<?php echo isset($_POST['father_name']) ? htmlspecialchars($_POST['father_name']) : ''; ?>">
-                    </div>
-                    <div class="form-group" style="text-align: right;">
-                        <label for="birth_date">تاریخ تولد دقیق (YYYY/MM/DD)</label>
-                        <input type="text" class="form-control" name="birth_date" id="birth_date" placeholder="مثال: ۱۳۷۰/۰۱/۰۱" required
-                            value="<?php echo isset($_POST['birth_date']) ? htmlspecialchars($_POST['birth_date']) : ''; ?>">
-                    </div>
-                    <div class="form-group" style="text-align: right;">
-                        <label for="issue_location">صادره از</label>
-                        <input type="text" class="form-control" name="issue_location" id="issue_location" required
-                            value="<?php echo isset($_POST['issue_location']) ? htmlspecialchars($_POST['issue_location']) : ''; ?>">
+                            required>
                     </div>
                     <div class="form-group" style="text-align: right;">
                         <label for="mobile">شماره همراه</label>
@@ -88,15 +69,23 @@ session_start();
                             id="mobile"
                             pattern="\d{11}"
                             title="شماره همراه باید 11 رقم باشد"
-                            required
-                            value="<?php echo isset($_POST['mobile']) ? htmlspecialchars($_POST['mobile']) : ''; ?>">
-                    </div>
-                    <div class="form-group" style="text-align: right;">
-                        <label for="address">آدرس</label>
-                        <input type="text" class="form-control" name="address" id="address" required
-                            value="<?php echo isset($_POST['address']) ? htmlspecialchars($_POST['address']) : ''; ?>">
+                            required>
                     </div>
 
+                    <div class="form-group" style="text-align: right;">
+                        <label for="email">ایمیل</label>
+                        <input type="email" class="form-control" name="email" id="email">
+                    </div>
+                    <div class="form-group" style="text-align: right;">
+                        <label for="age">سن</label>
+                        <input type="number" class="form-control" name="age" id="age" required>
+                    </div>
+
+
+                    <div class="form-group" style="text-align: right;">
+                        <label for="address">آدرس</label>
+                        <input type="text" class="form-control" name="address" id="address" required>
+                    </div>
                     <h6 style="text-align: right;">اطلاعات ثبت نامی :</h6>
                     <div class="form-group" style="text-align: right;">
                         <label for="course">دوره </label>
@@ -108,52 +97,47 @@ session_start();
                             $result1 = $conn->query($sql1);
                             if ($result1->num_rows > 0) {
                                 while ($row1 = $result1->fetch_assoc()) {
-                                    $selected = '';
-                                    if (isset($_POST['name_course']) && $_POST['name_course'] == $row1['course']) {
-                                        $selected = 'selected';
-                                    }
+
                             ?>
-                                    <option value="<?= $row1['course'] ?>" <?= $selected ?>>
-                                        دوره <?= $row1['course'] . " به قیمت : " . number_format($row1['amount']) . " ریال" ?>
-                                    </option>
+                                    <option value="<?= $row1['course'] ?>">دوره <?= $row1['course'] . " به قیمت : " . number_format($row1['amount']) . "ریال" ?></option>
                             <?php
                                 }
                             }
                             ?>
+
+
+
                         </select>
+
                     </div>
                     <div class="form-group" style="text-align: right;">
                         <label for="explain">توضیحات</label>
-                        <textarea class="form-control" name="explain" id="explain"><?php echo isset($_POST['explain']) ? htmlspecialchars($_POST['explain']) : ''; ?></textarea>
+                        <textarea class="form-control" name="explain" id="explain"></textarea>
                     </div>
                     <div class="form-group" style="text-align: right;">
                         <label for="discount_code">کد تخفیف : (در صورت وجود )</label>
-                        <input type="text" class="form-control" name="discount_code" id="discount_code" style="width: 100px;"
-                            value="<?php echo isset($_POST['discount_code']) ? htmlspecialchars($_POST['discount_code']) : ''; ?>">
+                        <input type="text" class="form-control" name="discount_code" id="discount_code" style="width: 100px;">
                     </div>
                     <div class="form-group" style="text-align: right;">
                         <p>نحوه آشنایی با موسسه :</p>
-                        <?php
-                        $reference_options = ['internet', 'relation', 'others'];
-                        foreach ($reference_options as $option) {
-                            $checked = '';
-                            if (isset($_POST['reference']) && $_POST['reference'] == $option) {
-                                $checked = 'checked';
-                            }
-                            echo '<label for="' . $option . '">' . ($option == 'internet' ? 'اینترنت' : ($option == 'relation' ? 'آشنایان' : 'غیره')) . '</label>
-                                  <input class="form-check-input" type="radio" name="reference" value="' . $option . '" id="' . $option . '" ' . $checked . '>
-                                  <br>';
-                        }
-                        ?>
+                        <label for="internet">اینترنت</label>
+                        <input class="form-check-input" type="radio" name="reference" value="internet" id="internet">
+                        <br>
+                        <label for="relation">آشنایان</label>
+                        <input class="form-check-input" type="radio" name="reference" value="relation" id="relation">
+                        <br>
+                        <label for="others">غیره</label>
+                        <input class="form-check-input" type="radio" name="reference" value="others" id="others">
                     </div>
 
-                    <p class="mt-4" style="text-align: center; color: red;">
-                        توجه: لطفاً فرم ثبت نام را با دقت پر کنید، اطلاعات این فرم در گواهینامه پایان دوره ثبت خواهد شد.
-                    </p>
 
                     <input type="submit" value="انتقال به درگاه آپ"
                         name="submit_register" class="btn mb-2 mb-md-0 btn-outline-info btn-block">
                 </form>
+
+
+
+
 
             </div>
         </div>
@@ -196,7 +180,7 @@ session_start();
 
     <script>
         // Custom required message for the select element
-        document.getElementById('name_course').addEventListener('invalid', function(event) {
+        document.getElementById('course').addEventListener('invalid', function(event) {
             if (this.validity.valueMissing) {
                 this.setCustomValidity('لطفا یک دوره را انتخاب کنید');
             } else {
@@ -205,7 +189,7 @@ session_start();
         });
 
         // Clear the message when the user makes a valid selection
-        document.getElementById('name_course').addEventListener('change', function() {
+        document.getElementById('course').addEventListener('change', function() {
             this.setCustomValidity('');
         });
     </script>
@@ -215,28 +199,32 @@ session_start();
 
 </html>
 
+
+
 <?php
+
+
+// var_dump(empty($_POST));
 if (isset($_POST['submit_register'])) {
     $CurUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
     $CurUrl = substr($CurUrl, 0, strrpos($CurUrl, '/') + 1);
 
-    // دریافت داده‌های فرم
+
+    $invoiceId = time();
+
+
     $mobile = $_POST['mobile'];
     $name = $_POST['name'];
     $lastname = $_POST['lastname'];
     $meli_code = $_POST['meli_code'];
+    $age = $_POST['age'];
+    $email = $_POST['email'];
     $address = $_POST['address'];
-    $father_name = $_POST['father_name'];
-    $birth_date = $_POST['birth_date'];
-    $issue_location = $_POST['issue_location'];
-    $description = isset($_POST['explain']) ? $_POST['explain'] : NULL;
-    $name_course = $_POST['name_course'];
-    $reference = isset($_POST['reference']) ? $_POST['reference'] : NULL;
-    $discount_code = isset($_POST['discount_code']) ? $_POST['discount_code'] : '';
 
-    // بررسی کد تخفیف
-    $discount = false;
-    $takhfif_amount = 0;
+
+
+    $description = isset($_POST['explain']) ? $_POST['explain'] : NULL;
+
 
     $takhfifs = "SELECT * FROM codes";
     $result_takhfif = $conn->query($takhfifs);
@@ -244,72 +232,72 @@ if (isset($_POST['submit_register'])) {
         $takhfif = $result_takhfif->fetch_assoc();
         $code = $takhfif['code'];
         $takhfif_amount = $takhfif['takhfif_amount'];
-        if (!empty($discount_code) && $discount_code == $code) {
-            $discount = true;
+        if (isset($_POST['discount_code']) && $_POST['discount_code'] == "$code") {
+            $discount = TRUE;
+        } else {
+            $discount = NULL;
         }
+    } else {
+        $discount = NULL;
     }
 
-    // دریافت اطلاعات دوره
+
+
+    if (empty($_POST['name_course'])) {
+        die("لطفاً یک دوره را انتخاب کنید.");
+    }
+    $name_course = $_POST['name_course'];
+
+
     $amounts = "SELECT * FROM courses WHERE category= 'course' AND (course LIKE '%$name_course%' OR title LIKE '%$name_course%')";
     $result_courses = $conn->query($amounts);
 
-    if ($result_courses->num_rows == 0) {
-        $_SESSION['error_message'] = 'دوره انتخاب شده معتبر نیست.';
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit();
-    }
+    // ذخیره داده‌های دوره‌ها در آرایه
+    $courses = [];
+    if ($result_courses->num_rows > 0) {
+        while ($row2 = $result_courses->fetch_assoc()) {
 
-    $row2 = $result_courses->fetch_assoc();
-    $course = $row2['course'];
-    $amount = $discount ? ($row2['amount'] - $takhfif_amount) : $row2['amount'];
-    $introduce = $row2['introduce'];
-
-    if ($amount <= 0) {
-        $_SESSION['error_message'] = 'مبلغ پرداخت نامعتبر است.';
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit();
-    }
-
-    // منطق بررسی و ایجاد کاربر جدید
-    $user_id_from_db = NULL;
-    $sql_check_user = "SELECT id FROM users WHERE username = '$mobile'";
-    $result_check_user = $conn->query($sql_check_user);
-
-    if ($result_check_user->num_rows > 0) {
-        $row_user = $result_check_user->fetch_assoc();
-        $user_id_from_db = $row_user['id'];
-    } else {
-        $password = password_hash($mobile, PASSWORD_DEFAULT);
-        $sql_insert_user = "INSERT INTO users (username, password) VALUES ('$mobile', '$password')";
-
-        if ($conn->query($sql_insert_user)) {
-            $user_id_from_db = $conn->insert_id;
-        } else {
-            $_SESSION['error_message'] = "خطا در ایجاد کاربر جدید: " . $conn->error;
-            header("Location: " . $_SERVER['PHP_SELF']);
-            exit();
+            $course = $row2['course'];
+            $amount = isset($discount) && $discount ? $row2['amount'] - $takhfif_amount : $row2['amount'];
+            $introduce = $row2['introduce'];
         }
     }
 
-    // ذخیره اطلاعات در session برای استفاده در back.php
-    $_SESSION['register_data'] = [
-        'user_id' => $user_id_from_db,
-        'name' => $name,
-        'lastname' => $lastname,
-        'meli_code' => $meli_code,
-        'father_name' => $father_name,
-        'birth_date' => $birth_date,
-        'issue_location' => $issue_location,
-        'course' => $course,
-        'introduce' => $introduce,
-        'amount' => $amount,
-        'mobile' => $mobile,
-        'address' => $address,
-        'reference' => $reference,
-        'description' => $description
-    ];
 
-    // انتقال به درگاه پرداخت
+
+
+
+
+
+    if ($amount <= 0) {
+        // Handle error
+        die('Invalid amount.');
+    }
+
+    // Handle reference selection
+    if (isset($_POST['reference'])) {
+        $reference = $_POST['reference'];
+    } else {
+        $reference = NULL;
+    }
+
+
+    $sql = "INSERT INTO contacts (user_id, name, lastname, age, course,  email, introduce, meli_code, amount, mobile, know, address, created_at) 
+                VALUES ('$invoiceId', '$name', '$lastname', '$age', '$course', '$email', '$introduce', '$meli_code', '$amount', '$mobile', '$reference', '$address', NOW())";
+
+    // echo $sql;
+
+    $result = $conn->query($sql);
+
+    if ($result) {
+        $new_id = $conn->insert_id;
+
+        // echo "<script>location.href='payment_receipt';</script>";
+    } else {
+        echo 'خطا در ذخیره اطلاعات تراکنش در پایگاه داده.';
+    }
+
+
     $CallBackUrl = $CurUrl . 'back.php';
 
     $result = Gateway::make()
@@ -318,23 +306,38 @@ if (isset($_POST['submit_register'])) {
         ->invoiceId(time())
         ->token();
 
-    if ($result['code'] == 200) {
-        // ذخیره اطلاعات تراکنش در session
-        $_SESSION['payment_token'] = $result['content'];
-        $_SESSION['payment_amount'] = $amount;
-        $_SESSION['payment_invoice_id'] = time();
 
-        // ریدایرکت به درگاه پرداخت
-        Gateway::redirect($result['content'], $mobile);
+
+    if ($result['code'] == 200) {
+        Gateway::redirect($result['content'], $_POST['mobile']);
         exit();
     } else {
         if ($result['errortype']) {
-            $_SESSION['error_message'] = "خطای ماژول CURL. کدخطا: " . $result['code'] . " - " . $result['content'];
-        } else {
-            $_SESSION['error_message'] = "خطا هنگام ایجاد تراکنش. کدخطا: " . $result['code'] . " - " . $result['content'];
+            echo
+            '<div class="error">
+                <span style="color: #d00">خطای ماژول CURL.<br>
+                کدخطا: <b>' . $result['code'] . '</b></span>
+                <p align="right">شرح خطا:</p>
+                <div style="text-align: left; direction: ltr;">
+                    <span style="font:bold 11pt verdana ">' . $result['content'] . '</span>
+                </div>		
+            </div>';
+            exit();
         }
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit();
+        echo
+        '<div class="error">
+            <span style="color: #d00">خطا هنگام ایجاد تراکنش.<br>
+            کدخطا: <b>' . $result['code'] . '</b></span>
+            <div style="text-align:right;">
+                شرح خطا:<br><span style="direction:ltr; font:bold 11pt verdana ">' . $result['content'] . '</span></div>
+                <div style="text-align:justify; direction:rtl; line-height:1.4;  margin-top:30px">برای دریافت شرح کاملتر خطا با مراجعه به نشانی 
+                <a href="https://rest.asanpardakht.net" target="_blank">https://rest.asanpardakht.net</a> ، شرح خطای <b>' . $result['code'] . '</b> 
+                را در متد <b>Token</b> مشاهده کنید.
+            </div>		
+        </div>';
     }
 }
+
+
+
 ?>
