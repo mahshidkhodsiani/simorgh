@@ -224,13 +224,38 @@ if (!empty($_POST)) {
 
         $result = $conn->query($sql);
 
-        if ($result) {
-            $new_id = $conn->insert_id;
+  
+            if ($result) {
+        $new_id = $conn->insert_id;
 
-            // echo "<script>location.href='payment_receipt';</script>";
-        } else {
-            echo 'خطا در ذخیره اطلاعات تراکنش در پایگاه داده.';
-        }
+
+           $user = "SELECT * FROM users WHERE username = '$mobile'";
+            $reseult_user = $conn->query($user);
+
+            if ($reseult_user === false) {
+                die("خطا در اجرای کوئری users: " . $conn->error);
+            }
+
+            if ($reseult_user->num_rows == 0) {
+                // هش کردن پسورد (می‌تونی همون شماره موبایل رو به عنوان پسورد اولیه بذاری)
+                $hashedPassword = password_hash($mobile, PASSWORD_DEFAULT);
+
+                $insert_user = "INSERT INTO users (name, family, username, password, level, admin, created_at)
+                VALUES ('$name', '$lastname', '$mobile', '$hashedPassword', 'user', 0, NOW())";
+
+                $create_user = $conn->query($insert_user);
+
+                if ($create_user === false) {
+                    die("خطا در ثبت کاربر: " . $conn->error);
+                }
+            }
+
+
+
+        // echo "<script>location.href='payment_receipt';</script>";
+    } else {
+        echo 'خطا در ذخیره اطلاعات تراکنش در پایگاه داده.';
+    }
 
 
         $CallBackUrl = $CurUrl . 'back.php';

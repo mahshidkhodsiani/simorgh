@@ -17,6 +17,14 @@ session_start();
 
     <link rel="icon" href="images/logo1.ico" type="image/x-icon">
 
+    <style> 
+        body {
+            a , p , label, h6, h5 {
+                font-weight: bold !important;
+            }
+        }
+    </style>
+
 </head>
 
 <body>
@@ -291,6 +299,30 @@ if (isset($_POST['submit_register'])) {
 
     if ($result) {
         $new_id = $conn->insert_id;
+
+
+           $user = "SELECT * FROM users WHERE username = '$mobile'";
+            $reseult_user = $conn->query($user);
+
+            if ($reseult_user === false) {
+                die("خطا در اجرای کوئری users: " . $conn->error);
+            }
+
+            if ($reseult_user->num_rows == 0) {
+                // هش کردن پسورد (می‌تونی همون شماره موبایل رو به عنوان پسورد اولیه بذاری)
+                $hashedPassword = password_hash($mobile, PASSWORD_DEFAULT);
+
+                $insert_user = "INSERT INTO users (name, family, username, password, level, admin, created_at)
+                VALUES ('$name', '$lastname', '$mobile', '$hashedPassword', 'user', 0, NOW())";
+
+                $create_user = $conn->query($insert_user);
+
+                if ($create_user === false) {
+                    die("خطا در ثبت کاربر: " . $conn->error);
+                }
+            }
+
+
 
         // echo "<script>location.href='payment_receipt';</script>";
     } else {

@@ -1,6 +1,6 @@
 <?php
-
 session_start();
+
 ?>
 <!doctype html>
 <html lang="fa" dir="rtl">
@@ -56,6 +56,44 @@ session_start();
                 </div>
             </div>
         </div>
+
+
+        
+        <?php
+        $username = "09124366786";
+        $password = "96139290@sN";
+        $from     = "300016343000";
+        $to       = $row['mobile'];
+      
+        $message = "ثبت نام در سیمرغ با موفقیت انجام شد\nمبلغ واریزی شما : {$row['amount']}\nیوزرنیم و پسورد شما جهت لاگین : {$row['mobile']}";
+
+
+        // ساخت URL
+        $url = "https://niksms.com/fa/publicapi/groupsms";
+
+        // آماده‌سازی داده‌ها
+        $data = [
+            "username"     => $username,
+            "password"     => $password,
+            "numbers"      => $to,
+            "sendernumber" => $from,
+            "message"      => $message,
+        ];
+
+        // ارسال با cURL
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        echo $response;
+        ?>
+
+
 
         <script>
             // Redirect to user_voice.php after 3 seconds
