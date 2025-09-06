@@ -4,12 +4,13 @@ session_start();
 ?>
 <!doctype html>
 <html lang="fa" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>درباره هفت هنر سیمرغ</title>
 
-   
+
 
     <link rel="stylesheet" href="fonts/icomoon/style.css">
     <link rel="stylesheet" href="css/owl.carousel.min.css">
@@ -19,6 +20,7 @@ session_start();
 
     <link rel="icon" href="images/logo1.ico" type="image/x-icon">
 </head>
+
 <body>
 
     <?php
@@ -28,7 +30,7 @@ session_start();
     include 'jalaliDate.php';
     $sdate = new SDate();
 
-    if(isset($_SESSION['invoice'])){
+    if (isset($_SESSION['invoice'])) {
 
         $user_id = $_SESSION['invoice'];
 
@@ -39,18 +41,21 @@ session_start();
             $row = $result->fetch_assoc();
         }
 
- 
+
     ?>
         <div class="container mt-4">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-10">
                     <div class="card border border-danger p-4 text-center">
                         <div style="text-align: center; margin : 20px ">
-                            <img src="images/tik.jpg" height="70px" width="70px" >
+                            <img src="images/tik.jpg" height="70px" width="70px">
                         </div>
-                        <h3 style="text-align: center; " class=""><span style="background-color: rgb(107, 165, 74);">رسید پرداختی</span></h3><p> پرداخت شما با موفقیت انجام شد.</p><p><br></p>
-                            <p>مبلغ : <?= $row['amount'];?></p>
-                        <p><br></p><p>بزودی کارشناسان ما در وقت اداری با شما تماس خواهند گرفت.</p>
+                        <h3 style="text-align: center; " class=""><span style="background-color: rgb(107, 165, 74);">رسید پرداختی</span></h3>
+                        <p> پرداخت شما با موفقیت انجام شد.</p>
+                        <p><br></p>
+                        <p>مبلغ : <?= $row['amount']; ?></p>
+                        <p><br></p>
+                        <p>بزودی کارشناسان ما در وقت اداری با شما تماس خواهند گرفت.</p>
                         <button class="btn btn-success mt-3">در حال انتقال به صفحه اصلی</button>
                     </div>
                 </div>
@@ -58,14 +63,17 @@ session_start();
         </div>
 
 
-        
+
         <?php
         $username = "09124366786";
         $password = "96139290@sN";
         $from     = "300016343000";
         $to       = $row['mobile'];
-      
-        $message = "ثبت نام در سیمرغ با موفقیت انجام شد\nمبلغ واریزی شما : {$row['amount']}\nیوزرنیم و پسورد شما جهت لاگین : {$row['mobile']}";
+
+        // $message = "ثبت نام در سیمرغ با موفقیت انجام شد\nمبلغ واریزی شما : {$row['amount']}\nیوزرنیم و پسورد شما جهت لاگین : {$row['mobile']}";
+
+
+        $message = "با سپاس از انتخاب شما\nثبت‌نام شما در آموزشگاه سیمرغ با موفقیت انجام شد.\nمبلغ پرداختی: {$row['amount']} ریال\nنام کاربری و رمز عبور جهت ورود به پنل کاربری: {$row['meli_code']}\nشماره تماس پشتیبانی: 02191300517\nبا آرزوی موفقیت روزافزون برای شما.";
 
 
         // ساخت URL
@@ -90,7 +98,7 @@ session_start();
         $response = curl_exec($ch);
         curl_close($ch);
 
-        echo $response;
+        // echo $response;
         ?>
 
 
@@ -102,14 +110,15 @@ session_start();
             }, 10000);
         </script>
 
-        <?php
-    }else{
-        echo "<h1 style='text-align : center'>". "هنوز ثبت نام نکردید" ."</h1>"; ;
+    <?php
+    } else {
+        echo "<h1 style='text-align : center'>" . "هنوز ثبت نام نکردید" . "</h1>";;
     }
     ?>
- 
+
 
     <?php include 'footer.php'; ?>
 
 </body>
+
 </html>

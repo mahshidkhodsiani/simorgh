@@ -310,10 +310,10 @@ if (isset($_POST['submit_register'])) {
 
             if ($reseult_user->num_rows == 0) {
                 // هش کردن پسورد (می‌تونی همون شماره موبایل رو به عنوان پسورد اولیه بذاری)
-                $hashedPassword = password_hash($mobile, PASSWORD_DEFAULT);
+                $hashedPassword = password_hash($meli_code, PASSWORD_DEFAULT);
 
-                $insert_user = "INSERT INTO users (name, family, username, password, level, admin, created_at)
-                VALUES ('$name', '$lastname', '$mobile', '$hashedPassword', 'user', 0, NOW())";
+                $insert_user = "INSERT INTO users (name, family, username, password, meli_code, mobile, level, admin, created_at)
+                VALUES ('$name', '$lastname', '$meli_code', '$hashedPassword', '$meli_code', '$mobile', 'user', 0, NOW())";
 
                 $create_user = $conn->query($insert_user);
 

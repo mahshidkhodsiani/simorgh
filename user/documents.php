@@ -1,73 +1,102 @@
 <?php
+session_start();
 
+// اگر کاربر وارد نشده است، به صفحه لاگین هدایت شود
+if (!isset($_SESSION['all_data'])) {
+    header("location: ../login.php");
+    exit;
+}
+
+$user_id = $_SESSION['all_data']['id'];
+$username = $_SESSION['all_data']['username'];
+$message = null;
+$message_type = null;
+
+// اطمینان حاصل کنید که مسیر فایل config.php صحیح است
 include '../config.php';
 
-// بررسی ارسال فرم
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // دریافت اطلاعات از فرم
-    $meli_code = $_POST['meli_code'];
-    $name = $_POST['name'];
-    $lastname = $_POST['lastname'];
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    // ایجاد پوشه برای کاربر بر اساس کد ملی
-    $target_dir = "../contacts/" . $meli_code . "/";
-    if (!is_dir($target_dir)) {
-        mkdir($target_dir, 0777, true);
-    }
+    // 1. بازیابی شماره ملی کاربر از پایگاه داده
+    $sql_get_meli_code = "SELECT meli_code FROM users WHERE id = ?";
+    $stmt_get_meli = $conn->prepare($sql_get_meli_code);
 
-    // تابع آپلود عکس
-    function upload_file($file_input_name, $target_dir, $file_prefix)
-    {
-        if (!isset($_FILES[$file_input_name]) || $_FILES[$file_input_name]['error'] !== UPLOAD_ERR_OK) {
-            return false;
-        }
-
-        $file_name = basename($_FILES[$file_input_name]["name"]);
-        $target_file = $target_dir . $file_name;
-        $file_type = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
-        // تغییر نام فایل برای جلوگیری از تکرار و استانداردسازی
-        $new_file_name = $file_prefix . "." . $file_type;
-        $final_target_file = $target_dir . $new_file_name;
-
-        // انتقال فایل به پوشه مقصد
-        if (move_uploaded_file($_FILES[$file_input_name]["tmp_name"], $final_target_file)) {
-            return "contacts/" . $meli_code . "/" . $new_file_name;
-        } else {
-            return false;
-        }
-    }
-
-    // آپلود عکس‌ها
-    $photo_path = upload_file('photo', $target_dir, 'photo');
-    $birth_cert_path = upload_file('birth_cert', $target_dir, 'birth_cert');
-    $id_card_path = upload_file('id_card', $target_dir, 'id_card');
-
-    // به‌روزرسانی پایگاه داده
-    $sql = "UPDATE contacts SET 
-                name=?, lastname=?, photo_path=?, birth_cert_path=?, id_card_path=?
-            WHERE meli_code=?";
-
-    $stmt = $conn->prepare($sql);
-    if ($stmt) {
-        $stmt->bind_param(
-            "ssssss",
-            $name,
-            $lastname,
-            $photo_path,
-            $birth_cert_path,
-            $id_card_path,
-            $meli_code
-        );
-
-        if ($stmt->execute()) {
-            echo "<div class='alert alert-success' role='alert'>اطلاعات با موفقیت به‌روزرسانی شد.</div>";
-        } else {
-            echo "<div class='alert alert-danger' role='alert'>خطا در به‌روزرسانی اطلاعات: " . $stmt->error . "</div>";
-        }
-        $stmt->close();
+    if (!$stmt_get_meli) {
+        $message = "خطا در آماده‌سازی کوئری: " . $conn->error;
+        $message_type = "danger";
     } else {
-        echo "<div class='alert alert-danger' role='alert'>خطا در آماده‌سازی کوئری: " . $conn->error . "</div>";
+        $stmt_get_meli->bind_param("i", $user_id);
+        $stmt_get_meli->execute();
+        $result = $stmt_get_meli->get_result();
+        $user_data = $result->fetch_assoc();
+        $meli_code = $user_data['meli_code'] ?? null;
+        $stmt_get_meli->close();
+
+        if (!$meli_code) {
+            $message = "خطا: شماره ملی کاربر یافت نشد. لطفاً ابتدا در پروفایل خود شماره ملی را ثبت کنید.";
+            $message_type = "danger";
+        } else {
+            // 2. تعیین مسیر پوشه بر اساس شماره ملی
+            $base_upload_dir = __DIR__ . "/madarek";
+            $user_upload_dir = $base_upload_dir . "/" . $meli_code;
+
+            // ایجاد پوشه اگر وجود ندارد
+            if (!is_dir($user_upload_dir)) {
+                if (!mkdir($user_upload_dir, 0755, true)) {
+                    $message = "خطا: نمی‌توان پوشه کاربر را ایجاد کرد.";
+                    $message_type = "danger";
+                }
+            }
+
+            if ($message_type !== "danger") { // فقط در صورت عدم وجود خطا ادامه دهد
+                // تابع آپلود عکس با اعتبارسنجی
+                function upload_file($file_input_name, $target_dir, $file_prefix, $meli_code)
+                {
+                    if (!isset($_FILES[$file_input_name]) || $_FILES[$file_input_name]['error'] !== UPLOAD_ERR_OK) {
+                        return false;
+                    }
+                    $uploaded_tmp = $_FILES[$file_input_name]['tmp_name'];
+                    $mime = mime_content_type($uploaded_tmp);
+                    $allowed_mimes = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/gif' => 'gif'];
+                    if (!isset($allowed_mimes[$mime])) {
+                        return "unsupported_type";
+                    }
+                    $extension = $allowed_mimes[$mime];
+                    $new_file_name = $file_prefix . "_" . uniqid() . "." . $extension;
+                    $final_target_file = rtrim($target_dir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $new_file_name;
+
+                    if (move_uploaded_file($uploaded_tmp, $final_target_file)) {
+                        $relative_path = "madarek/" . $meli_code . "/" . $new_file_name;
+                        return $relative_path;
+                    }
+                    return "upload_failed";
+                }
+
+                // 3. فراخوانی تابع با ارسال $meli_code
+                $personely_path = upload_file('personely', $user_upload_dir, 'personely', $meli_code);
+                $shenasname_path = upload_file('shenasname', $user_upload_dir, 'shenasname', $meli_code);
+                $meli_card_path = upload_file('meli_card', $user_upload_dir, 'meli_card', $meli_code);
+
+                // به‌روزرسانی پایگاه داده
+                $sql = "UPDATE users SET personely = ?, shenasname = ?, photo_meli = ? WHERE username = ?";
+                $stmt = $conn->prepare($sql);
+
+                if ($stmt) {
+                    $stmt->bind_param("ssss", $personely_path, $shenasname_path, $meli_card_path, $username);
+                    if ($stmt->execute()) {
+                        $message = "اطلاعات با موفقیت به‌روزرسانی شد.";
+                        $message_type = "success";
+                    } else {
+                        $message = "خطا در به‌روزرسانی اطلاعات: " . $stmt->error;
+                        $message_type = "danger";
+                    }
+                    $stmt->close();
+                } else {
+                    $message = "خطا در آماده‌سازی کوئری: " . $conn->error;
+                    $message_type = "danger";
+                }
+            }
+        }
     }
 }
 $conn->close();
@@ -94,7 +123,6 @@ $conn->close();
             background-color: #f8f9fc;
         }
 
-        /* استایل سایدبار کاملا سفید */
         .sidebar {
             position: fixed;
             right: 0;
@@ -102,9 +130,7 @@ $conn->close();
             height: 100%;
             width: var(--sidebar-width);
             background-color: #ffffff;
-            /* پس زمینه سفید */
             color: #333;
-            /* رنگ متن تیره برای خوانایی بهتر */
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
             transition: all 0.3s;
             z-index: 1000;
@@ -121,7 +147,6 @@ $conn->close();
             letter-spacing: 0.05rem;
             z-index: 1;
             color: #333 !important;
-            /* رنگ تیره برای متن برند */
         }
 
         .sidebar .nav-item {
@@ -131,20 +156,17 @@ $conn->close();
 
         .sidebar .nav-item .nav-link {
             color: #555;
-            /* رنگ متن لینک‌ها */
             font-weight: 500;
             padding: 10px;
             margin: 5px 0;
             border-radius: 10px;
         }
 
-        /* حالت شناور (Hover) با رنگ قرمز کمرنگ */
         .sidebar .nav-item .nav-link:hover {
             color: #333;
             background: rgba(255, 69, 0, 0.05);
         }
 
-        /* حالت فعال (Active) با رنگ قرمز بسیار کمرنگ */
         .sidebar .nav-item.active .nav-link {
             color: #333;
             background: rgba(255, 69, 0, 0.1);
@@ -203,7 +225,6 @@ $conn->close();
             right: auto !important;
         }
 
-        /* استایل‌های جدید برای حالت موبایل */
         @media (max-width: 768px) {
             .sidebar {
                 width: 0;
@@ -234,6 +255,14 @@ $conn->close();
     <div id="content-wrapper">
         <?php include 'header.php'; ?>
 
+        <div class="container-fluid py-2">
+            <?php if ($message): ?>
+                <div id="alertMessage" class="alert alert-<?php echo $message_type; ?> text-center" role="alert">
+                    <?php echo $message; ?>
+                </div>
+            <?php endif; ?>
+        </div>
+
         <div class="container-fluid py-4">
             <h1 class="h3 mb-4 text-gray-800">تکمیل مدارک</h1>
 
@@ -245,33 +274,19 @@ $conn->close();
                         </div>
                         <div class="card-body">
                             <form action="" method="POST" enctype="multipart/form-data">
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <label for="name" class="form-label">نام</label>
-                                        <input type="text" class="form-control" id="name" name="name" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="lastname" class="form-label">نام خانوادگی</label>
-                                        <input type="text" class="form-control" id="lastname" name="lastname" required>
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="meli_code" class="form-label">کد ملی</label>
-                                    <input type="text" class="form-control" id="meli_code" name="meli_code" required>
-                                </div>
                                 <hr class="my-4">
                                 <h5 class="mb-3">آپلود مدارک</h5>
                                 <div class="mb-3">
-                                    <label for="photo" class="form-label">عکس پرسنلی</label>
-                                    <input class="form-control" type="file" id="photo" name="photo" required>
+                                    <label for="personely" class="form-label">عکس پرسنلی</label>
+                                    <input class="form-control" type="file" id="personely" name="personely" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="birth_cert" class="form-label">عکس صفحه اول شناسنامه</label>
-                                    <input class="form-control" type="file" id="birth_cert" name="birth_cert" required>
+                                    <label for="shenasname" class="form-label">عکس صفحه اول شناسنامه</label>
+                                    <input class="form-control" type="file" id="shenasname" name="shenasname" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="id_card" class="form-label">عکس پشت و روی کارت ملی</label>
-                                    <input class="form-control" type="file" id="id_card" name="id_card" required>
+                                    <label for="meli_card" class="form-label">عکس پشت و روی کارت ملی</label>
+                                    <input class="form-control" type="file" id="meli_card" name="meli_card" required>
                                 </div>
                                 <div class="d-grid gap-2">
                                     <button type="submit" class="btn btn-primary btn-block">ثبت اطلاعات</button>
@@ -300,6 +315,18 @@ $conn->close();
                 this.parentElement.classList.add('active');
             });
         });
+
+        // جاوا اسکریپت برای محو شدن پیام
+        setTimeout(function() {
+            const alert = document.getElementById('alertMessage');
+            if (alert) {
+                alert.style.transition = "opacity 1s ease-out";
+                alert.style.opacity = "0";
+                setTimeout(function() {
+                    alert.style.display = "none";
+                }, 1000); // 1 ثانیه برای انتقال
+            }
+        }, 5000); // 5 ثانیه انتظار قبل از شروع محو شدن
     </script>
 </body>
 
