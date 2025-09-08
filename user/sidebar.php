@@ -27,5 +27,11 @@ $current_page = rtrim($current_page_name, '.php');
                 <span>تکمیل مدارک</span>
             </a>
         </li>
+        <li class="nav-item <?php echo ($current_page == 'edit_profile.php') ? 'active' : ''; ?>">
+            <a class="nav-link" href="edit_profile">
+                <i class="bi bi-people"></i>
+                <span>ادیت پروفایل</span>
+            </a>
+        </li>
     </ul>
 </div>
