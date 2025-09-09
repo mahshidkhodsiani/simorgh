@@ -27,7 +27,7 @@ if (isset($_POST['enter'])) {
             header("Location: admin/index");
             exit();
          } else if ($user['admin'] == 0) {
-            header("Location: user/index");
+            header("Location: user/profile");
             exit();
          } else {
             echo 'سطح دسترسی شما نامعتبر است.';

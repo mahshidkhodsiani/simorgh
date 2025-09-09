@@ -8,7 +8,7 @@ $current_page = rtrim($current_page_name, '.php');
 ?>
 <div class="sidebar">
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
-        <div class="sidebar-brand-text mx-3">پنل مدیریت</div>
+        <div class="sidebar-brand-text mx-3">پنل کاربری</div>
     </a>
 
     <hr class="sidebar-divider my-0">
@@ -25,6 +25,20 @@ $current_page = rtrim($current_page_name, '.php');
             <a class="nav-link" href="documents">
                 <i class="bi bi-people"></i>
                 <span>تکمیل مدارک</span>
+            </a>
+        </li>
+
+        <li class="nav-item <?php echo ($current_page == 'profile') ? 'active' : ''; ?>">
+            <a class="nav-link" href="profile">
+                <i class="bi bi-person"></i>
+                <span>پروفایل</span>
+            </a>
+        </li>
+
+        <li class="nav-item <?php echo ($current_page == 'my_courses') ? 'active' : ''; ?>">
+            <a class="nav-link" href="my_courses">
+                <i class="bi bi-book"></i>
+                <span>دوره های من </span>
             </a>
         </li>
     </ul>
