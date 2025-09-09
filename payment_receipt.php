@@ -37,6 +37,7 @@ session_start();
         $sql = "SELECT * FROM contacts WHERE user_id = $user_id";
         $result = $conn->query($sql);
 
+        $row = null;
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
         }

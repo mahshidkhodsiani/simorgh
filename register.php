@@ -301,7 +301,7 @@ if (isset($_POST['submit_register'])) {
         $new_id = $conn->insert_id;
 
 
-           $user = "SELECT * FROM users WHERE username = '$mobile'";
+           $user = "SELECT * FROM users WHERE username = '$meli_code'";
             $reseult_user = $conn->query($user);
 
             if ($reseult_user === false) {
