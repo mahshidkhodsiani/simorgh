@@ -137,6 +137,7 @@ $id = $_SESSION["all_data"]['id'];
                                             <th scope="col" class="text-center">ردیف</th>
                                             <th scope="col" class="text-center">نام</th>
                                             <th scope="col" class="text-center">نام خانوادگی</th>
+                                            <th scope="col" class="text-center">نقش</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -147,6 +148,7 @@ $id = $_SESSION["all_data"]['id'];
                                                 <th scope="row" class="text-center"><?= $a ?></th>
                                                 <td class="text-center"><?= $row['name'] ?></td>
                                                 <td class="text-center"><?= $row['family'] ?></td>
+                                                <td class="text-center"><?= $row['level'] == 'admin'? 'ادمین' : 'کاربر عادی' ?></td>
                                             </tr>
                                             <?php
                                             $a++;
