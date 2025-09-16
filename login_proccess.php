@@ -1,5 +1,8 @@
 <?php
 session_start();
+
+
+
 if (isset($_POST['enter'])) {
    // 1. جلوگیری از SQL Injection با Prepared Statements
    require 'config.php';
@@ -9,6 +12,7 @@ if (isset($_POST['enter'])) {
    $password = $_POST['password'];
 
    $sql = "SELECT * FROM users WHERE username = ? LIMIT 1";
+ 
    $stmt = $conn->prepare($sql);
    $stmt->bind_param("s", $username);
    $stmt->execute();

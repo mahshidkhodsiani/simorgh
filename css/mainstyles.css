@@ -697,9 +697,10 @@ hr {
   margin: 0 auto;
 }
 
-
-
 .animated-card {
+  border-color: #d85353 !important;
+  border-width: 2px;
+  border-style: solid;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   border-radius: 12px;
 }
@@ -728,23 +729,4 @@ hr {
 .rtl-title {
   text-align: right;
   direction: rtl;
-}
-
-/* استایل‌های جدید برای card-spacing */
-.card-spacing {
-  padding-left: 0.5rem;
-  /* فاصله از چپ برای دو ستون در موبایل */
-  padding-right: 0.5rem;
-  /* فاصله از راست برای دو ستون در موبایل */
-}
-
-@media (min-width: 768px) {
-  /* برای صفحه نمایش های md به بالا */
-  .card-spacing {
-    padding-left: 0.75rem;
-    /* g-4 معادل 1.5rem gap است، پس هر سمت 0.75rem */
-    padding-right: 0.75rem;
-  }
-
-  /* اگر still cards are too close, add more margin here */
 }

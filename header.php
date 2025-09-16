@@ -262,9 +262,6 @@
                 </li> -->
 
 
-
-            <li><a href="articles/speakers_archive" class="nav-link">کانون گویندگان</a></li>
-
             <li class="has-children">
                 <a href="#">نمونه کارها</a>
                 <ul class="dropdown arrow-top">
@@ -276,7 +273,7 @@
             <li><a href="articles" class="nav-link">وبلاگ سیمرغ</a></li>
             <!-- <li><a href="gallery/all" class="nav-link">پرداخت اقساطی دوره ها</a></li> -->
 
-            <li><a href="register" style="font-weight: bold !important;">ثبت نام</a></li>
+            <li><a href="create_account" style="font-weight: bold !important;">ساخت پنل کاربری</a></li>
             <li><a href="login" style="font-weight: bold !important;">ورود به پنل</a></li>
 
 

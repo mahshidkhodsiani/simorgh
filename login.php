@@ -1,45 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+session_start();
+?>
+<!doctype html>
+<html lang="fa" dir="rtl">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>صفحه ورود</title>
+	<title>هفت هنر سیمرغ</title>
 
 	<?php
 	include 'includes.php';
+	require 'API/Gateway.php';
+	require 'ipgcfg.php';
 	?>
+
+	<link rel="icon" href="images/logo1.ico" type="image/x-icon">
+
 	<style>
 		body {
-			background-image: url('images/bg.jpg');
+			font-weight: bold !important;
 		}
 	</style>
 </head>
-<body>
-	<div class="row mt-5">
-		<div class="col-md-4"></div>
-		<div class="col-md-4">
-			<form action="login_proccess.php" method="POST">
-				<h3 class="d-flex justify-content-center">صفحه ورود</h3>
-				<div class="form-group">
-					<label for="">Username</label>
-					<input type="username" name="username" class="form-control"  placeholder="Enter email">
-					<!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
-				</div>
-				<div class="form-group">
-					<label for="exampleInputPassword1">Password</label>
-					<input type="password" name="password" class="form-control"  placeholder="Password">
-				</div>
-				<!-- <div class="form-group form-check">
-					<input type="checkbox" class="form-check-input" id="exampleCheck1">
-					<label class="form-check-label" for="exampleCheck1">Check me out</label>
-				</div> -->
-				<br>
-				<button name="enter" class="btn btn-outline-primary">ورود</button>
-			</form>
-		</div>
-		<div class="col-md-4"></div>
 
+<body>
+
+	<?php
+	include 'header.php';
+	include 'config.php';
+	include 'PersianCalendar.php';
+	include 'jalaliDate.php';
+	$sdate = new SDate();
+	?>
+
+
+
+
+
+
+
+	<div class="container mt-4 mb-4">
+
+		<div class="row justify-content-center">
+			<div class="col-md-5 col-sm-12 border">
+				<h5 class="text-center mt-3 mb-3">ورود به حساب کاربری</h5>
+				<form action="login_proccess.php" method="POST">
+					<div class="mb-3">
+						<label for="username" class="form-label">نام کاربری</label>
+						<input type="text" class="form-control" id="username" name="username" required>
+					</div>
+					<div class="mb-3">
+						<label for="password" class="form-label">رمز عبور</label>
+						<input type="password" class="form-control" id="password" name="password" required>
+					</div>
+					<div class="d-grid gap-2">
+						<button name="enter" class="btn btn-primary">ورود</button>
+						<a href="create_account.php" class="btn btn-outline-primary">ثبت نام</a>
+					</div>
+				</form>
+			</div>
+		</div>
 	</div>
 
+	<?php include 'footer.php'; ?>
+
+
 </body>
+
 </html>

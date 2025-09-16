@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+
 // اگر کاربر وارد نشده است، به صفحه لاگین هدایت شود
 if (!isset($_SESSION['all_data'])) {
     header("location: ../login.php");
@@ -8,12 +9,41 @@ if (!isset($_SESSION['all_data'])) {
 }
 
 $user_id = $_SESSION['all_data']['id'];
+
 $username = $_SESSION['all_data']['username'];
 $message = null;
 $message_type = null;
 
 // اطمینان حاصل کنید که مسیر فایل config.php صحیح است
 include '../config.php';
+
+// تابع آپلود عکس با اعتبارسنجی
+function upload_file($file_input_name, $target_dir, $file_prefix, $meli_code)
+{
+    if (!isset($_FILES[$file_input_name]) || $_FILES[$file_input_name]['error'] !== UPLOAD_ERR_OK) {
+        return false;
+    }
+
+    $uploaded_tmp = $_FILES[$file_input_name]['tmp_name'];
+    $mime = mime_content_type($uploaded_tmp);
+    $allowed_mimes = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/gif' => 'gif', 'application/pdf' => 'pdf'];
+
+    if (!isset($allowed_mimes[$mime])) {
+        return "unsupported_type";
+    }
+
+    $extension = $allowed_mimes[$mime];
+    $new_file_name = $file_prefix . "_" . uniqid() . "." . $extension;
+    $final_target_file = rtrim($target_dir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $new_file_name;
+
+    if (move_uploaded_file($uploaded_tmp, $final_target_file)) {
+        // مسیر نسبی برای ذخیره در دیتابیس
+        $relative_path = "madarek/" . $meli_code . "/" . $new_file_name;
+        return $relative_path;
+    }
+
+    return "upload_failed";
+}
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
@@ -32,12 +62,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $meli_code = $user_data['meli_code'] ?? null;
         $stmt_get_meli->close();
 
-        if (!$meli_code) {
+        if (empty($meli_code)) {
             $message = "خطا: شماره ملی کاربر یافت نشد. لطفاً ابتدا در پروفایل خود شماره ملی را ثبت کنید.";
             $message_type = "danger";
         } else {
             // 2. تعیین مسیر پوشه بر اساس شماره ملی
-            $base_upload_dir = __DIR__ . "/madarek";
+            $base_upload_dir = __DIR__ . "../madarek";
             $user_upload_dir = $base_upload_dir . "/" . $meli_code;
 
             // ایجاد پوشه اگر وجود ندارد
@@ -49,50 +79,48 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
 
             if ($message_type !== "danger") { // فقط در صورت عدم وجود خطا ادامه دهد
-                // تابع آپلود عکس با اعتبارسنجی
-                function upload_file($file_input_name, $target_dir, $file_prefix, $meli_code)
-                {
-                    if (!isset($_FILES[$file_input_name]) || $_FILES[$file_input_name]['error'] !== UPLOAD_ERR_OK) {
-                        return false;
-                    }
-                    $uploaded_tmp = $_FILES[$file_input_name]['tmp_name'];
-                    $mime = mime_content_type($uploaded_tmp);
-                    $allowed_mimes = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/gif' => 'gif'];
-                    if (!isset($allowed_mimes[$mime])) {
-                        return "unsupported_type";
-                    }
-                    $extension = $allowed_mimes[$mime];
-                    $new_file_name = $file_prefix . "_" . uniqid() . "." . $extension;
-                    $final_target_file = rtrim($target_dir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $new_file_name;
-
-                    if (move_uploaded_file($uploaded_tmp, $final_target_file)) {
-                        $relative_path = "madarek/" . $meli_code . "/" . $new_file_name;
-                        return $relative_path;
-                    }
-                    return "upload_failed";
-                }
-
-                // 3. فراخوانی تابع با ارسال $meli_code
+                // 3. فراخوانی تابع آپلود
                 $personely_path = upload_file('personely', $user_upload_dir, 'personely', $meli_code);
                 $shenasname_path = upload_file('shenasname', $user_upload_dir, 'shenasname', $meli_code);
                 $meli_card_path = upload_file('meli_card', $user_upload_dir, 'meli_card', $meli_code);
 
-                // به‌روزرسانی پایگاه داده
-                $sql = "UPDATE users SET personely = ?, shenasname = ?, photo_meli = ? WHERE username = ?";
-                $stmt = $conn->prepare($sql);
 
-                if ($stmt) {
-                    $stmt->bind_param("ssss", $personely_path, $shenasname_path, $meli_card_path, $username);
-                    if ($stmt->execute()) {
-                        $message = "اطلاعات با موفقیت به‌روزرسانی شد.";
-                        $message_type = "success";
+                // var_dump($personely_path, $shenasname_path, $meli_card_path); // برای دیباگ
+                // die; // برای دیباگ
+
+                // **💡 مرحله کلیدی: بررسی نتایج آپلود قبل از به‌روزرسانی دیتابیس**
+                $errors = [];
+                if ($personely_path === "unsupported_type" || $shenasname_path === "unsupported_type" || $meli_card_path === "unsupported_type") {
+                    $errors[] = "⚠️ فرمت یکی از فایل‌ها پشتیبانی نمی‌شود. فقط jpg, png, gif و pdf مجاز هستند.";
+                }
+                if ($personely_path === "upload_failed" || $shenasname_path === "upload_failed" || $meli_card_path === "upload_failed") {
+                    $errors[] = "❌ آپلود یکی از فایل‌ها با خطا مواجه شد. لطفاً دوباره تلاش کنید.";
+                }
+
+                if (!empty($errors)) {
+                    $message = implode("<br>", $errors);
+                    $message_type = "danger";
+                } elseif ($personely_path && $shenasname_path && $meli_card_path) {
+                    // به‌روزرسانی پایگاه داده فقط در صورت موفقیت تمام آپلودها
+                    $sql = "UPDATE users SET personely = ?, shenasname = ?, photo_meli = ? WHERE id = ?";
+                    $stmt = $conn->prepare($sql);
+
+                    if ($stmt) {
+                        $stmt->bind_param("ssss", $personely_path, $shenasname_path, $meli_card_path, $user_id);
+                        if ($stmt->execute()) {
+                            $message = "✅ اطلاعات با موفقیت به‌روزرسانی شد.";
+                            $message_type = "success";
+                        } else {
+                            $message = "❌ خطا در به‌روزرسانی اطلاعات: " . $stmt->error;
+                            $message_type = "danger";
+                        }
+                        $stmt->close();
                     } else {
-                        $message = "خطا در به‌روزرسانی اطلاعات: " . $stmt->error;
+                        $message = "❌ خطا در آماده‌سازی کوئری: " . $conn->error;
                         $message_type = "danger";
                     }
-                    $stmt->close();
                 } else {
-                    $message = "خطا در آماده‌سازی کوئری: " . $conn->error;
+                    $message = "❌ خطایی رخ داده است. لطفاً تمام فایل‌ها را انتخاب کنید.";
                     $message_type = "danger";
                 }
             }

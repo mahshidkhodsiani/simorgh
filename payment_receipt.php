@@ -50,7 +50,7 @@ session_start();
         $mobile = $row['mobile'];
         $meli_code = $row['meli_code'];
 
-        $user = "SELECT * FROM users WHERE username = '$meli_code'";
+        $user = "SELECT * FROM users WHERE meli_code = '$meli_code'";
         $reseult_user = $conn->query($user);
 
         if ($reseult_user === false) {

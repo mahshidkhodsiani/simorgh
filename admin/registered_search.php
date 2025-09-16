@@ -18,7 +18,7 @@ if (isset($_GET['search_meli_code'])) {
     // Sanitize the input to prevent SQL injection
     $meli_code = $conn->real_escape_string($meli_code);
 
-    $sql = "SELECT * FROM contacts WHERE meli_code = '$meli_code'";
+    $sql = "SELECT * FROM users WHERE meli_code = '$meli_code'";
     $result = $conn->query($sql);
 
     if ($result && $result->num_rows > 0) {
@@ -98,61 +98,23 @@ if (isset($_GET['search_meli_code'])) {
                                 <tbody>
                                     <tr>
                                         <th style="width: 25%;">نام و نام خانوادگی:</th>
-                                        <td><?= htmlspecialchars($search_result['name']) . ' ' . htmlspecialchars($search_result['lastname']) ?></td>
+                                        <td><?= htmlspecialchars($search_result['name']) . ' ' . htmlspecialchars($search_result['family']) ?></td>
                                     </tr>
                                     <tr>
                                         <th>کد ملی:</th>
                                         <td><?= htmlspecialchars($search_result['meli_code']) ?></td>
                                     </tr>
-                                    <tr>
-                                        <th>نام پدر:</th>
-                                        <td><?= htmlspecialchars($search_result['father_name']) ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>تاریخ تولد:</th>
-                                        <td><?= htmlspecialchars($search_result['birth_date']) ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>محل صدور:</th>
-                                        <td><?= htmlspecialchars($search_result['issue_location']) ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>دوره ثبت‌نامی:</th>
-                                        <td><?= htmlspecialchars($search_result['course']) ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>نحوه آشنایی:</th>
-                                        <td><?= htmlspecialchars($search_result['know']) ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>توضیحات:</th>
-                                        <td><?= htmlspecialchars($search_result['description']) ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>مبلغ پرداختی:</th>
-                                        <td><?= htmlspecialchars(number_format($search_result['amount'])) ?> ریال</td>
-                                    </tr>
-                                    <tr>
-                                        <th>وضعیت پرداخت:</th>
-                                        <td><?= htmlspecialchars($search_result['pardakht']) ?></td>
-                                    </tr>
+                             
                                     <tr>
                                         <th>شماره موبایل:</th>
                                         <td><?= htmlspecialchars($search_result['mobile']) ?></td>
                                     </tr>
-                                    <tr>
-                                        <th>ایمیل:</th>
-                                        <td><?= htmlspecialchars($search_result['email']) ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>آدرس:</th>
-                                        <td><?= htmlspecialchars($search_result['address']) ?></td>
-                                    </tr>
+                                
                                     <tr>
                                         <th>عکس پرسنلی:</th>
                                         <td>
-                                            <?php if (!empty($search_result['photo_path'])): ?>
-                                                <a href="../<?= htmlspecialchars($search_result['photo_path']) ?>" target="_blank" class="btn btn-sm btn-info">مشاهده عکس</a>
+                                            <?php if (!empty($search_result['personely'])): ?>
+                                                <a href="../user/<?= htmlspecialchars($search_result['personely']) ?>" target="_blank" class="btn btn-sm btn-info">مشاهده عکس</a>
                                             <?php else: ?>
                                                 <span>ندارد</span>
                                             <?php endif; ?>
@@ -161,8 +123,8 @@ if (isset($_GET['search_meli_code'])) {
                                     <tr>
                                         <th>عکس شناسنامه:</th>
                                         <td>
-                                            <?php if (!empty($search_result['birth_cert_path'])): ?>
-                                                <a href="../<?= htmlspecialchars($search_result['birth_cert_path']) ?>" target="_blank" class="btn btn-sm btn-info">مشاهده عکس</a>
+                                            <?php if (!empty($search_result['shenasname'])): ?>
+                                                <a href="../user/<?= htmlspecialchars($search_result['shenasname']) ?>" target="_blank" class="btn btn-sm btn-info">مشاهده عکس</a>
                                             <?php else: ?>
                                                 <span>ندارد</span>
                                             <?php endif; ?>
@@ -171,8 +133,8 @@ if (isset($_GET['search_meli_code'])) {
                                     <tr>
                                         <th>عکس کارت ملی:</th>
                                         <td>
-                                            <?php if (!empty($search_result['id_card_path'])): ?>
-                                                <a href="../<?= htmlspecialchars($search_result['id_card_path']) ?>" target="_blank" class="btn btn-sm btn-info">مشاهده عکس</a>
+                                            <?php if (!empty($search_result['photo_meli'])): ?>
+                                                <a href="../user/<?= htmlspecialchars($search_result['photo_meli']) ?>" target="_blank" class="btn btn-sm btn-info">مشاهده عکس</a>
                                             <?php else: ?>
                                                 <span>ندارد</span>
                                             <?php endif; ?>
