@@ -11,6 +11,35 @@ if (isset($_POST['submit_create'])) {
     $password = $_POST['password'];
     $username = $_POST['username'];
 
+    // --- اعتبارسنجی سمت سرور (Server-Side Validation) ---
+    // تبدیل اعداد فارسی به انگلیسی در PHP قبل از بررسی
+    $persian_digits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+    $english_digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    $meli_code = str_replace($persian_digits, $english_digits, $meli_code);
+    $mobile = str_replace($persian_digits, $english_digits, $mobile);
+
+    // بررسی اینکه کد ملی فقط شامل ۱۰ رقم انگلیسی باشد.
+    if (!preg_match('/^[0-9]{10}$/', $meli_code)) {
+        $_SESSION['toast'] = ['type' => 'danger', 'message' => '❌ کد ملی باید ۱۰ رقم و فقط شامل اعداد انگلیسی باشد.'];
+        header("Location: create_account.php");
+        exit();
+    }
+
+    // بررسی اینکه شماره موبایل فقط شامل اعداد انگلیسی باشد.
+    if (!preg_match('/^[0-9]+$/', $mobile)) {
+        $_SESSION['toast'] = ['type' => 'danger', 'message' => '❌ شماره موبایل باید فقط شامل اعداد انگلیسی باشد.'];
+        header("Location: create_account.php");
+        exit();
+    }
+
+    // بررسی اینکه یوزرنیم فقط شامل حروف و اعداد انگلیسی باشد.
+    if (!preg_match('/^[a-zA-Z0-9]+$/', $username)) {
+        $_SESSION['toast'] = ['type' => 'danger', 'message' => '❌ یوزرنیم باید فقط شامل حروف و اعداد انگلیسی باشد.'];
+        header("Location: create_account.php");
+        exit();
+    }
+    // --- پایان اعتبارسنجی سمت سرور ---
+
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     // بررسی وجود کاربر
@@ -34,15 +63,15 @@ if (isset($_POST['submit_create'])) {
 
     if ($stmt->execute()) {
         $_SESSION['toast'] = ['type' => 'success', 'message' => '✅ ثبت نام با موفقیت انجام شد.'];
-        // **اینجا دیگه ریدایرکت نمی‌کنیم.**
     } else {
         $_SESSION['toast'] = ['type' => 'danger', 'message' => '❌ خطا در ثبت کاربر!'];
-        // **اینجا هم ریدایرکت نمی‌کنیم.**
     }
     $stmt->close();
 }
+
 $conn->close();
 ?>
+
 <!doctype html>
 <html lang="fa" dir="rtl">
 
@@ -61,6 +90,14 @@ $conn->close();
             max-width: 500px;
             margin: auto;
         }
+
+        .is-invalid {
+            border-color: #dc3545 !important;
+        }
+
+        .text-danger {
+            color: #dc3545 !important;
+        }
     </style>
 </head>
 
@@ -69,7 +106,7 @@ $conn->close();
     <div class="container mt-4">
         <div class="form-container border p-4 rounded shadow-sm">
             <h5 class="text-center mb-4">ایجاد حساب کاربری</h5>
-            <form action="" method="post">
+            <form action="" method="post" id="registrationForm">
                 <div class="mb-3">
                     <label for="name" class="form-label">نام</label>
                     <input type="text" class="form-control" id="name" name="name" required>
@@ -80,25 +117,28 @@ $conn->close();
                 </div>
                 <div class="mb-3">
                     <label for="meli_code" class="form-label">کد ملی</label>
-                    <input type="text" class="form-control" id="meli_code" name="meli_code" required>
+                    <input type="text" class="form-control" id="meli_code" name="meli_code" required oninput="checkNumbers(this)">
+                    <div id="meli_code_error" class="text-danger mt-1 d-none">لطفاً کد ملی را به **اعداد انگلیسی** وارد کنید.</div>
                 </div>
                 <div class="mb-3">
                     <label for="mobile" class="form-label">شماره موبایل</label>
-                    <input type="text" class="form-control" id="mobile" name="mobile" required>
+                    <input type="text" class="form-control" id="mobile" name="mobile" required oninput="checkNumbers(this)">
+                    <div id="mobile_error" class="text-danger mt-1 d-none">لطفاً شماره موبایل را به **اعداد انگلیسی** وارد کنید.</div>
                 </div>
                 <div class="mb-3">
                     <label for="username" class="form-label">یوزرنیم</label>
-                    <input type="text" class="form-control" id="username" name="username" required>
+                    <input type="text" class="form-control" id="username" name="username" required oninput="checkEnglish(this)">
+                    <div id="username_error" class="text-danger mt-1 d-none">لطفاً یوزرنیم را به **انگلیسی** وارد کنید.</div>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">پسورد</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
+                    <input type="password" class="form-control" id="password" name="password" required oninput="checkEnglish(this)">
+                    <div id="password_error" class="text-danger mt-1 d-none">لطفاً پسورد را به **انگلیسی** وارد کنید.</div>
                 </div>
                 <button name="submit_create" class="btn btn-primary w-100">ثبت نام</button>
                 <br>
                 <br>
                 <a href="login.php" class="btn btn-outline-primary w-100">ورود به حساب کاربری</a>
-
             </form>
         </div>
     </div>
@@ -123,6 +163,7 @@ $conn->close();
             ?>
         <?php endif; ?>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var toastEl = document.querySelector('.toast');
@@ -138,6 +179,86 @@ $conn->close();
                         window.location.href = 'login.php';
                     }, 3000); // 3000 میلی‌ثانیه = 3 ثانیه
                 <?php endif; ?>
+            }
+        });
+
+        // تابعی برای تبدیل اعداد فارسی به انگلیسی
+        function toEnglishDigits(str) {
+            var persianNumbers = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+            var englishNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+            for (var i = 0; i < 10; i++) {
+                str = str.replace(new RegExp(persianNumbers[i], 'g'), englishNumbers[i]);
+            }
+            return str;
+        }
+
+        // بررسی اعداد انگلیسی
+        function checkNumbers(inputElement) {
+            var inputValue = inputElement.value;
+            var errorElement = document.getElementById(inputElement.id + '_error');
+            var isPersian = /[۰-۹]/.test(inputValue);
+
+            // تبدیل اعداد فارسی به انگلیسی
+            inputElement.value = toEnglishDigits(inputValue);
+
+            if (isPersian) {
+                errorElement.classList.remove('d-none');
+                inputElement.classList.add('is-invalid');
+            } else {
+                errorElement.classList.add('d-none');
+                inputElement.classList.remove('is-invalid');
+            }
+        }
+
+        // بررسی حروف انگلیسی
+        function checkEnglish(inputElement) {
+            var inputValue = inputElement.value;
+            var errorElement = document.getElementById(inputElement.id + '_error');
+            var isPersian = /[آ-ی]/.test(inputValue);
+
+            if (isPersian) {
+                errorElement.classList.remove('d-none');
+                inputElement.classList.add('is-invalid');
+            } else {
+                errorElement.classList.add('d-none');
+                inputElement.classList.remove('is-invalid');
+            }
+        }
+
+        // بررسی کل فرم قبل از ارسال
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            var hasError = false;
+            var numberInputs = ['meli_code', 'mobile'];
+            var englishInputs = ['username', 'password'];
+
+            numberInputs.forEach(function(id) {
+                var inputElement = document.getElementById(id);
+                var errorElement = document.getElementById(id + '_error');
+                var inputValue = inputElement.value;
+                var isPersian = /[۰-۹آ-ی]/.test(inputValue);
+
+                if (isPersian) {
+                    errorElement.classList.remove('d-none');
+                    inputElement.classList.add('is-invalid');
+                    hasError = true;
+                }
+            });
+
+            englishInputs.forEach(function(id) {
+                var inputElement = document.getElementById(id);
+                var errorElement = document.getElementById(id + '_error');
+                var inputValue = inputElement.value;
+                var isPersian = /[۰-۹آ-ی]/.test(inputValue);
+
+                if (isPersian) {
+                    errorElement.classList.remove('d-none');
+                    inputElement.classList.add('is-invalid');
+                    hasError = true;
+                }
+            });
+
+            if (hasError) {
+                event.preventDefault(); // جلوگیری از ارسال فرم
             }
         });
     </script>

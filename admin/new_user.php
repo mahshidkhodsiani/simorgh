@@ -122,7 +122,7 @@ $id = $_SESSION["all_data"]['id'];
                         $offset = ($current_page - 1) * $items_per_page;
 
                         // SQL query to retrieve a subset of rows based on pagination
-                        $sql = "SELECT * FROM users ";
+                        $sql = "SELECT * FROM users ORDER BY id DESC";
                         $result = $conn->query($sql);
 
                         // Display the table
@@ -137,6 +137,7 @@ $id = $_SESSION["all_data"]['id'];
                                             <th scope="col" class="text-center">ردیف</th>
                                             <th scope="col" class="text-center">نام</th>
                                             <th scope="col" class="text-center">نام خانوادگی</th>
+                                            <th scope="col" class="text-center">کد ملی</th>
                                             <th scope="col" class="text-center">نقش</th>
                                         </tr>
                                     </thead>
@@ -148,6 +149,7 @@ $id = $_SESSION["all_data"]['id'];
                                                 <th scope="row" class="text-center"><?= $a ?></th>
                                                 <td class="text-center"><?= $row['name'] ?></td>
                                                 <td class="text-center"><?= $row['family'] ?></td>
+                                                <td class="text-center"><?= $row['meli_code'] ?></td>
                                                 <td class="text-center"><?= $row['level'] == 'admin'? 'ادمین' : 'کاربر عادی' ?></td>
                                             </tr>
                                             <?php
