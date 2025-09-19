@@ -41,7 +41,7 @@ if (!empty($title_slug)) {
     <meta name="description" content="<?= htmlspecialchars($article_description) ?>">
 
     <?php
-    if (!empty($keywords)) {
+    if (!empty($article_keywords)) {
     ?>
         <meta name="keywords" content="<?= htmlspecialchars($article_keywords) ?>">
     <?php
