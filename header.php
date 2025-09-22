@@ -1,3 +1,4 @@
+
 <style>
     .social-icon img {
         transition: transform 0.3s, filter 0.3s;
@@ -13,8 +14,6 @@
         transform: scale(1.3);
         filter: hue-rotate(180deg);
     }
-
-
 
     /* Ensure the navbar and menu items are laid out in a row */
     .site-navbar {
@@ -156,8 +155,6 @@
         font-size: 18px;
     }
 
-
-
     @media (max-width: 991px) {
         .toggle-button {
             display: inline-block;
@@ -175,11 +172,20 @@
             /* یک پس‌زمینه روشن */
         }
     }
+
+    /* Style for the badge on the cart icon */
+    .cart-badge {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        padding: 5px 8px;
+        border-radius: 50%;
+        background-color: #d9534f;
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+    }
 </style>
-
-
-
-
 
 <div class="site-mobile-menu site-navbar-target">
     <div class="site-mobile-menu-header">
@@ -190,20 +196,12 @@
     <div class="site-mobile-menu-body"></div>
 </div>
 
-
-<h5 style="text-align: center; background-color : #c71f1f ">** به موسسه فرهنگی هنری هفت هنر سیمرغ خوش آمدید **</h5>
-
-
-
-
+<h5 style="text-align: center; background-color: #c71f1f;">** به موسسه فرهنگی هنری هفت هنر سیمرغ خوش آمدید **</h5>
 
 <header class="site-navbar js-sticky-header site-navbar-target" role="banner">
-
-
     <nav class="site-navigation text-right ml-auto" role="navigation" aria-label="breadcrumb">
         <ul class="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
             <li><a href="./" class="nav-link">صفحه اصلی</a></li>
-            <!-- <li><a href="articles/index.php?title=درباره موسسه" class="nav-link">درباره موسسه</a></li> -->
             <li><a href="articles/about" class="nav-link">درباره موسسه</a></li>
 
             <li class="has-children">
@@ -216,12 +214,9 @@
                 </ul>
             </li>
 
-
-
             <li class="has-children">
                 <a href="courses">دوره های آموزشی</a>
                 <ul class="dropdown arrow-top">
-
                     <?php
                     // فرض بر این است که اتصال به دیتابیس در اینجا برقرار شده است (با استفاده از $conn)
                     include 'config.php'; // فایل کانفیگ که اتصال به دیتابیس را شامل می‌شود.
@@ -229,7 +224,6 @@
                     // پرس و جو برای دریافت دوره‌های آموزشی که show_header = 1 دارند.
                     $sql = "SELECT * FROM courses WHERE show_header = 1 ORDER BY id DESC";
                     $result = $conn->query($sql);
-
 
                     // چک کردن اینکه آیا نتایج در دیتابیس وجود دارند
                     if ($result->num_rows > 0) {
@@ -239,28 +233,11 @@
                             echo '<li><a href="courses/course.php?slug=' . urlencode($course['slug']) . '" class="nav-link">' . htmlspecialchars($course['title']) . '</a></li>';
                         }
                     }
-
-
-
                     ?>
-
                     <li><a href="register2" class="nav-link">پرداخت اقساطی دوره ها *</a></li>
                     <li><a href="pardakht" class="nav-link">پرداخت به موسسه</a></li>
                 </ul>
             </li>
-
-            <!-- <li class="has-children">
-                    <a href="#">پکیج های آموزشی</a>
-                    <ul class="dropdown arrow-top">
-                        <li><a href="#pricing-section" class="nav-link">موشن گرافیک</a></li>
-                        <li><a href="#faq-section" class="nav-link">فن بیان</a></li>
-                        <li><a href="#faq-section" class="nav-link">انیمیشن سازی</a></li>
-                        <li><a href="#faq-section" class="nav-link">تدوین فیلم</a></li>
-                        <li><a href="#faq-section" class="nav-link">فوتوشاپ</a></li>
-                        
-                    </ul>
-                </li> -->
-
 
             <li class="has-children">
                 <a href="#">نمونه کارها</a>
@@ -271,23 +248,32 @@
             </li>
 
             <li><a href="articles" class="nav-link">وبلاگ سیمرغ</a></li>
-            <!-- <li><a href="gallery/all" class="nav-link">پرداخت اقساطی دوره ها</a></li> -->
+            <li><a href="login" style="font-weight: bold !important;">ورود/ ساخت پنل</a></li>
 
-            <li><a href="create_account" style="font-weight: bold !important;">ساخت پنل کاربری</a></li>
-            <li><a href="login" style="font-weight: bold !important;">ورود به پنل</a></li>
+            <li>
+                <a href="temp_cart.php" class="nav-link" style="position: relative;">
+                    <i class="fas fa-shopping-cart"></i>
+                    سبد خرید
+                    <?php
+                    
+                    // تعداد آیتم‌ها را از سبد خرید موقت می‌خواند
+                    $cart_count = isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
 
-
-
+                    // اگر تعداد بیشتر از 0 بود، badge را نمایش می‌دهد
+                    if ($cart_count > 0) {
+                        echo '<span class="cart-badge">' . $cart_count . '</span>';
+                    }
+                    ?>
+                </a>
+            </li>
         </ul>
-
-
     </nav>
 
-
-
-
-    <div class="toggle-button d-inline-block d-lg-none"><a href="#" class="site-menu-toggle py-5 js-menu-toggle text-black"><span class="icon-menu h3"></span></a></div>
-
+    <div class="toggle-button d-inline-block d-lg-none">
+        <a href="#" class="site-menu-toggle py-5 js-menu-toggle text-black">
+            <span class="icon-menu h3"></span>
+        </a>
+    </div>
 
     <div class="dropdown">
         <button class="btn btn-outline-quarternary dropdown-toggle fw-bold" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -300,20 +286,12 @@
             <a href="https://t.me/+989354637055" class="ml-3 call-link social-icon" target="_blank"><img src="images/telegram.png" height="30px" width="30px" alt="Call Icon"></a>
             <a href="https://www.instagram.com/haft_simorgh/" class="ml-3 call-link social-icon" target="_blank"><img src="images/instagram.png" height="25px" width="25px" alt="Call Icon"></a>
             <a href="mailto:info@simorghtv.com" class="ml-3 call-link social-icon" target="_blank"><img src="images/email.png" height="30px" width="30px" alt="Call Icon"></a>
-
         </ul>
     </div>
-
-
-
-
-
 
     <div class="">
         <a href="./">
             <img src="images/logo1.png" height="60px">
         </a>
     </div>
-
-
 </header>

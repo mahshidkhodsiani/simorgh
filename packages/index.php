@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="fa" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,10 +9,8 @@
     <?php include "includes.php"; ?>
 
     <link rel="icon" href="../images/logo1.ico" type="image/x-icon">
-
-
-
 </head>
+
 <body>
 
     <?php
@@ -20,169 +19,65 @@
     include '../PersianCalendar.php';
     include '../jalaliDate.php';
     $sdate = new SDate();
-
     ?>
-        <div class="container mt-4">
-            <div class="row justify-content-center">
-                <div class="col-12 col-md-10">
-                    <div class="card border border-danger" style="border-radius: 40px;">
 
 
-                        <div class="card-body" dir="rtl" style="text-align: right;">
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10">
+                <div class="card border border-danger" style="border-radius: 40px;">
+                    <div class="card-body" dir="rtl" style="text-align: right;">
                         <h3>پکیج های آموزشی</h3>
-                        <p>اگر به دنبال پکیج‌های آموزشی جامع و کاربردی برای ارتقاء مهارت‌های خود هستید، موسسه سیمرغ بهترین گزینه برای شماست. پکیج‌های آموزشی ما با هدف ارائه آموزش‌های حرفه‌ای و به روز در حوزه‌های مختلف طراحی شده‌اند تا به شما کمک کنند تا به بهترین نحو ممکن به اهداف خود برسید.<br></p>
-
+                        <p>
+                            اگر به دنبال پکیج‌های آموزشی جامع و کاربردی برای ارتقاء مهارت‌های خود هستید، موسسه سیمرغ بهترین گزینه برای شماست. پکیج‌های آموزشی ما با هدف ارائه آموزش‌های حرفه‌ای و به روز در حوزه‌های مختلف طراحی شده‌اند تا به شما کمک کنند تا به بهترین نحو ممکن به اهداف خود برسید.
+                        </p>
                         <br>
 
-
-                        <!-- <div class="row mt-4">
-                            <div class="col-md-4">
-                                <a href="motion_graphics" class="btn mb-2 mb-md-0 btn-outline-quarternary btn-block">موشن گرافیک</a>
-                            </div>
-                            <div class="col-md-4">
-                                <a class="btn mb-2 mb-md-0 btn-outline-quarternary btn-block">انیمیشن سازی (موهو)</a>
-                            </div>
-                            <div class="col-md-4">
-                                <a class="btn mb-2 mb-md-0 btn-outline-quarternary btn-block">فتوشاپ</a>
-                            </div>
-                        </div>
-
                         <div class="row mt-4">
-                            <div class="col-md-4">
-                                <a class="btn mb-2 mb-md-0 btn-outline-quarternary btn-block">پریمر (تدوین)</a>
-                            </div>
-                            <div class="col-md-4">
-                                <a class="btn mb-2 mb-md-0 btn-outline-quarternary btn-block">ایلیستراتور</a>
-                            </div>
-                            <div class="col-md-4">
-                                <a class="btn mb-2 mb-md-0 btn-outline-quarternary btn-block">ایندیزاین</a>
-                            </div>
-                        </div>
+                            <?php
+                            // کوئری برای دریافت همه پکیج‌ها، شامل ستون description، files و price
+                            $sql = "SELECT `id`, `name`, `description`, `address`, `course`, `files`, `price` FROM `packages` ORDER BY `id` ASC";
+                            $result = $conn->query($sql);
 
-                        <div class="row mt-4">
-                            <div class="col-md-4">
-                                <a class="btn mb-2 mb-md-0 btn-outline-quarternary btn-block">سینما فوری</a>
-                            </div>
-                            <div class="col-md-4">
-                                <a class="btn mb-2 mb-md-0 btn-outline-quarternary btn-block">عکاسی</a>
-                            </div>
-                        </div> -->
+                            if ($result->num_rows > 0) {
+                                // نمایش هر پکیج در قالب یک کارت
+                                while ($package = $result->fetch_assoc()) {
+                            ?>
+                                    <div class="col-md-4 mb-4">
+                                        <div class="card h-100">
+                                            <img class="card-img-top" src="../images/packages.jpg" alt="تصویر پکیج">
+                                            <div class="card-body d-flex flex-column">
+                                                <h5 class="card-title"><?php echo htmlspecialchars($package['name']); ?></h5>
+                                                <p class="card-text text-muted"><?php echo htmlspecialchars($package['description']); ?></p>
+                                                <p class="card-text">
+                                                    <strong>مدرس دوره:</strong> <?php echo htmlspecialchars($package['course']); ?><br>
+                                                    <strong>قیمت:</strong> <?php echo number_format($package['price']); ?> تومان
+                                                </p>
 
-                        
-                     
-
-                        <div class="row mt-4">
-                            <div class="col-md-4">
-                                <div class="card">
-                                    <img class="card-img-top" src="../images/packages.jpg" alt="Card image cap">
-                                    <div class="card-body">
-                                        <h5 class="card-title">موشن گرافیک</h5>
-                                        <p class="card-text">
-                                            محتوای پکیج‌های آموزشی ما توسط کارشناسان و متخصصان برجسته طراحی شده است. با استفاده از منابع و متدهای آموزشی به روز، می‌توانید از یادگیری عمیق و کاربردی بهره‌مند شوید.</p>
-                                        <a href="motion_graphics" class="btn btn-primary">جزئیات پکیج</a>
+                                                <div class="mt-auto">
+                                                    <form action="cart_handler.php" method="POST">
+                                                        <input type="hidden" name="package_id" value="<?php echo $package['id']; ?>">
+                                                        <button type="submit" class="btn btn-primary btn-block w-100">افزودن به سبد خرید</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="card">
-                                    <img class="card-img-top" src="../images/packages.jpg" alt="Card image cap">
-                                    <div class="card-body">
-                                        <h5 class="card-title">انیمیشن سازی (موهو)</h5>
-                                        <p class="card-text">
-                                            محتوای پکیج‌های آموزشی ما توسط کارشناسان و متخصصان برجسته طراحی شده است. با استفاده از منابع و متدهای آموزشی به روز، می‌توانید از یادگیری عمیق و کاربردی بهره‌مند شوید.</p>
-                                        <a href="#" class="btn btn-primary">جزئیات پکیج</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="card">
-                                    <img class="card-img-top" src="../images/packages.jpg" alt="Card image cap">
-                                    <div class="card-body">
-                                        <h5 class="card-title">فتوشاپ</h5>
-                                        <p class="card-text">
-                                            محتوای پکیج‌های آموزشی ما توسط کارشناسان و متخصصان برجسته طراحی شده است. با استفاده از منابع و متدهای آموزشی به روز، می‌توانید از یادگیری عمیق و کاربردی بهره‌مند شوید.</p>
-                                        <a href="#" class="btn btn-primary">جزئیات پکیج</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row mt-4">
-                            <div class="col-md-4">
-                                <div class="card">
-                                    <img class="card-img-top" src="../images/packages.jpg" alt="Card image cap">
-                                    <div class="card-body">
-                                        <h5 class="card-title">پریمر (تدوین)</h5>
-                                        <p class="card-text">
-                                            محتوای پکیج‌های آموزشی ما توسط کارشناسان و متخصصان برجسته طراحی شده است. با استفاده از منابع و متدهای آموزشی به روز، می‌توانید از یادگیری عمیق و کاربردی بهره‌مند شوید.</p>
-                                        <a href="#" class="btn btn-primary">جزئیات پکیج</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="card">
-                                    <img class="card-img-top" src="../images/packages.jpg" alt="Card image cap">
-                                    <div class="card-body">
-                                        <h5 class="card-title">ایلیستراتور</h5>
-                                        <p class="card-text">
-                                            محتوای پکیج‌های آموزشی ما توسط کارشناسان و متخصصان برجسته طراحی شده است. با استفاده از منابع و متدهای آموزشی به روز، می‌توانید از یادگیری عمیق و کاربردی بهره‌مند شوید.</p>
-                                        <a href="#" class="btn btn-primary">جزئیات پکیج</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="card">
-                                    <img class="card-img-top" src="../images/packages.jpg" alt="Card image cap">
-                                    <div class="card-body">
-                                        <h5 class="card-title">ایندیزاین</h5>
-                                        <p class="card-text">
-                                            محتوای پکیج‌های آموزشی ما توسط کارشناسان و متخصصان برجسته طراحی شده است. با استفاده از منابع و متدهای آموزشی به روز، می‌توانید از یادگیری عمیق و کاربردی بهره‌مند شوید.</p>
-                                        <a href="#" class="btn btn-primary">جزئیات پکیج</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row mt-4">
-                            <div class="col-md-4">
-                                <div class="card">
-                                    <img class="card-img-top" src="../images/packages.jpg" alt="Card image cap">
-                                    <div class="card-body">
-                                        <h5 class="card-title">سینما فوری</h5>
-                                        <p class="card-text">
-                                            محتوای پکیج‌های آموزشی ما توسط کارشناسان و متخصصان برجسته طراحی شده است. با استفاده از منابع و متدهای آموزشی به روز، می‌توانید از یادگیری عمیق و کاربردی بهره‌مند شوید.</p>
-                                        <a href="#" class="btn btn-primary">جزئیات پکیج</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="card">
-                                    <img class="card-img-top" src="../images/packages.jpg" alt="Card image cap">
-                                    <div class="card-body">
-                                        <h5 class="card-title">عکاسی</h5>
-                                        <p class="card-text">
-                                            محتوای پکیج‌های آموزشی ما توسط کارشناسان و متخصصان برجسته طراحی شده است. با استفاده از منابع و متدهای آموزشی به روز، می‌توانید از یادگیری عمیق و کاربردی بهره‌مند شوید.</p>
-                                        <a href="#" class="btn btn-primary">جزئیات پکیج</a>
-                                    </div>
-                                </div>
-                            </div>
-                           
-                        </div>
-
-                     
-
+                            <?php
+                                }
+                            } else {
+                                echo "<div class='alert alert-warning text-center'>هیچ پکیجی برای نمایش وجود ندارد.</div>";
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
+    </div>
 
     <?php include 'footer.php'; ?>
 
-  
-
-
 </body>
+
 </html>

@@ -1,18 +1,14 @@
 <?php
 session_start();
 
-
-
 if (isset($_POST['enter'])) {
-   // 1. جلوگیری از SQL Injection با Prepared Statements
    require 'config.php';
-   include 'PersianCalendar.php';
 
    $username = $_POST['username'];
    $password = $_POST['password'];
 
+   // استفاده از Prepared Statements برای جلوگیری از SQL Injection
    $sql = "SELECT * FROM users WHERE username = ? LIMIT 1";
- 
    $stmt = $conn->prepare($sql);
    $stmt->bind_param("s", $username);
    $stmt->execute();
@@ -21,12 +17,35 @@ if (isset($_POST['enter'])) {
    if ($result->num_rows > 0) {
       $user = $result->fetch_assoc();
 
-      // 2. بررسی رمز عبور هش شده با password_verify
+      // بررسی رمز عبور هش شده
       if (password_verify($password, $user['password'])) {
-
+         $_SESSION['user_id'] = $user['id']; // ذخیره ID کاربر
+         $_SESSION['username'] = $user['username'];
          $_SESSION['all_data'] = $user;
 
-         // 3. هدایت کاربر بر اساس سطح دسترسی (level)
+         // --- منطق جدید برای انتقال سبد خرید ---
+         if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
+            $user_id = $_SESSION['user_id'];
+
+            // آماده‌سازی کوئری برای درج در user_cart
+            $insert_sql = "INSERT IGNORE INTO `user_cart` (`user_id`, `package_id`) VALUES (?, ?)";
+            $insert_stmt = $conn->prepare($insert_sql);
+            $insert_stmt->bind_param("ii", $user_id, $package_id);
+
+            foreach ($_SESSION['cart'] as $package_id) {
+               $insert_stmt->execute();
+            }
+
+            $insert_stmt->close();
+            unset($_SESSION['cart']); // پاک کردن سبد خرید موقت
+
+            // هدایت به صفحه سبد خرید نهایی
+            header("Location: user/user_cart.php");
+            exit();
+         }
+         // --- پایان منطق جدید ---
+
+         // هدایت پیش‌فرض در صورتی که سبد خرید موقتی وجود نداشت
          if ($user['admin'] == 1) {
             header("Location: admin/index");
             exit();
@@ -39,7 +58,7 @@ if (isset($_POST['enter'])) {
             exit();
          }
       } else {
-         // رمز عبور اشتباه است
+         // رمز عبور اشتباه
          echo 'نام کاربری یا رمز عبور اشتباه است.';
       }
    } else {

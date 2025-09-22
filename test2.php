@@ -44,7 +44,7 @@
             <span class="badge bg-danger">حفاظت شده</span>
         </div>
         <video id="myVideo" controls style="width: 100%;" controlsList="nodownload" oncontextmenu="return false;">
-            <source src="motion2.mp4" type="video/mp4">
+            <source src="motion1.mp4" type="video/mp4">
             مرورگر شما از تگ ویدیو پشتیبانی نمی‌کند.
         </video>
     </div>
