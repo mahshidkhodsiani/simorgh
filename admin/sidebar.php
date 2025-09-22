@@ -144,6 +144,7 @@
         }
     }
 </style>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <div class="sidebar" id="sidebar">
     <h5><?= $_SESSION['all_data']['name'] . " " . $_SESSION['all_data']['family'] ?></h5>
@@ -154,6 +155,10 @@
     <a href="code_takhfif" class="<?php if (basename($_SERVER['REQUEST_URI']) === 'code_takhfif') echo 'active'; ?>">
         <i class="fas fa-tags"></i> وارد کردن کد تخفیف
     </a>
+    <a href="new_package" class="<?php if (basename($_SERVER['REQUEST_URI']) === 'new_package') echo 'active'; ?>">
+        <i class="fas fa-box"></i> افزودن پکیج ها
+    </a>
+
     <a href="new_matlab" class="<?php if (basename($_SERVER['REQUEST_URI']) === 'new_matlab') echo 'active'; ?>">
         <i class="fas fa-book-open"></i> افزودن مطلب و دوره
     </a>

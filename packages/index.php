@@ -36,7 +36,7 @@
                         <div class="row mt-4">
                             <?php
                             // کوئری برای دریافت همه پکیج‌ها، شامل ستون description، files و price
-                            $sql = "SELECT `id`, `name`, `description`, `address`, `course`, `files`, `price` FROM `packages` ORDER BY `id` ASC";
+                            $sql = "SELECT * FROM `packages` ORDER BY `id` ASC";
                             $result = $conn->query($sql);
 
                             if ($result->num_rows > 0) {
@@ -48,9 +48,9 @@
                                             <img class="card-img-top" src="../images/packages.jpg" alt="تصویر پکیج">
                                             <div class="card-body d-flex flex-column">
                                                 <h5 class="card-title"><?php echo htmlspecialchars($package['name']); ?></h5>
-                                                <p class="card-text text-muted"><?php echo htmlspecialchars($package['description']); ?></p>
+                                                <p class="card-text text-muted"><?php echo $package['description']; ?></p>
                                                 <p class="card-text">
-                                                    <strong>مدرس دوره:</strong> <?php echo htmlspecialchars($package['course']); ?><br>
+                                                    <strong>مدرس دوره:</strong> <?php echo $package['teacher']; ?><br>
                                                     <strong>قیمت:</strong> <?php echo number_format($package['price']); ?> تومان
                                                 </p>
 
@@ -75,6 +75,7 @@
             </div>
         </div>
     </div>
+    <br><br><br>
 
     <?php include 'footer.php'; ?>
 

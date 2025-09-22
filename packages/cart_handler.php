@@ -31,7 +31,7 @@ if (isset($_POST['package_id'])) {
         $insert_stmt->execute();
 
         // هدایت به پنل کاربری
-        header("Location: ../user/profile.php");
+        header("Location: ../user/user_cart");
     } else {
         // اگر کاربر وارد نشده، به صفحه ورود هدایت کن
         header("Location: ../login.php");

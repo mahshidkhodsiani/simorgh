@@ -23,7 +23,13 @@ if (isset($_POST['enter'])) {
          $_SESSION['username'] = $user['username'];
          $_SESSION['all_data'] = $user;
 
-         // --- منطق جدید برای انتقال سبد خرید ---
+         // --- اول سطح دسترسی را بررسی کن ---
+         if ($user['admin'] == 1) {
+            header("Location: admin/index");
+            exit();
+         }
+
+         // اگر ادمین نبود، سبد خرید را منتقل کن
          if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
             $user_id = $_SESSION['user_id'];
 
@@ -43,20 +49,10 @@ if (isset($_POST['enter'])) {
             header("Location: user/user_cart.php");
             exit();
          }
-         // --- پایان منطق جدید ---
 
-         // هدایت پیش‌فرض در صورتی که سبد خرید موقتی وجود نداشت
-         if ($user['admin'] == 1) {
-            header("Location: admin/index");
-            exit();
-         } else if ($user['admin'] == 0) {
-            header("Location: user/profile");
-            exit();
-         } else {
-            echo 'سطح دسترسی شما نامعتبر است.';
-            session_destroy();
-            exit();
-         }
+         // هدایت پیش‌فرض برای کاربر عادی بدون سبد خرید
+         header("Location: user/profile");
+         exit();
       } else {
          // رمز عبور اشتباه
          echo 'نام کاربری یا رمز عبور اشتباه است.';
