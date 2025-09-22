@@ -157,7 +157,7 @@ $id = $_SESSION["all_data"]['id'];
                                             <th scope="row" class="text-center"><?= $a ?></th>
                                             <td class="text-center"><?= htmlspecialchars($row['name']) ?></td>
                                             <td class="text-center"><?= htmlspecialchars($row['teacher']) ?></td>
-                                            <td class="text-center"><?= htmlspecialchars($row['price']) ?></td>
+                                            <td class="text-center"><?= number_format($row['price']) ?> ریال</td>
                                             <td class="text-center">
                                                 <form action="" method="POST" style="display:inline;">
                                                     <input type="hidden" value="<?= $row['id'] ?>" name="id_package">

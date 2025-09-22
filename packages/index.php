@@ -45,7 +45,7 @@
                             ?>
                                     <div class="col-md-4 mb-4">
                                         <div class="card h-100">
-                                            <img class="card-img-top" src="../images/packages.jpg" alt="تصویر پکیج">
+                                            <img class="card-img-top" src="../<?php echo htmlspecialchars($package['pictures']); ?>" alt="تصویر پکیج">
                                             <div class="card-body d-flex flex-column">
                                                 <h5 class="card-title"><?php echo htmlspecialchars($package['name']); ?></h5>
                                                 <p class="card-text text-muted"><?php echo $package['description']; ?></p>

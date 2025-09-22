@@ -42,6 +42,13 @@ $current_page = rtrim($current_page_name, '.php');
             </a>
         </li>
 
+        <li class="nav-item <?php echo ($current_page == 'my_packages') ? 'active' : ''; ?>">
+            <a class="nav-link" href="my_packages">
+                <i class="bi bi-box"></i>
+                <span>پکیج های من </span>
+            </a>
+        </li>
+
         <li class="nav-item <?php echo ($current_page == 'user_cart') ? 'active' : ''; ?>">
             <a class="nav-link" href="user_cart">
                 <i class="bi bi-cart"></i>

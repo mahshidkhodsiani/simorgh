@@ -25,8 +25,8 @@ if (!isset($_GET['cart_id'])) {
 }
 $cart_id = intval($_GET['cart_id']);
 
-// گرفتن اطلاعات آیتم از دیتابیس
-$sql = "SELECT p.price, p.name 
+// گرفتن اطلاعات آیتم و package_id از دیتابیس
+$sql = "SELECT p.price, p.id AS package_id 
         FROM user_cart uc 
         JOIN packages p ON uc.package_id = p.id 
         WHERE uc.id = ? AND uc.user_id = ?";
@@ -37,7 +37,7 @@ $result = $stmt->get_result();
 
 if ($row = $result->fetch_assoc()) {
     $amount = (int)$row['price'];
-    $package_name = $row['name'];
+    $package_id = $row['package_id'];
 } else {
     die("آیتم سبد خرید یافت نشد یا دسترسی ندارید.");
 }
@@ -46,7 +46,6 @@ $stmt->close();
 // مرحله اول: پردازش فرم تأیید کد
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['verify_code'])) {
     if (isset($_SESSION['sms_code']) && $_POST['verify_code'] === $_SESSION['sms_code']) {
-        // کد صحیح است، متغیر را برای ادامه فرایند پرداخت تنظیم می کنیم
         $_SESSION['is_verified'] = true;
     } else {
         $message = "کد وارد شده اشتباه است. لطفاً دوباره تلاش کنید.";
@@ -56,7 +55,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['verify_code'])) {
 
 // مرحله دوم: اگر کد تأیید شده باشد، به مرحله پرداخت بروید
 if (isset($_SESSION['is_verified']) && $_SESSION['is_verified'] === true) {
-    // کد اصلی checkout.php برای اتصال به درگاه
     $invoiceID = time();
     $CurUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]" . dirname($_SERVER['REQUEST_URI']) . '/back.php';
 
@@ -64,9 +62,15 @@ if (isset($_SESSION['is_verified']) && $_SESSION['is_verified'] === true) {
         'id' => $invoiceID,
         'amount' => $amount,
         'user_id' => $user_id,
-        'package_name' => $package_name
+        'package_id' => $package_id,
+        'cart_id' => $cart_id
     ];
-    unset($_SESSION['is_verified']); // پاک کردن متغیر تأیید پس از هدایت موفق
+    
+    // unset($_SESSION['is_verified']);
+
+    if (isset($_SESSION['is_verified'])) {
+        unset($_SESSION['is_verified']);
+    }
 
     try {
         $result = Gateway::make()
@@ -89,11 +93,9 @@ if (isset($_SESSION['is_verified']) && $_SESSION['is_verified'] === true) {
     }
 } else {
     // اگر کاربر هنوز تأیید نشده است، فرم را نمایش دهید و پیامک ارسال کنید
-    // تولید کد تصادفی ۴ رقمی
     $code = str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT);
     $_SESSION['sms_code'] = $code;
 
-    // ارسال پیامک
     $username = "09124366786";
     $password = "96139290@sN";
     $from = "300016343000";
@@ -159,4 +161,3 @@ if (isset($_SESSION['is_verified']) && $_SESSION['is_verified'] === true) {
     </html>
 <?php
 }
-?>
