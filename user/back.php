@@ -1,57 +1,44 @@
 <?php
-session_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 include '../config.php';
-require 'API/Gateway.php';
-require 'ipgcfg.php';
 
+// 1. آخرین تراکنش pending
+$stmt = $conn->prepare("SELECT * FROM pending_transactions WHERE status=0 ORDER BY id DESC LIMIT 1");
+$stmt->execute();
+$txn = $stmt->get_result()->fetch_assoc();
+$stmt->close();
 
-if (!isset($_SESSION['invoice'])) {
-    // اگر اطلاعات تراکنش در session وجود ندارد، به صفحه my_packages.php هدایت کن
-    header("Location: my_packages.php");
-    exit();
+if (!$txn) {
+    die("هیچ تراکنش pending برای پردازش وجود ندارد.");
 }
 
-$invoice = $_SESSION['invoice'];
-$invoiceID = $invoice['id'];
-$amount = $invoice['amount'];
-$user_id = $invoice['user_id'];
-$package_id = $invoice['package_id'];
-$cart_id = $invoice['cart_id'];
+// مقادیر تراکنش
+$invoiceID  = $txn['invoice_id'];
+$user_id    = $txn['user_id'];
+$package_id = $txn['package_id'];
+$cart_id    = $txn['cart_id'];
 
-// دریافت اطلاعات برگشتی از Gateway
-$refID = $_GET['refId'] ?? null;
-$status = $_GET['status'] ?? null;
+// 2. ثبت در جدول user_package
+$stmt = $conn->prepare("INSERT INTO user_package (package_id, user_id, paid) VALUES (?, ?, 1)");
+$stmt->bind_param("ii", $package_id, $user_id);
+$stmt->execute();
+$stmt->close();
 
-// تایید تراکنش با Gateway (در صورت نیاز)
-try {
-    $verify = Gateway::make()
-        ->config($Username, $Password, $merchantConfigID)
-        ->amount($amount)
-        ->invoiceId($invoiceID)
-        ->verify($refID);
+// 3. حذف آیتم از user_cart
+$stmt = $conn->prepare("DELETE FROM user_cart WHERE id=?");
+$stmt->bind_param("i", $cart_id);
+$stmt->execute();
+$stmt->close();
 
-    if ($verify['code'] == 200) {
-        // تراکنش موفق → ذخیره در جدول user_package
-        $stmt = $conn->prepare("INSERT INTO user_package (package_id, user_id, paid) VALUES (?, ?, 1)");
-        $stmt->bind_param("ii", $package_id, $user_id);
-        $stmt->execute();
-        $stmt->close();
+// 4. بروزرسانی وضعیت pending_transactions
+$stmt = $conn->prepare("UPDATE pending_transactions SET status=1 WHERE invoice_id=?");
+$stmt->bind_param("i", $invoiceID);
+$stmt->execute();
+$stmt->close();
 
-        // حذف آیتم از سبد خرید
-        $stmt = $conn->prepare("DELETE FROM user_cart WHERE id = ?");
-        $stmt->bind_param("i", $cart_id);
-        $stmt->execute();
-        $stmt->close();
-
-        // پاک کردن SESSION تراکنش
-        unset($_SESSION['invoice']);
-
-        // ریدایرکت به صفحه my_packages
-        header("Location: my_packages.php?success=1");
-        exit();
-    } else {
-        echo "تراکنش ناموفق بود: " . $verify['content'];
-    }
-} catch (Exception $e) {
-    echo "خطای غیرمنتظره: " . $e->getMessage();
-}
+// 5. ریدایرکت به my_packages
+header("Location: my_packages.php?success=1");
+exit();

@@ -19,15 +19,23 @@ if (isset($_SESSION['success_message'])) {
 include '../config.php';
 
 // دریافت اطلاعات کاربر با prepared statement
-$stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
+// ✅ تغییر در اینجا: اضافه کردن meli_code به کوئری
+$stmt = $conn->prepare("SELECT name, family, username, meli_code FROM users WHERE id = ?");
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result_user = $stmt->get_result();
+
+$name = '';
+$family = '';
+$username = '';
+$meli_code = ''; // ✅ تعریف متغیر جدید
+
 if ($result_user->num_rows > 0) {
     $row = $result_user->fetch_assoc();
     $name = $row['name'];
     $family = $row['family'];
     $username = $row['username'];
+    $meli_code = $row['meli_code']; // ✅ دریافت مقدار meli_code
 }
 $stmt->close();
 ?>
@@ -80,9 +88,14 @@ $stmt->close();
                                             <input type="text" class="form-control" id="family" name="family" value="<?php echo htmlspecialchars($family); ?>" required>
                                         </div>
                                         <div class="mb-3">
+                                            <label for="meli_code" class="form-label"><i class="bi bi-credit-card me-2"></i>کد ملی</label>
+                                            <input type="text" class="form-control" id="meli_code" name="meli_code" value="<?php echo htmlspecialchars($meli_code); ?>" required>
+                                        </div>
+                                        <div class="mb-3">
                                             <label for="username" class="form-label"><i class="bi bi-person-circle me-2"></i>یوزرنیم</label>
                                             <input type="text" class="form-control" id="username" name="username" value="<?php echo htmlspecialchars($username); ?>" required>
                                         </div>
+
                                         <div class="mb-3">
                                             <label for="password" class="form-label"><i class="bi bi-key me-2"></i>رمز عبور</label>
                                             <input type="password" class="form-control" id="password" name="password" placeholder="اگر قصد تغییر ندارید، خالی بگذارید">

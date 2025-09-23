@@ -13,24 +13,29 @@ $user_id = $_SESSION['all_data']['id'];
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     include '../config.php';
 
-    // دریافت اطلاعات ارسالی از فرم و sanitize کردن
+    // ✅ تغییر در اینجا: دریافت فیلد جدید meli_code
     $name = $_POST['name'];
     $family = $_POST['family'];
     $username = $_POST['username'];
+    $meli_code = $_POST['meli_code']; // ✅ اضافه شدن فیلد کد ملی
     $password = $_POST['password'];
 
     // آماده‌سازی query برای به‌روزرسانی
     if (!empty($password)) {
         // اگر رمز عبور وارد شده بود، آن را هش کنید
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $sql = "UPDATE users SET name = ?, family = ?, username = ?, password = ? WHERE id = ?";
+        // ✅ تغییر در اینجا: اضافه شدن meli_code به کوئری
+        $sql = "UPDATE users SET name = ?, family = ?, username = ?, meli_code = ?, password = ? WHERE id = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssssi", $name, $family, $username, $hashed_password, $user_id);
+        // ✅ تغییر در اینجا: اضافه شدن 's' برای نوع meli_code و متغیر $meli_code
+        $stmt->bind_param("sssssi", $name, $family, $username, $meli_code, $hashed_password, $user_id);
     } else {
         // اگر رمز عبور خالی بود، آن را به‌روزرسانی نکنید
-        $sql = "UPDATE users SET name = ?, family = ?, username = ? WHERE id = ?";
+        // ✅ تغییر در اینجا: اضافه شدن meli_code به کوئری
+        $sql = "UPDATE users SET name = ?, family = ?, username = ?, meli_code = ? WHERE id = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssi", $name, $family, $username, $user_id);
+        // ✅ تغییر در اینجا: اضافه شدن 's' برای نوع meli_code و متغیر $meli_code
+        $stmt->bind_param("ssssi", $name, $family, $username, $meli_code, $user_id);
     }
 
     if ($stmt->execute()) {

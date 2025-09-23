@@ -5,16 +5,47 @@ include "config.php";
 include 'includes.php';
 
 $user_exist = FALSE; // مقدار اولیه
+$mobile_verified = FALSE; // وضعیت تایید شماره تلفن
 
-if (isset($_POST['submit_meliCode'])) {
-    $meli_code = $_POST['meli_code'];
-    $select_meli = "SELECT * FROM users WHERE meli_code = '$meli_code'";
+if (isset($_POST['submit_mobile'])) {
+    $mobile = $_POST['mobile'];
+    $select_mobile = "SELECT * FROM users WHERE mobile = '$mobile'";
 
-    $result_user = $conn->query($select_meli);
+    $result_user = $conn->query($select_mobile);
     if ($result_user->num_rows > 0) {
         $row_user = $result_user->fetch_assoc();
         $user_exist = TRUE;
-        $_SESSION['user_meli_code'] = $meli_code; // ذخیره کد ملی در session
+        $_SESSION['user_mobile'] = $mobile; // ذخیره شماره تلفن در session
+        $_SESSION['user_username'] = $row_user['username']; // این خط رو اضافه کنید
+
+        // تولید کد 4 رقمی تصادفی
+        $verification_code = rand(1000, 9999);
+        $_SESSION['verification_code'] = $verification_code; // ذخیره کد در session
+
+        // ارسال پیامک
+        $username = "09124366786";
+        $password = "96139290@sN";
+        $from = "300016343000";
+        $to = $mobile;
+        $message = "کد تایید شما برای تغییر رمز عبور: " . $verification_code;
+
+        $url = "https://niksms.com/fa/publicapi/groupsms";
+
+        $data = [
+            "username" => $username,
+            "password" => $password,
+            "numbers" => $to,
+            "sendernumber" => $from,
+            "message" => $message,
+        ];
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        curl_close($ch);
     } else {
         echo "<div id='errorToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' 
         style='position: fixed; top: 50px; right:30px; width: 300px; z-index: 1055;'>
@@ -22,7 +53,7 @@ if (isset($_POST['submit_meliCode'])) {
             <strong class='mr-auto'>Error</strong>
         </div>
         <div class='toast-body font-weight-bold'>
-            کاربری با این کد ملی وجود ندارد لطفا دوباره تلاش کنید !
+            کاربری با این شماره تلفن وجود ندارد لطفا دوباره تلاش کنید !
         </div>
         </div>
         <script>
@@ -39,20 +70,40 @@ if (isset($_POST['submit_meliCode'])) {
     }
 }
 
+if (isset($_POST['submit_verification'])) {
+    $entered_code = $_POST['verification_code'];
+    if ($entered_code == $_SESSION['verification_code']) {
+        $mobile_verified = TRUE;
+    } else {
+        echo "<div id='errorToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' 
+        style='position: fixed; top: 50px; right:30px; width: 300px; z-index: 1055;'>
+        <div class='toast-header bg-danger text-white'>
+            <strong class='mr-auto'>Error</strong>
+        </div>
+        <div class='toast-body font-weight-bold'>
+            کد وارد شده صحیح نیست.
+        </div>
+        </div>
+        <script>
+            $(document).ready(function(){
+                $('#errorToast').toast({
+                    autohide: true,
+                    delay: 4000
+                }).toast('show');
+            });
+        </script>";
+    }
+}
 
 
-// بعد از بخش پردازش فرم اول، این کد را اضافه کنید
 if (isset($_POST['submit_new_password'])) {
     $password = $_POST['password'];
     $password_repeat = $_POST['password_repeat'];
-    $meli_code = $_SESSION['user_meli_code'];
+    $mobile = $_SESSION['user_mobile'];
 
     if ($password === $password_repeat) {
-        // هش کردن رمز عبور
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-        // به روزرسانی رمز عبور در دیتابیس
-        $update_sql = "UPDATE users SET password = '$hashed_password' WHERE meli_code = '$meli_code'";
+        $update_sql = "UPDATE users SET password = '$hashed_password' WHERE mobile = '$mobile'";
 
         if ($conn->query($update_sql)) {
             echo "<div id='successToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' 
@@ -98,7 +149,6 @@ if (isset($_POST['submit_new_password'])) {
         </script>";
     }
 }
-
 ?>
 
 <!doctype html>
@@ -128,10 +178,8 @@ if (isset($_POST['submit_new_password'])) {
 </head>
 
 <body>
-
     <?php
     include 'header.php';
-
     include 'PersianCalendar.php';
     include 'jalaliDate.php';
     $sdate = new SDate();
@@ -142,25 +190,31 @@ if (isset($_POST['submit_new_password'])) {
             <div class="col-md-5 col-sm-12 border">
                 <h4 class="text-center mt-3 mb-3 font-weight-bold">فرم فراموشی رمز</h4>
 
-                <!-- فرم اول (ورود کد ملی) -->
-                <form id="meliForm" action="" method="POST" <?php echo $user_exist ? 'class="hidden-form"' : ''; ?>>
+                <form id="mobileForm" action="" method="POST" <?php echo ($user_exist) ? 'class="hidden-form"' : ''; ?>>
                     <div class="mb-3">
-                        <label for="meli_code" class="form-label">کد ملی خودرا وارد کنید</label>
-                        <input type="text" class="form-control" id="meli_code" name="meli_code" placeholder="کد ملی" required>
+                        <label for="mobile" class="form-label">شماره تلفن خود را وارد کنید</label>
+                        <input type="text" class="form-control" id="mobile" name="mobile" placeholder="شماره تلفن" required>
                     </div>
                     <div class="mb-3">
-                        <button class="btn btn-info" name="submit_meliCode">ثبت درخواست</button>
+                        <button class="btn btn-info" name="submit_mobile">ثبت درخواست</button>
                     </div>
                 </form>
 
-                <!-- فرم دوم (تعیین رمز عبور جدید) -->
-                <form id="passwordForm" action="" method="POST" <?php echo !$user_exist ? 'class="hidden-form"' : ''; ?>>
+                <form id="verificationForm" action="" method="POST" <?php echo (!$user_exist || $mobile_verified) ? 'class="hidden-form"' : ''; ?>>
+                    <div class="mb-3">
+                        <label for="verification_code" class="form-label">کد 4 رقمی ارسال شده به شماره تلفن خود را وارد کنید</label>
+                        <input type="text" class="form-control" id="verification_code" name="verification_code" placeholder="کد تایید" required>
+                    </div>
+                    <div class="mb-3">
+                        <button class="btn btn-warning" name="submit_verification">تایید کد</button>
+                    </div>
+                </form>
 
+                <form id="passwordForm" action="" method="POST" <?php echo !$mobile_verified ? 'class="hidden-form"' : ''; ?>>
                     <div class="mb-3">
                         <label for="username" class="form-label">نام کاربری شما</label>
-                        <input type="text" class="form-control" value="<?= $row_user['username'] ?>" name="username" readonly>
+                        <input type="text" class="form-control" value="<?= $_SESSION['user_username'] ?? '' ?>" name="username" readonly>
                     </div>
-
                     <div class="mb-3">
                         <label for="password" class="form-label">رمز عبور جدید</label>
                         <input type="password" class="form-control" id="password" name="password" required>
@@ -184,18 +238,26 @@ if (isset($_POST['submit_new_password'])) {
     <?php include 'footer.php'; ?>
 
     <script>
-        // برای اطمینان از تغییر display در سمت کلاینت
         document.addEventListener('DOMContentLoaded', function() {
-            <?php if ($user_exist): ?>
-                document.getElementById('meliForm').style.display = 'none';
-                document.getElementById('passwordForm').style.display = 'block';
+            var mobileForm = document.getElementById('mobileForm');
+            var verificationForm = document.getElementById('verificationForm');
+            var passwordForm = document.getElementById('passwordForm');
+
+            <?php if ($user_exist && !$mobile_verified): ?>
+                mobileForm.style.display = 'none';
+                verificationForm.style.display = 'block';
+                passwordForm.style.display = 'none';
+            <?php elseif ($mobile_verified): ?>
+                mobileForm.style.display = 'none';
+                verificationForm.style.display = 'none';
+                passwordForm.style.display = 'block';
             <?php else: ?>
-                document.getElementById('meliForm').style.display = 'block';
-                document.getElementById('passwordForm').style.display = 'none';
+                mobileForm.style.display = 'block';
+                verificationForm.style.display = 'none';
+                passwordForm.style.display = 'none';
             <?php endif; ?>
         });
     </script>
-
 </body>
 
 </html>

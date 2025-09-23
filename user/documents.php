@@ -55,9 +55,26 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     if (!isset($_FILES[$file_input_name]) || $_FILES[$file_input_name]['error'] !== UPLOAD_ERR_OK) {
                         return false;
                     }
+
+
                     $uploaded_tmp = $_FILES[$file_input_name]['tmp_name'];
+
                     $mime = mime_content_type($uploaded_tmp);
-                    $allowed_mimes = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/gif' => 'gif'];
+                    // $allowed_mimes = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/gif' => 'gif'];
+
+
+                    // ✅ تغییر در اینجا: اضافه کردن فرمت‌های جدید
+                    $allowed_mimes = [
+                        'image/jpeg' => 'jpg',
+                        'image/png' => 'png',
+                        'image/gif' => 'gif',
+                        'image/webp' => 'webp', // WebP را اضافه کنید
+                        'image/svg+xml' => 'svg', // SVG را اضافه کنید
+                        'image/bmp' => 'bmp', // BMP را اضافه کنید
+                        'image/tiff' => 'tiff' // TIFF را اضافه کنید
+                    ];
+
+
                     if (!isset($allowed_mimes[$mime])) {
                         return "unsupported_type";
                     }
