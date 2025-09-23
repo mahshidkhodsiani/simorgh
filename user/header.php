@@ -81,6 +81,12 @@ include "../PersianCalendar.php";
             <div class="d-none d-sm-block topbar-divider"></div>
         </ul>
 
+        <ul>
+            <a href="../index.php" class="d-flex align-items-center text-decoration-none">
+                <img src="../images/logo1.png" alt="Logo" style="height: 60px; margin-right: 60px;">
+            </a>
+        </ul>
+
         <ul class="navbar-nav me-auto">
             <li class="nav-item dropdown no-arrow">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">

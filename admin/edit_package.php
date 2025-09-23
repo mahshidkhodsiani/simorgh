@@ -37,6 +37,7 @@ if (isset($_POST['update_package'])) {
     $description = $_POST['description'];
     $teacher = $_POST['teacher'];
     $price = $_POST['price'];
+    $spotplayer = $_POST['spot_id'];
 
     // اعتبار سنجی سمت سرور برای فیلدهای ضروری
     if (empty($name) || empty($teacher) || empty($price)) {
@@ -48,17 +49,18 @@ if (isset($_POST['update_package'])) {
                 errorToast.show();
             });
         </script>";
-        exit(); // توقف اجرای کد در صورت خالی بودن فیلدها
+        exit();
     }
 
     $name = $conn->real_escape_string($name);
     $description = $conn->real_escape_string($description);
     $teacher = $conn->real_escape_string($teacher);
     $price = $conn->real_escape_string($price);
+    $spotplayer = $conn->real_escape_string($spotplayer);
 
     // آپدیت اطلاعات اصلی پکیج
-    $stmt = $conn->prepare("UPDATE packages SET name = ?, description = ?, teacher = ?, price = ? WHERE id = ?");
-    $stmt->bind_param("ssssi", $name, $description, $teacher, $price, $id_package);
+    $stmt = $conn->prepare("UPDATE packages SET name = ?, description = ?, teacher = ?, price = ?, spotplayer = ? WHERE id = ?");
+    $stmt->bind_param("sssssi", $name, $description, $teacher, $price, $spotplayer, $id_package);
 
     if ($stmt->execute()) {
         echo "<script>
@@ -243,7 +245,11 @@ if (handleFileUpdate($conn, $id_package, 'file3_input', 'file3', $package_data['
                                 <label for="teacher" class="form-label">نام مدرس:</label>
                                 <input type="text" id="teacher" name="teacher" class="form-control" value="<?= htmlspecialchars($package_data['teacher']) ?>" required>
                             </div>
-                            <div class="col-12 mb-3">
+                            <div class="col-md-6 mb-3">
+                                <label for="spot_id" class="form-label">شناسه اسپات پلیر:</label>
+                                <input type="text" id="spot_id" name="spot_id" class="form-control" value="<?= htmlspecialchars($package_data['spotplayer']) ?>" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
                                 <label for="price" class="form-label">قیمت پکیج (ریال):</label>
                                 <input type="text" id="price" name="price" class="form-control" value="<?= htmlspecialchars($package_data['price']) ?>" required>
                             </div>

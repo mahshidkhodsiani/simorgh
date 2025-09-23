@@ -180,7 +180,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                 <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
                                     <div class="card-body d-flex flex-row justify-content-between align-items-center p-4">
                                         <h4 class="card-title rtl-title fw-bold text-dark mb-0">پکیج های آموزشی</h4>
-                                        <a href="#" class="btn btn-outline-quarternary fw-bold">ثبت نام &rarr;</a>
+                                        <a href="packages" class="btn btn-outline-quarternary fw-bold">ثبت نام &rarr;</a>
                                     </div>
                                 </div>
                             </div>

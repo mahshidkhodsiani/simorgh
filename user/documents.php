@@ -15,6 +15,28 @@ $message_type = null;
 // اطمینان حاصل کنید که مسیر فایل config.php صحیح است
 include '../config.php';
 
+// **کد جدید: بازیابی مسیرهای عکس‌ها از پایگاه داده**
+$personely_path = null;
+$shenasname_path = null;
+$meli_card_path = null;
+
+$sql_get_paths = "SELECT personely, shenasname, photo_meli FROM users WHERE id = ?";
+$stmt_paths = $conn->prepare($sql_get_paths);
+if ($stmt_paths) {
+    $stmt_paths->bind_param("i", $user_id);
+    $stmt_paths->execute();
+    $result_paths = $stmt_paths->get_result();
+    $user_paths = $result_paths->fetch_assoc();
+    if ($user_paths) {
+        $personely_path = $user_paths['personely'];
+        $shenasname_path = $user_paths['shenasname'];
+        $meli_card_path = $user_paths['photo_meli'];
+    }
+    $stmt_paths->close();
+}
+// **پایان کد جدید**
+
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // 1. بازیابی شماره ملی کاربر از پایگاه داده
@@ -90,19 +112,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 }
 
                 // 3. فراخوانی تابع با ارسال $meli_code
-                $personely_path = upload_file('personely', $user_upload_dir, 'personely', $meli_code);
-                $shenasname_path = upload_file('shenasname', $user_upload_dir, 'shenasname', $meli_code);
-                $meli_card_path = upload_file('meli_card', $user_upload_dir, 'meli_card', $meli_code);
+                // **تغییر در اینجا: آپلود فقط در صورت انتخاب فایل**
+                $new_personely_path = isset($_FILES['personely']) && $_FILES['personely']['error'] === UPLOAD_ERR_OK ? upload_file('personely', $user_upload_dir, 'personely', $meli_code) : $personely_path;
+                $new_shenasname_path = isset($_FILES['shenasname']) && $_FILES['shenasname']['error'] === UPLOAD_ERR_OK ? upload_file('shenasname', $user_upload_dir, 'shenasname', $meli_code) : $shenasname_path;
+                $new_meli_card_path = isset($_FILES['meli_card']) && $_FILES['meli_card']['error'] === UPLOAD_ERR_OK ? upload_file('meli_card', $user_upload_dir, 'meli_card', $meli_code) : $meli_card_path;
+
 
                 // به‌روزرسانی پایگاه داده
                 $sql = "UPDATE users SET personely = ?, shenasname = ?, photo_meli = ? WHERE id = ?";
                 $stmt = $conn->prepare($sql);
 
                 if ($stmt) {
-                    $stmt->bind_param("ssss", $personely_path, $shenasname_path, $meli_card_path, $user_id);
+                    $stmt->bind_param("ssss", $new_personely_path, $new_shenasname_path, $new_meli_card_path, $user_id);
                     if ($stmt->execute()) {
                         $message = "اطلاعات با موفقیت به‌روزرسانی شد.";
                         $message_type = "success";
+                        // ** به‌روزرسانی متغیرهای مسیر پس از آپلود موفق **
+                        $personely_path = $new_personely_path;
+                        $shenasname_path = $new_shenasname_path;
+                        $meli_card_path = $new_meli_card_path;
                     } else {
                         $message = "خطا در به‌روزرسانی اطلاعات: " . $stmt->error;
                         $message_type = "danger";
@@ -160,18 +188,49 @@ $conn->close();
                             <form action="" method="POST" enctype="multipart/form-data">
                                 <hr class="my-4">
                                 <h5 class="mb-3">آپلود مدارک</h5>
+
                                 <div class="mb-3">
                                     <label for="personely" class="form-label">عکس پرسنلی</label>
-                                    <input class="form-control" type="file" id="personely" name="personely" required>
+                                    <?php if ($personely_path): ?>
+                                        <div class="d-flex align-items-center mb-2">
+                                            <img src="<?php echo htmlspecialchars($personely_path); ?>" alt="عکس پرسنلی" class="img-thumbnail me-3" style="width: 50px; height: 50px; object-fit: cover;">
+                                            <span class="text-success">✅ عکس آپلود شده است.</span>
+                                        </div>
+                                        <button type="button" class="btn btn-sm btn-outline-info" onclick="toggleFileInput('personely')">تغییر عکس</button>
+                                        <input class="form-control mt-2" type="file" id="personely" name="personely" style="display: none;">
+                                    <?php else: ?>
+                                        <input class="form-control" type="file" id="personely" name="personely" required>
+                                    <?php endif; ?>
                                 </div>
+
                                 <div class="mb-3">
                                     <label for="shenasname" class="form-label">عکس صفحه اول شناسنامه</label>
-                                    <input class="form-control" type="file" id="shenasname" name="shenasname" required>
+                                    <?php if ($shenasname_path): ?>
+                                        <div class="d-flex align-items-center mb-2">
+                                            <img src="<?php echo htmlspecialchars($shenasname_path); ?>" alt="عکس شناسنامه" class="img-thumbnail me-3" style="width: 50px; height: 50px; object-fit: cover;">
+                                            <span class="text-success">✅ عکس آپلود شده است.</span>
+                                        </div>
+                                        <button type="button" class="btn btn-sm btn-outline-info" onclick="toggleFileInput('shenasname')">تغییر عکس</button>
+                                        <input class="form-control mt-2" type="file" id="shenasname" name="shenasname" style="display: none;">
+                                    <?php else: ?>
+                                        <input class="form-control" type="file" id="shenasname" name="shenasname" required>
+                                    <?php endif; ?>
                                 </div>
+
                                 <div class="mb-3">
                                     <label for="meli_card" class="form-label">عکس پشت و روی کارت ملی</label>
-                                    <input class="form-control" type="file" id="meli_card" name="meli_card" required>
+                                    <?php if ($meli_card_path): ?>
+                                        <div class="d-flex align-items-center mb-2">
+                                            <img src="<?php echo htmlspecialchars($meli_card_path); ?>" alt="عکس کارت ملی" class="img-thumbnail me-3" style="width: 50px; height: 50px; object-fit: cover;">
+                                            <span class="text-success">✅ عکس آپلود شده است.</span>
+                                        </div>
+                                        <button type="button" class="btn btn-sm btn-outline-info" onclick="toggleFileInput('meli_card')">تغییر عکس</button>
+                                        <input class="form-control mt-2" type="file" id="meli_card" name="meli_card" style="display: none;">
+                                    <?php else: ?>
+                                        <input class="form-control" type="file" id="meli_card" name="meli_card" required>
+                                    <?php endif; ?>
                                 </div>
+
                                 <div class="d-grid gap-2">
                                     <button type="submit" class="btn btn-primary btn-block">ثبت اطلاعات</button>
                                 </div>
@@ -211,6 +270,21 @@ $conn->close();
                 }, 1000); // 1 ثانیه برای انتقال
             }
         }, 5000); // 5 ثانیه انتظار قبل از شروع محو شدن
+
+
+        // **کد جدید: تابع برای نمایش و پنهان کردن فیلد آپلود**
+        function toggleFileInput(id) {
+            const fileInput = document.getElementById(id);
+            const isHidden = fileInput.style.display === "none";
+
+            fileInput.style.display = isHidden ? "block" : "none";
+            if (isHidden) {
+                fileInput.required = true; // فیلد را الزامی کنید
+            } else {
+                fileInput.required = false; // الزامی بودن را بردارید
+            }
+        }
+        // **پایان کد جدید**
     </script>
 </body>
 

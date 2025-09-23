@@ -192,7 +192,7 @@ $id = $_SESSION["all_data"]['id'];
                                                 <th scope="row"><?= $a ?></th>
                                                 <td><?= $row['name'] . " " . $row['lastname'] ?></td>
                                                 <td><?= $row['course'] ?></td>
-                                                <td><?= number_format($row['amount']) ?> تومان</td>
+                                                <td><?= number_format($row['amount']) ?> ریال</td>
                                                 <td>
                                                     <?php
                                                     if($row['pardakht'] == 1){
