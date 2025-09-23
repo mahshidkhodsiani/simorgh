@@ -221,7 +221,11 @@
                     <li><a href="videos" class="nav-link">ویدیوها</a></li>
                 </ul>
             </li>
+            
             <li><a href="../articles" class="nav-link">وبلاگ سیمرغ</a></li>
+
+            <li><a href="../packages" class="nav-link">پکیج ها</a></li>
+
 
 
         </ul>

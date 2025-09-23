@@ -221,6 +221,9 @@
             </li>
             <li><a href="../articles" class="nav-link">وبلاگ سیمرغ</a></li>
 
+            <li><a href="../packages" class="nav-link">پکیج ها</a></li>
+
+
 
         </ul>
     </nav>

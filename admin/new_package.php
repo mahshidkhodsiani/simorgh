@@ -95,8 +95,12 @@ $id = $_SESSION["all_data"]['id'];
                                 <label for="teacher" class="form-label">نام مدرس:</label>
                                 <input type="text" id="teacher" name="teacher" class="form-control" placeholder="نام مدرس را وارد کنید" required>
                             </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="spot_id" class="form-label">شناسه اسپات پلیر:</label>
+                                <input type="text" id="spot_id" name="spot_id" class="form-control" placeholder="نام مدرس را وارد کنید" required>
+                            </div>
 
-                            <div class="col-12 mb-3">
+                            <div class="col-6 mb-3">
                                 <label for="price" class="form-label">قیمت پکیج (ریال):</label>
                                 <input type="text" id="price" name="price" class="form-control" placeholder="قیمت را وارد کنید" required>
                             </div>
@@ -251,6 +255,7 @@ if (isset($_POST['submit_package'])) {
     $description = $_POST['description'];
     $teacher = $_POST['teacher'];
     $price = $_POST['price'];
+    $spotplayer = $_POST['spot_id'];
 
     // اعتبار سنجی سمت سرور برای فیلدهای ضروری
     if (empty($name) || empty($teacher) || empty($price) || !isset($_FILES['pictures']) || $_FILES['pictures']['error'] !== UPLOAD_ERR_OK) {
@@ -271,8 +276,9 @@ if (isset($_POST['submit_package'])) {
     $price = $conn->real_escape_string($price);
 
     // مرحله اول: درج اطلاعات اصلی پکیج در دیتابیس
-    $stmt = $conn->prepare("INSERT INTO packages (name, description, teacher, price) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("sssd", $name, $description, $teacher, $price);
+    $stmt = $conn->prepare("INSERT INTO packages (name, description, teacher, spotplayer, price) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssd", $name, $description, $teacher, $spotplayer, $price);
+
 
     if ($stmt->execute()) {
         $package_id = $conn->insert_id;

@@ -221,7 +221,10 @@
                 </ul>
             </li>
 
-            <li><a href="./articles" class="nav-link">وبلاگ سیمرغ</a></li>
+            <li><a href="../articles" class="nav-link">وبلاگ سیمرغ</a></li>
+
+            <li><a href="./" class="nav-link">پکیج ها</a></li>
+
 
 
         </ul>
