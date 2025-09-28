@@ -64,7 +64,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img class="d-block w-100" src="images/25.jpg" alt="سیمرغ">
+                <img class="d-block w-100" src="images/29.jpg" alt="سیمرغ">
                 <!-- <div class="carousel-caption d-none d-md-block">
                     <h5>استودیو صدا</h5>
                     <p>بهترین استادیوی صدا برای ضبط کلاسها</p>
@@ -86,6 +86,14 @@ if (session_status() === PHP_SESSION_NONE) {
             </div>
             <div class="carousel-item">
                 <img class="d-block w-100" src="images/28.jpg" alt="سیمرغ">
+                <!-- <div class="carousel-caption d-none d-md-block">
+                    <h5>جمعه های سیمرغی</h5>
+                    <p>در جمعه های سیمرغی با شما هستیم </p>
+                </div> -->
+            </div>
+
+            <div class="carousel-item">
+                <img class="d-block w-100" src="images/25.jpg" alt="سیمرغ">
                 <!-- <div class="carousel-caption d-none d-md-block">
                     <h5>جمعه های سیمرغی</h5>
                     <p>در جمعه های سیمرغی با شما هستیم </p>
