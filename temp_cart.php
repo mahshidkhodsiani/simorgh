@@ -1,3 +1,7 @@
+<?php
+// شروع نشست
+session_start();
+?>
 <!doctype html>
 <html lang="fa" dir="rtl">
 
@@ -14,8 +18,7 @@
 <body>
 
     <?php
-    // شروع نشست
-    session_start();
+    
     include 'header.php';
     include 'config.php';
     ?>

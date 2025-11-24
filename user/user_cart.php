@@ -97,7 +97,7 @@ $conn->close();
                                         <tr>
                                             <td><?php echo $index + 1; ?></td>
                                             <td><?php echo htmlspecialchars($item['name']); ?></td>
-                                            <td><?php echo number_format($item['price']); ?> ریال</td>
+                                            <td><?php echo number_format($item['price']); ?> تومان</td>
                                             <td>
                                                 <form action="" method="POST" style="display:inline-block;">
                                                     <input type="hidden" name="cart_id" value="<?php echo $item['cart_id']; ?>">

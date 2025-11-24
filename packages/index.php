@@ -54,12 +54,23 @@
                                                     <strong>قیمت:</strong> <?php echo number_format($package['price']); ?> تومان
                                                 </p>
 
+
                                                 <div class="mt-auto">
-                                                    <form action="cart_handler.php" method="POST">
-                                                        <input type="hidden" name="package_id" value="<?php echo $package['id']; ?>">
-                                                        <button type="submit" class="btn btn-primary btn-block w-100">افزودن به سبد خرید</button>
-                                                    </form>
+                                                    <div class="row">
+                                                        <div class="col-12 mb-2">
+                                                            <form action="cart_handler.php" method="POST">
+                                                                <input type="hidden" name="package_id" value="<?php echo $package['id']; ?>">
+                                                                <button type="submit" class="btn btn-success btn-block w-100">🛒 افزودن به سبد خرید</button>
+                                                            </form>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <a href="package.php?id=<?php echo $package['id']; ?>" class="btn btn-outline-info btn-block w-100">
+                                                                مشاهده جزئیات
+                                                            </a>
+                                                        </div>
+                                                    </div>
                                                 </div>
+                                                
                                             </div>
                                         </div>
                                     </div>
