@@ -97,7 +97,7 @@ $id = $_SESSION["all_data"]['id'];
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="spot_id" class="form-label">شناسه اسپات پلیر:</label>
-                                <input type="text" id="spot_id" name="spot_id" class="form-control" placeholder="نام مدرس را وارد کنید" required>
+                                <input type="text" id="spot_id" name="spot_id" class="form-control" placeholder="شناسه اسپات پلیر این دوره را وارد نید" required>
                             </div>
 
                             <div class="col-6 mb-3">

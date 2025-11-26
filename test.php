@@ -1,520 +1,407 @@
-<?php
-/**
- * Theme functions and definitions
- *
- * @package HelloElementor
- */
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>جزئیات پکیج</title>
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
-}
+    <?php include "includes.php"; ?>
+    <?php include "../config.php"; ?>
 
-define( 'HELLO_ELEMENTOR_VERSION', '3.4.4' );
-define( 'EHP_THEME_SLUG', 'hello-elementor' );
-
-define( 'HELLO_THEME_PATH', get_template_directory() );
-define( 'HELLO_THEME_URL', get_template_directory_uri() );
-define( 'HELLO_THEME_ASSETS_PATH', HELLO_THEME_PATH . '/assets/' );
-define( 'HELLO_THEME_ASSETS_URL', HELLO_THEME_URL . '/assets/' );
-define( 'HELLO_THEME_SCRIPTS_PATH', HELLO_THEME_ASSETS_PATH . 'js/' );
-define( 'HELLO_THEME_SCRIPTS_URL', HELLO_THEME_ASSETS_URL . 'js/' );
-define( 'HELLO_THEME_STYLE_PATH', HELLO_THEME_ASSETS_PATH . 'css/' );
-define( 'HELLO_THEME_STYLE_URL', HELLO_THEME_ASSETS_URL . 'css/' );
-define( 'HELLO_THEME_IMAGES_PATH', HELLO_THEME_ASSETS_PATH . 'images/' );
-define( 'HELLO_THEME_IMAGES_URL', HELLO_THEME_ASSETS_URL . 'images/' );
-
-if ( ! isset( $content_width ) ) {
-	$content_width = 800; // Pixels.
-}
-
-if ( ! function_exists( 'hello_elementor_setup' ) ) {
-	/**
-	 * Set up theme support.
-	 *
-	 * @return void
-	 */
-	function hello_elementor_setup() {
-		if ( is_admin() ) {
-			hello_maybe_update_theme_version_in_db();
-		}
-
-		if ( apply_filters( 'hello_elementor_register_menus', true ) ) {
-			register_nav_menus( [ 'menu-1' => esc_html__( 'Header', 'hello-elementor' ) ] );
-			register_nav_menus( [ 'menu-2' => esc_html__( 'Footer', 'hello-elementor' ) ] );
-		}
-
-		if ( apply_filters( 'hello_elementor_post_type_support', true ) ) {
-			add_post_type_support( 'page', 'excerpt' );
-		}
-
-		if ( apply_filters( 'hello_elementor_add_theme_support', true ) ) {
-			add_theme_support( 'post-thumbnails' );
-			add_theme_support( 'automatic-feed-links' );
-			add_theme_support( 'title-tag' );
-			add_theme_support(
-				'html5',
-				[
-					'search-form',
-					'comment-form',
-					'comment-list',
-					'gallery',
-					'caption',
-					'script',
-					'style',
-					'navigation-widgets',
-				]
-			);
-			add_theme_support(
-				'custom-logo',
-				[
-					'height'      => 100,
-					'width'       => 350,
-					'flex-height' => true,
-					'flex-width'  => true,
-				]
-			);
-			add_theme_support( 'align-wide' );
-			add_theme_support( 'responsive-embeds' );
-
-			/*
-			 * Editor Styles
-			 */
-			add_theme_support( 'editor-styles' );
-			add_editor_style( 'editor-styles.css' );
-
-			/*
-			 * WooCommerce.
-			 */
-			if ( apply_filters( 'hello_elementor_add_woocommerce_support', true ) ) {
-				// WooCommerce in general.
-				add_theme_support( 'woocommerce' );
-				// Enabling WooCommerce product gallery features (are off by default since WC 3.0.0).
-				// zoom.
-				add_theme_support( 'wc-product-gallery-zoom' );
-				// lightbox.
-				add_theme_support( 'wc-product-gallery-lightbox' );
-				// swipe.
-				add_theme_support( 'wc-product-gallery-slider' );
-			}
-		}
-	}
-}
-add_action( 'after_setup_theme', 'hello_elementor_setup' );
-
-function hello_maybe_update_theme_version_in_db() {
-	$theme_version_option_name = 'hello_theme_version';
-	// The theme version saved in the database.
-	$hello_theme_db_version = get_option( $theme_version_option_name );
-
-	// If the 'hello_theme_version' option does not exist in the DB, or the version needs to be updated, do the update.
-	if ( ! $hello_theme_db_version || version_compare( $hello_theme_db_version, HELLO_ELEMENTOR_VERSION, '<' ) ) {
-		update_option( $theme_version_option_name, HELLO_ELEMENTOR_VERSION );
-	}
-}
-
-if ( ! function_exists( 'hello_elementor_display_header_footer' ) ) {
-	/**
-	 * Check whether to display header footer.
-	 *
-	 * @return bool
-	 */
-	function hello_elementor_display_header_footer() {
-		$hello_elementor_header_footer = true;
-
-		return apply_filters( 'hello_elementor_header_footer', $hello_elementor_header_footer );
-	}
-}
-
-if ( ! function_exists( 'hello_elementor_scripts_styles' ) ) {
-	/**
-	 * Theme Scripts & Styles.
-	 *
-	 * @return void
-	 */
-	function hello_elementor_scripts_styles() {
-		if ( apply_filters( 'hello_elementor_enqueue_style', true ) ) {
-			wp_enqueue_style(
-				'hello-elementor',
-				HELLO_THEME_STYLE_URL . 'reset.css',
-				[],
-				HELLO_ELEMENTOR_VERSION
-			);
-		}
-
-		if ( apply_filters( 'hello_elementor_enqueue_theme_style', true ) ) {
-			wp_enqueue_style(
-				'hello-elementor-theme-style',
-				HELLO_THEME_STYLE_URL . 'theme.css',
-				[],
-				HELLO_ELEMENTOR_VERSION
-			);
-		}
-
-		if ( hello_elementor_display_header_footer() ) {
-			wp_enqueue_style(
-				'hello-elementor-header-footer',
-				HELLO_THEME_STYLE_URL . 'header-footer.css',
-				[],
-				HELLO_ELEMENTOR_VERSION
-			);
-		}
-	}
-}
-add_action( 'wp_enqueue_scripts', 'hello_elementor_scripts_styles' );
-
-if ( ! function_exists( 'hello_elementor_register_elementor_locations' ) ) {
-	/**
-	 * Register Elementor Locations.
-	 *
-	 * @param ElementorPro\Modules\ThemeBuilder\Classes\Locations_Manager $elementor_theme_manager theme manager.
-	 *
-	 * @return void
-	 */
-	function hello_elementor_register_elementor_locations( $elementor_theme_manager ) {
-		if ( apply_filters( 'hello_elementor_register_elementor_locations', true ) ) {
-			$elementor_theme_manager->register_all_core_location();
-		}
-	}
-}
-add_action( 'elementor/theme/register_locations', 'hello_elementor_register_elementor_locations' );
-
-if ( ! function_exists( 'hello_elementor_content_width' ) ) {
-	/**
-	 * Set default content width.
-	 *
-	 * @return void
-	 */
-	function hello_elementor_content_width() {
-		$GLOBALS['content_width'] = apply_filters( 'hello_elementor_content_width', 800 );
-	}
-}
-add_action( 'after_setup_theme', 'hello_elementor_content_width', 0 );
-
-if ( ! function_exists( 'hello_elementor_add_description_meta_tag' ) ) {
-	/**
-	 * Add description meta tag with excerpt text.
-	 *
-	 * @return void
-	 */
-	function hello_elementor_add_description_meta_tag() {
-		if ( ! apply_filters( 'hello_elementor_description_meta_tag', true ) ) {
-			return;
-		}
-
-		if ( ! is_singular() ) {
-			return;
-		}
-
-		$post = get_queried_object();
-		if ( empty( $post->post_excerpt ) ) {
-			return;
-		}
-
-		echo '<meta name="description" content="' . esc_attr( wp_strip_all_tags( $post->post_excerpt ) ) . '">' . "\n";
-	}
-}
-add_action( 'wp_head', 'hello_elementor_add_description_meta_tag' );
-
-// Settings page
-require get_template_directory() . '/includes/settings-functions.php';
-
-// Header & footer styling option, inside Elementor
-require get_template_directory() . '/includes/elementor-functions.php';
-
-if ( ! function_exists( 'hello_elementor_customizer' ) ) {
-	// Customizer controls
-	function hello_elementor_customizer() {
-		if ( ! is_customize_preview() ) {
-			return;
-		}
-
-		if ( ! hello_elementor_display_header_footer() ) {
-			return;
-		}
-
-		require get_template_directory() . '/includes/customizer-functions.php';
-	}
-}
-add_action( 'init', 'hello_elementor_customizer' );
-
-if ( ! function_exists( 'hello_elementor_check_hide_title' ) ) {
-	/**
-	 * Check whether to display the page title.
-	 *
-	 * @param bool $val default value.
-	 *
-	 * @return bool
-	 */
-	function hello_elementor_check_hide_title( $val ) {
-		if ( defined( 'ELEMENTOR_VERSION' ) ) {
-			$current_doc = Elementor\Plugin::instance()->documents->get( get_the_ID() );
-			if ( $current_doc && 'yes' === $current_doc->get_settings( 'hide_title' ) ) {
-				$val = false;
-			}
-		}
-		return $val;
-	}
-}
-add_filter( 'hello_elementor_page_title', 'hello_elementor_check_hide_title' );
-
-/**
- * BC:
- * In v2.7.0 the theme removed the `hello_elementor_body_open()` from `header.php` replacing it with `wp_body_open()`.
- * The following code prevents fatal errors in child themes that still use this function.
- */
-if ( ! function_exists( 'hello_elementor_body_open' ) ) {
-	function hello_elementor_body_open() {
-		wp_body_open();
-	}
-}
-
-require HELLO_THEME_PATH . '/theme.php';
-
-HelloTheme\Theme::instance();
-
-
-
-
-
-
-
-
-// مهشید
-function show_recent_posts_box($atts)
-{
-    // استخراج پارامترهای شورتکد
-    $atts = shortcode_atts(array(
-        'number' => 3,
-    ), $atts);
-
-    // شروع بافر خروجی
-    ob_start();
-
-    // کوئری وردپرس برای دریافت پست‌ها
-    $query = new WP_Query(array(
-        'posts_per_page' => $atts['number'],
-        'post_status' => 'publish',
-        'ignore_sticky_posts' => true
-    ));
-
-    if ($query->have_posts()) {
-        // استایل‌های CSS
-?>
-        <style>
-            .recent-posts-container {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 30px;
-                justify-content: center;
-                margin: 40px 0;
-            }
-
-            .recent-post-card {
-                width: calc(33.333% - 20px);
-                min-width: 280px;
-                background: #fff;
-                border-radius: 12px;
-                overflow: hidden;
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-                transition: all 0.3s ease;
-                position: relative;
-            }
-
-            .recent-post-card:hover {
-                transform: translateY(-10px);
-                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-            }
-
-            .post-thumbnail {
-                width: 100%;
-                height: 200px;
-                object-fit: cover;
-                display: block;
-            }
-
-            .post-content {
-                padding: 20px;
-            }
-
-            .post-title {
-                margin: 0 0 15px 0;
-                font-size: 1.2em;
-                line-height: 1.4;
-            }
-
-            .post-title a {
-                color: #333;
-                text-decoration: none;
-                transition: color 0.3s ease;
-            }
-
-            .post-title a:hover {
-                color: #4e6bff;
-            }
-
-            .post-excerpt {
-                color: #666;
-                font-size: 0.9em;
-                margin-bottom: 20px;
-                line-height: 1.6;
-            }
-
-            .read-more-btn {
-                display: inline-block;
-                padding: 8px 20px;
-                background: #4e6bff;
-                color: white;
-                text-decoration: none;
-                border-radius: 30px;
-                font-size: 0.9em;
-                transition: all 0.3s ease;
-            }
-
-            .read-more-btn:hover {
-                background: #3a56d4;
-                transform: translateY(-2px);
-            }
-
-            @media (max-width: 992px) {
-                .recent-post-card {
-                    width: calc(50% - 15px);
-                }
-            }
-
-            @media (max-width: 768px) {
-                .recent-post-card {
-                    width: 100%;
-                }
-            }
-        </style>
-
-        <div class="recent-posts-container">
-            <?php
-
-            while ($query->have_posts()) {
-                $query->the_post();
-            ?>
-                <div class="recent-post-card">
-                    <a href="<?php the_permalink(); ?>">
-                        <?php if (has_post_thumbnail()) {
-                            the_post_thumbnail('medium_large', array('class' => 'post-thumbnail'));
-                        } else {
-                            echo '<img src="' . get_template_directory_uri() . '/assets/images/default-thumbnail.jpg" class="post-thumbnail" alt="' . get_the_title() . '">';
-                        }
-                        ?>
-                    </a>
-                    <div class="post-content">
-                        <h3 class="post-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-                        <div class="post-excerpt"><?php echo wp_trim_words(get_the_excerpt(), 20); ?></div>
-                        <a href="<?php the_permalink(); ?>" class="read-more-btn">خواندن بیشتر</a>
-                    </div>
-                </div>
     <?php
-            }
+    // دریافت دیتای پکیج
+    $package = null;
+    if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+        $package_id = (int) $_GET['id'];
+        $stmt = $conn->prepare("SELECT * FROM `packages` WHERE `id` = ?");
+        $stmt->bind_param("i", $package_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result && $result->num_rows > 0) {
+            $package = $result->fetch_assoc();
+        }
+        $stmt->close();
+    }
 
-            echo '</div>';
-        } else {
-            echo '<p>هیچ پستی یافت نشد.</p>';
+    $pageUrl   = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http')
+                . "://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+    $pageTitle = $package ? "جزئیات پکیج: " . $package['name'] : "جزئیات پکیج";
+    $metaDesc  = $package
+        ? "دوره " . ($package['name'] ?? 'آموزشی') . " با تدریس " . ($package['teacher'] ?? 'مدرس') . "، شامل توضیحات، قیمت، پیش‌نمایش و ویژگی‌ها."
+        : "مشخصات و توضیحات پکیج آموزشی.";
+    $imageUrl  = ($package && !empty($package['pictures'])) ? "../" . htmlspecialchars($package['pictures']) : null;
+    ?>
+
+    <!-- سئو پایه -->
+    <meta name="description" content="<?php echo htmlspecialchars($metaDesc); ?>">
+    <link rel="canonical" href="<?php echo htmlspecialchars($pageUrl); ?>">
+    <meta property="og:locale" content="fa_IR">
+    <meta property="og:type" content="product">
+    <meta property="og:title" content="<?php echo htmlspecialchars($pageTitle); ?>">
+    <meta property="og:description" content="<?php echo htmlspecialchars($metaDesc); ?>">
+    <meta property="og:url" content="<?php echo htmlspecialchars($pageUrl); ?>">
+    <?php if ($imageUrl): ?>
+        <meta property="og:image" content="<?php echo $imageUrl; ?>">
+        <meta property="og:image:alt" content="<?php echo htmlspecialchars($package['name']); ?>">
+    <?php endif; ?>
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<?php echo htmlspecialchars($pageTitle); ?>">
+    <meta name="twitter:description" content="<?php echo htmlspecialchars($metaDesc); ?>">
+    <?php if ($imageUrl): ?>
+        <meta name="twitter:image" content="<?php echo $imageUrl; ?>">
+    <?php endif; ?>
+
+    <link rel="icon" href="../images/logo1.ico" type="image/x-icon">
+
+    <style>
+        /* پس‌زمینه کلی صورتی مطابق تصویر */
+        body {
+            background: #ffe3eb;
+            color: #111827;
+        }
+        .container-narrow { max-width: 1100px; }
+
+        /* هرو دو ستونه با پس‌زمینه صورتی روشن و خطوط ملایم */
+        .hero {
+            background: #ffd6e3;
+            border: 1px solid #ffc6d7;
+            border-radius: 1rem;
+            padding: 1.5rem;
+        }
+        .hero-right-title {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #111111;
+        }
+        .hero-right-sub {
+            font-size: 1.05rem;
+            color: #5b5b5b;
+            margin-bottom: .75rem;
         }
 
-        wp_reset_postdata();
+        /* دکمه ثبت‌نام بالا-چپ */
+        .register-top {
+            display: inline-block;
+            background: #111111;
+            color: #ffffff;
+            font-weight: 800;
+            border-radius: .6rem;
+            padding: .7rem 1rem;
+            text-decoration: none;
+        }
+        .register-top:hover { background: #000; color: #fff; }
 
-        return ob_get_clean();
+        /* کارت مدرس کارتونی و نشان‌ها */
+        .teacher-card {
+            background: #ffe9f0;
+            border: 1px solid #ffc6d7;
+            border-radius: 1rem;
+            padding: 1rem;
+            text-align: center;
+        }
+        .teacher-illustration {
+            width: 180px; height: 180px; object-fit: cover;
+            border-radius: 1rem;
+            border: 4px solid #fff;
+            box-shadow: 0 8px 24px rgba(0,0,0,.08);
+            background: #fff; /* اگر تصویر مدرس ندارید، سفید می‌ماند */
+        }
+        .teacher-name {
+            font-weight: 800; color: #111111; margin-top: .75rem;
+        }
+        .badge-list {
+            margin-top: 1rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: .5rem;
+        }
+        .badge-item {
+            background: #ffffff;
+            border: 1px solid #ffc6d7;
+            color: #111827;
+            padding: .5rem .7rem;
+            border-radius: .6rem;
+            font-weight: 700;
+            display: flex; align-items: center; gap: .5rem;
+        }
+
+        /* جعبه پکیج سمت راست */
+        .package-box {
+            background: #fff;
+            border: 1px solid #ffc6d7;
+            border-radius: .75rem;
+            padding: 1rem;
+            text-align: center;
+        }
+        .package-cover {
+            width: 100%;
+            max-height: 360px;
+            object-fit: cover;
+            border-radius: .75rem;
+            border: 1px solid #ffc6d7;
+            box-shadow: 0 10px 30px rgba(0,0,0,.08);
+        }
+        .package-caption {
+            margin-top: .6rem;
+            color: #444;
+            font-weight: 700;
+        }
+
+        /* قیمت و CTA داخل هرو (سمت راست زیر عنوان) */
+        .price-wrap {
+            display: inline-flex; align-items: center; gap: .5rem;
+            background: #fff;
+            border: 1px solid #ffc6d7;
+            color: #b42318;
+            padding: .5rem .8rem;
+            border-radius: .6rem;
+            font-weight: 800;
+        }
+        .cta-btn {
+            background: #111111; color: #fff; border: none;
+            font-weight: 900; padding: .8rem 1.2rem; border-radius: .6rem;
+        }
+        .cta-btn:hover { background: #000; }
+
+        /* بخش ویدیو + متن توضیح مطابق تصویر دوم */
+        .video-section {
+            background: #ffe9f0;
+            border: 1px solid #ffc6d7;
+            border-radius: 1rem;
+            padding: 1rem;
+        }
+        .ratio { position: relative; width: 100%; }
+        .ratio-16x9 { padding-top: 56.25%; }
+        .ratio > video, .ratio > iframe {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            border-radius: .75rem; border: 1px solid #ffc6d7; background: #fff;
+        }
+        .course-text {
+            margin-top: 1rem; color: #333; line-height: 2;
+            font-size: 1rem;
+        }
+        .course-text h2 {
+            font-size: 1.3rem; font-weight: 900; margin-bottom: .75rem; color: #111;
+        }
+
+        /* لینک‌ها */
+        .file-link { color: #0d6efd; font-weight: 700; text-decoration: none; }
+        .file-link:hover { text-decoration: underline; }
+
+        /* ریسپانسیو */
+        @media (max-width: 992px) {
+            .hero-right-title { font-size: 1.7rem; }
+        }
+    </style>
+</head>
+<body>
+
+<?php include 'header.php'; ?>
+
+<?php if (!$package): ?>
+    <div class="container container-narrow mt-5">
+        <div class="alert alert-warning text-center">
+            ⚠️ شناسه پکیج (ID) به درستی تعیین نشده یا پکیج یافت نشد. لطفاً از طریق صفحه اصلی اقدام کنید.
+        </div>
+    </div>
+    <?php include 'footer.php'; ?>
+    <?php $conn->close(); ?>
+    </body>
+</html>
+<?php exit; endif; ?>
+
+<?php
+// آماده‌سازی مقادیر امن
+$safeName    = htmlspecialchars($package['name']);
+$safeTeacher = htmlspecialchars($package['teacher']);
+$safeDesc    = nl2br(htmlspecialchars($package['description']));
+$safeAddress = !empty($package['address']) ? htmlspecialchars($package['address']) : null;
+$safePrice   = isset($package['price']) ? number_format((int)$package['price']) : "—";
+$safeCover   = !empty($package['pictures']) ? "../" . htmlspecialchars($package['pictures']) : null;
+$safeFile1   = !empty($package['file1']) ? "../" . htmlspecialchars($package['file1']) : null;
+$safeFile2   = !empty($package['file2']) ? "../" . htmlspecialchars($package['file2']) : null;
+$safeFile3   = !empty($package['file3']) ? "../" . htmlspecialchars($package['file3']) : null;
+$spotPlayer  = !empty($package['spotplayer']) ? htmlspecialchars($package['spotplayer']) : null;
+
+// Badge ها: منبع را از ستون course اگر موجود باشد
+$courseBadge = !empty($package['course']) ? htmlspecialchars($package['course']) : "مقدماتی تا پیشرفته";
+
+// ساخت عنوان صفحه
+echo "<script>document.title = " . json_encode("جزئیات پکیج: " . $safeName, JSON_UNESCAPED_UNICODE) . ";</script>";
+?>
+
+<!-- نوار دکمه ثبت‌نام بالای سمت چپ -->
+<div class="container container-narrow mt-4">
+    <div class="d-flex justify-content-start">
+        <a href="#register" class="register-top">ثبت نام در دوره</a>
+    </div>
+</div>
+
+<!-- هرو دو ستونه مطابق تصویر: سمت چپ مدرس و نشان‌ها، سمت راست عنوان‌ها و تصویر بسته -->
+<main class="container container-narrow my-3">
+    <section class="hero">
+        <div class="row g-4 align-items-start">
+            <!-- سمت چپ: مدرس کارتونی + نشان‌ها -->
+            <div class="col-lg-5">
+                <div class="teacher-card">
+                    <!-- اگر تصویر مدرس دارید، اینجا قرار دهید. فعلاً از کاور به‌عنوان نمونه استفاده نمی‌کنیم تا شبیه تصویر کارتونی باشد -->
+                    <div class="teacher-illustration d-inline-block"></div>
+                    <div class="teacher-name"><?php echo $safeTeacher; ?></div>
+
+                    <div class="badge-list">
+                        <div class="badge-item">🛡️ <span>۱ سال پشتیبانی</span></div>
+                        <div class="badge-item">📦 <span>۷ بخش</span></div>
+                        <div class="badge-item">⚙️ <span>در حال تکمیل</span></div>
+                        <div class="badge-item">🎓 <span>۱۰۰٪ رایگان همراه با ضمانت یادگیری</span></div>
+                    </div>
+
+                    <?php if ($spotPlayer): ?>
+                        <div class="mt-3">
+                            <a class="file-link" href="<?php echo $spotPlayer; ?>" target="_blank" rel="noopener">مشاهده در SpotPlayer</a>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+
+            <!-- سمت راست: عنوان‌ها، قیمت+CTA، تصویر بسته -->
+            <div class="col-lg-7">
+                <h1 class="hero-right-title">آموزش استادی سینما فوردی</h1>
+                <div class="hero-right-sub">مقدماتی تا پیشرفته</div>
+                <div class="hero-right-sub">با تدریس <?php echo $safeTeacher; ?></div>
+
+                <div class="d-flex align-items-center gap-3 my-3">
+                    <div class="price-wrap">
+                        <span>💰 قیمت:</span>
+                        <strong><?php echo $safePrice; ?> تومان</strong>
+                    </div>
+                    <form action="cart_handler.php" method="POST" id="register">
+                        <input type="hidden" name="package_id" value="<?php echo (int)$package['id']; ?>">
+                        <button type="submit" class="cta-btn">
+                            ثبت‌نام و افزودن به سبد خرید
+                        </button>
+                    </form>
+                </div>
+
+                <div class="package-box mt-2">
+                    <?php if ($safeCover): ?>
+                        <img class="package-cover" src="<?php echo $safeCover; ?>" alt="تصویر پکیج <?php echo $safeName; ?>">
+                        <div class="package-caption">دوره آموزش مدل سازی سینما فوردی ۲۰۲۳</div>
+                    <?php else: ?>
+                        <div class="text-muted">تصویر پکیج موجود نیست</div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- بخش ویدیو + متن توضیح مطابق تصویر دوم -->
+    <section class="video-section mt-4">
+        <div class="row g-4">
+            <div class="col-lg-5">
+                <?php if ($safeFile1): ?>
+                    <div class="ratio ratio-16x9">
+                        <video controls preload="metadata" aria-label="پیش‌نمایش دوره <?php echo $safeName; ?>">
+                            <source src="<?php echo $safeFile1; ?>" type="video/mp4">
+                            مرورگر شما از پخش ویدیو پشتیبانی نمی‌کند.
+                        </video>
+                    </div>
+                <?php else: ?>
+                    <div class="text-muted">پیش‌نمایش ویدیویی موجود نیست</div>
+                <?php endif; ?>
+            </div>
+            <div class="col-lg-7">
+                <div class="course-text">
+                    <h2>آموزش استادی سینما فوردی</h2>
+                    <p>
+                        دوره آموزش استادی سینما فوردی یک دوره بسیار جامع می‌باشد که شما را از دیگر دوره‌ها بی‌نیاز خواهد کرد.
+                        در این دوره بخش ابتدایی که آموزش عمومی سینما فوردی می‌باشد کاملا رایگان در اختیار علاقه‌مندان قرار خواهد گرفت
+                        تا با سبک تدریس آشنا شده و در صورت نیاز با اطمینان بیشتری اقدام به خریداری نمایید.
+                    </p>
+                    <!-- اگر می‌خواهید متن شرح را از دیتابیس جایگزین کنید: -->
+                    <div class="mt-3">
+                        <?php echo $safeDesc; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- فایل‌ها و منابع اضافه (اختیاری) -->
+    <?php if ($safeFile2 || $safeFile3): ?>
+    <section class="mt-4">
+        <div class="video-section">
+            <h3 class="h6 mb-3" style="font-weight:900;color:#111">📁 فایل‌ها و منابع</h3>
+            <ul class="list-unstyled m-0">
+                <?php if ($safeFile2): ?>
+                    <li class="mb-2">
+                        <span class="me-2">•</span>
+                        <a class="file-link" href="<?php echo $safeFile2; ?>" target="_blank" rel="noopener">دانلود فایل ۲</a>
+                    </li>
+                <?php endif; ?>
+                <?php if ($safeFile3): ?>
+                    <li>
+                        <span class="me-2">•</span>
+                        <a class="file-link" href="<?php echo $safeFile3; ?>" target="_blank" rel="noopener">دانلود فایل ۳</a>
+                    </li>
+                <?php endif; ?>
+            </ul>
+        </div>
+    </section>
+    <?php endif; ?>
+</main>
+
+<?php
+// اسکیما JSON-LD برای سئو
+$schemaCourse = [
+    "@context" => "https://schema.org",
+    "@type" => "Course",
+    "name" => $package['name'],
+    "description" => strip_tags($package['description']),
+    "provider" => [
+        "@type" => "Person",
+        "name" => $package['teacher']
+    ]
+];
+$schemaProduct = [
+    "@context" => "https://schema.org",
+    "@type" => "Product",
+    "name" => $package['name'],
+    "description" => strip_tags($package['description']),
+    "image" => $safeCover ?: null,
+    "brand" => [ "@type" => "Organization", "name" => "آکادمی آموزشی" ],
+    "offers" => [
+        "@type" => "Offer",
+        "priceCurrency" => "IRR",
+        "price" => (string) ((int) $package['price']),
+        "availability" => "https://schema.org/InStock",
+        "url" => $pageUrl
+    ]
+];
+?>
+<script type="application/ld+json">
+<?php echo json_encode($schemaCourse, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?>
+</script>
+<script type="application/ld+json">
+<?php echo json_encode($schemaProduct, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?>
+</script>
+
+<?php include 'footer.php'; ?>
+<?php $conn->close(); ?>
+
+<!-- ویجت گفتینو -->
+<script type="text/javascript">
+!function(){
+    var i="4Ey6dG",a=window,d=document;
+    function g(){
+        var g=d.createElement("script"),
+            s="https://www.goftino.com/widget/"+i,
+            l=localStorage.getItem("goftino_"+i);
+        g.async=!0,g.src=l?s+"?o="+l:s;
+        d.getElementsByTagName("head")[0].appendChild(g);
     }
-    add_shortcode('recent_posts', 'show_recent_posts_box');
+    "complete"===d.readyState?g():a.attachEvent?a.attachEvent("onload",g):a.addEventListener("load",g,!1);
+}();
+</script>
 
-
-
-
-
-add_action('woocommerce_before_cart', 'custom_cart_payment_notice');
-function custom_cart_payment_notice() {
-    echo '<div style="padding:15px; background:#fff8e1; border:1px solid #fbc02d; border-radius:8px; margin-bottom:20px; font-family:Tahoma;">
-        <strong>روش پرداخت کارت به کارت</strong><br>
-        💳 شماره کارت: <strong>6037-6975-6574-3298</strong><br>
-        به نام: <strong>مهشید خودسیانی</strong><br>
-        📩 لطفاً فیش واریزی را به شماره <strong>09130109552</strong> ارسال کنید.
-    </div>';
-}
-
-
-
-
-
-/**
- * حذف کامل چک باکس "حمل و نقل به یک آدرس متفاوت؟" در صفحه تسویه حساب
- * ووکامرس را مجبور می‌کند که از آدرس صورتحساب برای حمل و نقل استفاده کند.
- */
-add_filter( 'woocommerce_cart_needs_shipping_address', '__return_false' );
-
-
-
-
-
-
-
-
-
-add_filter('woocommerce_checkout_fields', 'customize_checkout_fields_update');
-
-function customize_checkout_fields_update($fields)
-{
-
-    // ۱. اجباری کردن فیلد تلفن و تغییر برچسب آدرس
-
-    // فیلد تلفن (billing_phone) را اجباری (Required) می‌کند
-    $fields['billing']['billing_phone']['required'] = true;
-
-    // **تغییر برچسب فیلد آدرس اصلی (billing_address_1) به "آدرس کامل"**
-    $fields['billing']['billing_address_1']['label'] = 'آدرس کامل';
-    // تغییر برچسب فیلد استان/ایالت
-    $fields['billing']['billing_state']['label'] = 'شهر ';
-
-    // ۲. حذف فیلدهای اضافی
-
-    // حذف فیلد آدرس ایمیل (billing_email)
-    unset($fields['billing']['billing_email']);
-    // حذف فیلد کشور
-    unset($fields['billing']['billing_country']);
-
-    // **حذف فیلد آپارتمان/واحد (billing_address_2)**
-    unset($fields['billing']['billing_address_2']);
-
-    // حذف فیلد شهر (billing_city) - **توجه:** چون شما فیلد billing_state را نگه داشته‌اید،
-    // حذف billing_city ممکن است در برخی ساختارها باعث مشکل شود. اگر قصد استفاده از آن را ندارید، حذفش کنید.
-    unset($fields['billing']['billing_city']);
-
-    // حذف نام شرکت (اختیاری)
-    // unset($fields['billing']['billing_company']);
-
-    return $fields;
-}
-
-
-// --- کد جدید برای محدود کردن فیلد استان/ایالت (billing_state) ---
-/**
- * محدود کردن گزینه‌های فیلد استان/ایالت (billing_state) به اصفهان
- * در صورت فعال بودن فیلد billing_country.
- */
-add_filter('woocommerce_states', 'limit_woocommerce_states_to_esfahan');
-
-function limit_woocommerce_states_to_esfahan($states)
-{
-    // کد استان اصفهان در ووکامرس ایران ESF است
-    $esfahan_code = 'ESF';
-    $esfahan_name = 'اصفهان';
-
-    // ابتدا بررسی می‌کنیم که کشور ایران (IR) وجود داشته باشد
-    if (isset($states['IR'])) {
-        // یک آرایه جدید حاوی فقط اصفهان ایجاد می‌کنیم
-        $limited_states = array(
-            $esfahan_code => $esfahan_name
-        );
-
-        // لیست استان‌های ایران را به این آرایه محدود شده تغییر می‌دهیم
-        $states['IR'] = $limited_states;
-    }
-
-    return $states;
-}
-
+</body>
+</html>
