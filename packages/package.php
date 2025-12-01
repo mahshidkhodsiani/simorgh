@@ -1,123 +1,127 @@
+<?php
+// این بخش در <head> قرار می‌گیرد، بنابراین کد زیر از فایل قبلی حفظ می‌شود
+// اگر id معتبر ارسال شده باشد، برای تولید متاها از دیتابیس استفاده می‌کنیم
+$meta_description = "جزئیات پکیج آموزشی";
+if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+    include_once '../config.php';
+    $tmp_id = (int)$_GET['id'];
+    if (isset($conn) && $conn instanceof mysqli) {
+        $q = $conn->prepare("SELECT `name`, `description`, `pictures` FROM `packages` WHERE `id` = ?");
+        if ($q) {
+            $q->bind_param("i", $tmp_id);
+            $q->execute();
+            $r = $q->get_result();
+            if ($r && $r->num_rows) {
+                $p_tmp = $r->fetch_assoc();
+                // 160 کاراکتر برای توضیحات متا
+                $meta_description = mb_substr(strip_tags($p_tmp['description'] ?: $p_tmp['name']), 0, 160, 'UTF-8');
+                // عنوان صفحه را در تگ title هم قرار می‌دهیم
+                echo '<script>document.title = "جزئیات پکیج: ' . htmlspecialchars($p_tmp['name'], ENT_QUOTES, 'UTF-8') . '";</script>';
+            }
+            $q->close();
+        }
+        // اگر اتصال باز باشد، آن را می‌بندیم. (این اتصال موقت برای متاها بود)
+        $conn->close();
+        unset($conn);
+    }
+}
+?>
 <!doctype html>
 <html lang="fa" dir="rtl">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>جزئیات پکیج</title>
-
+    
     <?php include "includes.php"; ?>
-
+    
     <link rel="icon" href="../images/logo1.ico" type="image/x-icon">
-
-    <?php
-    // اگر id معتبر ارسال شده باشد، برای تولید متاها از دیتابیس استفاده می‌کنیم
-    $meta_description = "جزئیات پکیج آموزشی";
-    if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-        include_once '../config.php';
-        $tmp_id = (int)$_GET['id'];
-        if (isset($conn) && $conn instanceof mysqli) {
-            $q = $conn->prepare("SELECT `name`, `description`, `pictures` FROM `packages` WHERE `id` = ?");
-            if ($q) {
-                $q->bind_param("i", $tmp_id);
-                $q->execute();
-                $r = $q->get_result();
-                if ($r && $r->num_rows) {
-                    $p_tmp = $r->fetch_assoc();
-                    $meta_description = mb_substr(strip_tags($p_tmp['description'] ?: $p_tmp['name']), 0, 160);
-                    // عنوان صفحه را در تگ title هم قرار می‌دهیم
-                    echo '<script>document.title = "جزئیات پکیج: ' . htmlspecialchars($p_tmp['name'], ENT_QUOTES, 'UTF-8') . '";</script>';
-                }
-                $q->close();
-            }
-            $conn->close();
-        }
-    }
-    ?>
-
+    
     <meta name="description" content="<?php echo htmlspecialchars($meta_description, ENT_QUOTES, 'UTF-8'); ?>">
     <meta name="robots" content="index, follow">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
     <style>
         /* استایل سفارشی برای نمایش بهتر جزئیات */
-        .detail-item strong {
-            display: inline-block;
-            min-width: 150px;
-            /* برای هم‌راستایی بهتر عناوین */
-        }
-
-        .file-link {
-            color: #007bff;
-            text-decoration: none;
-        }
-
-        .file-link:hover {
-            text-decoration: underline;
-        }
-
-        /* استایل‌های بلوک تبلیغی شبیه تصویر */
-        .promo-card {
-            background: linear-gradient(135deg, #f7c6e0 0%, #f0a6d1 100%);
-            border-radius: 12px;
-            padding: 22px;
-            color: #222;
-        }
-
-        .promo-avatar {
-            width: 220px;
-            height: 220px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 6px solid rgba(255, 255, 255, 0.6);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
-        }
-
-        .feature-item {
-            background: rgba(255, 255, 255, 0.18);
-            padding: 8px 12px;
-            border-radius: 999px;
-            font-weight: 700;
-            color: #fff;
-            margin: 6px;
-            display: inline-block;
-        }
-
-        .register-btn {
-            background: #ff5c9e;
-            color: #fff;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 10px;
-            font-weight: 800;
-            text-decoration: none;
-        }
-
-        .course-card {
-            background: #fff;
-            border-radius: 12px;
-            padding: 14px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-        }
-
+        .detail-item strong { display: inline-block; min-width: 150px; }
+        .file-link { color: #007bff; text-decoration: none; }
+        .file-link:hover { text-decoration: underline; }
+        .promo-card { background: linear-gradient(135deg, #f7c6e0 0%, #f0a6d1 100%); border-radius: 12px; padding: 22px; color: #222; }
+        .promo-avatar { width: 220px; height: 220px; border-radius: 50%; object-fit: cover; border: 6px solid rgba(255, 255, 255, 0.6); box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12); }
+        .feature-item { background: rgba(255, 255, 255, 0.18); padding: 8px 12px; border-radius: 999px; font-weight: 700; color: #fff; margin: 6px; display: inline-block; }
+        .register-btn { background: #ff5c9e; color: #fff; border: none; padding: 10px 18px; border-radius: 10px; font-weight: 800; text-decoration: none; }
+        .course-card { background: #fff; border-radius: 12px; padding: 14px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06); }
         @media (max-width: 767px) {
-            .promo-avatar {
-                width: 140px;
-                height: 140px;
-            }
+            .promo-avatar { width: 140px; height: 140px; }
+            .promo-card { padding: 14px; }
+        }
 
-            .promo-card {
-                padding: 14px;
-            }
+        /* --- استایل جدید برای لیست جلسات --- */
+        .session-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .session-item:hover { background-color: #e9ecef; }
+        .session-info {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+        }
+        .session-number {
+            font-weight: bold;
+            color: #6c757d;
+            min-width: 60px;
+            text-align: right;
+        }
+        .session-title {
+            margin-right: 15px;
+            font-weight: 600;
+        }
+        .session-duration {
+            font-size: 0.85em;
+            color: #495057;
+            text-align: left;
+            min-width: 80px;
+        }
+        .play-icon {
+            color: #dc3545; /* رنگ قرمز برای هشدار */
+            margin-left: 10px;
+        }
+        
+        /* اصلاح استایل توضیحات */
+        .description-content img {
+            max-width: 100%;
+            height: auto;
+        }
+        .description-content p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+            text-align: justify;
         }
     </style>
 </head>
 
 <body>
 
-    <?php
-    include 'header.php';
+    <?php 
+    // اینکلود هدر
+    include 'header.php'; 
+    // ایجاد مجدد اتصال دیتابیس برای ادامه صفحه
     include '../config.php';
+    ?>
 
+    <?php
     // --- منطق بازیابی اطلاعات ---
     if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         $package_id = (int)$_GET['id'];
@@ -127,6 +131,7 @@
         $stmt = $conn->prepare($sql);
         if ($stmt === false) {
             echo "<div class='container mt-5'><div class='alert alert-danger text-center'>خطا در آماده‌سازی کوئری.</div></div>";
+            $conn->close(); // بستن اتصال در صورت خطا
             include 'footer.php';
             exit;
         }
@@ -136,85 +141,136 @@
 
         if ($result->num_rows > 0) {
             $package = $result->fetch_assoc();
-            // عنوان صفحه را به‌روز می‌کنیم (برای مرورگرهایی که JS ندارند، تگ title در head هم تنظیم شده بود)
+            // عنوان صفحه را به‌روز می‌کنیم 
             echo "<script>document.title = 'جزئیات پکیج: " . htmlspecialchars($package['name'], ENT_QUOTES, 'UTF-8') . "';</script>";
             // مسیر تصویر را امن‌سازی می‌کنیم
             $picture = !empty($package['pictures']) ? ('../' . ltrim($package['pictures'], '/')) : '../images/default-course.jpg';
-            $price_text = !empty($package['price']) ? htmlspecialchars($package['price'], ENT_QUOTES, 'UTF-8') . ' تومان' : 'رایگان';
+            $price_text = !empty($package['price']) ? htmlspecialchars($package['price'], ENT_QUOTES, 'UTF-8') . ' ریال' : 'رایگان';
     ?>
+    <div class="container mt-4">
 
-
-
-
-                <section class="promo-card">
-                    <div class="row align-items-center">
-                        <div class="col-md-6 text-center mb-4 mb-md-0">
-                            <img class="promo-avatar rounded-circle shadow-lg" 
-                                src="<?php echo htmlspecialchars($picture, ENT_QUOTES, 'UTF-8'); ?>" 
-                                alt="تصویر پکیج <?php echo htmlspecialchars($package['name'], ENT_QUOTES, 'UTF-8'); ?>" 
-                                loading="lazy" 
-                                width="300" 
-                                height="300">
-                            
-                            <div class="mt-4">
-                                <div class="feature-item">۱ سال پشتیبانی</div>
-                                
-                                <div class="feature-item">تکمیل شده</div>
-                                
-                            </div>
-                            
-                            <div class="mt-4">
-                                
-                                <form action="cart_handler.php" method="POST">
-                                    <input type="hidden" name="package_id" value="<?php echo $package['id']; ?>">
-                                    <button type="submit" class="register-btn">
-                                        🛒 افزودن به سبد خرید
-                                    </button>
-                                </form>
-                                
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 text-md-right">
-                            
-                            <h2 class="mb-1 bold"><?= htmlspecialchars($package['name'], ENT_QUOTES, 'UTF-8'); ?></h2>
-                            <p>مقدماتی تا پیشرفته</p>
-                            <h5>با تدریس <?= $package['teacher'] ?></h5>
-                            
-                            <hr>
-                            
-                            <div class="my-3">
-                                <strong>قیمت</strong>
-                                <h3 class="text-success fw-bold"><?= number_format($package['price']) ?> تومان</h3>
-                            </div>
-
-                            <div class="my-4">
-                                <video controls class="w-100 rounded shadow-sm">
-                                    <source src="../<?= $package['file1'] ?>" type="video/mp4">
-                                    مرورگر شما از تگ ویدئو پشتیبانی نمی‌کند.
-                                </video>
-                            </div>
-                            
-                      
-                        </div>
+        <section class="promo-card">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center mb-4 mb-md-0">
+                    <img class="promo-avatar rounded-circle shadow-lg" 
+                        src="<?php echo htmlspecialchars($picture, ENT_QUOTES, 'UTF-8'); ?>" 
+                        alt="تصویر پکیج <?php echo htmlspecialchars($package['name'], ENT_QUOTES, 'UTF-8'); ?>" 
+                        loading="lazy" 
+                        width="300" 
+                        height="300">
+                    
+                    <div class="mt-4">
+                        <div class="feature-item">۱ سال پشتیبانی</div>
+                        <div class="feature-item">تکمیل شده</div>
                     </div>
-                </section>
-
-                <div class="container">
-
-                <!-- فایل‌ها و سرفصل‌ها -->
-                    <div class="row mt-4">
-                        <div class="col-lg-12">
-                            <h4 class="h6">توضیحات</h4>
-                            <p class="lead" style="max-width:95%;"><?php echo $package['description']; ?></p>
-                        </div>
-
+                    
+                    <div class="mt-4">
+                        <form action="cart_handler.php" method="POST">
+                            <input type="hidden" name="package_id" value="<?php echo $package['id']; ?>">
+                            <button type="submit" class="register-btn">
+                                🛒 افزودن به سبد خرید
+                            </button>
+                        </form>
                     </div>
-                </div>         
+                </div>
 
-            <br><br><br>
+                <div class="col-md-6 text-md-right">
+                    <h2 class="mb-1 bold"><?= htmlspecialchars($package['name'], ENT_QUOTES, 'UTF-8'); ?></h2>
+                    <p>مقدماتی تا پیشرفته</p>
+                    <h5>با تدریس <?= $package['teacher'] ?></h5>
+                    
+                    <hr>
+                    
+                    <div class="my-3">
+                        <strong>قیمت</strong>
+                        <h3 class="text-success fw-bold"><?= number_format($package['price']) ?> ریال</h3>
+                    </div>
 
-    <?php
+                    <div class="my-4">
+                        <video controls class="w-100 rounded shadow-sm">
+                            <source src="../<?= htmlspecialchars($package['file1'], ENT_QUOTES, 'UTF-8') ?>" type="video/mp4">
+                            مرورگر شما از تگ ویدئو پشتیبانی نمی‌کند.
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="row mt-5">
+            <div class="col-lg-12">
+                <div class="course-card mb-4">
+                    <h4 class="h6 mb-3"><i class="fas fa-file-alt me-2"></i>توضیحات کامل پکیج</h4>
+                    <div class="description-content">
+                        <?php 
+                        // محتوا به صورت HTML رندر می‌شود و اگر HTML شامل تگ‌های نامناسب باشد، مشکل از آنجاست.
+                        echo $package['description']; 
+                        ?>
+                    </div>
+                </div>
+
+                <div class="course-card">
+                    <h4 class="h6 mb-3"><i class="fas fa-list-ol me-2"></i>سرفصل‌ها و جلسات دوره</h4>
+                    
+                    <?php
+                    // کوئری برای دریافت جلسات مربوط به این پکیج
+                    $sessions_sql = "SELECT title, duration_minutes FROM `sessions` WHERE `package_id` = ? ORDER BY id ASC";
+                    $sessions_stmt = $conn->prepare($sessions_sql);
+                    $sessions_stmt->bind_param("i", $package_id);
+                    $sessions_stmt->execute();
+                    $sessions_result = $sessions_stmt->get_result();
+
+                    if ($sessions_result->num_rows > 0) {
+                        $session_count = 1;
+                        while ($session = $sessions_result->fetch_assoc()) {
+                            $duration = (int)$session['duration_minutes'];
+                            // تبدیل دقیقه به قالب M:S
+                            $minutes = floor($duration);
+                            // 3 ثانیه برای حالت پیش‌فرض و 3 ثانیه برای کلیک
+                            $seconds = str_pad(round(($duration - $minutes) * 60), 2, '0', STR_PAD_LEFT); 
+                            $duration_formatted = $duration > 0 ? $minutes . ':' . $seconds : 'نامشخص';
+                    ?>
+                        <div class="session-item" onclick="showSpotPlayerAlert()">
+                            <div class="session-info">
+                                <span class="session-number">درس <?= $session_count ?></span>
+                                <span class="session-title"><?= htmlspecialchars($session['title'], ENT_QUOTES, 'UTF-8') ?></span>
+                            </div>
+                            <div class="session-duration">
+                                <?= $duration_formatted ?> دقیقه
+                            </div>
+                            <div class="play-icon">
+                                <i class="fas fa-play-circle"></i>
+                            </div>
+                        </div>
+                    <?php
+                            $session_count++;
+                        }
+                        $sessions_stmt->close();
+                    } else {
+                        echo "<div class='alert alert-info text-center'>هنوز هیچ جلسه‌ای برای این پکیج ثبت نشده است.</div>";
+                    }
+                    ?>
+
+                </div>
+            </div>
+        </div> 
+
+        <br><br><br>
+        
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div id="spotPlayerAlert" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
+                <div class="toast-header bg-danger text-white">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <strong class="me-auto">هشدار مهم</strong>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body text-danger">
+                    ⚠️ تماشای جلسات فقط از طریق **نرم‌افزار اسپات پلیر (Spot Player)** امکان‌پذیر است. لطفاً دوره را خریداری کرده و لایسنس را در پلیر خود وارد کنید.
+                </div>
+            </div>
+        </div>
+
+
+    </div> <?php
         } else {
             // پکیجی با این ID پیدا نشد
             echo "<div class='container mt-5'><div class='alert alert-danger text-center'>⚠️ پکیج مورد نظر با شناسه " . htmlspecialchars($package_id, ENT_QUOTES, 'UTF-8') . " پیدا نشد.</div></div>";
@@ -226,6 +282,7 @@
     }
 
     $conn->close();
+    // اینکلود فوتر
     include 'footer.php';
     ?>
 
@@ -246,7 +303,15 @@
             "complete" === d.readyState ? g() : a.attachEvent ? a.attachEvent("onload", g) : a.addEventListener("load", g, !1);
         }();
     </script>
+    
+    <script>
+        function showSpotPlayerAlert() {
+            // ایجاد و نمایش Toast
+            var toastEl = document.getElementById('spotPlayerAlert');
+            var toast = new bootstrap.Toast(toastEl);
+            toast.show();
+        }
+    </script>
 
 </body>
-
 </html>

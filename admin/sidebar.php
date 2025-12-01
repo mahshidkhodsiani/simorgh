@@ -159,6 +159,10 @@
         <i class="fas fa-box"></i> افزودن پکیج ها
     </a>
 
+    <a href="new_session" class="<?php if (basename($_SERVER['REQUEST_URI']) === 'new_session') echo 'active'; ?>">
+        <i class="fas fa-box"></i> افزودن جلسات پکیج
+    </a>
+
     <a href="new_matlab" class="<?php if (basename($_SERVER['REQUEST_URI']) === 'new_matlab') echo 'active'; ?>">
         <i class="fas fa-book-open"></i> افزودن مطلب و دوره
     </a>

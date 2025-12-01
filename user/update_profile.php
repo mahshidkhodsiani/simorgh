@@ -13,34 +13,39 @@ $user_id = $_SESSION['all_data']['id'];
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     include '../config.php';
 
-    // ✅ تغییر در اینجا: دریافت فیلد جدید meli_code
     $name = $_POST['name'];
     $family = $_POST['family'];
+    $mobile = $_POST['mobile']; // ✅ دریافت فیلد جدید mobile
     $username = $_POST['username'];
-    $meli_code = $_POST['meli_code']; // ✅ اضافه شدن فیلد کد ملی
+    $meli_code = $_POST['meli_code']; 
     $password = $_POST['password'];
 
     // آماده‌سازی query برای به‌روزرسانی
     if (!empty($password)) {
         // اگر رمز عبور وارد شده بود، آن را هش کنید
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        // ✅ تغییر در اینجا: اضافه شدن meli_code به کوئری
-        $sql = "UPDATE users SET name = ?, family = ?, username = ?, meli_code = ?, password = ? WHERE id = ?";
+        
+        // ✅ اصلاح: اضافه شدن mobile به کوئری
+        $sql = "UPDATE users SET name = ?, family = ?, mobile = ?, username = ?, meli_code = ?, password = ? WHERE id = ?";
         $stmt = $conn->prepare($sql);
-        // ✅ تغییر در اینجا: اضافه شدن 's' برای نوع meli_code و متغیر $meli_code
-        $stmt->bind_param("sssssi", $name, $family, $username, $meli_code, $hashed_password, $user_id);
+        // ✅ اصلاح: اضافه شدن 's' برای نوع mobile و متغیر $mobile
+        $stmt->bind_param("ssssssi", $name, $family, $mobile, $username, $meli_code, $hashed_password, $user_id);
     } else {
         // اگر رمز عبور خالی بود، آن را به‌روزرسانی نکنید
-        // ✅ تغییر در اینجا: اضافه شدن meli_code به کوئری
-        $sql = "UPDATE users SET name = ?, family = ?, username = ?, meli_code = ? WHERE id = ?";
+        
+        // ✅ اصلاح: اضافه شدن mobile به کوئری
+        $sql = "UPDATE users SET name = ?, family = ?, mobile = ?, username = ?, meli_code = ? WHERE id = ?";
         $stmt = $conn->prepare($sql);
-        // ✅ تغییر در اینجا: اضافه شدن 's' برای نوع meli_code و متغیر $meli_code
-        $stmt->bind_param("ssssi", $name, $family, $username, $meli_code, $user_id);
+        // ✅ اصلاح: اضافه شدن 's' برای نوع mobile و متغیر $mobile
+        $stmt->bind_param("sssssi", $name, $family, $mobile, $username, $meli_code, $user_id);
     }
 
     if ($stmt->execute()) {
         // اگر به‌روزرسانی موفقیت‌آمیز بود، پیام موفقیت را در سشن ذخیره کرده و به صفحه پروفایل برگردید
         $_SESSION['success_message'] = "اطلاعات پروفایل شما با موفقیت به‌روزرسانی شد.";
+        
+        // مهم: به‌روزرسانی mobile در سشن
+        $_SESSION['all_data']['mobile'] = $mobile;
     } else {
         // در صورت خطا
         $_SESSION['success_message'] = "خطا در به‌روزرسانی اطلاعات: " . $conn->error;
