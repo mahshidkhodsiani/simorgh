@@ -1,5 +1,5 @@
 /* --- فونت و استایل پایه --- */
-@font-face {
+/* @font-face {
   font-family: "BNazanin";
   src: url("../fonts/fonts/BNazanin.woff2") format("woff2"),
     url("../fonts/fonts/BNazanin.woff") format("woff"),
@@ -11,6 +11,19 @@
 
 body {
   font-family: "BNazanin" !important;
+} */
+
+
+@font-face {
+    font-family: 'estedad';
+    /* src: url('fonts/estedad.woff2') format('woff2'), */
+    src:
+        url('../fonts/ttf/Estedad-Medium.ttf') format('truetype'),
+}
+
+body , p, h1, h2, h3, h4, h5, h6, a, li, span, div {
+    font-family: 'estedad', sans-serif !important;
+    line-height: 2 !important;
 }
 
 html,

@@ -10,8 +10,8 @@ $user_id = $_SESSION['all_data']['id'];
 
 include '../config.php';
 
-// کوئری اصلاح‌شده که از ستون 'price' به‌جای 'amount' استفاده می‌کند
-$stmt_courses = $conn->prepare("SELECT up.paid, p.name AS package_name, p.price AS package_price FROM user_package up JOIN packages p ON up.package_id = p.id WHERE up.user_id = ?");
+// کوئری اصلاح‌شده برای واکشی ستون 'license_key'
+$stmt_courses = $conn->prepare("SELECT up.paid, up.license_key, p.name AS package_name, p.price AS package_price FROM user_package up JOIN packages p ON up.package_id = p.id WHERE up.user_id = ?");
 $stmt_courses->bind_param("i", $user_id);
 $stmt_courses->execute();
 $result_courses = $stmt_courses->get_result();
@@ -52,7 +52,7 @@ $conn->close();
                 <div class="container py-4">
                     <h1 class="h3 mb-4 text-gray-800"><i class="bi bi-book me-2"></i>پکیج های من</h1>
                     <div class="row">
-                        <div class="col-lg-8 mx-auto">
+                        <div class="col-lg-10 mx-auto">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">لیست پکیج های ثبت‌نام شده</h6>
@@ -67,7 +67,7 @@ $conn->close();
                                                         <th scope="col">نام دوره</th>
                                                         <th scope="col">مبلغ</th>
                                                         <th scope="col">وضعیت پرداخت</th>
-                                                    </tr>
+                                                        <th scope="col">کلید لایسنس</th> </tr>
                                                 </thead>
                                                 <tbody>
                                                     <?php $counter = 1; ?>
@@ -75,12 +75,22 @@ $conn->close();
                                                         <tr>
                                                             <th scope="row"><?php echo $counter++; ?></th>
                                                             <td><?php echo htmlspecialchars($course['package_name']); ?></td>
-                                                            <td><?php echo number_format($course['package_price']); ?> تومان</td>
+                                                            <td><?php echo number_format($course['package_price']); ?> ریال</td>
                                                             <td>
                                                                 <?php if ($course['paid'] == 1): ?>
                                                                     <span class="badge bg-success">پرداخت شده</span>
                                                                 <?php else: ?>
                                                                     <span class="badge bg-danger">در انتظار پرداخت</span>
+                                                                <?php endif; ?>
+                                                            </td>
+                                                            <td> <?php 
+                                                                    if ($course['paid'] == 1 && !empty($course['license_key'])): 
+                                                                ?>
+                                                                    <code class="text-break small"><?php echo htmlspecialchars($course['license_key']); ?></code>
+                                                                <?php elseif ($course['paid'] == 1): ?>
+                                                                    <span class="text-danger small">کلید موجود نیست!</span>
+                                                                <?php else: ?>
+                                                                    <span class="text-muted small">پس از پرداخت</span>
                                                                 <?php endif; ?>
                                                             </td>
                                                         </tr>

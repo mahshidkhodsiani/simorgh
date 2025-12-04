@@ -48,6 +48,21 @@ if (session_status() === PHP_SESSION_NONE) {
 
 
 
+
+    <style>
+        @font-face {
+            font-family: 'estedad';
+            /* src: url('fonts/estedad.woff2') format('woff2'), */
+            src:
+                url('fonts/ttf/Estedad-Medium.ttf') format('truetype'),
+        }
+
+        body {
+            font-family: 'estedad', sans-serif !important;
+            line-height: 2 !important;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -160,7 +175,7 @@ if (session_status() === PHP_SESSION_NONE) {
                             <div class="col-6 col-md-6 mb-4 card-spacing">
                                 <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
                                     <div class="card-body d-flex flex-row justify-content-between align-items-center p-4">
-                                        <h4 class="card-title rtl-title fw-bold text-dark mb-0">پرداخت اقساطی دوره ها</h4>
+                                        <h6 class="card-title rtl-title fw-bold text-dark mb-0">پرداخت اقساطی دوره ها</h6>
                                         <a href="register2" class="btn btn-outline-quarternary fw-bold">ثبت نام &rarr;</a>
                                     </div>
                                 </div>
@@ -169,7 +184,7 @@ if (session_status() === PHP_SESSION_NONE) {
                             <div class="col-6 col-md-6 mb-4 card-spacing">
                                 <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
                                     <div class="card-body d-flex flex-row justify-content-between align-items-center p-4">
-                                        <h4 class="card-title rtl-title fw-bold text-dark mb-0">پرداخت نقدی دوره ها</h4>
+                                        <h6 class="card-title rtl-title fw-bold text-dark mb-0">پرداخت نقدی دوره ها</h6>
                                         <a href="register" class="btn btn-outline-quarternary fw-bold">رفتن به صفحه &rarr;</a>
                                     </div>
                                 </div>
@@ -178,7 +193,7 @@ if (session_status() === PHP_SESSION_NONE) {
                             <div class="col-6 col-md-6 mb-4 card-spacing">
                                 <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
                                     <div class="card-body d-flex flex-row justify-content-between align-items-center p-4">
-                                        <h4 class="card-title rtl-title fw-bold text-dark mb-0">پرداخت آزاد به موسسه</h4>
+                                        <h6 class="card-title rtl-title fw-bold text-dark mb-0">پرداخت آزاد به موسسه</h6>
                                         <a href="pardakht" class="btn btn-outline-quarternary fw-bold">پرداخت &rarr;</a>
                                     </div>
                                 </div>
@@ -187,7 +202,7 @@ if (session_status() === PHP_SESSION_NONE) {
                             <div class="col-6 col-md-6 mb-4 card-spacing">
                                 <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
                                     <div class="card-body d-flex flex-row justify-content-between align-items-center p-4">
-                                        <h4 class="card-title rtl-title fw-bold text-dark mb-0">پکیج های آموزشی</h4>
+                                        <h6 class="card-title rtl-title fw-bold text-dark mb-0">پکیج های آموزشی</h6>
                                         <a href="packages" class="btn btn-outline-quarternary fw-bold">ثبت نام &rarr;</a>
                                     </div>
                                 </div>
@@ -196,7 +211,7 @@ if (session_status() === PHP_SESSION_NONE) {
                             <div class="col-6 col-md-6 mb-4 card-spacing">
                                 <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
                                     <div class="card-body d-flex flex-row justify-content-between align-items-center p-4">
-                                        <h4 class="card-title rtl-title fw-bold text-dark mb-0">گالری و نمونه کارها</h4>
+                                        <h6 class="card-title rtl-title fw-bold text-dark mb-0">گالری و نمونه کارها</h6>
                                         <a href="portofilo/pictures" class="btn btn-outline-quarternary fw-bold">رفتن به صفحه &rarr;</a>
                                     </div>
                                 </div>
@@ -205,7 +220,7 @@ if (session_status() === PHP_SESSION_NONE) {
                             <div class="col-6 col-md-6 mb-4 card-spacing">
                                 <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
                                     <div class="card-body d-flex flex-row justify-content-between align-items-center p-4">
-                                        <h4 class="card-title rtl-title fw-bold text-dark mb-0">ویدیوهای نمونه کار</h4>
+                                        <h6 class="card-title rtl-title fw-bold text-dark mb-0">ویدیوهای نمونه کار</h6>
                                         <a href="portofilo/videos" class="btn btn-outline-quarternary fw-bold">رفتن به صفحه &rarr;</a>
                                     </div>
                                 </div>
@@ -214,7 +229,7 @@ if (session_status() === PHP_SESSION_NONE) {
                             <div class="col-6 col-md-6 mb-4 card-spacing">
                                 <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
                                     <div class="card-body d-flex flex-row justify-content-between align-items-center p-4">
-                                        <h4 class="card-title rtl-title fw-bold text-dark mb-0">گویندگان رادیو سیمرغ</h4>
+                                        <h6 class="card-title rtl-title fw-bold text-dark mb-0">گویندگان رادیو سیمرغ</h6>
                                         <a href="articles/speakers_archive" class="btn btn-outline-quarternary fw-bold">رفتن به صفحه &rarr;</a>
                                     </div>
                                 </div>
@@ -223,7 +238,7 @@ if (session_status() === PHP_SESSION_NONE) {
                             <div class="col-6 col-md-6 mb-4 card-spacing">
                                 <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
                                     <div class="card-body d-flex flex-row justify-content-between align-items-center p-4">
-                                        <h4 class="card-title rtl-title fw-bold text-dark mb-0">انتقاد و پیشنهاد به سیمرغ</h4>
+                                        <h6 class="card-title rtl-title fw-bold text-dark mb-0">انتقاد و پیشنهاد به سیمرغ</h6>
                                         <a href="articles/suggestion" class="btn btn-outline-quarternary fw-bold">رفتن به صفحه &rarr;</a>
                                     </div>
                                 </div>

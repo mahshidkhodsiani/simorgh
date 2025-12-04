@@ -56,7 +56,7 @@ session_start();
 					</div>
 					<div class="d-grid gap-2">
 						<button name="enter" class="btn btn-primary">ورود</button>
-						<a href="create_account.php" class="btn btn-outline-primary">ثبت نام</a>
+						<a href="create_account.php" class="btn btn-success">ثبت نام</a>
 					</div>
 					<div class="mb-3">
 						<h5 class="bold">

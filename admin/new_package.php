@@ -105,16 +105,8 @@ $id = $_SESSION["all_data"]['id'];
                                 <input type="text" id="price" name="price" class="form-control" placeholder="قیمت را وارد کنید" required>
                             </div>
                             <div class="col-12 mb-3">
-                                <label for="file1" class="form-label">فایل اول:</label>
+                                <label for="file1" class="form-label">فایل ضمیمه:</label>
                                 <input type="file" id="file1" name="file1" class="form-control">
-                            </div>
-                            <div class="col-12 mb-3">
-                                <label for="file2" class="form-label">فایل دوم:</label>
-                                <input type="file" id="file2" name="file2" class="form-control">
-                            </div>
-                            <div class="col-12 mb-3">
-                                <label for="file3" class="form-label">فایل سوم:</label>
-                                <input type="file" id="file3" name="file3" class="form-control">
                             </div>
                         </div>
                         <div class="mb-3">
@@ -258,6 +250,7 @@ if (isset($_POST['submit_package'])) {
     $spotplayer = $_POST['spot_id'];
 
     // اعتبار سنجی سمت سرور برای فیلدهای ضروری
+    // فیلد فایل ضمیمه (file1) اختیاری است و نیازی به بررسی UPLOAD_ERR_OK نیست
     if (empty($name) || empty($teacher) || empty($price) || !isset($_FILES['pictures']) || $_FILES['pictures']['error'] !== UPLOAD_ERR_OK) {
         echo "<script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -274,9 +267,13 @@ if (isset($_POST['submit_package'])) {
     $description = $conn->real_escape_string($description);
     $teacher = $conn->real_escape_string($teacher);
     $price = $conn->real_escape_string($price);
+    $spotplayer = $conn->real_escape_string($spotplayer); // اضافه شده برای تمیزی بیشتر کد
 
     // مرحله اول: درج اطلاعات اصلی پکیج در دیتابیس
-    $stmt = $conn->prepare("INSERT INTO packages (name, description, teacher, spotplayer, price) VALUES (?, ?, ?, ?, ?)");
+    // توجه: ستون‌های file2 و file3 همچنان در کوئری INSERT حضور دارند اما مقدار آنها NULL در نظر گرفته می‌شود.
+    // اگر ساختار جدول پایگاه داده شما به‌روزرسانی نشده باشد، این بخش باید همچنان با تمامی ستون‌های مربوط به فایل‌ها کار کند.
+    // فرض بر این است که ستون‌های file2 و file3 را در دیتابیس نگه می‌دارید تا کد دیتابیس شما تغییر نکند.
+    $stmt = $conn->prepare("INSERT INTO packages (name, description, teacher, spotplayer, price, file2, file3) VALUES (?, ?, ?, ?, ?, NULL, NULL)");
     $stmt->bind_param("ssssd", $name, $description, $teacher, $spotplayer, $price);
 
 
@@ -293,8 +290,8 @@ if (isset($_POST['submit_package'])) {
 
         $picture_path = null;
         $file1_path = null;
-        $file2_path = null;
-        $file3_path = null;
+        $file2_path = null; // حذف شده
+        $file3_path = null; // حذف شده
 
         // آپلود تصویر شاخص
         $pictures = $_FILES['pictures'];
@@ -306,7 +303,7 @@ if (isset($_POST['submit_package'])) {
             $picture_path = str_replace('../', '', $finalPath);
         }
 
-        // آپلود فایل اول
+        // آپلود فایل اول (فایل ضمیمه)
         if (isset($_FILES['file1']) && $_FILES['file1']['error'] === UPLOAD_ERR_OK) {
             $file1 = $_FILES['file1'];
             $file1_originalName = basename($file1['name']);
@@ -317,34 +314,14 @@ if (isset($_POST['submit_package'])) {
                 $file1_path = str_replace('../', '', $file1_finalPath);
             }
         }
-
-        // آپلود فایل دوم
-        if (isset($_FILES['file2']) && $_FILES['file2']['error'] === UPLOAD_ERR_OK) {
-            $file2 = $_FILES['file2'];
-            $file2_originalName = basename($file2['name']);
-            $file2_extension = pathinfo($file2_originalName, PATHINFO_EXTENSION);
-            $file2_uniqueName = uniqid('file2_') . '.' . $file2_extension;
-            $file2_finalPath = $uploadDir . '/' . $file2_uniqueName;
-            if (move_uploaded_file($file2['tmp_name'], $file2_finalPath)) {
-                $file2_path = str_replace('../', '', $file2_finalPath);
-            }
-        }
-
-        // آپلود فایل سوم
-        if (isset($_FILES['file3']) && $_FILES['file3']['error'] === UPLOAD_ERR_OK) {
-            $file3 = $_FILES['file3'];
-            $file3_originalName = basename($file3['name']);
-            $file3_extension = pathinfo($file3_originalName, PATHINFO_EXTENSION);
-            $file3_uniqueName = uniqid('file3_') . '.' . $file3_extension;
-            $file3_finalPath = $uploadDir . '/' . $file3_uniqueName;
-            if (move_uploaded_file($file3['tmp_name'], $file3_finalPath)) {
-                $file3_path = str_replace('../', '', $file3_finalPath);
-            }
-        }
+        
+        // آپلود فایل دوم (حذف شده)
+        // آپلود فایل سوم (حذف شده)
 
         // مرحله دوم: به‌روزرسانی مسیر فایل‌ها در دیتابیس
-        $update_stmt = $conn->prepare("UPDATE packages SET pictures = ?, file1 = ?, file2 = ?, file3 = ? WHERE id = ?");
-        $update_stmt->bind_param("ssssi", $picture_path, $file1_path, $file2_path, $file3_path, $package_id);
+        // فقط file1 و pictures به‌روزرسانی می‌شوند، file2 و file3 همچنان NULL باقی می‌مانند.
+        $update_stmt = $conn->prepare("UPDATE packages SET pictures = ?, file1 = ? WHERE id = ?");
+        $update_stmt->bind_param("ssi", $picture_path, $file1_path, $package_id);
         $update_stmt->execute();
         $update_stmt->close();
 
@@ -380,7 +357,8 @@ if (isset($_POST['delete_package'])) {
     if ($row) {
         if ($row['pictures']) @unlink("../" . $row['pictures']);
         if ($row['file1']) @unlink("../" . $row['file1']);
-        if ($row['file2']) @unlink("../" . $row['file2']);
+        // حذف فیزیکی file2 و file3
+        if ($row['file2']) @unlink("../" . $row['file2']); 
         if ($row['file3']) @unlink("../" . $row['file3']);
         // حذف پوشه مربوطه
         @rmdir("../uploads/packages/" . $id_package);

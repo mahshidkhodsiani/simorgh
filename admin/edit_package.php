@@ -31,7 +31,7 @@ if (isset($_GET['id_package'])) {
     exit();
 }
 
-// ----- پردازش فرم ویرایش -----
+// ----- پردازش فرم ویرایش اطلاعات اصلی -----
 if (isset($_POST['update_package'])) {
     $name = $_POST['name'];
     $description = $_POST['description'];
@@ -52,11 +52,9 @@ if (isset($_POST['update_package'])) {
         exit();
     }
 
-    $name = $conn->real_escape_string($name);
-    $description = $conn->real_escape_string($description);
-    $teacher = $conn->real_escape_string($teacher);
-    $price = $conn->real_escape_string($price);
-    $spotplayer = $conn->real_escape_string($spotplayer);
+    // استفاده از prepared statements برای جلوگیری از SQL Injection و حذف real_escape_string
+    // $name = $conn->real_escape_string($name); 
+    // ...
 
     // آپدیت اطلاعات اصلی پکیج
     $stmt = $conn->prepare("UPDATE packages SET name = ?, description = ?, teacher = ?, price = ?, spotplayer = ? WHERE id = ?");
@@ -120,9 +118,10 @@ if (isset($_POST['upload_picture'])) {
     }
 }
 
-// ----- پردازش آپلود و حذف فایل‌ها (فایل ۱، ۲، ۳) -----
+// ----- پردازش آپلود و حذف فایل (فقط فایل ۱) -----
 function handleFileUpdate($conn, $id_package, $file_name, $column_name, $old_file_path)
 {
+    // بررسی دکمه آپلود/جایگزینی
     if (isset($_FILES[$file_name]) && $_FILES[$file_name]['error'] === UPLOAD_ERR_OK) {
         // اگر فایلی وجود داشت، حذف کن
         if ($old_file_path) {
@@ -139,7 +138,8 @@ function handleFileUpdate($conn, $id_package, $file_name, $column_name, $old_fil
 
         $originalFileName = basename($file['name']);
         $extension = pathinfo($originalFileName, PATHINFO_EXTENSION);
-        $uniqueFileName = uniqid($column_name . '_') . '.' . $extension;
+        // از یونیک آیدی برای جلوگیری از تکرار نام در داخل پوشه پکیج استفاده می‌شود
+        $uniqueFileName = uniqid($column_name . '_') . '.' . $extension; 
         $finalPath = $uploadDir . '/' . $uniqueFileName;
 
         if (move_uploaded_file($file['tmp_name'], $finalPath)) {
@@ -150,7 +150,9 @@ function handleFileUpdate($conn, $id_package, $file_name, $column_name, $old_fil
             $stmt->close();
             return true;
         }
-    } else if (isset($_POST['delete_' . $file_name])) {
+    } 
+    // بررسی دکمه حذف
+    else if (isset($_POST['delete_' . $file_name])) { 
         // اگر دکمه حذف فشرده شد
         if ($old_file_path) {
             @unlink("../" . $old_file_path);
@@ -164,18 +166,44 @@ function handleFileUpdate($conn, $id_package, $file_name, $column_name, $old_fil
     return false;
 }
 
+// فقط file1 را پردازش می‌کنیم و file2 و file3 را نادیده می‌گیریم.
+// همچنین ستون‌های file2 و file3 در دیتابیس را به صراحت NULL می‌کنیم تا مطمئن شویم داده‌های قبلی حذف می‌شوند.
+// این کار را قبل از بررسی file1 انجام می‌دهیم تا اگر فایلی آپلود/حذف شد، صفحه رفرش شده و این بخش دیگر اجرا نشود.
+
+// پاکسازی file2 و file3 (اجرای یک بار برای حذف هر داده باقی‌مانده)
+$should_refresh = false;
+if (!empty($package_data['file2'])) {
+    @unlink("../" . $package_data['file2']);
+    $stmt = $conn->prepare("UPDATE packages SET file2 = NULL WHERE id = ?");
+    $stmt->bind_param("i", $id_package);
+    $stmt->execute();
+    $stmt->close();
+    $should_refresh = true;
+}
+
+if (!empty($package_data['file3'])) {
+    @unlink("../" . $package_data['file3']);
+    $stmt = $conn->prepare("UPDATE packages SET file3 = NULL WHERE id = ?");
+    $stmt->bind_param("i", $id_package);
+    $stmt->execute();
+    $stmt->close();
+    $should_refresh = true;
+}
+
+if ($should_refresh) {
+    header("Location: edit_package.php?id_package=" . $id_package);
+    exit();
+}
+
+
+// پردازش فایل ۱
 if (handleFileUpdate($conn, $id_package, 'file1_input', 'file1', $package_data['file1'])) {
     header("Location: edit_package.php?id_package=" . $id_package);
     exit();
 }
-if (handleFileUpdate($conn, $id_package, 'file2_input', 'file2', $package_data['file2'])) {
-    header("Location: edit_package.php?id_package=" . $id_package);
-    exit();
-}
-if (handleFileUpdate($conn, $id_package, 'file3_input', 'file3', $package_data['file3'])) {
-    header("Location: edit_package.php?id_package=" . $id_package);
-    exit();
-}
+
+// file2_input و file3_input را از بررسی‌های بعدی حذف می‌کنیم.
+
 ?>
 
 <!DOCTYPE html>
@@ -286,14 +314,13 @@ if (handleFileUpdate($conn, $id_package, 'file3_input', 'file3', $package_data['
                 </div>
 
                 <div class="card-form mt-4">
-                    <h4>فایل‌ها</h4>
+                    <h4>فایل ضمیمه</h4>
                     <?php
-                    $files = ['file1', 'file2', 'file3'];
-                    foreach ($files as $file_column) {
-                        $file_path = $package_data[$file_column];
-                        $file_number = substr($file_column, 4);
+                    // فقط file1 را در اینجا نمایش می‌دهیم
+                    $file_column = 'file1';
+                    $file_path = $package_data[$file_column];
+                    $file_number = 'اول'; // یا صرفاً "ضمیمه"
                     ?>
-                        <hr>
                         <div class="mt-3">
                             <h6>فایل <?= $file_number ?></h6>
                             <?php if ($file_path) { ?>
@@ -327,7 +354,6 @@ if (handleFileUpdate($conn, $id_package, 'file3_input', 'file3', $package_data['
                                 </button>
                             </form>
                         </div>
-                    <?php } ?>
                 </div>
 
                 <div class="toast-container">

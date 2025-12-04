@@ -126,7 +126,7 @@
 
     li {
         font-weight: 600;
-        font-size: 19px;
+        font-size: 15px;
     }
 
     @media (max-width: 991px) {

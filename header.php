@@ -152,7 +152,7 @@
 
     li {
         font-weight: bold;
-        font-size: 18px;
+        font-size: 14px;
     }
 
     @media (max-width: 991px) {

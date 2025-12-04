@@ -153,13 +153,15 @@ $id = $_SESSION["all_data"]['id'];
                                             <td class="text-center"><?= htmlspecialchars($row['package_name']) ?></td>
                                             <td class="text-center"><?= $row['duration_minutes'] ?? '-' ?></td>
                                             <td class="text-center">
+                                                <a href="edit_session.php?id=<?= $row['id'] ?>" class="btn btn-outline-primary btn-sm me-2">
+                                                    <i class="fas fa-edit me-1"></i>ویرایش
+                                                </a>
+                                                 
                                                 <form action="" method="POST" style="display:inline;">
                                                     <input type="hidden" value="<?= $row['id'] ?>" name="id_session">
                                                     <button type="submit" name="delete_session" class="btn btn-outline-danger btn-sm" onclick="return confirmDelete()">
                                                         <i class="fas fa-trash-alt me-1"></i>حذف
                                                     </button>
-                                                 
-                                                    
                                                 </form>
                                             </td>
                                         </tr>
@@ -228,8 +230,12 @@ $id = $_SESSION["all_data"]['id'];
         });
 
         // اطمینان از ارسال محتوای ادیتور در هنگام ثبت فرم
+        // توجه: این بخش فقط برای فرم 'ثبت جدید' در همین صفحه است.
         $('form').submit(function() {
-            $('#editor').val(editor.getEditorValue());
+            // تنها اگر نام دکمه 'submit_session' وجود دارد، محتوای ادیتور را تنظیم کن.
+            if ($('button[name="submit_session"]').length > 0) {
+                 $('#editor').val(editor.getEditorValue());
+            }
         });
 
         // تابع تایید حذف
@@ -252,7 +258,8 @@ if (isset($_POST['submit_session'])) {
     $package_id = $_POST['package_id'];
     $title = $_POST['title'];
     // duration_minutes اختیاری است
-    $duration_minutes = $_POST['duration'] ? (int)$_POST['duration'] : null;
+    // استفاده از عملگر سه‌تایی برای جلوگیری از خطا در صورتی که فیلد خالی باشد.
+    $duration_minutes = $_POST['duration'] !== '' ? (int)$_POST['duration'] : null;
     $description = $_POST['description'];
 
     // اعتبار سنجی سمت سرور برای فیلدهای الزامی
@@ -265,16 +272,20 @@ if (isset($_POST['submit_session'])) {
                 errorToast.show();
             });
         </script>";
-        exit();
+        // استفاده از 'goto' یا بازگرداندن تابع یا... برای جلوگیری از ادامه اجرای کد.
+        // در اینجا به دلیل ساختار فایل، `exit()` مناسب است.
+        exit(); 
     }
 
     $package_id = (int)$package_id;
     $title = $conn->real_escape_string($title);
     $description = $conn->real_escape_string($description);
+    // duration_minutes نیازی به real_escape_string ندارد چون یا null است یا int
 
     // درج اطلاعات در دیتابیس با استفاده از Prepared Statement
     $stmt = $conn->prepare("INSERT INTO sessions (package_id, title, description, duration_minutes) VALUES (?, ?, ?, ?)");
     // نوع پارامترها: i: integer (برای package_id و duration_minutes), s: string (برای title و description)
+    // دقت کنید که $duration_minutes در اینجا می‌تواند null باشد و PDO یا MySQLi آن را مدیریت می‌کند.
     $stmt->bind_param("issi", $package_id, $title, $description, $duration_minutes);
 
     if ($stmt->execute()) {
@@ -328,5 +339,5 @@ if (isset($_POST['delete_session'])) {
     }
     $stmt->close();
 }
-// $conn->close();
+// $conn->close(); // بستن اتصال به دیتابیس در انتهای فایل یا در فایل config.php باید انجام شود.
 ?>

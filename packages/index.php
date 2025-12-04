@@ -9,9 +9,10 @@
     <?php include "includes.php"; ?>
 
     <link rel="icon" href="../images/logo1.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../css/mainstyles.css">
 
     <style>
-        /* 1. پررنگ کردن فونت عنوان و متن اصلی (درخواست شما) */
+        /* 1. پررنگ کردن فونت عنوان و متن اصلی */
         .card-title {
             font-weight: 700 !important; /* پررنگ‌تر کردن عنوان */
             color: #212529;
@@ -22,14 +23,14 @@
             font-weight: 500 !important; /* پررنگ‌تر کردن متن‌های معمولی */
         }
 
-        /* 2. تثبیت ارتفاع توضیحات برای رفع بهم ریختگی سطرها (stepping issue) */
+        /* 2. تثبیت ارتفاع توضیحات برای رفع بهم ریختگی سطرها و محدودیت به 2 خط */
         .card-text.text-muted {
-            height: 4.5em; /* ارتفاع دقیق برای 3 خط */
+            height: 3em; /* ارتفاع دقیق برای 2 خط (1.5em * 2) */
             line-height: 1.5em; 
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
-            -webkit-line-clamp: 3; /* محدودیت به 3 خط */
+            -webkit-line-clamp: 2; /* محدودیت به 2 خط */
             -webkit-box-orient: vertical;
             white-space: normal;
             margin-bottom: 15px !important;
@@ -47,11 +48,26 @@
         
         /* 4. استایل برای کارت معرفی بالای صفحه */
         .intro-card {
-            background-color: #f8f9fa; /* رنگی شبیه به border-danger قبلی، اما تمیزتر */
+            background-color: #f8f9fa; 
             border: 1px solid #dee2e6;
             border-radius: 40px;
             padding: 20px;
-            margin-bottom: 25px; /* فاصله از لیست پکیج‌ها */
+            margin-bottom: 25px; 
+        }
+        
+        /* 5. استایل برای لینک‌های صفحه‌بندی (Pagination) */
+        .pagination .page-link {
+            color: #007bff;
+            border-radius: 50px;
+            margin: 0 5px;
+        }
+        .pagination .page-item.active .page-link {
+            background-color: #007bff;
+            border-color: #007bff;
+            color: white;
+        }
+        .pagination {
+            justify-content: center; /* وسط چین کردن */
         }
     </style>
     </head>
@@ -64,6 +80,18 @@
     include '../PersianCalendar.php';
     include '../jalaliDate.php';
     $sdate = new SDate();
+
+    // تنظیمات صفحه‌بندی
+    $limit = 9; // 3 ردیف 3 تایی = 9 پکیج در هر صفحه
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    $start = ($page - 1) * $limit;
+
+    // 1. کوئری برای محاسبه کل تعداد پکیج‌ها
+    $count_sql = "SELECT COUNT(id) AS total FROM `packages`";
+    $count_result = $conn->query($count_sql);
+    $total_packages = $count_result->fetch_assoc()['total'];
+    $total_pages = ceil($total_packages / $limit);
+
     ?>
 
 
@@ -79,23 +107,41 @@
                 </div>
                 <div class="row mt-4">
                     <?php
-                    // کوئری برای دریافت همه پکیج‌ها
-                    $sql = "SELECT * FROM `packages` ORDER BY `id` ASC";
+                    // 2. کوئری برای دریافت پکیج‌های صفحه جاری
+                    $sql = "SELECT * FROM `packages` ORDER BY `id` DESC LIMIT $start, $limit"; 
                     $result = $conn->query($sql);
 
-                    if ($result->num_rows > 0) {
+                    if ($result && $result->num_rows > 0) {
                         // نمایش هر پکیج در قالب یک کارت
                         while ($package = $result->fetch_assoc()) {
+                            
+                            // 1. پاکسازی توضیحات از تگ‌های HTML
+                            $cleaned_description = strip_tags($package['description']);
+
+                            // 2. آرایه‌ای از کاراکترهایی که باید حذف یا جایگزین شوند (شامل خطوط جدید، بک‌اسلش و تیک)
+                            $chars_to_remove = array("\r\n", "\n", "\r", "\\", "✅", "⭐", "•"); 
+
+                            // 3. حذف کاراکترهای ناخواسته و جایگزین کردن آن‌ها با فضای خالی
+                            $cleaned_description = str_replace($chars_to_remove, ' ', $cleaned_description);
+                            
+                            // 4. حذف فاصله‌های اضافی پی در پی که ممکن است پس از حذف کاراکترها ایجاد شده باشند
+                            $cleaned_description = preg_replace('/\s+/', ' ', $cleaned_description);
+                            
+                            // 5. حذف فضای خالی از ابتدا و انتهای رشته
+                            $cleaned_description = trim($cleaned_description);
+
                             // در دسکتاپ (md) هر پکیج 4 ستون از 12 ستون را اشغال می‌کند (3 کارت در یک ردیف)
                     ?>
                                     <div class="col-md-4 mb-4">
                                         <div class="card h-100">
                                             <img class="card-img-top" src="../<?php echo htmlspecialchars($package['pictures']); ?>" alt="تصویر پکیج" loading="lazy">
-                                            <div class="card-body d-flex flex-column">
+                                            <div class="card-body">
                                                 <h5 class="card-title"><?php echo htmlspecialchars($package['name']); ?></h5>
-                                                <p class="card-text text-muted"><?php echo $package['description']; ?></p> 
+                                                
+                                                <p class="card-text text-muted"><?php echo htmlspecialchars($cleaned_description); ?></p> 
+                                                
                                                 <p class="card-text">
-                                                    <strong>مدرس دوره:</strong> <?php echo $package['teacher']; ?><br>
+                                                    <strong>مدرس دوره:</strong> <?php echo htmlspecialchars($package['teacher']); ?><br>
                                                     <strong>قیمت:</strong> <?php echo number_format($package['price']); ?> ریال
                                                 </p>
 
@@ -122,10 +168,36 @@
                             <?php
                                 }
                             } else {
-                                echo "<div class='alert alert-warning text-center'>هیچ پکیجی برای نمایش وجود ندارد.</div>";
+                                echo "<div class='col-12'><div class='alert alert-warning text-center'>هیچ پکیجی برای نمایش وجود ندارد.</div></div>";
                             }
                             ?>
                         </div>
+                        
+                        <?php if ($total_pages > 1): ?>
+                            <nav aria-label="صفحه‌بندی پکیج‌ها">
+                                <ul class="pagination mt-5 mb-5">
+                                    
+                                    <li class="page-item <?= ($page <= 1) ? 'disabled' : '' ?>">
+                                        <a class="page-link" href="?page=<?= max(1, $page - 1) ?>" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+
+                                    <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                                        <li class="page-item <?= ($i == $page) ? 'active' : '' ?>">
+                                            <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                                        </li>
+                                    <?php endfor; ?>
+                                    
+                                    <li class="page-item <?= ($page >= $total_pages) ? 'disabled' : '' ?>">
+                                        <a class="page-link" href="?page=<?= min($total_pages, $page + 1) ?>" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        <?php endif; ?>
+                        
                 </div>
         </div>
     </div>
@@ -134,6 +206,7 @@
     <?php include 'footer.php'; ?>
 
     <script type="text/javascript">
+        // کد گفتینو بدون تغییر باقی ماند
         ! function() {
             var i = "4Ey6dG",
                 a = window,

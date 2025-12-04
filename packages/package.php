@@ -45,6 +45,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
+    <link rel="stylesheet" href="../css/mainstyles.css">
+
+    
     <style>
         /* استایل سفارشی برای نمایش بهتر جزئیات */
         .detail-item strong { display: inline-block; min-width: 150px; }
@@ -109,6 +112,11 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             line-height: 1.8;
             text-align: justify;
         }
+        $des_session {
+            text-align: justify;
+            margin-top: 5px;
+            color: #555;
+        }
     </style>
 </head>
 
@@ -160,8 +168,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                         height="300">
                     
                     <div class="mt-4">
-                        <div class="feature-item">۱ سال پشتیبانی</div>
-                        <div class="feature-item">تکمیل شده</div>
+                        <div class="feature-item text-dark">پشتیبانی آنلاین</div>
+                        <div class="feature-item text-dark">ارائه مدرک معتبر</div>
                     </div>
                     
                     <div class="mt-4">
@@ -176,7 +184,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 
                 <div class="col-md-6 text-md-right">
                     <h2 class="mb-1 bold"><?= htmlspecialchars($package['name'], ENT_QUOTES, 'UTF-8'); ?></h2>
-                    <p>مقدماتی تا پیشرفته</p>
+                    <p>دوره مخصوص ورود به بازار کار</p>
                     <h5>با تدریس <?= $package['teacher'] ?></h5>
                     
                     <hr>
@@ -213,7 +221,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                     
                     <?php
                     // کوئری برای دریافت جلسات مربوط به این پکیج
-                    $sessions_sql = "SELECT title, duration_minutes FROM `sessions` WHERE `package_id` = ? ORDER BY id ASC";
+                    $sessions_sql = "SELECT * FROM `sessions` WHERE `package_id` = ? ORDER BY id ASC";
                     $sessions_stmt = $conn->prepare($sessions_sql);
                     $sessions_stmt->bind_param("i", $package_id);
                     $sessions_stmt->execute();
@@ -233,6 +241,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                             <div class="session-info">
                                 <span class="session-number">درس <?= $session_count ?></span>
                                 <span class="session-title"><?= htmlspecialchars($session['title'], ENT_QUOTES, 'UTF-8') ?></span>
+                                <p id="des_session"><?= $session['description'] ?></p>
                             </div>
                             <div class="session-duration">
                                 <?= $duration_formatted ?> دقیقه
