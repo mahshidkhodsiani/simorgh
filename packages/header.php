@@ -126,7 +126,7 @@
 
     li {
         font-weight: 600;
-        font-size: 15px;
+        font-size: 14px;
     }
 
     @media (max-width: 991px) {
@@ -171,7 +171,7 @@
         <ul class="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
             <li><a href="../" class="nav-link">صفحه اصلی</a></li>
             <!-- <li><a href="articles/index.php?title=درباره موسسه" class="nav-link">درباره موسسه</a></li> -->
-            <li><a href="about" class="nav-link">درباره موسسه</a></li>
+            <li><a href="../articles/about" class="nav-link">درباره موسسه</a></li>
 
             <li class="has-children">
                 <a href="order_ads">سفارش تبلیغات</a>
@@ -224,6 +224,8 @@
             <li><a href="../articles" class="nav-link">وبلاگ سیمرغ</a></li>
 
             <li><a href="./" class="nav-link">پکیج ها</a></li>
+
+            <li><a href="../login" style="font-weight: bold !important;">ورود/ ثبت نام</a></li>
 
 
 

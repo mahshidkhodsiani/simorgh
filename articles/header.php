@@ -126,7 +126,7 @@
 
     li {
         font-weight: 600;
-        font-size: 15px;
+        font-size: 14px;
     }
 
     @media (max-width: 991px) {
@@ -223,6 +223,9 @@
             <li><a href="./" class="nav-link">وبلاگ سیمرغ</a></li>
 
             <li><a href="../packages" class="nav-link">پکیج ها</a></li>
+
+            <li><a href="../login" style="font-weight: bold !important;">ورود/ ثبت نام</a></li>
+
 
 
 

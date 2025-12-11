@@ -14,7 +14,8 @@ if (session_status() === PHP_SESSION_NONE) {
     <meta name="author" content="موسسه هفت هنر سیمرغ">
     <meta property="og:title" content="موسسه هفت هنر سیمرغ">
     <meta property="og:description" content="موسسه هفت هنر سیمرغ، پیشرو در آموزش گویندگی، انیمیشن، طراحی و موسیقی با دوره‌های تخصصی و کارگاه‌های عملی.">
-    <meta property="og:image" content="URL-to-your-image.jpg">
+    <meta property="og:image" content="images/logo1.png">
+    
     <meta property="og:url" content="https://www.simorghtv.com">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="fa_IR">

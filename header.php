@@ -253,7 +253,7 @@
             <li><a href="packages" class="nav-link">پکیج ها</a></li>
 
 
-            <li><a href="login" style="font-weight: bold !important;">ورود/ ساخت پنل</a></li>
+            <li><a href="login" style="font-weight: bold !important;">ورود/ ثبت نام</a></li>
 
             <li>
                 <a href="temp_cart.php" class="nav-link" style="position: relative;">

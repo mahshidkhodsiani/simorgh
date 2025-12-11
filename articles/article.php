@@ -263,16 +263,18 @@ if (!empty($title_slug)) {
                             <div class="card-header sidebar-header text-center">
                                 <h5 class="m-0">🎭 دوره‌ها و خدمات سیمرغ</h5>
                             </div>
+                      
                             <div class="list-group list-group-flush sidebar-list">
                                 <a href="../courses/course.php?slug=دوبله+پیشرفته" class="list-group-item list-group-item-action sidebar-item"><i class="fas fa-microphone-alt"></i> دوره دوبله پیشرفته</a>
-
                                 <a href="../courses/course.php?slug=فن+بیان+و+گویندگی+کودکان" class="list-group-item list-group-item-action sidebar-item"><i class="fas fa-child"></i> دوره گویندگی و فن بیان کودکان</a>
-
                                 <a href="../courses/course.php?slug=موشن+گرافیک" class="list-group-item list-group-item-action sidebar-item"><i class="fas fa-pen-nib"></i> موشن گرافیک</a>
-
                                 <a href="../courses/course.php?slug=تدوین+فیلم" class="list-group-item list-group-item-action sidebar-item"><i class="fas fa-film"></i> تدوین فیلم</a>
-
                                 <a href="../courses/course.php?slug=بازیگری+بزرگسال" class="list-group-item list-group-item-action sidebar-item"><i class="fas fa-theater-masks"></i> کلاس بازیگری</a>
+                                
+                                <a href="../packages" class="list-group-item list-group-item-action sidebar-item">
+                                    <i class="fas fa-cubes"></i> پکیج های آموزشی سیمرغ
+                                </a>
+                                
                             </div>
                         </div>
                     </div>

@@ -6,7 +6,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     include_once '../config.php';
     $tmp_id = (int)$_GET['id'];
     if (isset($conn) && $conn instanceof mysqli) {
-        $q = $conn->prepare("SELECT `name`, `description`, `pictures` FROM `packages` WHERE `id` = ?");
+        $q = $conn->prepare("SELECT * FROM `packages` WHERE `id` = ?");
         if ($q) {
             $q->bind_param("i", $tmp_id);
             $q->execute();
@@ -38,7 +38,22 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     <link rel="icon" href="../images/logo1.ico" type="image/x-icon">
     
     <meta name="description" content="<?php echo htmlspecialchars($meta_description, ENT_QUOTES, 'UTF-8'); ?>">
-    <meta name="robots" content="index, follow">
+   
+    <meta name="author" content="موسسه هفت هنر سیمرغ">
+    <meta property="og:title" content="موسسه هفت هنر سیمرغ">
+    <meta property="og:description" content="<?php echo htmlspecialchars($meta_description, ENT_QUOTES, 'UTF-8'); ?>">
+    <meta property="og:image" content="<?= $p_tmp['pictures'] ?>">
+    
+    <meta property="og:url" content="https://www.simorghtv.com">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="fa_IR">
+    
+    <meta name="twitter:title" content="موسسه هفت هنر سیمرغ">
+    <meta name="twitter:description" content="<?php echo htmlspecialchars($meta_description, ENT_QUOTES, 'UTF-8'); ?>">
+    <meta name="twitter:image" content="<?= $p_tmp['pictures'] ?>">
+
+
+
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -53,10 +68,10 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         .detail-item strong { display: inline-block; min-width: 150px; }
         .file-link { color: #007bff; text-decoration: none; }
         .file-link:hover { text-decoration: underline; }
-        .promo-card { background: linear-gradient(135deg, #f7c6e0 0%, #f0a6d1 100%); border-radius: 12px; padding: 22px; color: #222; }
+        .promo-card { background: linear-gradient(135deg, #b5122aff 0%, #d18093ff 100%); border-radius: 12px; padding: 22px; color: #222; }
         .promo-avatar { width: 220px; height: 220px; border-radius: 50%; object-fit: cover; border: 6px solid rgba(255, 255, 255, 0.6); box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12); }
         .feature-item { background: rgba(255, 255, 255, 0.18); padding: 8px 12px; border-radius: 999px; font-weight: 700; color: #fff; margin: 6px; display: inline-block; }
-        .register-btn { background: #ff5c9e; color: #fff; border: none; padding: 10px 18px; border-radius: 10px; font-weight: 800; text-decoration: none; }
+        .register-btn { background: #1b0b92ff; color: #fff; border: none; padding: 10px 18px; border-radius: 10px; font-weight: 800; text-decoration: none; }
         .course-card { background: #fff; border-radius: 12px; padding: 14px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06); }
         @media (max-width: 767px) {
             .promo-avatar { width: 140px; height: 140px; }
@@ -70,7 +85,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             align-items: center;
             padding: 12px 15px;
             margin-bottom: 8px;
-            background-color: #f8f9fa;
+            background-color: #6f74acff;
             border-radius: 8px;
             cursor: pointer;
             transition: background-color 0.2s;
@@ -83,7 +98,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         }
         .session-number {
             font-weight: bold;
-            color: #6c757d;
+            color: #0b0b0bff;
             min-width: 60px;
             text-align: right;
         }
@@ -112,11 +127,63 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             line-height: 1.8;
             text-align: justify;
         }
-        $des_session {
+        #des_session {
             text-align: justify;
             margin-top: 5px;
             color: #555;
         }
+        
+
+        /* ........ */
+        .description-content {
+            position: relative;
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .description-content::before,
+        .description-content::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.25;
+            animation: floatBubble 12s infinite ease-in-out;
+        }
+
+        .description-content::before {
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle at center, #9b1c22ff, #c70d16ff);
+            top: -40px;
+            left: -40px;
+        }
+
+        .description-content::after {
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle at center, #6f42c1, #c70d16ff);
+            bottom: -30px;
+            right: -30px;
+        }
+
+        @keyframes floatBubble {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .description-content p {
+            position: relative;
+            z-index: 1;
+            color: #333;
+            line-height: 1.9;
+            font-size: 1.05em;
+        }
+
+
+
     </style>
 </head>
 
@@ -155,57 +222,62 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             $picture = !empty($package['pictures']) ? ('../' . ltrim($package['pictures'], '/')) : '../images/default-course.jpg';
             $price_text = !empty($package['price']) ? htmlspecialchars($package['price'], ENT_QUOTES, 'UTF-8') . ' ریال' : 'رایگان';
     ?>
-    <div class="container mt-4">
 
-        <section class="promo-card">
-            <div class="row align-items-center">
-                <div class="col-md-6 text-center mb-4 mb-md-0">
-                    <img class="promo-avatar rounded-circle shadow-lg" 
-                        src="<?php echo htmlspecialchars($picture, ENT_QUOTES, 'UTF-8'); ?>" 
-                        alt="تصویر پکیج <?php echo htmlspecialchars($package['name'], ENT_QUOTES, 'UTF-8'); ?>" 
-                        loading="lazy" 
-                        width="300" 
-                        height="300">
-                    
-                    <div class="mt-4">
-                        <div class="feature-item text-dark">پشتیبانی آنلاین</div>
-                        <div class="feature-item text-dark">ارائه مدرک معتبر</div>
-                    </div>
-                    
-                    <div class="mt-4">
-                        <form action="cart_handler.php" method="POST">
-                            <input type="hidden" name="package_id" value="<?php echo $package['id']; ?>">
-                            <button type="submit" class="register-btn">
-                                🛒 افزودن به سبد خرید
-                            </button>
-                        </form>
-                    </div>
+    <section class="promo-card">
+        <div class="row align-items-center">
+            <div class="col-md-6 text-center mb-4 mb-md-0">
+                <img class="promo-avatar rounded-circle shadow-lg" 
+                    src="<?php echo htmlspecialchars($picture, ENT_QUOTES, 'UTF-8'); ?>" 
+                    alt="تصویر پکیج <?php echo htmlspecialchars($package['name'], ENT_QUOTES, 'UTF-8'); ?>" 
+                    loading="lazy" 
+                    width="300" 
+                    height="300">
+                
+                <div class="mt-4">
+                    <div class="feature-item text-dark">پشتیبانی آنلاین</div>
+                    <div class="feature-item text-dark">ارائه مدرک معتبر</div>
                 </div>
-
-                <div class="col-md-6 text-md-right">
-                    <h2 class="mb-1 bold"><?= htmlspecialchars($package['name'], ENT_QUOTES, 'UTF-8'); ?></h2>
-                    <p>دوره مخصوص ورود به بازار کار</p>
-                    <h5>با تدریس <?= $package['teacher'] ?></h5>
-                    
-                    <hr>
-                    
-                    <div class="my-3">
-                        <strong>قیمت</strong>
-                        <h3 class="text-success fw-bold"><?= number_format($package['price']) ?> ریال</h3>
-                    </div>
-
-                    <div class="my-4">
-                        <video controls class="w-100 rounded shadow-sm">
-                            <source src="../<?= htmlspecialchars($package['file1'], ENT_QUOTES, 'UTF-8') ?>" type="video/mp4">
-                            مرورگر شما از تگ ویدئو پشتیبانی نمی‌کند.
-                        </video>
-                    </div>
+                
+                <div class="mt-4">
+                    <form action="cart_handler.php" method="POST">
+                        <input type="hidden" name="package_id" value="<?php echo $package['id']; ?>">
+                        <button type="submit" class="register-btn">
+                            🛒 افزودن به سبد خرید
+                        </button>
+                    </form>
                 </div>
             </div>
-        </section>
+
+            <div class="col-md-6 text-md-right">
+                <h2 class="mb-1 bold"><?= htmlspecialchars($package['name'], ENT_QUOTES, 'UTF-8'); ?></h2>
+                <p>دوره مخصوص ورود به بازار کار</p>
+                <h5>با تدریس <?= $package['teacher'] ?></h5>
+                
+                <hr>
+                
+                <div class="my-3">
+                    <strong>قیمت</strong>
+                    <h3 class="text-white fw-bold"><?= number_format($package['price']) ?> ریال</h3>
+                </div>
+
+                <div class="my-4">
+                    <video controls class="w-100 rounded shadow-sm">
+                        <source src="../<?= htmlspecialchars($package['file1'], ENT_QUOTES, 'UTF-8') ?>" type="video/mp4">
+                        مرورگر شما از تگ ویدئو پشتیبانی نمی‌کند.
+                    </video>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    
+
+    <div class="container mt-4">
 
         <div class="row mt-5">
-            <div class="col-lg-12">
+
+            <div class="col-lg-9">
                 <div class="course-card mb-4">
                     <h4 class="h6 mb-3"><i class="fas fa-file-alt me-2"></i>توضیحات کامل پکیج</h4>
                     <div class="description-content">
@@ -236,21 +308,21 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                             // 3 ثانیه برای حالت پیش‌فرض و 3 ثانیه برای کلیک
                             $seconds = str_pad(round(($duration - $minutes) * 60), 2, '0', STR_PAD_LEFT); 
                             $duration_formatted = $duration > 0 ? $minutes . ':' . $seconds : 'نامشخص';
-                    ?>
-                        <div class="session-item" onclick="showSpotPlayerAlert()">
-                            <div class="session-info">
-                                <span class="session-number">درس <?= $session_count ?></span>
-                                <span class="session-title"><?= htmlspecialchars($session['title'], ENT_QUOTES, 'UTF-8') ?></span>
-                                <p id="des_session"><?= $session['description'] ?></p>
+                        ?>
+                            <div class="session-item" onclick="showSpotPlayerAlert()">
+                                <div class="session-info">
+                                    <span class="session-number">درس <?= $session_count ?></span>
+                                    <span class="session-title"><?= htmlspecialchars($session['title'], ENT_QUOTES, 'UTF-8') ?></span>
+                                    <p id="des_session"><?= $session['description'] ?></p>
+                                </div>
+                                <div class="session-duration">
+                                    <?= $duration_formatted ?> دقیقه
+                                </div>
+                                <div class="play-icon">
+                                    <i class="fas fa-play-circle"></i>
+                                </div>
                             </div>
-                            <div class="session-duration">
-                                <?= $duration_formatted ?> دقیقه
-                            </div>
-                            <div class="play-icon">
-                                <i class="fas fa-play-circle"></i>
-                            </div>
-                        </div>
-                    <?php
+                        <?php
                             $session_count++;
                         }
                         $sessions_stmt->close();
@@ -261,6 +333,98 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 
                 </div>
             </div>
+
+            
+            <div class="col-lg-3">
+                <div class="card shadow-sm border-0 mb-5"> 
+                    <div class="card-header bg-dark text-white text-center">
+                        <h4 class="h5 mb-0"><i class="fas fa-layer-group me-2"></i>دیگر پکیج‌های سیمرغ</h4> 
+                    </div>
+                    
+                    <div class="accordion accordion-flush" id="packagesAccordion">
+                        <?php
+                        // کوئری اصلاح شده: از ستون 'description' به جای 'short_description' استفاده می‌کند.
+                        $other_packages_sql = "SELECT id, name, description FROM `packages` WHERE `id` != ? ORDER BY name ASC";
+                        $other_stmt = $conn->prepare($other_packages_sql);
+                        
+                        // بررسی موفقیت آماده‌سازی
+                        if ($other_stmt === false) {
+                            echo "<div class='p-3 text-center text-danger'>خطا در آماده‌سازی کوئری پکیج‌ها.</div>";
+                        } else {
+                            $other_stmt->bind_param("i", $package_id);
+                            $other_stmt->execute();
+                            $other_result = $other_stmt->get_result();
+
+                            if ($other_result->num_rows > 0) {
+                                while ($other_package = $other_result->fetch_assoc()) {
+                                    $target_id = "collapse-" . $other_package['id'];
+                                    $heading_id = "heading-" . $other_package['id'];
+                                    $package_link = "package.php?id=" . htmlspecialchars($other_package['id'], ENT_QUOTES, 'UTF-8');
+                                    $package_name = htmlspecialchars($other_package['name'], ENT_QUOTES, 'UTF-8');
+                                    
+                                    // 🌟🌟🌟 قسمت اصلاح شده برای کوتاه کردن توضیحات 🌟🌟🌟
+                                    $raw_description = strip_tags($other_package['description']); // حذف تگ‌های HTML
+                                    $description_text = mb_substr($raw_description, 0, 100, 'UTF-8'); // برش متن تا ۱۰۰ کاراکتر
+                                    if (mb_strlen($raw_description, 'UTF-8') > 100) {
+                                        $description_text .= '...'; // افزودن سه‌نقطه در صورت برش
+                                    }
+                                    // 🌟🌟🌟 پایان قسمت اصلاح شده 🌟🌟🌟
+                            ?>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="<?= $heading_id ?>">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#<?= $target_id ?>" aria-expanded="false" aria-controls="<?= $target_id ?>">
+                                            <?= $package_name ?>
+                                        </button>
+                                    </h2>
+                                    <div id="<?= $target_id ?>" class="accordion-collapse collapse" aria-labelledby="<?= $heading_id ?>" data-bs-parent="#packagesAccordion">
+                                        <div class="accordion-body">
+                                            <p class="text-muted small"><?= htmlspecialchars($description_text, ENT_QUOTES, 'UTF-8') ?></p>
+                                            <a href="<?= $package_link ?>" class="btn btn-sm btn-outline-primary w-100 mt-2">
+                                                <i class="fas fa-eye me-1"></i> مشاهده کامل پکیج
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php
+                                }
+                                $other_stmt->close();
+                            } else {
+                                echo "<div class='p-3 text-center text-muted'>پکیج دیگری موجود نیست.</div>";
+                            }
+                        }
+                        ?>
+                    </div>
+                </div>
+
+                
+                <div class="card sidebar-card mb-5">
+                    <div class="card-header bg-dark text-white text-center">
+                        <h5 class="m-0">📚 جدیدترین مقالات</h5>
+                    </div>
+                    <div class="list-group list-group-flush sidebar-list">
+                        <?php
+                        $recentStmt = $conn->prepare("SELECT title FROM articles ORDER BY created_at DESC LIMIT 6");
+                        $recentStmt->execute();
+                        $recentResult = $recentStmt->get_result();
+
+                        if ($recentResult->num_rows > 0) {
+                            while ($recentRow = $recentResult->fetch_assoc()) {
+                                $recentTitle = htmlspecialchars($recentRow['title']);
+                                echo '<a href="../articles/article.php?slug=' . urlencode($recentTitle) . '" class="list-group-item list-group-item-action sidebar-item"><i class="fas fa-arrow-left"></i>' . $recentTitle . '</a>';
+                            }
+                        } else {
+                            echo '<p class="text-center p-3 m-0 text-muted">مقاله‌ای برای نمایش نیست.</p>';
+                        }
+                        $recentStmt->close();
+                        ?>
+                    </div>
+                    <div class="card-footer text-center bg-white">
+                        <a href="../articles" class="btn btn-block sidebar-btn">مشاهده همه مقالات 🚀</a>
+                    </div>
+                </div>
+
+            </div>
+
         </div> 
 
         <br><br><br>
@@ -279,7 +443,10 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         </div>
 
 
-    </div> <?php
+    </div>
+
+
+    <?php
         } else {
             // پکیجی با این ID پیدا نشد
             echo "<div class='container mt-5'><div class='alert alert-danger text-center'>⚠️ پکیج مورد نظر با شناسه " . htmlspecialchars($package_id, ENT_QUOTES, 'UTF-8') . " پیدا نشد.</div></div>";
