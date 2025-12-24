@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cart_id'])) {
     $stmt_del->close();
 }
 
-// دریافت آیتم‌های سبد خرید به همراه قیمت و اطلاعات تخفیف
+// دریافت آیتم‌های سبد خرید
 $sql = "SELECT uc.id AS cart_id, p.id AS package_id, p.name, p.price, p.discount_code, p.discount_price 
         FROM user_cart uc 
         JOIN packages p ON uc.package_id = p.id 
@@ -144,8 +144,8 @@ $stmt->close();
     // دکمه اعمال تخفیف
     $('.apply-discount-btn').click(function() {
         let row = $(this).closest('tr');
-        let inputCode = row.find('.discount-input').val();
-        let validCode = row.data('valid-code');
+        let inputCode = row.find('.discount-input').val().trim();
+        let validCode = String(row.data('valid-code')).trim();
         let basePrice = parseInt(row.data('base-price'));
         let discountValue = parseInt(row.data('discount-val'));
 
@@ -153,35 +153,35 @@ $stmt->close();
             let newPrice = basePrice - discountValue;
             if (newPrice < 0) newPrice = 0;
 
-            row.find('.final-price-display').text(new Intl.NumberFormat().format(newPrice)).css('color',
-                'green').css('font-weight', 'bold');
-            row.attr('data-calculated-price', newPrice);
+            row.find('.final-price-display').text(new Intl.NumberFormat().format(newPrice)).css({
+                'color': 'green',
+                'font-weight': 'bold'
+            });
+
+            // ذخیره قیمت جدید در دیتای ردیف
+            row.data('current-price', newPrice);
             alert("کد تخفیف با موفقیت اعمال شد.");
         } else {
             alert("کد تخفیف نامعتبر است.");
         }
     });
 
-    // تابع انتقال به درگاه با مبلغ نهایی
+    // تابع انتقال به درگاه
     function payNow(cartId, btn) {
         let row = $(btn).closest('tr');
-        let amount = row.attr('data-calculated-price') ? row.attr('data-calculated-price') : row.data('base-price');
+        // اگر تخفیف اعمال شده باشد از current-price وگرنه از base-price استفاده می‌کند
+        let amount = row.data('current-price') !== undefined ? row.data('current-price') : row.data('base-price');
+
         window.location.href = "checkout.php?cart_id=" + cartId + "&amount=" + amount;
     }
 
-    // کدهای سایدبار و الرت شما بدون تغییر
-    document.getElementById('sidebarToggle')?.addEventListener('click', function() {
-        document.body.classList.toggle('sidebar-toggled');
-    });
-
+    // بستن خودکار الرت
     setTimeout(function() {
         const alert = document.getElementById('alertMessage');
         if (alert) {
             alert.style.transition = "opacity 1s ease-out";
             alert.style.opacity = "0";
-            setTimeout(function() {
-                alert.style.display = "none";
-            }, 1000);
+            setTimeout(() => alert.style.display = "none", 1000);
         }
     }, 5000);
     </script>

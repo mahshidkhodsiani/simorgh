@@ -12,10 +12,11 @@ if(isset($_POST['cart_id']) && isset($_POST['code'])) {
     $res = $stmt->get_result()->fetch_assoc();
 
     if($res && $res['discount_code'] === $code && !empty($code)) {
-        // مبلغ نهایی = قیمت اصلی منهای مبلغ تخفیف تعریف شده در ادمین
         $new_price = $res['price'] - $res['discount_price'];
-        echo json_encode(['success' => true, 'new_price' => $max(0, $new_price)]);
+        // اصلاح $max به max
+        echo json_encode(['success' => true, 'new_price' => max(0, $new_price)]);
     } else {
         echo json_encode(['success' => false]);
     }
 }
+// علامت } اضافی حذف شد

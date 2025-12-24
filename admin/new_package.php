@@ -109,7 +109,7 @@ include '../config.php'; // اتصال به دیتابیس در ابتدا بر�
                                     placeholder="مثلا OFF50">
                             </div>
                             <div class="col-md-4 mb-3">
-                                <label for="discount_price" class="form-label">قیمت تخفیف (ریال):</label>
+                                <label for="discount_price" class="form-label">میزان تخفیف (ریال):</label>
                                 <input type="number" id="discount_price" name="discount_price" class="form-control"
                                     placeholder="اگر تخفیف ندارد خالی بگذارید">
                             </div>

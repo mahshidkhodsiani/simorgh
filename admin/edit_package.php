@@ -217,7 +217,7 @@ if (isset($_POST['delete_file1_input'])) {
                                     placeholder="مثلا OFF50">
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">قیمت با تخفیف (ریال):</label>
+                                <label class="form-label">میزان تخفیف (ریال):</label>
                                 <input type="number" name="discount_price" class="form-control"
                                     value="<?= htmlspecialchars($package_data['discount_price'] ?? 0) ?>"
                                     placeholder="اگر تخفیف ندارد 0 بگذارید">
