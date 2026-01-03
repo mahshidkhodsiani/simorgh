@@ -9,37 +9,40 @@ if (session_status() === PHP_SESSION_NONE) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="موسسه هفت هنر سیمرغ، پیشرو در آموزش گویندگی، انیمیشن، طراحی و موسیقی با ارائه دوره‌های تخصصی و کارگاه‌های عملی.">
+    <meta name="description"
+        content="موسسه هفت هنر سیمرغ، پیشرو در آموزش گویندگی، انیمیشن، طراحی و موسیقی با ارائه دوره‌های تخصصی و کارگاه‌های عملی.">
     <meta name="keywords" content="گویندگی, انیمیشن, طراحی, موسیقی, آموزش گویندگی, دوره‌های گویندگی, موسسه هنری">
     <meta name="author" content="موسسه هفت هنر سیمرغ">
     <meta property="og:title" content="موسسه هفت هنر سیمرغ">
-    <meta property="og:description" content="موسسه هفت هنر سیمرغ، پیشرو در آموزش گویندگی، انیمیشن، طراحی و موسیقی با دوره‌های تخصصی و کارگاه‌های عملی.">
+    <meta property="og:description"
+        content="موسسه هفت هنر سیمرغ، پیشرو در آموزش گویندگی، انیمیشن، طراحی و موسیقی با دوره‌های تخصصی و کارگاه‌های عملی.">
     <meta property="og:image" content="images/logo1.png">
-    
+
     <meta property="og:url" content="https://www.simorghtv.com">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="fa_IR">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="موسسه هفت هنر سیمرغ">
-    <meta name="twitter:description" content="موسسه هفت هنر سیمرغ، پیشرو در آموزش گویندگی، انیمیشن، طراحی و موسیقی با دوره‌های تخصصی و کارگاه‌های عملی.">
+    <meta name="twitter:description"
+        content="موسسه هفت هنر سیمرغ، پیشرو در آموزش گویندگی، انیمیشن، طراحی و موسیقی با دوره‌های تخصصی و کارگاه‌های عملی.">
     <meta name="twitter:image" content="URL-to-your-image.jpg">
     <title>هفت هنر سیمرغ</title>
     <link rel="icon" href="/images/logo1.ico" type="image/x-icon">
     <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            "name": "موسسه هفت هنر سیمرغ",
-            "url": "https://simorghtv.com",
-            "logo": "https://simorghtv.com/images/logo1.png",
-            "contactPoint": {
-                "@type": "ContactPoint",
-                "telephone": "+02191300517",
-                "contactType": "customer service",
-                "areaServed": "IR",
-                "availableLanguage": "Persian"
-            }
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "موسسه هفت هنر سیمرغ",
+        "url": "https://simorghtv.com",
+        "logo": "https://simorghtv.com/images/logo1.png",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+02191300517",
+            "contactType": "customer service",
+            "areaServed": "IR",
+            "availableLanguage": "Persian"
         }
+    }
     </script>
 
     <?php
@@ -51,17 +54,17 @@ if (session_status() === PHP_SESSION_NONE) {
 
 
     <style>
-        @font-face {
-            font-family: 'estedad';
-            /* src: url('fonts/estedad.woff2') format('woff2'), */
-            src:
-                url('fonts/ttf/Estedad-Medium.ttf') format('truetype'),
-        }
+    @font-face {
+        font-family: 'estedad';
+        /* src: url('fonts/estedad.woff2') format('woff2'), */
+        src:
+            url('fonts/ttf/Estedad-Medium.ttf') format('truetype'),
+    }
 
-        body {
-            font-family: 'estedad', sans-serif !important;
-            line-height: 2 !important;
-        }
+    body {
+        font-family: 'estedad', sans-serif !important;
+        line-height: 2 !important;
+    }
     </style>
 
 </head>
@@ -132,13 +135,13 @@ if (session_status() === PHP_SESSION_NONE) {
 
     <div class="container-fluid px-4 mt-4">
 
-
         <div class="row">
             <div class="col-md-4">
                 <div class="search-wrapper">
                     <div class="search-bubble"></div>
                     <div class="input-group search-box">
-                        <input type="text" id="searchInput" name="search_word" class="form-control" placeholder="دوره مورد نظر خود را جستجو کنید..." autocomplete="off">
+                        <input type="text" id="searchInput" name="search_word" class="form-control"
+                            placeholder="دوره مورد نظر خود را جستجو کنید..." autocomplete="off">
                         <span class="input-group-text">
                             <i class="fas fa-magnifying-glass"></i>
                         </span>
@@ -149,7 +152,16 @@ if (session_status() === PHP_SESSION_NONE) {
 
             <div class="col-md-8">
                 <h3 class="alert-heading"><b>موسسه هفت هنر سیمرغ</b></h3>
-                <p>اگر به هنر، گویندگی و سینما علاقه‌مند هستید، اینجا جایی‌ست که می‌توانید استعدادهای خود را شکوفا کرده، مهارت‌های لازم را بیاموزید و با راهنمایی اساتید مجرب، قدم به دنیای حرفه‌ای هنر بگذارید.</p>
+
+
+                <p style="font-size: 13px;">
+                    اگر به دنیای هنر و رسانه علاقه‌مند هستید، آموزشگاه سیمرغ فضایی حرفه‌ای برای کشف و پرورش استعدادهای
+                    شما فراهم کرده است.
+                    دوره‌های تخصصی ما شامل بازیگری ، دوبله و گویندگی ، گریم سینمایی، موشن گرافیک، هوش مصنوعی، عکاسی،
+                    تدوین ، جلوه‌های ویژه و ... بوده و به‌صورت حضوری و پکیج‌های آموزشی آنلاین ارائه می‌شود.
+                    با آموزش‌های کاربردی و راهنمایی اساتید مجرب، مسیر یادگیری تا ورود به بازار کار را هدفمند و حرفه‌ای
+                    طی خواهید کرد.
+                </p>
                 <hr>
 
             </div>
@@ -161,88 +173,106 @@ if (session_status() === PHP_SESSION_NONE) {
 
     <div class="container-fluid px-4 mt-4">
 
-
-
         <section id="portfolio" class="py-5">
             <div class="container">
                 <div class="row align-items-center">
 
                     <div class="col-md-5 col-lg-4 text-center mb-4 mb-md-0">
-                        <img class="img-fluid rounded shadow-lg" src="images/20.jpeg" alt="تصویر سیمرغ" style="max-height: 650px; object-fit: cover;">
+                        <img class="img-fluid rounded shadow-lg" src="images/30.jpg" alt="تصویر سیمرغ"
+                            style="max-height: 650px; object-fit: cover;">
                     </div>
+
+
+
                     <div class="col-md-7 col-lg-8">
                         <div class="row">
 
                             <div class="col-6 col-md-6 mb-4 card-spacing">
-                                <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
-                                    <div class="card-body d-flex flex-row justify-content-between align-items-center p-4">
-                                        <h6 class="card-title rtl-title fw-bold text-dark mb-0">پرداخت اقساطی دوره ها</h6>
-                                        <a href="register2" class="btn btn-outline-quarternary fw-bold">ثبت نام &rarr;</a>
+                                <a href="register2" class="text-decoration-none" title="کلیک کنید">
+                                    <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
+                                        <div class="card-body d-flex align-items-center justify-content-center p-4">
+                                            <h6 class="card-title rtl-title text-center fw-bold text-dark mb-0">پرداخت
+                                                اقساطی دوره‌ها</h6>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
 
                             <div class="col-6 col-md-6 mb-4 card-spacing">
-                                <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
-                                    <div class="card-body d-flex flex-row justify-content-between align-items-center p-4">
-                                        <h6 class="card-title rtl-title fw-bold text-dark mb-0">پرداخت نقدی دوره ها</h6>
-                                        <a href="register" class="btn btn-outline-quarternary fw-bold">رفتن به صفحه &rarr;</a>
+                                <a href="register" class="text-decoration-none" title="کلیک کنید">
+                                    <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
+                                        <div class="card-body d-flex align-items-center justify-content-center p-4">
+                                            <h6 class="card-title rtl-title text-center fw-bold text-dark mb-0">پرداخت
+                                                نقدی دوره ها</h6>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
 
                             <div class="col-6 col-md-6 mb-4 card-spacing">
-                                <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
-                                    <div class="card-body d-flex flex-row justify-content-between align-items-center p-4">
-                                        <h6 class="card-title rtl-title fw-bold text-dark mb-0">پرداخت آزاد به موسسه</h6>
-                                        <a href="pardakht" class="btn btn-outline-quarternary fw-bold">پرداخت &rarr;</a>
+                                <a href="pardakht" class="text-decoration-none" title="کلیک کنید">
+                                    <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
+                                        <div class="card-body d-flex align-items-center justify-content-center p-4">
+                                            <h6 class="card-title rtl-title text-center fw-bold text-dark mb-0">پرداخت
+                                                آزاد به موسسه</h6>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
 
                             <div class="col-6 col-md-6 mb-4 card-spacing">
-                                <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
-                                    <div class="card-body d-flex flex-row justify-content-between align-items-center p-4">
-                                        <h6 class="card-title rtl-title fw-bold text-dark mb-0">پکیج های آموزشی</h6>
-                                        <a href="packages" class="btn btn-outline-quarternary fw-bold">ثبت نام &rarr;</a>
+                                <a href="packages" class="text-decoration-none" title="کلیک کنید">
+                                    <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
+                                        <div class="card-body d-flex align-items-center justify-content-center p-4">
+                                            <h6 class="card-title rtl-title text-center fw-bold text-dark mb-0">پکیج های
+                                                آموزشی</h6>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
 
                             <div class="col-6 col-md-6 mb-4 card-spacing">
-                                <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
-                                    <div class="card-body d-flex flex-row justify-content-between align-items-center p-4">
-                                        <h6 class="card-title rtl-title fw-bold text-dark mb-0">گالری و نمونه کارها</h6>
-                                        <a href="portofilo/pictures" class="btn btn-outline-quarternary fw-bold">رفتن به صفحه &rarr;</a>
+                                <a href="portofilo/pictures" class="text-decoration-none" title="کلیک کنید">
+                                    <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
+                                        <div class="card-body d-flex align-items-center justify-content-center p-4">
+                                            <h6 class="card-title rtl-title text-center fw-bold text-dark mb-0">گالری و
+                                                نمونه کارها</h6>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
 
                             <div class="col-6 col-md-6 mb-4 card-spacing">
-                                <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
-                                    <div class="card-body d-flex flex-row justify-content-between align-items-center p-4">
-                                        <h6 class="card-title rtl-title fw-bold text-dark mb-0">ویدیوهای نمونه کار</h6>
-                                        <a href="portofilo/videos" class="btn btn-outline-quarternary fw-bold">رفتن به صفحه &rarr;</a>
+                                <a href="portofilo/videos" class="text-decoration-none" title="کلیک کنید">
+                                    <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
+                                        <div class="card-body d-flex align-items-center justify-content-center p-4">
+                                            <h6 class="card-title rtl-title text-center fw-bold text-dark mb-0">ویدیوهای
+                                                نمونه کار</h6>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
 
                             <div class="col-6 col-md-6 mb-4 card-spacing">
-                                <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
-                                    <div class="card-body d-flex flex-row justify-content-between align-items-center p-4">
-                                        <h6 class="card-title rtl-title fw-bold text-dark mb-0">گویندگان رادیو سیمرغ</h6>
-                                        <a href="articles/speakers_archive" class="btn btn-outline-quarternary fw-bold">رفتن به صفحه &rarr;</a>
+                                <a href="articles/speakers_archive" class="text-decoration-none" title="کلیک کنید">
+                                    <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
+                                        <div class="card-body d-flex align-items-center justify-content-center p-4">
+                                            <h6 class="card-title rtl-title text-center fw-bold text-dark mb-0">گویندگان
+                                                رادیو سیمرغ</h6>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
 
                             <div class="col-6 col-md-6 mb-4 card-spacing">
-                                <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
-                                    <div class="card-body d-flex flex-row justify-content-between align-items-center p-4">
-                                        <h6 class="card-title rtl-title fw-bold text-dark mb-0">انتقاد و پیشنهاد به سیمرغ</h6>
-                                        <a href="articles/suggestion" class="btn btn-outline-quarternary fw-bold">رفتن به صفحه &rarr;</a>
+                                <a href="articles/suggestion" class="text-decoration-none" title="کلیک کنید">
+                                    <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
+                                        <div class="card-body d-flex align-items-center justify-content-center p-4">
+                                            <h6 class="card-title rtl-title text-center fw-bold text-dark mb-0">انتقاد و
+                                                پیشنهاد به سیمرغ</h6>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
 
                         </div>
@@ -258,33 +288,30 @@ if (session_status() === PHP_SESSION_NONE) {
 
 
 
-
-
-
-
-
-
         <section class="light">
             <div class="container py-2">
-                <a href="courses">
-                    <h1 class="h1 text-center text-dark fw-bold" id="pageHeaderTitle" title="کلیک کنید">
-                        آخرین مطالب سیمرغ
-                        <img src="images/link.jpg" height="30px" width="30px" alt="آخرین مقالات" title="آخرین مقالات سیمرغ">
-                    </h1>
+                <a href="packages">
+                    <h2 class="h1 text-center text-dark fw-bold" id="pageHeaderTitle" title="کلیک کنید">
+                        آخرین پکیج‌های سیمرغ
+                        <img src="images/link.jpg" height="30px" width="30px" alt="آخرین پکیج‌ها"
+                            title="آخرین پکیج‌های سیمرغ">
+                    </h2>
                 </a>
 
                 <?php
-                $sql = "SELECT * FROM courses WHERE show_index =1 ORDER BY id DESC LIMIT 4";
+                // تغییر کوئری به جدول packages
+                $sql = "SELECT * FROM packages ORDER BY id DESC LIMIT 4";
                 $result = $conn->query($sql);
                 if ($result->num_rows > 0) {
                     $counter = 0;
                     while ($row = $result->fetch_assoc()) {
-                        if (is_object(json_decode($row["images"]))) {
-                            $images = json_decode($row["images"], true);
+                        // تنظیم آدرس تصویر از فیلد pictures
+                        if (is_object(json_decode($row["pictures"]))) {
+                            $images = json_decode($row["pictures"], true);
                             $image_url = $images["images"]["original"];
                             $image_url = str_replace("/upload", "upload", $image_url);
                         } else {
-                            $image_url = $row["images"];
+                            $image_url = $row["pictures"];
                             $image_url = str_replace(
                                 "../upload",
                                 "upload",
@@ -292,68 +319,53 @@ if (session_status() === PHP_SESSION_NONE) {
                             );
                         }
 
-                        $body_content = preg_replace('/<p>/', '<p style="color: black !important; margin-right: 5px !important; font-size: 16px !important;">', $row['text']);
+                        // تغییر متن به فیلد description پکیج‌ها
+                        $body_content = preg_replace('/<p>/', '<p style="color: black !important; margin-right: 5px !important; font-size: 16px !important;">', $row['description']);
 
                         if ($counter % 2 == 0) {
                 ?>
 
 
-                            <article class="postcard light blue">
-                                <a class="postcard__img_link" href="courses">
-                                    <img class="postcard__img" src="<?= $image_url ?>" alt="موسسه هفت هنر سیمرغ" />
-                                </a>
-                                <div class="postcard__text t-dark">
-                                    <h1 class="postcard__title blue"><a href="courses"><?= $row["title"] ?></a></h1>
-                                    <div class="postcard__subtitle small">
-                                        <time datetime="<?= $sdate->toShaDate($row["created_at"]) ?>">
-                                            <i class="fas fa-calendar-alt mr-2"></i><?= $sdate->toShaDate(
-                                                                                        $row["created_at"]
-                                                                                    ) ?>
-                                        </time>
-                                    </div>
-                                    <div class="postcard__bar"></div>
-                                    <div class="postcard__preview-txt mr-5 fw-bold"><?= $body_content ?></div>
-                                    <ul class="postcard__tagbox">
-                                        <a href="courses/course.php?slug=<?= $row['title'] ?>">
-                                            <li class="tag__item"><i class="fas fa-clock mr-2"></i>ادامه مطلب</li>
-                                        </a>
-
-                                    </ul>
-                                </div>
-                            </article>
+                <article class="postcard light blue">
+                    <a class="postcard__img_link" href="packages">
+                        <img class="postcard__img" src="<?= $image_url ?>" alt="<?= $row["name"] ?>" />
+                    </a>
+                    <div class="postcard__text t-dark">
+                        <h3 class="postcard__title blue"><a href="packages"><?= $row["name"] ?></a></h3>
+                        <div class="postcard__bar"></div>
+                        <div class="postcard__preview-txt mr-5 fw-bold"><?= $body_content ?></div>
+                        <ul class="postcard__tagbox">
+                            <a href="packages">
+                                <li class="tag__item"><i class="fas fa-clock mr-2"></i>مشاهده پکیج</li>
+                            </a>
+                        </ul>
+                    </div>
+                </article>
 
 
-                        <?php } else { ?>
+                <?php } else { ?>
 
-                            <article class="postcard light red">
-                                <a class="postcard__img_link" href="courses">
-                                    <img class="postcard__img" src="<?= $image_url ?>" alt="موسسه هفت هنر سیمرغ" />
-                                </a>
-                                <div class="postcard__text t-dark">
-                                    <h1 class="postcard__title red"><a href="courses"><?= $row["title"] ?></a></h1>
-                                    <div class="postcard__subtitle small">
-                                        <time datetime="<?= $sdate->toShaDate($row["created_at"]) ?>">
-                                            <i class="fas fa-calendar-alt mr-2"></i><?= $sdate->toShaDate(
-                                                                                        $row["created_at"]
-                                                                                    ) ?>
-                                        </time>
-                                    </div>
-                                    <div class="postcard__bar"></div>
-                                    <div class="postcard__preview-txt fw-bold"><?= $body_content ?></div>
-                                    <ul class="postcard__tagbox">
-                                        <a href="courses/course.php?slug=<?= $row['title'] ?>">
-                                            <li class="tag__item"><i class="fas fa-clock mr-2"></i>ادامه مطلب</li>
-                                        </a>
-
-                                    </ul>
-                                </div>
-                            </article>
+                <article class="postcard light red">
+                    <a class="postcard__img_link" href="packages">
+                        <img class="postcard__img" src="<?= $image_url ?>" alt="<?= $row["name"] ?>" />
+                    </a>
+                    <div class="postcard__text t-dark">
+                        <h3 class="postcard__title red"><a href="packages"><?= $row["name"] ?></a></h3>
+                        <div class="postcard__bar"></div>
+                        <div class="postcard__preview-txt fw-bold"><?= $body_content ?></div>
+                        <ul class="postcard__tagbox">
+                            <a href="packages">
+                                <li class="tag__item"><i class="fas fa-clock mr-2"></i>مشاهده پکیج</li>
+                            </a>
+                        </ul>
+                    </div>
+                </article>
 
                 <?php }
                         $counter++;
                     }
                 } else {
-                    echo "0 results";
+                    echo "موردی یافت نشد";
                 }
                 ?>
             </div>
@@ -380,7 +392,8 @@ if (session_status() === PHP_SESSION_NONE) {
                                                 <img class="img-fluid" src="images/audio.jpg" alt="card image">
                                             </p>
                                             <h4 class="card-title fw-bold">گویندگان سیمرغ</h4>
-                                            <p class="card-text fw-bold">اگر دنبال صداهای جذاب با گوینده های متنوع هستید کلیک کنید.</p>
+                                            <p class="card-text fw-bold">اگر دنبال صداهای جذاب با گوینده های متنوع هستید
+                                                کلیک کنید.</p>
                                             <a href="articles/speakers_archive" class="btn btn-primary btn-sm">
                                                 <i class="fa fa-plus"></i>
                                             </a>
@@ -393,7 +406,9 @@ if (session_status() === PHP_SESSION_NONE) {
                                             <a href="articles/speakers_archive">
                                                 <h4 class="card-title fw-bold">سفارش صدا (کلیک کنید)</h4>
                                             </a>
-                                            <p class="card-text fw-bold">آرشیو بهترین گویندگان با صداهای متنوع تیزر تبلیغاتی، موشن گرافیک ، دوبلوری، پادکست ، کتاب صوتی و هرصدایی که بخواهید میتوانید ایجا برای آن گوینده پیدا کنید </p>
+                                            <p class="card-text fw-bold">آرشیو بهترین گویندگان با صداهای متنوع تیزر
+                                                تبلیغاتی، موشن گرافیک ، دوبلوری، پادکست ، کتاب صوتی و هرصدایی که بخواهید
+                                                میتوانید ایجا برای آن گوینده پیدا کنید </p>
                                         </div>
                                     </div>
                                 </div>
@@ -423,7 +438,9 @@ if (session_status() === PHP_SESSION_NONE) {
                                             <a href="courses/speaking_training_course">
                                                 <h4 class="card-title fw-bold">فن بیان و گویندگی (کلیک کنید)</h4>
                                             </a>
-                                            <p class="card-text fw-bold">اگر صدای خوب یا استعداد گویندگی دارید می‌توانید در آموزشگاه رادیو سیمرغ دوره‌های آکادمیک و تجربی را بگذرانید و در ضبط برنامه‌ها حضور پیدا کنید.</p>
+                                            <p class="card-text fw-bold">اگر صدای خوب یا استعداد گویندگی دارید می‌توانید
+                                                در آموزشگاه رادیو سیمرغ دوره‌های آکادمیک و تجربی را بگذرانید و در ضبط
+                                                برنامه‌ها حضور پیدا کنید.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -440,7 +457,8 @@ if (session_status() === PHP_SESSION_NONE) {
                                                 <img class="img-fluid" src="images/packages.jpg" alt="card image">
                                             </p>
                                             <h4 class="card-title fw-bold">پکیج‌های آموزشی</h4>
-                                            <p class="card-text fw-bold">پکیج‌های آموزشی موسسه سیمرغ، راهی نوین برای یادگیری و پیشرفت</p>
+                                            <p class="card-text fw-bold">پکیج‌های آموزشی موسسه سیمرغ، راهی نوین برای
+                                                یادگیری و پیشرفت</p>
                                             <a href="packages" class="btn btn-primary btn-sm">
                                                 <i class="fa fa-plus"></i>
                                             </a>
@@ -453,7 +471,8 @@ if (session_status() === PHP_SESSION_NONE) {
                                             <a href="packages">
                                                 <h4 class="card-title fw-bold">پکیج‌های آموزشی (کلیک کنید)</h4>
                                             </a>
-                                            <p class="card-text fw-bold">اگر به دنبال پکیج‌های آموزشی جامع و کاربردی برای ارتقاء مهارت‌های خود هستید، موسسه سیمرغ بهترین گزینه برای شماست</p>
+                                            <p class="card-text fw-bold">اگر به دنبال پکیج‌های آموزشی جامع و کاربردی
+                                                برای ارتقاء مهارت‌های خود هستید، موسسه سیمرغ بهترین گزینه برای شماست</p>
                                         </div>
                                     </div>
                                 </div>
@@ -470,7 +489,8 @@ if (session_status() === PHP_SESSION_NONE) {
                                                 <img class="img-fluid" src="images/acting1.jpg" alt="card image">
                                             </p>
                                             <h4 class="card-title fw-bold">آموزش بازیگری</h4>
-                                            <p class="card-text fw-bold">آیا به دنبال ارتقاء مهارت‌های بازیگری خود هستید؟</p>
+                                            <p class="card-text fw-bold">آیا به دنبال ارتقاء مهارت‌های بازیگری خود
+                                                هستید؟</p>
                                             <a href="courses/acting1" class="btn btn-primary btn-sm">
                                                 <i class="fa fa-plus"></i>
                                             </a>
@@ -483,7 +503,10 @@ if (session_status() === PHP_SESSION_NONE) {
                                             <a href="courses/acting1">
                                                 <h4 class="card-title fw-bold">آموزش بازیگری (کلیک کنید)</h4>
                                             </a>
-                                            <p class="card-text fw-bold">موسسه «سیمرغ»، پیشرو در آموزش بازیگری در ایران، دوره‌های تخصصی بازیگری مقدماتی و پیشرفته را ارائه می‌دهد. این دوره‌ها با هدف توسعه توانایی‌های بازیگری شما و آماده‌سازی شما برای ورود به دنیای هنر طراحی شده‌اند.</p>
+                                            <p class="card-text fw-bold">موسسه «سیمرغ»، پیشرو در آموزش بازیگری در ایران،
+                                                دوره‌های تخصصی بازیگری مقدماتی و پیشرفته را ارائه می‌دهد. این دوره‌ها با
+                                                هدف توسعه توانایی‌های بازیگری شما و آماده‌سازی شما برای ورود به دنیای
+                                                هنر طراحی شده‌اند.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -513,7 +536,9 @@ if (session_status() === PHP_SESSION_NONE) {
                                             <a href="articles/order_ads">
                                                 <h4 class="card-title fw-bold">سفارش تبلیغات (کلیک کنید)</h4>
                                             </a>
-                                            <p class="card-text fw-bold">آیا به دنبال راهی برای ارتقاء برند خود و جذب مشتریان بیشتر هستید؟ سفارش تبلیغات می‌تواند بهترین گزینه برای شما باشد!</p>
+                                            <p class="card-text fw-bold">آیا به دنبال راهی برای ارتقاء برند خود و جذب
+                                                مشتریان بیشتر هستید؟ سفارش تبلیغات می‌تواند بهترین گزینه برای شما باشد!
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -543,7 +568,9 @@ if (session_status() === PHP_SESSION_NONE) {
                                             <a href="radios">
                                                 <h4 class="card-title fw-bold">برنامه های رادیویی (کلیک کنید)</h4>
                                             </a>
-                                            <p class="card-text fw-bold">با گوش سپردن به برنامه‌های رادیویی موسسه "هفت هنر سیمرغ"، می‌توانید به یک ماجراجویی شنیدنی در دنیای هنر و فرهنگ قدم بگذارید</p>
+                                            <p class="card-text fw-bold">با گوش سپردن به برنامه‌های رادیویی موسسه "هفت
+                                                هنر سیمرغ"، می‌توانید به یک ماجراجویی شنیدنی در دنیای هنر و فرهنگ قدم
+                                                بگذارید</p>
                                         </div>
                                     </div>
                                 </div>
@@ -571,16 +598,17 @@ if (session_status() === PHP_SESSION_NONE) {
                         while ($row = $result->fetch_assoc()) {
                     ?>
 
-                            <div class="col-md-3 mb-4 col-6">
-                                <div class="card-four position-relative overflow-hidden">
-                                    <a href="articles" class="d-block">
-                                        <img src="<?= $row['images'] ?>" class="img-fluid w-100 hover-zoom" alt="تصویر مقاله" style="height: 200px; object-fit: cover;">
-                                        <div class="title-overlay">
-                                            <h5 class="card-title text-white fw-bold p-2"><?= $row['title'] ?></h5>
-                                        </div>
-                                    </a>
+                    <div class="col-md-3 mb-4 col-6">
+                        <div class="card-four position-relative overflow-hidden">
+                            <a href="articles" class="d-block">
+                                <img src="<?= $row['images'] ?>" class="img-fluid w-100 hover-zoom" alt="تصویر مقاله"
+                                    style="height: 200px; object-fit: cover;">
+                                <div class="title-overlay">
+                                    <h5 class="card-title text-white fw-bold p-2"><?= $row['title'] ?></h5>
                                 </div>
-                            </div>
+                            </a>
+                        </div>
+                    </div>
                     <?php
                         }
                     }
@@ -601,7 +629,8 @@ if (session_status() === PHP_SESSION_NONE) {
         <section class="parallax-section">
             <div class="parallax-content">
                 <h2>دنیای هنر در دستان شماست!</h2>
-                <p>با دوره‌های تخصصی موسسه هفت هنر سیمرغ، استعدادهای خود را کشف و شکوفا کنید و به جمع هنرمندان حرفه‌ای بپیوندید.</p>
+                <p>با دوره‌های تخصصی موسسه هفت هنر سیمرغ، استعدادهای خود را کشف و شکوفا کنید و به جمع هنرمندان حرفه‌ای
+                    بپیوندید.</p>
                 <a href="register2" class="btn btn-light btn-lg mt-4 fw-bold">همین حالا ثبت نام کنید</a>
             </div>
         </section>
@@ -610,74 +639,78 @@ if (session_status() === PHP_SESSION_NONE) {
 
         <hr class="my-4">
         <script>
-            $(document).ready(function() {
-                let timer;
+        $(document).ready(function() {
+            let timer;
 
-                $("#searchInput").on("keyup", function() {
-                    clearTimeout(timer);
-                    let search_word = $(this).val().trim();
+            $("#searchInput").on("keyup", function() {
+                clearTimeout(timer);
+                let search_word = $(this).val().trim();
 
-                    if (search_word.length > 0) {
-                        timer = setTimeout(function() {
-                            $.ajax({
-                                url: "search_box.php",
-                                type: "POST",
-                                data: {
-                                    search_word: search_word
-                                },
-                                dataType: "html", // اطمینان از دریافت پاسخ HTML
-                                success: function(response) {
-                                    console.log("Response received:", response); // ✅ نمایش پاسخ در کنسول
+                if (search_word.length > 0) {
+                    timer = setTimeout(function() {
+                        $.ajax({
+                            url: "search_box.php",
+                            type: "POST",
+                            data: {
+                                search_word: search_word
+                            },
+                            dataType: "html", // اطمینان از دریافت پاسخ HTML
+                            success: function(response) {
+                                console.log("Response received:",
+                                    response); // ✅ نمایش پاسخ در کنسول
 
-                                    if (response.trim().length > 0) {
-                                        $("#suggestionsList").html(response).show(); // نمایش لیست پیشنهادات
-                                    } else {
-                                        $("#suggestionsList").hide(); // در صورت خالی بودن نتیجه، لیست پنهان شود
-                                    }
-                                },
-                                error: function(xhr, status, error) {
-                                    console.error("AJAX Error:", error);
+                                if (response.trim().length > 0) {
+                                    $("#suggestionsList").html(response)
+                                        .show(); // نمایش لیست پیشنهادات
+                                } else {
+                                    $("#suggestionsList")
+                                        .hide(); // در صورت خالی بودن نتیجه، لیست پنهان شود
                                 }
-                            });
-                        }, 300);
-                    } else {
-                        $("#suggestionsList").hide();
-                    }
-                });
-
-                // انتخاب پیشنهادات با کلیک
-                $(document).on("click", ".suggestion-item", function() {
-                    let selectedText = $(this).text();
-                    $("#searchInput").val(selectedText);
+                            },
+                            error: function(xhr, status, error) {
+                                console.error("AJAX Error:", error);
+                            }
+                        });
+                    }, 300);
+                } else {
                     $("#suggestionsList").hide();
-                });
-
-                // بستن پیشنهادات هنگام کلیک بیرون
-                $(document).on("click", function(e) {
-                    if (!$(e.target).closest(".search-wrapper").length) {
-                        $("#suggestionsList").hide();
-                    }
-                });
+                }
             });
+
+            // انتخاب پیشنهادات با کلیک
+            $(document).on("click", ".suggestion-item", function() {
+                let selectedText = $(this).text();
+                $("#searchInput").val(selectedText);
+                $("#suggestionsList").hide();
+            });
+
+            // بستن پیشنهادات هنگام کلیک بیرون
+            $(document).on("click", function(e) {
+                if (!$(e.target).closest(".search-wrapper").length) {
+                    $("#suggestionsList").hide();
+                }
+            });
+        });
         </script>
 
 
 
         <script type="text/javascript">
-            ! function() {
-                var i = "4Ey6dG",
-                    a = window,
-                    d = document;
+        ! function() {
+            var i = "4Ey6dG",
+                a = window,
+                d = document;
 
-                function g() {
-                    var g = d.createElement("script"),
-                        s = "https://www.goftino.com/widget/" + i,
-                        l = localStorage.getItem("goftino_" + i);
-                    g.async = !0, g.src = l ? s + "?o=" + l : s;
-                    d.getElementsByTagName("head")[0].appendChild(g);
-                }
-                "complete" === d.readyState ? g() : a.attachEvent ? a.attachEvent("onload", g) : a.addEventListener("load", g, !1);
-            }();
+            function g() {
+                var g = d.createElement("script"),
+                    s = "https://www.goftino.com/widget/" + i,
+                    l = localStorage.getItem("goftino_" + i);
+                g.async = !0, g.src = l ? s + "?o=" + l : s;
+                d.getElementsByTagName("head")[0].appendChild(g);
+            }
+            "complete" === d.readyState ? g() : a.attachEvent ? a.attachEvent("onload", g) : a.addEventListener("load",
+                g, !1);
+        }();
         </script>
 
 

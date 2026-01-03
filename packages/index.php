@@ -5,13 +5,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>پکیج‌های آموزشی سیمرغ | مرجع یادگیری حرفه‌ای</title>
+
     <meta name="description"
         content="ارتقاء مهارت‌های فردی با پکیج‌های آموزشی جامع موسسه سیمرغ. آموزش‌های پروژه‌محور و بازارکاری در حوزه‌های مختلف.">
+    <!-- SEO Core -->
+    <link rel="canonical" href="https://simorghtv.com/packages" />
+
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="googlebot" content="index, follow, max-image-preview:large" />
+
+
+    <!-- Open Graph / WhatsApp -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="پکیج‌های آموزشی سیمرغ | آموزش پروژه‌محور و بازارکار" />
+    <meta property="og:description"
+        content="دوره‌ها و پکیج‌های آموزشی سیمرغ؛ آموزش کاملاً عملی، پروژه‌محور و مناسب ورود به بازار کار." />
+    <meta property="og:url" content="https://simorghtv.com/packages" />
+
+    <meta property="og:image" content="https://simorghtv.com/images/30.jpg" />
+    <meta property="og:image:secure_url" content="https://simorghtv.com/images/30.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="پکیج‌های آموزشی سیمرغ" />
+    <meta name="twitter:description" content="مرجع یادگیری حرفه‌ای با آموزش‌های پروژه‌محور" />
+    <meta name="twitter:image" content="https://simorghtv.com/images/30.jpg" />
+
+
 
     <?php include "includes.php"; ?>
 
     <link rel="icon" href="../images/logo1.ico" type="image/x-icon">
     <link rel="stylesheet" href="../css/mainstyles.css">
+
+
+
+
 
     <style>
     :root {
@@ -127,12 +160,17 @@
     .intro-section {
         background: #ffffff;
         border-radius: 30px;
-        padding: 40px;
+        padding: 20px;
         margin-bottom: 50px;
-        border-right: 8px solid var(--primary-color);
+        border: 8px solid var(--primary-color);
+        /* border-left: 8px solid var(--primary-color); */
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
     }
     </style>
+
+
+
+
 </head>
 
 <body>
@@ -154,11 +192,29 @@
 
     <main class="container mt-5">
         <section class="intro-section">
-            <h1 class="h2 mb-3 fw-bolder">پکیج‌های آموزشی سیمرغ</h1>
-            <p class="lead text-muted" style="font-weight: 500;">
-                دسترسی به بهترین پکیج‌های آموزشی بصورت پروژه‌محور و کاملاً کاربردی. مهارت خود را همین امروز ارتقاء دهید.
-            </p>
+            <div class="row">
+                <div class="col-md-6">
+                    <h1 class="h2 mb-3 fw-bolder">پکیج‌های آموزشی سیمرغ</h1>
+                    <p class="lead text-muted" style="font-weight: 500;">
+                        دسترسی به بهترین پکیج‌های آموزشی بصورت پروژه‌محور و کاملاً کاربردی. مهارت خود را همین امروز
+                        ارتقاء دهید.
+                    </p>
+                    <p>
+                        جهت استفاده بهتر ویدیوی روبرو را مشاهده کنید و در صورت بروز هرگونه مشکلی از نشان پیام پایین صفحه
+                        به پشتیبان های ما پیام دهید
+                    </p>
+                </div>
+                <div class="col-md-6">
+
+                    <video width="100%" height="100%" controls autoplay>
+                        <source src="../uploads/packages/6/file_6958bc6a782c1.m4v" type="video/mp4">
+                        Sorry, your browser doesn't support the video element.
+                    </video>
+                </div>
+
+            </div>
         </section>
+        <br>
 
         <div class="row">
             <?php
@@ -189,7 +245,8 @@
                                 <span class="fw-bold"><?php echo htmlspecialchars($package['teacher']); ?></span>
                             </div>
                             <div class="d-flex justify-content-between align-items-center">
-                                <span class="text-muted">مبلغ سرمایه‌گذاری:</span>
+                                <span class="text-muted">
+                                    مبلغ دوره :</span>
                                 <span class="price-tag"><?php echo number_format($package['price']); ?> ریال</span>
                             </div>
                         </div>
@@ -216,6 +273,25 @@
         </div>
 
     </main>
+
+
+    <script type="text/javascript">
+    ! function() {
+        var i = "4Ey6dG",
+            a = window,
+            d = document;
+
+        function g() {
+            var g = d.createElement("script"),
+                s = "https://www.goftino.com/widget/" + i,
+                l = localStorage.getItem("goftino_" + i);
+            g.async = !0, g.src = l ? s + "?o=" + l : s;
+            d.getElementsByTagName("head")[0].appendChild(g);
+        }
+        "complete" === d.readyState ? g() : a.attachEvent ? a.attachEvent("onload", g) : a.addEventListener("load",
+            g, !1);
+    }();
+    </script>
 
     <?php include 'footer.php'; ?>
 </body>
