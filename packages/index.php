@@ -206,10 +206,14 @@
                 </div>
                 <div class="col-md-6">
 
-                    <video width="100%" height="100%" controls autoplay>
-                        <source src="../uploads/packages/6/file_6958bc6a782c1.m4v" type="video/mp4">
-                        Sorry, your browser doesn't support the video element.
+
+
+                    <video controls class="w-100 rounded shadow-sm">
+                        <source src="../uploads/packages/12/file_695d261d07bf1.m4v" type="video/mp4">
+                        مرورگر شما از تگ ویدئو پشتیبانی نمی‌کند.
                     </video>
+
+
                 </div>
 
             </div>
@@ -247,7 +251,11 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="text-muted">
                                     مبلغ دوره :</span>
-                                <span class="price-tag"><?php echo number_format($package['price']); ?> ریال</span>
+
+                                <span class="price-tag">
+                                    <?php echo number_format($package['price'] / 10); ?> تومان
+                                </span>
+
                             </div>
                         </div>
 

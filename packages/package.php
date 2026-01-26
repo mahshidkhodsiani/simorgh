@@ -330,7 +330,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 
                 <div class="my-3">
                     <strong>قیمت</strong>
-                    <h3 class="text-white fw-bold"><?= number_format($package['price']) ?> ریال</h3>
+                    <h3 class="text-white fw-bold"><?= number_format($package['price'] / 10) ?> تومان</h3>
                 </div>
 
                 <div class="my-4">
