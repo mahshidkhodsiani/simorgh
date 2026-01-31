@@ -1,148 +1,148 @@
 <style>
-    /* Sidebar base */
+/* Sidebar base */
+.sidebar {
+    width: 240px;
+    background: linear-gradient(180deg, #2c3e50, #34495e);
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100%;
+    overflow-y: auto;
+    padding-top: 10px;
+    box-shadow: -3px 0 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+/* Sidebar header (user info) */
+.sidebar h5 {
+    font-size: 18px;
+    color: #ecf0f1;
+    text-align: center;
+    padding: 18px 12px;
+    margin: 0;
+    background: rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Sidebar links */
+.sidebar a,
+.dropdown-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 18px;
+    color: #ecf0f1;
+    font-size: 15px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+    margin: 4px 8px;
+}
+
+.sidebar a i,
+.dropdown-btn i {
+    width: 20px;
+    text-align: center;
+}
+
+/* Active & Hover state */
+.sidebar a.active,
+.sidebar a:hover,
+.dropdown-btn:hover {
+    background: #b85ed6ff;
+    color: #fff;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Dropdown container */
+.dropdown-container {
+    display: none;
+    flex-direction: column;
+    margin: 0 10px;
+    padding-left: 10px;
+    border-left: 2px solid rgba(255, 255, 255, 0.15);
+    animation: slideDown 0.3s ease;
+}
+
+.dropdown-container.show {
+    display: flex;
+}
+
+/* Dropdown animation */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Content */
+div.content {
+    margin-right: 240px;
+    padding: 20px;
+    background: #fdfdfd;
+    min-height: 100vh;
+    transition: margin-right 0.3s ease;
+}
+
+/* Scrollbar styling */
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
     .sidebar {
-        width: 240px;
-        background: linear-gradient(180deg, #2c3e50, #34495e);
+        width: 200px;
+        transform: translateX(100%);
+        z-index: 1000;
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    div.content {
+        margin-right: 0;
+    }
+
+    /* Add a backdrop */
+    .sidebar-backdrop {
+        display: none;
         position: fixed;
-        right: 0;
-        top: 0;
-        height: 100%;
-        overflow-y: auto;
-        padding-top: 10px;
-        box-shadow: -3px 0 8px rgba(0, 0, 0, 0.2);
-        transition: all 0.3s ease;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
     }
 
-    /* Sidebar header (user info) */
-    .sidebar h5 {
-        font-size: 18px;
-        color: #ecf0f1;
-        text-align: center;
-        padding: 18px 12px;
-        margin: 0;
-        background: rgba(0, 0, 0, 0.2);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    .sidebar-backdrop.show {
+        display: block;
     }
 
-    /* Sidebar links */
-    .sidebar a,
-    .dropdown-btn {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        padding: 12px 18px;
-        color: #ecf0f1;
-        font-size: 15px;
-        text-decoration: none;
-        transition: all 0.3s ease;
-        border-radius: 6px;
-        margin: 4px 8px;
-    }
-
-    .sidebar a i,
-    .dropdown-btn i {
-        width: 20px;
-        text-align: center;
-    }
-
-    /* Active & Hover state */
-    .sidebar a.active,
-    .sidebar a:hover,
-    .dropdown-btn:hover {
+    .sidebar-toggle {
+        position: fixed;
+        top: 15px;
+        right: 15px;
         background: #b85ed6ff;
         color: #fff;
-        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
+        border: none;
+        padding: 10px 14px;
+        border-radius: 6px;
+        z-index: 1100;
+        cursor: pointer;
+        font-size: 16px;
     }
-
-    /* Dropdown container */
-    .dropdown-container {
-        display: none;
-        flex-direction: column;
-        margin: 0 10px;
-        padding-left: 10px;
-        border-left: 2px solid rgba(255, 255, 255, 0.15);
-        animation: slideDown 0.3s ease;
-    }
-
-    .dropdown-container.show {
-        display: flex;
-    }
-
-    /* Dropdown animation */
-    @keyframes slideDown {
-        from {
-            opacity: 0;
-            transform: translateY(-5px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    /* Content */
-    div.content {
-        margin-right: 240px;
-        padding: 20px;
-        background: #fdfdfd;
-        min-height: 100vh;
-        transition: margin-right 0.3s ease;
-    }
-
-    /* Scrollbar styling */
-    .sidebar::-webkit-scrollbar {
-        width: 6px;
-    }
-
-    .sidebar::-webkit-scrollbar-thumb {
-        background: rgba(255, 255, 255, 0.3);
-        border-radius: 3px;
-    }
-
-    /* Mobile styles */
-    @media (max-width: 768px) {
-        .sidebar {
-            width: 200px;
-            transform: translateX(100%);
-            z-index: 1000;
-        }
-
-        .sidebar.active {
-            transform: translateX(0);
-        }
-
-        div.content {
-            margin-right: 0;
-        }
-
-        /* Add a backdrop */
-        .sidebar-backdrop {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
-
-        .sidebar-backdrop.show {
-            display: block;
-        }
-
-        .sidebar-toggle {
-            position: fixed;
-            top: 15px;
-            right: 15px;
-            background: #b85ed6ff;
-            color: #fff;
-            border: none;
-            padding: 10px 14px;
-            border-radius: 6px;
-            z-index: 1100;
-            cursor: pointer;
-            font-size: 16px;
-        }
-    }
+}
 </style>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -194,44 +194,51 @@
     <a href="suggests" class="<?php if (basename($_SERVER['REQUEST_URI']) === 'suggests') echo 'active'; ?>">
         <i class="fas fa-lightbulb"></i> پیشنهادات
     </a>
+
+    <a href="admin_tickets" class="<?php if (basename($_SERVER['REQUEST_URI']) === 'admin_tickets') echo 'active'; ?>">
+        <i class="fas fa-lightbulb"></i> مدیریت تیکت ها
+    </a>
+
     <a href="registered" class="<?php if (basename($_SERVER['REQUEST_URI']) === 'registered') echo 'active'; ?>">
         <i class="fas fa-clipboard-list"></i> اطلاعات ثبت نامی
+    </a>
+    <a href="registered_search"
+        class="<?php if (basename($_SERVER['REQUEST_URI']) === 'registered_search') echo 'active'; ?>">
+        <i class="fas fa-search"></i> جستجوی اطلاعات ثبت نامی
     </a>
 
     <a href="sounds" class="<?php if (basename($_SERVER['REQUEST_URI']) === 'sounds') echo 'active'; ?>">
         <i class="fas fa-music"></i> صداهای ارسالی
     </a>
 
-    <a href="registered_search" class="<?php if (basename($_SERVER['REQUEST_URI']) === 'registered_search') echo 'active'; ?>">
-        <i class="fas fa-search"></i> جستجوی اطلاعات ثبت نامی
-    </a>
+
 </div>
 
 <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
 <button class="sidebar-toggle" id="sidebar-toggle">☰</button>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Dropdown toggle
-        document.querySelectorAll('.dropdown-btn').forEach(function(button) {
-            button.addEventListener('click', function() {
-                this.nextElementSibling.classList.toggle('show');
-            });
-        });
-
-        // Mobile sidebar toggle
-        const sidebar = document.getElementById('sidebar');
-        const backdrop = document.getElementById('sidebar-backdrop');
-        const toggleBtn = document.getElementById('sidebar-toggle');
-
-        toggleBtn.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
-            backdrop.classList.toggle('show');
-        });
-
-        backdrop.addEventListener('click', () => {
-            sidebar.classList.remove('active');
-            backdrop.classList.remove('show');
+document.addEventListener('DOMContentLoaded', function() {
+    // Dropdown toggle
+    document.querySelectorAll('.dropdown-btn').forEach(function(button) {
+        button.addEventListener('click', function() {
+            this.nextElementSibling.classList.toggle('show');
         });
     });
+
+    // Mobile sidebar toggle
+    const sidebar = document.getElementById('sidebar');
+    const backdrop = document.getElementById('sidebar-backdrop');
+    const toggleBtn = document.getElementById('sidebar-toggle');
+
+    toggleBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('active');
+        backdrop.classList.toggle('show');
+    });
+
+    backdrop.addEventListener('click', () => {
+        sidebar.classList.remove('active');
+        backdrop.classList.remove('show');
+    });
+});
 </script>

@@ -191,6 +191,9 @@
     ?>
 
     <main class="container mt-5">
+        <a class="btn btn-success m-2" href="../user/tickets">ارسال تیکت به پشتیبانی</a>
+
+
         <section class="intro-section">
             <div class="row">
                 <div class="col-md-6">
