@@ -12,40 +12,50 @@ header("Pragma: cache");
     <?php include "includes.php"; ?>
     <link rel="icon" href="../images/logo1.ico" type="image/x-icon">
     <style>
-        .speaker-card {
-            transition: transform 0.3s;
-            margin-bottom: 20px;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+    .speaker-card {
+        transition: transform 0.3s;
+        margin-bottom: 20px;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
-        .speaker-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
+    .speaker-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
 
-        .speaker-img {
-            width: 100%;
-            height: 350px;
-            object-fit: cover;
-        }
+    /* .speaker-img {
+        width: 100%;
+        height: 350px;
+        object-fit: cover;
+    } */
 
-        .card-body {
-            padding: 15px;
-            text-align: center;
-        }
+    .speaker-img {
+        width: 100%;
+        height: auto;
+        /* اجازه دهید ارتفاع بر اساس عرض تصویر تنظیم شود */
+        object-fit: contain;
+        /* تصویر را بدون برش و با حفظ تناسب جا می‌دهد */
+        background-color: #f8f9fa;
+        /* اختیاری: برای پر کردن فضاهای خالی پشت تصویر */
+    }
 
-        .speaker-name {
-            font-weight: bold;
-            font-size: 18px;
-            margin-bottom: 5px;
-        }
+    .card-body {
+        padding: 15px;
+        text-align: center;
+    }
 
-        .speaker-type {
-            color: #666;
-            font-size: 14px;
-        }
+    .speaker-name {
+        font-weight: bold;
+        font-size: 18px;
+        margin-bottom: 5px;
+    }
+
+    .speaker-type {
+        color: #666;
+        font-size: 14px;
+    }
     </style>
 </head>
 
@@ -63,22 +73,32 @@ header("Pragma: cache");
             <div class="col-12">
                 <div class="card border border-danger" style="border-radius: 40px;">
                     <div class="card-body" dir="rtl" style="text-align: right;">
-                        <h3>آرشیو گویندگان موسسه سیمرغ</h3>
+                        <h3>کانون گویندگان رادیو سیمرغ</h3>
+
+                        <p>
+
+                            مرجع رسمی معرفی گویندگان رادیویی آموزشگاه سیمرغ
+                        </p>
 
 
                         <p>
-                            آرشیو گویندگان سیمرغ
-                            اینجا صدای حرفه‌ای‌ها شنیده می‌شود.
-                            معرفی گویندگان توانمند آموزشگاه سیمرغ؛ همراه با رزومه‌ای کوتاه، صدایی ماندگار، و نگاهی به پشت‌صحنه‌ی اجراهایی که در خاطره ها می‌مانند.
-                            با گویندگان سیمرغ بیشتر آشنا بشید!
-                            ما اینجاییم تا صداهایی رو بهتون معرفی کنیم که قراره توی دنیای دوبله، اجرا و گویندگی، بیشتر ازشون بشنوید.
-                            هر صدا، یه داستان داره… این صفحه، بخشی از اون داستانه.
-                            صدای آینده شما هم اینجاست…
-                            ما با افتخار، گویندگان برتر آموزشگاه سیمرغ را معرفی می‌کنیم؛
-                            صدای کسانی که با تلاش و تمرین، مسیر حرفه‌ای خود را آغاز کرده‌اند.
-                            شما هم می‌توانید صدای بعدی این لیست باشید!
+                            کانون گویندگان سیمرغ به‌عنوان یکی از بخش‌های تخصصی آموزشگاه سیمرغ، با هدف شناسایی، معرفی و
+                            اعتباربخشی به گویندگان توانمند شکل گرفته است. در این کانون، گویندگانی معرفی می‌شوند که دارای
+                            سابقه فعالیت در برنامه‌های رادیویی بوده و مسیر حرفه‌ای خود را به‌صورت رسمی آغاز کرده‌اند.
+                            هر گوینده‌ی معرفی‌شده در این صفحه، دارای کارت شناسایی معتبر کانون گویندگان سیمرغ است و
+                            اطلاعات
+                            درج‌شده شامل رزومه‌ی اجرایی در برنامه‌های رادیویی می‌باشد. این ساختار به تهیه‌کنندگان،
+                            مدیران
+                            رسانه، کارفرمایان و مجموعه‌های فرهنگی کمک می‌کند تا فرآیند شناسایی و انتخاب گوینده را با
+                            اطمینان
+                            و شفافیت بیشتری انجام دهند.
+                            کانون گویندگان سیمرغ پلی میان آموزش تخصصی و حضور حرفه‌ای در فضای رسانه‌ای است و تلاش می‌کند
+                            با
+                            ایجاد یک مرجع قابل اعتماد، دسترسی به گویندگان دارای تجربه‌ی واقعی اجرا را ساده‌تر و معتبرتر
+                            کند.
+
                         </p>
-               
+
                         <div class="row mt-4">
                             <?php
                             // Pagination configuration
@@ -87,21 +107,21 @@ header("Pragma: cache");
                             $offset = ($current_page - 1) * $items_per_page;
 
                             // SQL query
-                            $sql = "SELECT * FROM speakers ORDER BY id DESC LIMIT $items_per_page OFFSET $offset";
+                            $sql = "SELECT * FROM speakers ORDER BY id ASC LIMIT $items_per_page OFFSET $offset";
                             $result = $conn->query($sql);
 
                             if ($result->num_rows > 0) {
                                 while ($row = $result->fetch_assoc()) {
                             ?>
-                                    <div class="col-md-4 col-sm-6 col-12">
-                                        <div class="speaker-card">
-                                            <img src="<?= $row['image'] ?>" class="speaker-img" alt="<?= $row['name'] ?>">
-                                            <div class="card-body">
-                                                <div class="speaker-name"><?= $row['name'] ?></div>
-                                                <div class="speaker-type"><?= $row['kind'] ?></div>
-                                            </div>
-                                        </div>
+                            <div class="col-md-4 col-sm-6 col-12">
+                                <div class="speaker-card">
+                                    <img src="<?= $row['image'] ?>" class="speaker-img" alt="<?= $row['name'] ?>">
+                                    <div class="card-body">
+                                        <div class="speaker-name"><?= $row['name'] ?></div>
+                                        <div class="speaker-type"><?= $row['kind'] ?></div>
                                     </div>
+                                </div>
+                            </div>
                             <?php
                                 }
                             } else {
@@ -127,23 +147,24 @@ header("Pragma: cache");
 
                         if ($total_pages > 1) {
                         ?>
-                            <nav aria-label="Page navigation">
-                                <ul class="pagination justify-content-center">
-                                    <li class="page-item <?= $current_page == 1 ? 'disabled' : '' ?>">
-                                        <a class="page-link" href="?page=<?= max(1, $current_page - 1) ?>">قبلی</a>
-                                    </li>
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item <?= $current_page == 1 ? 'disabled' : '' ?>">
+                                    <a class="page-link" href="?page=<?= max(1, $current_page - 1) ?>">قبلی</a>
+                                </li>
 
-                                    <?php for ($i = $start_page; $i <= $end_page; $i++) { ?>
-                                        <li class="page-item <?= $i == $current_page ? 'active' : '' ?>">
-                                            <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
-                                        </li>
-                                    <?php } ?>
+                                <?php for ($i = $start_page; $i <= $end_page; $i++) { ?>
+                                <li class="page-item <?= $i == $current_page ? 'active' : '' ?>">
+                                    <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                                </li>
+                                <?php } ?>
 
-                                    <li class="page-item <?= $current_page == $total_pages ? 'disabled' : '' ?>">
-                                        <a class="page-link" href="?page=<?= min($total_pages, $current_page + 1) ?>">بعدی</a>
-                                    </li>
-                                </ul>
-                            </nav>
+                                <li class="page-item <?= $current_page == $total_pages ? 'disabled' : '' ?>">
+                                    <a class="page-link"
+                                        href="?page=<?= min($total_pages, $current_page + 1) ?>">بعدی</a>
+                                </li>
+                            </ul>
+                        </nav>
                         <?php } ?>
                     </div>
                 </div>

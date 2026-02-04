@@ -229,7 +229,7 @@ include '../config.php'; // اتصال به دیتابیس در ابتدا بر�
 // منطق PHP برای ثبت پکیج
 if (isset($_POST['submit_package'])) {
     $name = $conn->real_escape_string($_POST['name']);
-    $description = $conn->real_escape_string($_POST['description']);
+    $description = $_POST['description'];
     $teacher = $conn->real_escape_string($_POST['teacher']);
     $price = $conn->real_escape_string($_POST['price']);
     $spotplayer = $conn->real_escape_string($_POST['spot_id']);

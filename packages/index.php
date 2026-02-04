@@ -203,8 +203,7 @@
                         ارتقاء دهید.
                     </p>
                     <p>
-                        جهت استفاده بهتر ویدیوی روبرو را مشاهده کنید و در صورت بروز هرگونه مشکلی از نشان پیام پایین صفحه
-                        به پشتیبان های ما پیام دهید
+                        جهت استفاده بهتر ویدیوی روبرو را مشاهده کنید و در صورت بروز هرگونه مشکلی به پشتیبانی تیکت بزنید
                     </p>
                 </div>
                 <div class="col-md-6">
@@ -225,7 +224,7 @@
 
         <div class="row">
             <?php
-            $sql = "SELECT * FROM `packages` ORDER BY `id` DESC LIMIT $start, $limit"; 
+            $sql = "SELECT * FROM `packages` ORDER BY `id` ASC LIMIT $start, $limit"; 
             $result = $conn->query($sql);
 
             if ($result && $result->num_rows > 0) {
