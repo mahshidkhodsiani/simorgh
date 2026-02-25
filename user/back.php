@@ -1,122 +1,82 @@
 <?php
-// فعال کردن گزارش خطا
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
+// فعال‌سازی گزارش خطا برای دیباگ (در حالت اصلی روی 0 بگذارید)
+ini_set('display_errors', 0);
 error_reporting(E_ALL);
 
 session_start();
 
+// فراخوانی فایل‌های پیکربندی
 include '../config.php'; 
 require 'API/Gateway.php'; 
 require 'ipgcfg.php';
 
 // =========================================================================
-//                  ثابت‌ها و توابع ارتباط با API و SMS
+// ثابت‌ها و توابع کاربردی
 // =========================================================================
 
 define('SPOTPLAYER_API_KEY', 'aNOAHmD7i6t49l9O4YjS6wypggM=');
 define('SPOTPLAYER_API_URL', 'https://panel.spotplayer.ir/license/edit/');
 
-function filter_json_data($data): array {
-	return array_filter($data, function ($v) { return !is_null($v); });
+function filter_json_data($data) { 
+    return array_filter($data, function ($v) { return !is_null($v); }); 
 }
 
-function create_spotplayer_license(string $name, array $courses, string $watermark_text, bool $test = false, string $invoiceID = null): ?array {
-    $unique_watermark = $watermark_text . "-" . time() . "-" . uniqid(); 
-
-    $watermark_payload = [
-        'texts' => [
-            ['text' => $unique_watermark] 
-        ]
-    ];
-
+/**
+ * تابع ساخت لایسنس در اسپات پلیر
+ */
+function create_spotplayer_license($user_id, $courses, $watermark_text, $invoiceID) {
     $payload = [
-        'test'      => $test,
-        'name'      => $name . "-" . time(),
+        'test'      => false,
+        'name'      => "User-" . $user_id . "-" . time(),
         'course'    => $courses,
-        'watermark' => $watermark_payload,
-        'payload' => ($invoiceID ?? 'N/A') . '_' . $name . '_' . time(), 
-        'device' => ['p0' => 3, 'p1' => 1]
+        'watermark' => ['texts' => [['text' => $watermark_text]]],
+        'payload'   => $invoiceID, 
+        'device'    => ['p0' => 3, 'p1' => 1] // محدودیت دستگاه (مثلاً ۳ ویندوز، ۱ اندروید)
     ];
 
-	$ch = curl_init();
-	curl_setopt_array($ch, [
-		CURLOPT_URL            => SPOTPLAYER_API_URL,
-		CURLOPT_RETURNTRANSFER => true,
-		CURLOPT_CUSTOMREQUEST  => 'POST',
-		CURLOPT_SSL_VERIFYHOST => false, 
-		CURLOPT_SSL_VERIFYPEER => false, 
-		CURLOPT_FOLLOWLOCATION => false,
-		CURLOPT_TIMEOUT        => 30, 
-		CURLOPT_HTTPHEADER     => [
+    $ch = curl_init();
+    curl_setopt_array($ch, [
+        CURLOPT_URL            => SPOTPLAYER_API_URL,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_CUSTOMREQUEST  => 'POST',
+        CURLOPT_SSL_VERIFYPEER => false, 
+        CURLOPT_HTTPHEADER     => [
             '$API: ' . SPOTPLAYER_API_KEY,
             '$LEVEL: -1',
             'content-type: application/json'
         ],
-        CURLOPT_POSTFIELDS     => json_encode(filter_json_data($payload))
-	]);
-
-	$response_json = curl_exec($ch);
-    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    $curl_error = curl_error($ch);
-    $curl_errno = curl_errno($ch);
-	curl_close($ch);
-
-    if ($curl_errno) {
-        error_log("SpotPlayer API CRITICAL CURL Error [Code: " . $curl_errno . "]: " . $curl_error);
-        throw new Exception("خطای اتصال CURL: " . $curl_error);
-    }
-
-	$result = json_decode($response_json, true);
-    $ex = null;
-
-    if ($http_code !== 200 || (is_array($result) && isset($result['ex']))) {
-        if (is_array($result) && isset($result['ex'])) {
-            $ex = $result['ex'];
-        } else {
-            $ex = ['msg' => 'HTTP Error (Not 200)', 'http_code' => $http_code, 'response' => $response_json];
-        }
-        $error_message = ($ex['msg'] ?? "HTTP Code: " . $http_code . " | Response: " . json_encode($ex));
-        error_log("SpotPlayer API Error: " . $error_message);
-        throw new Exception("SpotPlayer API Error: " . $error_message);
-    }
-
-	return $result;
-}
-
-function send_license_sms(string $mobile, string $license_key): bool {
-    $username = "09124366786";
-    $password = "96139290@sN";
-    $from = "300016343000";
-    $to = $mobile;
-    $sms_message = "خرید شما با موفقیت انجام شد.\nکلید لایسنس اسپات پلیر شما:\n" . $license_key . "\nلطفا آن را در پلیر وارد کنید.";
-
-    $ch = curl_init();
-    curl_setopt_array($ch, [
-        CURLOPT_URL => "https://niksms.com/fa/publicapi/groupsms",
-        CURLOPT_POST => true,
-        CURLOPT_POSTFIELDS => http_build_query([
-            "username" => $username,
-            "password" => $password,
-            "numbers" => $to,
-            "sendernumber" => $from,
-            "message" => $sms_message
-        ]),
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_TIMEOUT => 30 
+        CURLOPT_POSTFIELDS      => json_encode(filter_json_data($payload))
     ]);
 
     $response = curl_exec($ch);
-    $curl_error = curl_error($ch);
-    $success = ($response !== false);
     curl_close($ch);
-
-    if (!$success) {
-        error_log("SMS Send Error: " . $curl_error);
-    }
-    return $success;
+    return json_decode($response, true);
 }
 
+/**
+ * تابع ارسال پیامک لایسنس
+ */
+function send_license_sms($mobile, $license_key) {
+    $username = "09124366786";
+    $password = "96139290@sN";
+    $from = "300016343000";
+    $sms_message = "خرید شما موفق بود.\nلایسنس شما:\n" . $license_key . "\nسیمرغ";
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, "https://niksms.com/fa/publicapi/groupsms");
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query([
+        "username" => $username, "password" => $password,
+        "numbers" => $mobile, "sendernumber" => $from, "message" => $sms_message
+    ]));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_exec($ch);
+    curl_close($ch);
+}
+
+/**
+ * نمایش صفحه موفقیت
+ */
 function show_success_page($license_key, $package_name) {
     ?>
 <!DOCTYPE html>
@@ -124,135 +84,46 @@ function show_success_page($license_key, $package_name) {
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>پرداخت موفق</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <style>
     body {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        min-height: 100vh;
+        background: #f4f7f6;
+        font-family: Tahoma, sans-serif;
+        text-align: center;
+        padding-top: 50px;
     }
 
-    .success-card {
-        background: white;
-        border-radius: 20px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    .card {
+        max-width: 500px;
+        margin: auto;
+        padding: 20px;
+        border-radius: 15px;
+        background: #fff;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
 
-    .checkmark {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        display: block;
-        stroke-width: 2;
-        stroke: #4bb71b;
-        stroke-miterlimit: 10;
-        box-shadow: inset 0 0 0 #4bb71b;
-        animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
-    }
-
-    .checkmark-circle {
-        stroke-dasharray: 166;
-        stroke-dashoffset: 166;
-        stroke-width: 2;
-        stroke-miterlimit: 10;
-        stroke: #4bb71b;
-        fill: #fff;
-        animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
-    }
-
-    .checkmark-check {
-        transform-origin: 50% 50%;
-        stroke-dasharray: 48;
-        stroke-dashoffset: 48;
-        animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
-    }
-
-    @keyframes stroke {
-        100% {
-            stroke-dashoffset: 0;
-        }
-    }
-
-    @keyframes scale {
-
-        0%,
-        100% {
-            transform: none;
-        }
-
-        50% {
-            transform: scale3d(1.1, 1.1, 1);
-        }
-    }
-
-    @keyframes fill {
-        100% {
-            box-shadow: inset 0 0 0 30px #4bb71b;
-        }
-    }
-
-    .license-box {
-        background: #f8f9fa;
-        border: 2px dashed #667eea;
-        border-radius: 10px;
-        padding: 15px;
-        font-family: 'Courier New', monospace;
-        font-size: 16px;
-        color: #333;
+    .license {
+        background: #eee;
+        padding: 10px;
+        border: 1px dashed #333;
         word-break: break-all;
+        margin: 15px 0;
+        font-family: monospace;
     }
     </style>
 </head>
 
 <body>
-    <div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh;">
-        <div class="success-card p-5 text-center" style="max-width: 600px; width: 100%;">
-            <svg class="checkmark mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none" />
-                <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
-            </svg>
-
-            <h2 class="text-success mb-3"><i class="bi bi-check-circle-fill"></i> پرداخت موفق!</h2>
-            <p class="text-muted mb-4">خرید شما با موفقیت انجام شد و پکیج به حساب شما اضافه گردید.</p>
-
-            <div class="alert alert-info">
-                <i class="bi bi-box-seam"></i> <strong>پکیج:</strong> <?php echo htmlspecialchars($package_name); ?>
-            </div>
-
-            <h5 class="mt-4 mb-3"><i class="bi bi-key-fill text-warning"></i> کلید لایسنس شما:</h5>
-            <div class="license-box mb-3" id="licenseKey">
-                <?php echo htmlspecialchars($license_key); ?>
-            </div>
-
-            <button class="btn btn-outline-primary mb-4" onclick="copyLicense()">
-                <i class="bi bi-clipboard"></i> کپی کلید لایسنس
-            </button>
-
-            <div class="alert alert-warning small">
-                <i class="bi bi-info-circle"></i> کلید لایسنس به شماره موبایل شما نیز پیامک شده است.
-            </div>
-
-            <hr class="my-4">
-
-            <a href="my_packages.php" class="btn btn-success btn-lg">
-                <i class="bi bi-box-arrow-in-left"></i> مشاهده پکیج‌های من
-            </a>
-            <a href="index.php" class="btn btn-outline-secondary btn-lg ms-2">
-                <i class="bi bi-house-door"></i> بازگشت به داشبورد
-            </a>
-        </div>
+    <div class="card">
+        <h2 style="color: green;">✓ پرداخت با موفقیت انجام شد</h2>
+        <p>پکیج: <strong><?php echo htmlspecialchars($package_name); ?></strong></p>
+        <div class="license" id="lkey"><?php echo htmlspecialchars($license_key); ?></div>
+        <button onclick="navigator.clipboard.writeText(document.getElementById('lkey').innerText); alert('کپی شد!')"
+            class="btn btn-sm btn-outline-primary">کپی لایسنس</button>
+        <hr>
+        <a href="index.php" class="btn btn-success w-100">بازگشت به پنل کاربری</a>
     </div>
-
-    <script>
-    function copyLicense() {
-        const licenseText = document.getElementById('licenseKey').innerText;
-        navigator.clipboard.writeText(licenseText).then(() => {
-            alert('✅ کلید لایسنس کپی شد!');
-        });
-    }
-    </script>
 </body>
 
 </html>
@@ -260,57 +131,25 @@ function show_success_page($license_key, $package_name) {
     exit();
 }
 
-function show_error_page($message, $show_support = true) {
+/**
+ * نمایش صفحه خطا
+ */
+function show_error_page($message) {
     ?>
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>خطا در پرداخت</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <style>
-    body {
-        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        min-height: 100vh;
-    }
-
-    .error-card {
-        background: white;
-        border-radius: 20px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-    }
-    </style>
 </head>
 
-<body>
-    <div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh;">
-        <div class="error-card p-5 text-center" style="max-width: 600px; width: 100%;">
-            <i class="bi bi-x-circle-fill text-danger" style="font-size: 80px;"></i>
-            <h2 class="text-danger mt-3 mb-3">خطا در پردازش پرداخت</h2>
-            <p class="text-muted mb-4"><?php echo htmlspecialchars($message); ?></p>
-
-            <?php if ($show_support): ?>
-            <div class="alert alert-warning">
-                <i class="bi bi-exclamation-triangle"></i>
-                <strong>توجه:</strong> در صورت کسر مبلغ از حساب شما، پول ظرف 72 ساعت بازگردانده می‌شود.
-            </div>
-            <div class="alert alert-info">
-                <i class="bi bi-headset"></i> برای پیگیری با پشتیبانی تماس بگیرید: <strong>09124366786</strong>
-            </div>
-            <?php endif; ?>
-
-            <hr class="my-4">
-
-            <a href="user_cart.php" class="btn btn-primary btn-lg">
-                <i class="bi bi-cart"></i> بازگشت به سبد خرید
-            </a>
-            <a href="index.php" class="btn btn-outline-secondary btn-lg ms-2">
-                <i class="bi bi-house-door"></i> بازگشت به داشبورد
-            </a>
-        </div>
+<body style="background: #fff5f5; text-align: center; padding-top: 50px;">
+    <div class="container">
+        <h2 style="color: red;">خطا در پردازش پرداخت</h2>
+        <div class="alert alert-danger"><?php echo htmlspecialchars($message); ?></div>
+        <a href="user_cart.php" class="btn btn-primary">بازگشت به سبد خرید</a>
     </div>
 </body>
 
@@ -320,26 +159,18 @@ function show_error_page($message, $show_support = true) {
 }
 
 // =========================================================================
-//                  🔥 مرحله 1: دریافت invoice از درگاه AsanPardakht
+// شروع پردازش اصلی
 // =========================================================================
 
-error_log("=== BACK.PHP STARTED (AsanPardakht) ===");
-error_log("GET params: " . json_encode($_GET));
-error_log("POST params: " . json_encode($_POST));
-
+// ۱. دریافت اطلاعات از درگاه (آسان پرداخت معمولاً POST می‌کند)
 $invoiceID = $_REQUEST['invoice'] ?? null;
+$payGateTranID = $_REQUEST['PayGateTranID'] ?? $_REQUEST['payGateTranID'] ?? null;
 
 if (!$invoiceID) {
-    error_log("ERROR: No invoice ID received");
-    show_error_page("شناسه تراکنش یافت نشد.", true);
+    show_error_page("شناسه فاکتور دریافت نشد.");
 }
 
-error_log("Processing Invoice: {$invoiceID}");
-
-// =========================================================================
-//                  مرحله 2: بررسی تراکنش در دیتابیس
-// =========================================================================
-
+// ۲. بررسی وجود تراکنش در دیتابیس
 $stmt = $conn->prepare("SELECT * FROM pending_transactions WHERE invoice_id=? AND status=0 LIMIT 1");
 $stmt->bind_param("s", $invoiceID);
 $stmt->execute();
@@ -347,169 +178,85 @@ $txn = $stmt->get_result()->fetch_assoc();
 $stmt->close();
 
 if (!$txn) {
-    error_log("ERROR: Transaction not found or already processed for Invoice: {$invoiceID}");
-    show_error_page("تراکنش یافت نشد یا قبلاً پردازش شده است.", false);
+    show_error_page("این تراکنش قبلاً پردازش شده یا معتبر نیست.");
 }
 
-error_log("Transaction found: user_id={$txn['user_id']}, package_id={$txn['package_id']}, amount={$txn['amount']}");
-
-// =========================================================================
-//                  🔥 مرحله 3: Verify با AsanPardakht (3 مرحله)
-// =========================================================================
-
 try {
-    error_log("Step 1: Calling TranResult()...");
-    
-    // مرحله 1: TranResult
+    // ۳. عملیات Verify و Settlement در درگاه بانکی
     $gateway = Gateway::make()->config($Username, $Password, $merchantConfigID)->invoiceId($invoiceID);
-    $result = $gateway->TranResult();
     
-    error_log("TranResult Response: " . json_encode($result));
-    
-    if ($result['code'] != 200) {
-        throw new Exception("TranResult failed - Code: {$result['code']}, Response: " . json_encode($result['content']));
-    }
-    
-    $payGateTranID = $result['content']['payGateTranID'] ?? null;
+    // اگر توکن تراکنش مستقیم نیامده، استعلام می‌کنیم
     if (!$payGateTranID) {
-        throw new Exception("payGateTranID not found in TranResult response");
+        $check = $gateway->TranResult();
+        $payGateTranID = $check['content']['payGateTranID'] ?? null;
     }
-    
-    error_log("Step 2: Calling verify() with payGateTranID: {$payGateTranID}");
-    
-    // مرحله 2: Verify
-    $verify = $gateway->verify($payGateTranID);
-    
-    error_log("Verify Response: " . json_encode($verify));
-    
-    if ($verify['code'] != 200) {
-        throw new Exception("Verify failed - Code: {$verify['code']}, Response: " . json_encode($verify['content']));
+
+    if (!$payGateTranID) {
+        throw new Exception("بانک تراکنش را تایید نکرد.");
     }
-    
-    error_log("Step 3: Calling settlement()...");
-    
-    // مرحله 3: Settlement
-    $settlement = $gateway->settlement($payGateTranID);
-    
-    error_log("Settlement Response: " . json_encode($settlement));
-    
-    if ($settlement['code'] != 200) {
-        throw new Exception("Settlement failed - Code: {$settlement['code']}, Response: " . json_encode($settlement['content']));
+
+    // تایید (Verify)
+    $v_res = $gateway->verify($payGateTranID);
+    if ($v_res['code'] != 200) throw new Exception("خطا در مرحله Verify بانک.");
+
+    // تسویه (Settlement) - برای آسان‌پرداخت الزامی است
+    $s_res = $gateway->settlement($payGateTranID);
+    if ($s_res['code'] != 200) throw new Exception("خطا در مرحله Settlement بانک.");
+
+    // ۴. دریافت اطلاعات تکمیلی برای اسپات پلیر
+    $stmt = $conn->prepare("SELECT p.name, p.spotplayer, u.mobile FROM packages p JOIN users u ON u.id = ? WHERE p.id = ?");
+    $stmt->bind_param("ii", $txn['user_id'], $txn['package_id']);
+    $stmt->execute();
+    $info = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+
+    if (!$info) throw new Exception("اطلاعات پکیج در سیستم یافت نشد.");
+
+    // ۵. صدور لایسنس اسپات پلیر
+    $watermark = $txn['user_id'] . "-" . $info['mobile'];
+    $spot_res = create_spotplayer_license($txn['user_id'], [$info['spotplayer']], $watermark, $invoiceID);
+
+    if (!isset($spot_res['key'])) {
+        throw new Exception("خطا در صدور لایسنس از سمت اسپات‌پلیر.");
     }
-    
-    error_log("✅ Payment VERIFIED and SETTLED successfully!");
-    
-} catch (Exception $e) {
-    error_log("❌ Payment verification/settlement FAILED: " . $e->getMessage());
-    
-    // بروزرسانی وضعیت به 2 (خطا)
-    $stmt = $conn->prepare("UPDATE pending_transactions SET status=2 WHERE invoice_id=?");
-    if ($stmt) {
-        $stmt->bind_param("s", $invoiceID);
-        $stmt->execute();
-        $stmt->close();
-    }
-    
-    show_error_page("خطا در تایید پرداخت: " . $e->getMessage(), true);
-}
+    $license_key = $spot_res['key'];
 
-// =========================================================================
-//                  مرحله 4: صدور لایسنس و ثبت اطلاعات
-// =========================================================================
+    // ۶. ثبت نهایی در دیتابیس (Transaction Safe)
+    $conn->begin_transaction();
 
-$user_id    = $txn['user_id'];
-$package_id = $txn['package_id'];
-$cart_id    = $txn['cart_id'];
-$amount     = $txn['amount'];
-
-$stmt = $conn->prepare("
-    SELECT p.name AS title, p.spotplayer, u.mobile
-    FROM packages p
-    JOIN users u ON u.id = ?
-    WHERE p.id = ?
-");
-$stmt->bind_param("ii", $user_id, $package_id);
-$stmt->execute();
-$result = $stmt->get_result();
-$data = $result->fetch_assoc();
-$stmt->close();
-
-if (!$data || empty($data['spotplayer']) || empty($data['mobile'])) {
-    error_log("CRITICAL: Package info missing for user_id: {$user_id}, package_id: {$package_id}");
-    show_error_page("اطلاعات پکیج یا کاربر ناقص است.", true);
-}
-
-$course_name = $data['title'];
-$spotplayer_course_id = $data['spotplayer'];
-$user_mobile = $data['mobile'];
-
-error_log("Package info: name={$course_name}, spotplayer_id={$spotplayer_course_id}");
-
-$license_key = null;
-
-$conn->begin_transaction(); 
-
-try {
-    error_log("Creating SpotPlayer license...");
-    
-    $spotplayer_courses = [$spotplayer_course_id];
-    $custom_watermark = strval($user_id) . "-" . $user_mobile;
-    
-    $license_result = create_spotplayer_license(strval($user_id), $spotplayer_courses, $custom_watermark, false, $invoiceID);
-
-    if (!isset($license_result['key'])) {
-        throw new Exception("کلید لایسنس از API دریافت نشد.");
-    }
-    
-    $license_key = $license_result['key'];
-    error_log("✅ License created: {$license_key}");
-    
+    // ثبت در پکیج‌های کاربر
     $stmt = $conn->prepare("INSERT INTO user_package (package_id, user_id, paid, license_key, created_at) VALUES (?, ?, 1, ?, NOW())");
-    if (!$stmt) throw new Exception("خطا در ذخیره لایسنس: " . $conn->error);
-    $stmt->bind_param("iis", $package_id, $user_id, $license_key);
+    $stmt->bind_param("iis", $txn['package_id'], $txn['user_id'], $license_key);
     $stmt->execute();
-    $stmt->close();
-    error_log("✅ License saved to user_package");
 
+    // ثبت در لیست کانتکت‌ها/فروش
     $stmt = $conn->prepare("INSERT INTO contacts (user_id, course, amount, mobile, pardakht, created_at) VALUES (?, ?, ?, ?, 1, NOW())");
-    if (!$stmt) throw new Exception("خطا در ثبت تماس: " . $conn->error);
-    $stmt->bind_param("isis", $user_id, $course_name, $amount, $user_mobile);
+    $stmt->bind_param("isis", $txn['user_id'], $info['name'], $txn['amount'], $info['mobile']);
     $stmt->execute();
-    $stmt->close();
-    error_log("✅ Contact record created");
 
+    // حذف از سبد خرید
     $stmt = $conn->prepare("DELETE FROM user_cart WHERE id=? AND user_id=?");
-    if (!$stmt) throw new Exception("خطا در حذف سبد: " . $conn->error);
-    $stmt->bind_param("ii", $cart_id, $user_id);
+    $stmt->bind_param("ii", $txn['cart_id'], $txn['user_id']);
     $stmt->execute();
-    $stmt->close();
-    error_log("✅ Cart item deleted");
 
+    // بروزرسانی وضعیت تراکنش معلق
     $stmt = $conn->prepare("UPDATE pending_transactions SET status=1 WHERE invoice_id=?");
-    if (!$stmt) throw new Exception("خطا در بروزرسانی تراکنش: " . $conn->error);
     $stmt->bind_param("s", $invoiceID);
     $stmt->execute();
-    $stmt->close();
-    error_log("✅ Transaction status updated to 1");
 
     $conn->commit();
-    error_log("✅ Database transaction COMMITTED");
 
-    send_license_sms($user_mobile, $license_key);
-
-    error_log("=== TRANSACTION COMPLETED SUCCESSFULLY ===");
-    show_success_page($license_key, $course_name);
+    // ۷. ارسال پیامک و نمایش نتیجه
+    send_license_sms($info['mobile'], $license_key);
+    show_success_page($license_key, $info['name']);
 
 } catch (Exception $e) {
-    $conn->rollback();
-    error_log("❌ CRITICAL ERROR: " . $e->getMessage());
+    if (isset($conn)) $conn->rollback();
     
-    $stmt2 = $conn->prepare("UPDATE pending_transactions SET status=2 WHERE invoice_id=?");
-    if ($stmt2) {
-        $stmt2->bind_param("s", $invoiceID);
-        $stmt2->execute();
-        $stmt2->close();
-    }
-    
-    show_error_page("خطا در صدور لایسنس: " . $e->getMessage(), true);
+    // ثبت خطا در دیتابیس برای پیگیری‌های بعدی
+    $stmt = $conn->prepare("UPDATE pending_transactions SET status=2 WHERE invoice_id=?");
+    $stmt->bind_param("s", $invoiceID);
+    $stmt->execute();
+
+    show_error_page($e->getMessage());
 }
