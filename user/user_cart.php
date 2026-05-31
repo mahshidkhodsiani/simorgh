@@ -54,13 +54,16 @@ $stmt->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>سبد خرید</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"> -->
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <?php include 'sidebar.php'; ?>
+    <?php
+        include "includes.php";
+        include 'sidebar.php'; 
+     ?>
     <div id="content-wrapper">
         <?php include 'header.php'; ?>
         <div class="container-fluid py-2">
@@ -138,53 +141,59 @@ $stmt->close();
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!--<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+    <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
     <script>
-    // دکمه اعمال تخفیف
-    $('.apply-discount-btn').click(function() {
-        let row = $(this).closest('tr');
-        let inputCode = row.find('.discount-input').val().trim();
-        let validCode = String(row.data('valid-code')).trim();
-        let basePrice = parseInt(row.data('base-price'));
-        let discountValue = parseInt(row.data('discount-val'));
+    document.addEventListener("DOMContentLoaded", function() {
 
-        if (inputCode === validCode && validCode !== "") {
-            let newPrice = basePrice - discountValue;
-            if (newPrice < 0) newPrice = 0;
+        // اعمال تخفیف
+        document.querySelectorAll('.apply-discount-btn').forEach(function(btn) {
 
-            row.find('.final-price-display').text(new Intl.NumberFormat().format(newPrice)).css({
-                'color': 'green',
-                'font-weight': 'bold'
+            btn.addEventListener('click', function() {
+
+                let row = this.closest('tr');
+
+                let inputCode = row.querySelector('.discount-input').value.trim();
+                let validCode = row.dataset.validCode ? row.dataset.validCode.trim() : "";
+                let basePrice = parseInt(row.dataset.basePrice);
+                let discountValue = parseInt(row.dataset.discountVal);
+
+                if (inputCode === validCode && validCode !== "") {
+
+                    let newPrice = basePrice - discountValue;
+                    if (newPrice < 0) newPrice = 0;
+
+                    row.querySelector('.final-price-display').innerText =
+                        new Intl.NumberFormat().format(newPrice);
+
+                    row.dataset.currentPrice = newPrice;
+
+                    alert("کد تخفیف با موفقیت اعمال شد.");
+
+                } else {
+                    alert("کد تخفیف نامعتبر است.");
+                }
+
             });
 
-            // ذخیره قیمت جدید در دیتای ردیف
-            row.data('current-price', newPrice);
-            alert("کد تخفیف با موفقیت اعمال شد.");
-        } else {
-            alert("کد تخفیف نامعتبر است.");
-        }
+        });
+
     });
 
-    // تابع انتقال به درگاه
+
+    // پرداخت
     function payNow(cartId, btn) {
-        let row = $(btn).closest('tr');
-        // اگر تخفیف اعمال شده باشد از current-price وگرنه از base-price استفاده می‌کند
-        let amount = row.data('current-price') !== undefined ? row.data('current-price') : row.data('base-price');
+
+        let row = btn.closest('tr');
+
+        let amount = row.dataset.currentPrice ?
+            row.dataset.currentPrice :
+            row.dataset.basePrice;
 
         window.location.href = "checkout.php?cart_id=" + cartId + "&amount=" + amount;
     }
-
-    // بستن خودکار الرت
-    setTimeout(function() {
-        const alert = document.getElementById('alertMessage');
-        if (alert) {
-            alert.style.transition = "opacity 1s ease-out";
-            alert.style.opacity = "0";
-            setTimeout(() => alert.style.display = "none", 1000);
-        }
-    }, 5000);
     </script>
+
 </body>
 
 </html>

@@ -169,9 +169,9 @@ $conn->close();
 
         <div class="container-fluid py-2">
             <?php if ($message): ?>
-                <div id="alertMessage" class="alert alert-<?php echo $message_type; ?> text-center" role="alert">
-                    <?php echo $message; ?>
-                </div>
+            <div id="alertMessage" class="alert alert-<?php echo $message_type; ?> text-center" role="alert">
+                <?php echo $message; ?>
+            </div>
             <?php endif; ?>
         </div>
 
@@ -192,42 +192,54 @@ $conn->close();
                                 <div class="mb-3">
                                     <label for="personely" class="form-label">عکس پرسنلی</label>
                                     <?php if ($personely_path): ?>
-                                        <div class="d-flex align-items-center mb-2">
-                                            <img src="<?php echo htmlspecialchars($personely_path); ?>" alt="عکس پرسنلی" class="img-thumbnail me-3" style="width: 50px; height: 50px; object-fit: cover;">
-                                            <span class="text-success">✅ عکس آپلود شده است.</span>
-                                        </div>
-                                        <button type="button" class="btn btn-sm btn-outline-info" onclick="toggleFileInput('personely')">تغییر عکس</button>
-                                        <input class="form-control mt-2" type="file" id="personely" name="personely" style="display: none;">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <img src="<?php echo htmlspecialchars($personely_path); ?>" alt="عکس پرسنلی"
+                                            class="img-thumbnail me-3"
+                                            style="width: 50px; height: 50px; object-fit: cover;">
+                                        <span class="text-success">✅ عکس آپلود شده است.</span>
+                                    </div>
+                                    <button type="button" class="btn btn-sm btn-outline-info"
+                                        onclick="toggleFileInput('personely')">تغییر عکس</button>
+                                    <input class="form-control mt-2" type="file" id="personely" name="personely"
+                                        style="display: none;">
                                     <?php else: ?>
-                                        <input class="form-control" type="file" id="personely" name="personely" required>
+                                    <input class="form-control" type="file" id="personely" name="personely" required>
                                     <?php endif; ?>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="shenasname" class="form-label">عکس صفحه اول شناسنامه</label>
                                     <?php if ($shenasname_path): ?>
-                                        <div class="d-flex align-items-center mb-2">
-                                            <img src="<?php echo htmlspecialchars($shenasname_path); ?>" alt="عکس شناسنامه" class="img-thumbnail me-3" style="width: 50px; height: 50px; object-fit: cover;">
-                                            <span class="text-success">✅ عکس آپلود شده است.</span>
-                                        </div>
-                                        <button type="button" class="btn btn-sm btn-outline-info" onclick="toggleFileInput('shenasname')">تغییر عکس</button>
-                                        <input class="form-control mt-2" type="file" id="shenasname" name="shenasname" style="display: none;">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <img src="<?php echo htmlspecialchars($shenasname_path); ?>" alt="عکس شناسنامه"
+                                            class="img-thumbnail me-3"
+                                            style="width: 50px; height: 50px; object-fit: cover;">
+                                        <span class="text-success">✅ عکس آپلود شده است.</span>
+                                    </div>
+                                    <button type="button" class="btn btn-sm btn-outline-info"
+                                        onclick="toggleFileInput('shenasname')">تغییر عکس</button>
+                                    <input class="form-control mt-2" type="file" id="shenasname" name="shenasname"
+                                        style="display: none;">
                                     <?php else: ?>
-                                        <input class="form-control" type="file" id="shenasname" name="shenasname" required>
+                                    <input class="form-control" type="file" id="shenasname" name="shenasname" required>
                                     <?php endif; ?>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="meli_card" class="form-label">عکس پشت و روی کارت ملی</label>
                                     <?php if ($meli_card_path): ?>
-                                        <div class="d-flex align-items-center mb-2">
-                                            <img src="<?php echo htmlspecialchars($meli_card_path); ?>" alt="عکس کارت ملی" class="img-thumbnail me-3" style="width: 50px; height: 50px; object-fit: cover;">
-                                            <span class="text-success">✅ عکس آپلود شده است.</span>
-                                        </div>
-                                        <button type="button" class="btn btn-sm btn-outline-info" onclick="toggleFileInput('meli_card')">تغییر عکس</button>
-                                        <input class="form-control mt-2" type="file" id="meli_card" name="meli_card" style="display: none;">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <img src="<?php echo htmlspecialchars($meli_card_path); ?>" alt="عکس کارت ملی"
+                                            class="img-thumbnail me-3"
+                                            style="width: 50px; height: 50px; object-fit: cover;">
+                                        <span class="text-success">✅ عکس آپلود شده است.</span>
+                                    </div>
+                                    <button type="button" class="btn btn-sm btn-outline-info"
+                                        onclick="toggleFileInput('meli_card')">تغییر عکس</button>
+                                    <input class="form-control mt-2" type="file" id="meli_card" name="meli_card"
+                                        style="display: none;">
                                     <?php else: ?>
-                                        <input class="form-control" type="file" id="meli_card" name="meli_card" required>
+                                    <input class="form-control" type="file" id="meli_card" name="meli_card" required>
                                     <?php endif; ?>
                                 </div>
 
@@ -244,47 +256,47 @@ $conn->close();
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.getElementById('sidebarToggle').addEventListener('click', function() {
-            document.body.classList.toggle('sidebar-toggled');
-        });
+    document.getElementById('sidebarToggle').addEventListener('click', function() {
+        document.body.classList.toggle('sidebar-toggled');
+    });
 
-        const navLinks = document.querySelectorAll('.sidebar .nav-item .nav-link');
-        navLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                const currentActive = document.querySelector('.sidebar .nav-item.active');
-                if (currentActive) {
-                    currentActive.classList.remove('active');
-                }
-                this.parentElement.classList.add('active');
-            });
-        });
-
-        // جاوا اسکریپت برای محو شدن پیام
-        setTimeout(function() {
-            const alert = document.getElementById('alertMessage');
-            if (alert) {
-                alert.style.transition = "opacity 1s ease-out";
-                alert.style.opacity = "0";
-                setTimeout(function() {
-                    alert.style.display = "none";
-                }, 1000); // 1 ثانیه برای انتقال
+    const navLinks = document.querySelectorAll('.sidebar .nav-item .nav-link');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            const currentActive = document.querySelector('.sidebar .nav-item.active');
+            if (currentActive) {
+                currentActive.classList.remove('active');
             }
-        }, 5000); // 5 ثانیه انتظار قبل از شروع محو شدن
+            this.parentElement.classList.add('active');
+        });
+    });
 
-
-        // **کد جدید: تابع برای نمایش و پنهان کردن فیلد آپلود**
-        function toggleFileInput(id) {
-            const fileInput = document.getElementById(id);
-            const isHidden = fileInput.style.display === "none";
-
-            fileInput.style.display = isHidden ? "block" : "none";
-            if (isHidden) {
-                fileInput.required = true; // فیلد را الزامی کنید
-            } else {
-                fileInput.required = false; // الزامی بودن را بردارید
-            }
+    // جاوا اسکریپت برای محو شدن پیام
+    setTimeout(function() {
+        const alert = document.getElementById('alertMessage');
+        if (alert) {
+            alert.style.transition = "opacity 1s ease-out";
+            alert.style.opacity = "0";
+            setTimeout(function() {
+                alert.style.display = "none";
+            }, 1000); // 1 ثانیه برای انتقال
         }
-        // **پایان کد جدید**
+    }, 5000); // 5 ثانیه انتظار قبل از شروع محو شدن
+
+
+    // **کد جدید: تابع برای نمایش و پنهان کردن فیلد آپلود**
+    function toggleFileInput(id) {
+        const fileInput = document.getElementById(id);
+        const isHidden = fileInput.style.display === "none";
+
+        fileInput.style.display = isHidden ? "block" : "none";
+        if (isHidden) {
+            fileInput.required = true; // فیلد را الزامی کنید
+        } else {
+            fileInput.required = false; // الزامی بودن را بردارید
+        }
+    }
+    // **پایان کد جدید**
     </script>
 </body>
 

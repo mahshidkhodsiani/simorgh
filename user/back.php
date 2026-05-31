@@ -85,7 +85,8 @@ function show_success_page($license_key, $package_name) {
 <head>
     <meta charset="UTF-8">
     <title>پرداخت موفق</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <?php include "includes.php" ?>
     <style>
     body {
         background: #f4f7f6;
@@ -142,7 +143,7 @@ function show_error_page($message) {
 <head>
     <meta charset="UTF-8">
     <title>خطا در پرداخت</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> -->
 </head>
 
 <body style="background: #fff5f5; text-align: center; padding-top: 50px;">

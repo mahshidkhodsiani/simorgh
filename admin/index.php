@@ -23,58 +23,67 @@ $id = $_SESSION["all_data"]['id'];
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body {
-            background-color: #f0f2f5;
-        }
-        .main-content {
-            padding: 20px;
-        }
-        .dashboard-card {
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            padding: 20px;
-            margin-bottom: 20px;
-            border: none;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .dashboard-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
-        }
-        .dashboard-card .card-icon {
-            font-size: 2.5rem;
-            color: #b85ed6;
-        }
-        .dashboard-card h5 {
-            font-size: 1rem;
-            color: #6c757d;
-            margin-top: 10px;
-            font-weight: 500;
-        }
-        .dashboard-card .card-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #34495e;
-            margin-top: 5px;
-        }
-        .data-table-section {
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            padding: 20px;
-        }
-        .table-header {
-            background-color: #4a5d73;
-            color: white;
-            padding: 10px;
-            border-radius: 8px 8px 0 0;
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-        .table-striped tbody tr:nth-of-type(odd) {
-            background-color: rgba(0, 0, 0, 0.03);
-        }
+    body {
+        background-color: #f0f2f5;
+    }
+
+    .main-content {
+        padding: 20px;
+    }
+
+    .dashboard-card {
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        padding: 20px;
+        margin-bottom: 20px;
+        border: none;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .dashboard-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .dashboard-card .card-icon {
+        font-size: 2.5rem;
+        color: #b85ed6;
+    }
+
+    .dashboard-card h5 {
+        font-size: 1rem;
+        color: #6c757d;
+        margin-top: 10px;
+        font-weight: 500;
+    }
+
+    .dashboard-card .card-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #34495e;
+        margin-top: 5px;
+    }
+
+    .data-table-section {
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        padding: 20px;
+    }
+
+    .table-header {
+        background-color: #4a5d73;
+        color: white;
+        padding: 10px;
+        border-radius: 8px 8px 0 0;
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: rgba(0, 0, 0, 0.03);
+    }
     </style>
 </head>
 
@@ -90,7 +99,7 @@ $id = $_SESSION["all_data"]['id'];
             <div class="col-md-9 main-content">
 
                 <h3 class="mb-4 text-center">داشبورد مدیریتی</h3>
-                
+
                 <?php
                     $total_users_query = $conn->query("SELECT COUNT(*) FROM users");
                     $total_users = $total_users_query->fetch_row()[0];
@@ -142,17 +151,17 @@ $id = $_SESSION["all_data"]['id'];
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <?php
+                                        <?php
                                     $a = 1;
                                     $sql = "SELECT * FROM suggestions ORDER BY id DESC LIMIT 10";
                                     $result = $conn->query($sql);
                                     if ($result->num_rows > 0) {
                                         while ($row = $result->fetch_assoc()) {?>
-                                            <tr>
-                                                <th scope="row"><?= $a ?></th>
-                                                <td><?= mb_strimwidth($row['text'], 0, 40, '...') ?></td>
-                                                <td><span class="badge bg-primary"><?= $row['type'] ?></span></td>
-                                            </tr>
+                                        <tr>
+                                            <th scope="row"><?= $a ?></th>
+                                            <td><?= mb_strimwidth($row['text'], 0, 40, '...') ?></td>
+                                            <td><span class="badge bg-primary"><?= $row['type'] ?></span></td>
+                                        </tr>
                                         <?php
                                         $a++;
                                         }
@@ -182,27 +191,27 @@ $id = $_SESSION["all_data"]['id'];
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <?php
+                                        <?php
                                     $a = 1;
                                     $sql = "SELECT * FROM contacts ORDER BY id DESC LIMIT 10";
                                     $result = $conn->query($sql);
                                     if ($result->num_rows > 0) {
                                         while ($row = $result->fetch_assoc()) {?>
-                                            <tr>
-                                                <th scope="row"><?= $a ?></th>
-                                                <td><?= $row['name'] . " " . $row['lastname'] ?></td>
-                                                <td><?= $row['course'] ?></td>
-                                                <td><?= number_format($row['amount']) ?> ریال</td>
-                                                <td>
-                                                    <?php
+                                        <tr>
+                                            <th scope="row"><?= $a ?></th>
+                                            <td><?= $row['name'] . " " . $row['lastname'] ?></td>
+                                            <td><?= $row['course'] ?></td>
+                                            <td><?= number_format($row['amount']) ?> ریال</td>
+                                            <td>
+                                                <?php
                                                     if($row['pardakht'] == 1){
                                                         echo "<span class='badge bg-success'>پرداخت شده</span>";
                                                     } else {
                                                         echo "<span class='badge bg-danger'>پرداخت نشده</span>";
                                                     }
                                                     ?>
-                                                </td>
-                                            </tr>
+                                            </td>
+                                        </tr>
                                         <?php
                                         $a++;
                                         }
@@ -221,4 +230,5 @@ $id = $_SESSION["all_data"]['id'];
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
