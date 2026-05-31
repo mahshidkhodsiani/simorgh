@@ -90,6 +90,7 @@
                     <li><a href="articles/contact">ارتباط با ما</a></li>
                     <li><a href="articles/index">بهترین مقالات</a></li>
                     <li><a href="articles/work_us">همکاری با ما</a></li>
+                    <li><a href="articles/suggestion">انتقاد و پیشنهاد به سیمرغ</a></li>
                 </ul>
             </div>
 

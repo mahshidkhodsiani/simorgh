@@ -672,7 +672,7 @@ hr {
 
 /* CSS برای بخش پارالاکس */
 .parallax-section {
-  background-image: url("../images/31.jpg"); /* تصویر پس‌زمینه پارالاکس */
+  background-image: url("../images/33.webp"); /* تصویر پس‌زمینه پارالاکس */
   min-height: 500px; /* حداقل ارتفاع بخش */
   background-attachment: fixed; /* ایجاد افکت پارالاکس */
   background-position: center;

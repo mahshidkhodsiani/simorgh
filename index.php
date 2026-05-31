@@ -188,37 +188,16 @@ if (session_status() === PHP_SESSION_NONE) {
                         <div class="row">
 
                             <div class="col-6 col-md-6 mb-4 card-spacing">
-                                <a href="register2" class="text-decoration-none" title="کلیک کنید">
+                                <a href="radios" class="text-decoration-none" title="کلیک کنید">
                                     <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
                                         <div class="card-body d-flex align-items-center justify-content-center p-4">
-                                            <h6 class="card-title rtl-title text-center fw-bold text-dark mb-0">پرداخت
-                                                اقساطی دوره‌ها</h6>
+                                            <h6 class="card-title rtl-title text-center fw-bold text-dark mb-0">برنامه
+                                                های رادیویی سیمرغ</h6>
                                         </div>
                                     </div>
                                 </a>
                             </div>
 
-                            <div class="col-6 col-md-6 mb-4 card-spacing">
-                                <a href="register" class="text-decoration-none" title="کلیک کنید">
-                                    <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
-                                        <div class="card-body d-flex align-items-center justify-content-center p-4">
-                                            <h6 class="card-title rtl-title text-center fw-bold text-dark mb-0">پرداخت
-                                                نقدی دوره ها</h6>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="col-6 col-md-6 mb-4 card-spacing">
-                                <a href="pardakht" class="text-decoration-none" title="کلیک کنید">
-                                    <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
-                                        <div class="card-body d-flex align-items-center justify-content-center p-4">
-                                            <h6 class="card-title rtl-title text-center fw-bold text-dark mb-0">پرداخت
-                                                آزاد به موسسه</h6>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
 
                             <div class="col-6 col-md-6 mb-4 card-spacing">
                                 <a href="packages" class="text-decoration-none" title="کلیک کنید">
@@ -231,6 +210,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                 </a>
                             </div>
 
+
                             <div class="col-6 col-md-6 mb-4 card-spacing">
                                 <a href="portofilo/pictures" class="text-decoration-none" title="کلیک کنید">
                                     <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
@@ -242,16 +222,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                 </a>
                             </div>
 
-                            <div class="col-6 col-md-6 mb-4 card-spacing">
-                                <a href="portofilo/videos" class="text-decoration-none" title="کلیک کنید">
-                                    <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
-                                        <div class="card-body d-flex align-items-center justify-content-center p-4">
-                                            <h6 class="card-title rtl-title text-center fw-bold text-dark mb-0">ویدیوهای
-                                                نمونه کار</h6>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
+
 
                             <div class="col-6 col-md-6 mb-4 card-spacing">
                                 <a href="articles/speakers_archive" class="text-decoration-none" title="کلیک کنید">
@@ -264,16 +235,59 @@ if (session_status() === PHP_SESSION_NONE) {
                                 </a>
                             </div>
 
+
+
+
                             <div class="col-6 col-md-6 mb-4 card-spacing">
-                                <a href="articles/suggestion" class="text-decoration-none" title="کلیک کنید">
+                                <a href="portofilo/videos" class="text-decoration-none" title="کلیک کنید">
                                     <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
                                         <div class="card-body d-flex align-items-center justify-content-center p-4">
-                                            <h6 class="card-title rtl-title text-center fw-bold text-dark mb-0">انتقاد و
-                                                پیشنهاد به سیمرغ</h6>
+                                            <h6 class="card-title rtl-title text-center fw-bold text-dark mb-0">ویدیوهای
+                                                نمونه کار</h6>
                                         </div>
                                     </div>
                                 </a>
                             </div>
+
+
+                            <div class="col-6 col-md-6 mb-4 card-spacing">
+                                <a href="register" class="text-decoration-none" title="کلیک کنید">
+                                    <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
+                                        <div class="card-body d-flex align-items-center justify-content-center p-4">
+                                            <h6 class="card-title rtl-title text-center fw-bold text-dark mb-0">پرداخت
+                                                نقدی دوره ها</h6>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+
+
+                            <div class="col-6 col-md-6 mb-4 card-spacing">
+                                <a href="register2" class="text-decoration-none" title="کلیک کنید">
+                                    <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
+                                        <div class="card-body d-flex align-items-center justify-content-center p-4">
+                                            <h6 class="card-title rtl-title text-center fw-bold text-dark mb-0">پرداخت
+                                                اقساطی دوره‌ها</h6>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+
+
+                            <div class="col-6 col-md-6 mb-4 card-spacing">
+                                <a href="pardakht" class="text-decoration-none" title="کلیک کنید">
+                                    <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
+                                        <div class="card-body d-flex align-items-center justify-content-center p-4">
+                                            <h6 class="card-title rtl-title text-center fw-bold text-dark mb-0">پرداخت
+                                                آزاد به موسسه</h6>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+
 
                         </div>
                     </div>

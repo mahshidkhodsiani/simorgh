@@ -185,6 +185,12 @@ div.content {
     <a href="new_radio" class="<?php if (basename($_SERVER['REQUEST_URI']) === 'new_radio') echo 'active'; ?>">
         <i class="fas fa-podcast"></i> افزودن رادیو
     </a>
+
+    <a href="new_radio_tehran"
+        class="<?php if (basename($_SERVER['REQUEST_URI']) === 'new_radio_tehran') echo 'active'; ?>">
+        <i class="fas fa-podcast"></i> افزودن شب های تهران
+    </a>
+
     <a href="new_speaker" class="<?php if (basename($_SERVER['REQUEST_URI']) === 'new_speaker') echo 'active'; ?>">
         <i class="fas fa-microphone-alt"></i> افزودن گوینده
     </a>
