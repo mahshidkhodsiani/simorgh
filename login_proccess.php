@@ -19,7 +19,7 @@ if (isset($_POST['enter'])) {
 
       // بررسی رمز عبور هش شده
       if (password_verify($password, $user['password'])) {
-         $_SESSION['user_id'] = $user['id']; // ذخیره ID کاربر
+         $_SESSION['user_id'] = $user['id'];
          $_SESSION['username'] = $user['username'];
          $_SESSION['all_data'] = $user;
 
@@ -50,18 +50,33 @@ if (isset($_POST['enter'])) {
             exit();
          }
 
+         // ========== اضافه شدن کد جدید ==========
+         // چک کردن اینکه آیا صفحه قبلی برای برگشت ذخیره شده یا نه
+         if (isset($_SESSION['redirect_after_login'])) {
+            $redirect_url = $_SESSION['redirect_after_login'];
+            unset($_SESSION['redirect_after_login']); // پاک کردن بعد از استفاده
+            header("Location: " . $redirect_url);
+            exit();
+         }
+         // ======================================
+
          // هدایت پیش‌فرض برای کاربر عادی بدون سبد خرید
          header("Location: user/profile");
          exit();
       } else {
          // رمز عبور اشتباه
-         echo 'نام کاربری یا رمز عبور اشتباه است.';
+         $_SESSION['login_error'] = 'نام کاربری یا رمز عبور اشتباه است.';
+         header("Location: login.php");
+         exit();
       }
    } else {
       // نام کاربری پیدا نشد
-      echo 'نام کاربری یا رمز عبور اشتباه است.';
+      $_SESSION['login_error'] = 'نام کاربری یا رمز عبور اشتباه است.';
+      header("Location: login.php");
+      exit();
    }
 
    $stmt->close();
    $conn->close();
 }
+?>

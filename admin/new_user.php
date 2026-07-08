@@ -35,16 +35,16 @@ $id = $_SESSION["all_data"]['id'];
 
 <body>
 
-   
 
-<?php include 'header.php'; ?>
+
+    <?php include 'header.php'; ?>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3 d-flex">
                 <?php
                 include 'sidebar.php';
                 ?>
-              
+
             </div>
 
             <div class="col-md-8 col-sm-12">
@@ -63,7 +63,7 @@ $id = $_SESSION["all_data"]['id'];
                             <input type="text" name="family" class="form-control" required autocomplete="off">
                         </div>
                     </div>
-                   
+
                     <div class="row mt-1">
                         <div class="col-md-6">
                             <label for="username" class="form-label fw-semibold">
@@ -80,17 +80,17 @@ $id = $_SESSION["all_data"]['id'];
                     </div>
 
                     <div class="row mt-2">
-                        
+
                         <div class="col-md-1">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="" id="isAdmin" name="isAdmin">
-                                <label class="form-check-label" for="isAdmin" >
+                                <label class="form-check-label" for="isAdmin">
                                     ادمین
                                 </label>
                             </div>
                         </div>
                         <div class="col-md-10">
-                            
+
                         </div>
                     </div>
                     <div class="row mt-4">
@@ -102,13 +102,13 @@ $id = $_SESSION["all_data"]['id'];
 
 
                 <script>
-                    document.getElementById('userForm').addEventListener('submit', function(event) {
-                       
-                        event.preventDefault();
-                        
-                  
-                        document.getElementById('userForm').reset();
-                    });
+                document.getElementById('userForm').addEventListener('submit', function(event) {
+
+                    event.preventDefault();
+
+
+                    document.getElementById('userForm').reset();
+                });
                 </script>
 
                 <div class="row mt-4">
@@ -121,45 +121,76 @@ $id = $_SESSION["all_data"]['id'];
                         // Calculate the offset for the SQL query
                         $offset = ($current_page - 1) * $items_per_page;
 
-                        // SQL query to retrieve a subset of rows based on pagination
-                        $sql = "SELECT * FROM users ORDER BY id DESC";
+                        // SQL query to retrieve a subset of rows based on pagination with LIMIT
+                        $sql = "SELECT * FROM users ORDER BY id DESC LIMIT $offset, $items_per_page";
                         $result = $conn->query($sql);
 
                         // Display the table
                         if ($result->num_rows > 0) {
                             $a = ($current_page - 1) * $items_per_page + 1; // Counter for row numbers
                             ?>
-                            <div class="table-responsive">
-                                <table class="table border border-4">
-                                    <h4>نگاه کلی :</h4>
-                                    <thead>
-                                        <tr>
-                                            <th scope="col" class="text-center">ردیف</th>
-                                            <th scope="col" class="text-center">نام</th>
-                                            <th scope="col" class="text-center">نام خانوادگی</th>
-                                            <th scope="col" class="text-center">کد ملی</th>
-                                            <th scope="col" class="text-center">نقش</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
+                        <div class="table-responsive">
+                            <table class="table border border-4">
+                                <h4>نگاه کلی :</h4>
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="text-center">ردیف</th>
+                                        <th scope="col" class="text-center">نام</th>
+                                        <th scope="col" class="text-center">نام خانوادگی</th>
+                                        <th scope="col" class="text-center">کد ملی</th>
+                                        <th scope="col" class="text-center">نقش</th>
+                                        <th scope="col" class="text-center">گوینده</th>
+                                        <th scope="col" class="text-center">عملیات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
                                         while ($row = $result->fetch_assoc()) {
                                             ?>
-                                            <tr>
-                                                <th scope="row" class="text-center"><?= $a ?></th>
-                                                <td class="text-center"><?= $row['name'] ?></td>
-                                                <td class="text-center"><?= $row['family'] ?></td>
-                                                <td class="text-center"><?= $row['meli_code'] ?></td>
-                                                <td class="text-center"><?= $row['level'] == 'admin'? 'ادمین' : 'کاربر عادی' ?></td>
-                                            </tr>
-                                            <?php
+                                    <tr>
+                                        <th scope="row" class="text-center"><?= $a ?></th>
+                                        <td class="text-center"><?= htmlspecialchars($row['name']) ?></td>
+                                        <td class="text-center"><?= htmlspecialchars($row['family']) ?></td>
+                                        <td class="text-center"><?= htmlspecialchars($row['meli_code']) ?></td>
+                                        <td class="text-center"><?= $row['level'] == 'admin'? 'ادمین' : 'کاربر عادی' ?>
+                                        </td>
+                                        <td class="text-center">
+                                            <?php if (isset($row['speaker']) && $row['speaker'] == 1): ?>
+                                            <form method="POST" action="" style="display: inline;" onsubmit="return confirm('آیا مطمئن هستید که می‌خواهید دسترسی گویندگی این کاربر را بردارید؟');">
+                                                <input type="hidden" name="user_id" value="<?= $row['id'] ?>">
+                                                <input type="hidden" name="remove_speaker" value="1">
+                                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                    🎙️ برداشتن از گویندگی
+                                                </button>
+                                            </form>
+                                            <?php else: ?>
+                                            <form method="POST" action="" style="display: inline;" onsubmit="return confirm('آیا مطمئن هستید که می‌خواهید این کاربر را به گوینده تبدیل کنید؟');">
+                                                <input type="hidden" name="user_id" value="<?= $row['id'] ?>">
+                                                <input type="hidden" name="make_speaker" value="1">
+                                                <button type="submit" class="btn btn-sm btn-outline-primary">
+                                                    تبدیل به گوینده
+                                                </button>
+                                            </form>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td class="text-center">
+                                            <form method="POST" action="" style="display: inline;" onsubmit="return confirm('آیا مطمئن هستید که می‌خواهید این کاربر را حذف کنید؟');">
+                                                <input type="hidden" name="delete_user_id" value="<?= $row['id'] ?>">
+                                                <button type="submit" name="delete_user" class="btn btn-sm btn-outline-danger">
+                                                    🗑️ حذف
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    <?php
                                             $a++;
                                         }
                                         ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <?php
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <?php
 
                             // Pagination links
                             $sql = "SELECT COUNT(*) AS total FROM users";
@@ -170,27 +201,27 @@ $id = $_SESSION["all_data"]['id'];
 
                             // Display pagination links
                             ?>
-                            <nav aria-label="Page navigation">
-                                <ul class="pagination justify-content-center">
-                                    <?php
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination justify-content-center">
+                                <?php
                                     for ($i = 1; $i <= $total_pages; $i++) {
                                         ?>
-                                        <li class="page-item <?= $i == $current_page ? 'active' : '' ?>">
-                                            <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
-                                        </li>
-                                        <?php
+                                <li class="page-item <?= $i == $current_page ? 'active' : '' ?>">
+                                    <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                                </li>
+                                <?php
                                     }
                                     ?>
-                                </ul>
-                            </nav>
-                            <?php
+                            </ul>
+                        </nav>
+                        <?php
                         } else {
                             echo "<p>No records found.</p>";
                         }
                         ?>
 
                     </div>
-                
+
                 </div>
 
             </div>
@@ -198,12 +229,12 @@ $id = $_SESSION["all_data"]['id'];
     </div>
 
     <script>
-        $(document).ready(function() {
-            $('.nav-link').click(function() {
-                $('.nav-link').removeClass('active');
-                $(this).addClass('active');
-            });
+    $(document).ready(function() {
+        $('.nav-link').click(function() {
+            $('.nav-link').removeClass('active');
+            $(this).addClass('active');
         });
+    });
     </script>
 </body>
 
@@ -229,7 +260,7 @@ if(isset($_POST['enter'])){
   
 
 
-    $SQL1 = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
+    $SQL1 = "SELECT * FROM users WHERE username = '$username'";
     $result1 = $conn->query($SQL1);
     if ($result1->num_rows > 0) {
         echo "<div id='errorToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 20px; right: 20px; width: 300px;'>
@@ -240,7 +271,7 @@ if(isset($_POST['enter'])){
                     </button>
                 </div>
                 <div class='toast-body'>
-                    این یوزرنیم و پسورد قبلا به ثبت رسیده است!
+                    این یوزرنیم قبلا به ثبت رسیده است!
                 </div>
             </div>
             <script>
@@ -317,3 +348,60 @@ if(isset($_POST['enter'])){
     
     
 }
+
+// منطق تبدیل کاربر به گوینده (ست کردن 1)
+if (isset($_POST['make_speaker'])) {
+    $user_id_to_update = intval($_POST['user_id']);
+    
+    // کوئری برای آپدیت کردن فیلد speaker به 1
+    $update_sql = "UPDATE users SET speaker = 1 WHERE id = $user_id_to_update";
+    
+    if ($conn->query($update_sql) === TRUE) {
+        echo "<script>
+                alert('✅ کاربر با موفقیت به گوینده تبدیل شد');
+                window.location.href = window.location.href.split('?')[0] + '?page=$current_page';
+              </script>";
+    } else {
+        echo "<script>alert('❌ خطا در بروزرسانی: " . $conn->error . "');</script>";
+    }
+}
+
+// منطق برداشتن از گویندگی (ست کردن 0)
+if (isset($_POST['remove_speaker'])) {
+    $user_id_to_update = intval($_POST['user_id']);
+    
+    // کوئری برای آپدیت کردن فیلد speaker به 0
+    $update_sql = "UPDATE users SET speaker = 0 WHERE id = $user_id_to_update";
+    
+    if ($conn->query($update_sql) === TRUE) {
+        echo "<script>
+                alert('🗑️ دسترسی گویندگی از کاربر برداشته شد');
+                window.location.href = window.location.href.split('?')[0] + '?page=$current_page';
+              </script>";
+    } else {
+        echo "<script>alert('❌ خطا در بروزرسانی: " . $conn->error . "');</script>";
+    }
+}
+
+// منطق حذف کاربر
+if (isset($_POST['delete_user'])) {
+    $user_id_to_delete = intval($_POST['delete_user_id']);
+    
+    // جلوگیری از حذف خود کاربر فعلی
+    if ($user_id_to_delete == $id) {
+        echo "<script>alert('❌ شما نمی‌توانید خودتان را حذف کنید!');</script>";
+    } else {
+        // کوئری برای حذف کاربر
+        $delete_sql = "DELETE FROM users WHERE id = $user_id_to_delete";
+        
+        if ($conn->query($delete_sql) === TRUE) {
+            echo "<script>
+                    alert('✅ کاربر با موفقیت حذف شد');
+                    window.location.href = window.location.href.split('?')[0] + '?page=$current_page';
+                  </script>";
+        } else {
+            echo "<script>alert('❌ خطا در حذف کاربر: " . $conn->error . "');</script>";
+        }
+    }
+}
+?>

@@ -133,6 +133,77 @@ if (session_status() === PHP_SESSION_NONE) {
 
 
 
+
+
+
+
+    <!-- ===== بخش استوری‌ها ===== -->
+    <div class="container-fluid px-4 mt-3">
+        <div class="stories-wrapper">
+            <div class="stories-scroll" id="storiesScroll">
+                <?php
+            // دریافت استوری‌های فعال
+            $current_date = date('Y-m-d H:i:s');
+            $sql_stories = "SELECT * FROM stories 
+                           WHERE status = 1 
+                           AND (expire_at IS NULL OR expire_at > '$current_date') 
+                           ORDER BY id DESC 
+                           LIMIT 15";
+            $stories_result = $conn->query($sql_stories);
+            
+            if ($stories_result && $stories_result->num_rows > 0) {
+                while ($story = $stories_result->fetch_assoc()) {
+                    $expire_labels = [
+                        'day' => '۱ روز',
+                        'week' => '۱ هفته',
+                        'month' => '۱ ماه',
+                        'custom' => ($story['expire_days'] ?? 0) . ' روز',
+                        'unlimited' => '♾️'
+                    ];
+                    
+                    // درست کردن آدرس تصویر
+                    $image_path = $story['image'];
+                    // اگه آدرس با http شروع نمیشه و با upload/ شروع نمیشه، اصلاح کن
+                    if (strpos($image_path, 'http') !== 0 && strpos($image_path, 'upload/') !== 0) {
+                        $image_path = 'upload/images/stories/' . $image_path;
+                    }
+                    // اگه فایل وجود نداشت، از تصویر پیش‌فرض استفاده کن
+                    if (!file_exists($image_path) && strpos($image_path, 'http') !== 0) {
+                        $image_path = 'images/default-story.jpg';
+                    }
+            ?>
+                <div class="story-item" data-story="<?= $image_path ?>"
+                    data-title="<?= htmlspecialchars($story['title']) ?>">
+                    <div class="story-avatar" style="background: linear-gradient(45deg, #f09433, #e6683c, #dc2743);">
+                        <div class="story-img" style="background-image: url('<?= $image_path ?>');"></div>
+                    </div>
+                    <span class="story-name"><?= htmlspecialchars($story['title']) ?></span>
+                    <span class="story-badge"><?= $expire_labels[$story['expire_type']] ?? '۱ روز' ?></span>
+                </div>
+                <?php
+                }
+            } else {
+                echo '<p class="text-muted text-center w-100 my-3">📸 هیچ استوری فعالی وجود ندارد</p>';
+            }
+            ?>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== مدال نمایش استوری ===== -->
+    <div id="storyModal" class="story-modal" onclick="closeStoryModal()">
+        <div class="story-modal-content" onclick="event.stopPropagation();">
+            <span class="story-modal-close" onclick="closeStoryModal()">&times;</span>
+            <img id="storyModalImage" class="story-modal-img" src="" alt="استوری">
+            <h4 id="storyModalTitle" class="story-modal-title"></h4>
+        </div>
+    </div>
+    <!-- ===== پایان بخش استوری‌ها ===== -->
+
+
+
+
+
     <div class="container-fluid px-4 mt-4">
 
         <div class="row">
@@ -178,7 +249,7 @@ if (session_status() === PHP_SESSION_NONE) {
                 <div class="row align-items-center">
 
                     <div class="col-md-5 col-lg-4 text-center mb-4 mb-md-0">
-                        <img class="img-fluid rounded shadow-lg" src="images/30.jpg" alt="تصویر سیمرغ"
+                        <img class="img-fluid rounded shadow-lg" src="images/37.png" alt="تصویر سیمرغ"
                             style="max-height: 650px; object-fit: cover;">
                     </div>
 
@@ -727,6 +798,78 @@ if (session_status() === PHP_SESSION_NONE) {
         }();
         </script>
 
+        <script>
+        // ===== استوری ها =====
+        document.addEventListener('DOMContentLoaded', function() {
+            // انتخاب همه آیتم‌های استوری
+            var storyItems = document.querySelectorAll('.story-item');
+
+            // افزودن رویداد کلیک به هر آیتم
+            storyItems.forEach(function(item) {
+                item.addEventListener('click', function() {
+                    // گرفتن آدرس تصویر و عنوان از attribute های داده
+                    var imgSrc = this.getAttribute('data-story');
+                    var title = this.getAttribute('data-title');
+
+                    // اگر data-story وجود نداشت، از background-image استخراج کن
+                    if (!imgSrc) {
+                        var style = this.querySelector('.story-img').style.backgroundImage;
+                        imgSrc = style.replace(/.*\(|\).*/g, '');
+                        imgSrc = imgSrc.replace(/['"]/g, '');
+                    }
+
+                    // اگر title وجود نداشت، از متن داخل .story-name بگیر
+                    if (!title) {
+                        var nameEl = this.querySelector('.story-name');
+                        if (nameEl) {
+                            title = nameEl.textContent;
+                        } else {
+                            title = 'استوری';
+                        }
+                    }
+
+                    // نمایش مدال
+                    openStoryModal(imgSrc, title);
+                });
+            });
+        });
+
+        // ===== توابع باز و بسته کردن مدال =====
+        function openStoryModal(imageSrc, title) {
+            var modal = document.getElementById('storyModal');
+            var modalImg = document.getElementById('storyModalImage');
+            var modalTitle = document.getElementById('storyModalTitle');
+
+            if (!modal || !modalImg) {
+                console.error('مدال پیدا نشد!');
+                return;
+            }
+
+            modalImg.src = imageSrc;
+            modalTitle.textContent = title || 'استوری';
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeStoryModal() {
+            var modal = document.getElementById('storyModal');
+            if (modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // ===== بستن با کلید ESC =====
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeStoryModal();
+            }
+        });
+
+        // ===== تست در کنسول =====
+        console.log('✅ بخش استوری‌ها فعال شد!');
+        console.log('تعداد استوری‌ها:', document.querySelectorAll('.story-item').length);
+        </script>
 
     </div>
     <?php include "footer.php"; ?>

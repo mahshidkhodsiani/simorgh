@@ -1,36 +1,149 @@
+<?php
+session_start();
+
+if(!isset($_SESSION['user_id'])){
+    $_SESSION['redirect_after_login'] = $_SERVER['REQUEST_URI'];
+}
+
+include '../config.php';
+
+// ========== بررسی گوینده بودن کاربر ==========
+$is_speaker = false;
+if(isset($_SESSION['user_id'])) {
+    $speaker_check_sql = "SELECT speaker FROM users WHERE id = ?";
+    $speaker_stmt = $conn->prepare($speaker_check_sql);
+    $speaker_stmt->bind_param("i", $_SESSION['user_id']);
+    $speaker_stmt->execute();
+    $speaker_result = $speaker_stmt->get_result();
+    if($speaker_result->num_rows > 0) {
+        $speaker_data = $speaker_result->fetch_assoc();
+        if(isset($speaker_data['speaker']) && $speaker_data['speaker'] == 1) {
+            $is_speaker = true;
+        }
+    }
+    $speaker_stmt->close();
+}
+// ========== پایان بررسی گوینده ==========
+
+$radio_slug = 'tehran';
+$radio_info = null;
+$radio_price = 0;
+
+$radio_query = "SELECT * FROM radios WHERE slug = '$radio_slug'";
+$radio_result = $conn->query($radio_query);
+if($radio_result->num_rows > 0) {
+    $radio_info = $radio_result->fetch_assoc();
+    $radio_price = $radio_info['price'];
+}
+
+// دریافت برنامه‌ها از جدول radio_tehran
+$programs = [];
+$sql = "SELECT * FROM radio_tehran ORDER BY created_at DESC";
+$result = $conn->query($sql);
+if($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+        $programs[] = $row;
+    }
+}
+
+function formatDate($date) {
+    if ($date && $date != '0000-00-00 00:00:00') {
+        return date('Y/m/d', strtotime($date));
+    }
+    return '';
+}
+
+$poems = ["شب‌های تهران، قصه‌های ناگفته‌ی شهر..."];
+$randomPoem = $poems[array_rand($poems)];
+
+// ========== بررسی دسترسی کاربر ==========
+$has_full_access = false;
+$user_purchased_programs = [];
+$payment_message = '';
+
+// اگر گوینده باشه، همه چی براش مجانی و کامل هست
+if($is_speaker) {
+    $has_full_access = true;  // گوینده به همه چیز دسترسی کامل داره
+} 
+elseif(isset($_SESSION['user_id'])) {
+    // بقیه کاربرها مثل قبل، فقط اونایی که خرید کردن
+    $user_id = $_SESSION['user_id'];
+    
+    $check_full_sql = "SELECT * FROM user_radio WHERE user_id = ? AND radio_type = 'tehran' AND paid = 1 AND program_id IS NULL LIMIT 1";
+    $check_stmt = $conn->prepare($check_full_sql);
+    $check_stmt->bind_param("i", $user_id);
+    $check_stmt->execute();
+    if($check_stmt->get_result()->num_rows > 0) {
+        $has_full_access = true;
+    }
+    $check_stmt->close();
+    
+    if(!$has_full_access) {
+        $prog_sql = "SELECT program_id FROM user_radio WHERE user_id = ? AND radio_type = 'tehran' AND paid = 1 AND program_id IS NOT NULL";
+        $prog_stmt = $conn->prepare($prog_sql);
+        $prog_stmt->bind_param("i", $user_id);
+        $prog_stmt->execute();
+        $prog_result = $prog_stmt->get_result();
+        while($row = $prog_result->fetch_assoc()) {
+            $user_purchased_programs[] = $row['program_id'];
+        }
+        $prog_stmt->close();
+    }
+}
+
+if(isset($_GET['payment'])) {
+    if($_GET['payment'] == 'success') {
+        $payment_message = '<div class="alert alert-success text-center">✅ پرداخت شما با موفقیت انجام شد! از شنیدن برنامه‌ها لذت ببرید. 🌙</div>';
+        if(isset($_SESSION['user_id'])) {
+            $user_id = $_SESSION['user_id'];
+            $has_full_access = false;
+            $user_purchased_programs = [];
+            
+            $check_full_sql = "SELECT * FROM user_radio WHERE user_id = ? AND radio_type = 'tehran' AND paid = 1 AND program_id IS NULL LIMIT 1";
+            $check_stmt = $conn->prepare($check_full_sql);
+            $check_stmt->bind_param("i", $user_id);
+            $check_stmt->execute();
+            if($check_stmt->get_result()->num_rows > 0) {
+                $has_full_access = true;
+            }
+            $check_stmt->close();
+            
+            if(!$has_full_access) {
+                $prog_sql = "SELECT program_id FROM user_radio WHERE user_id = ? AND radio_type = 'tehran' AND paid = 1 AND program_id IS NOT NULL";
+                $prog_stmt = $conn->prepare($prog_sql);
+                $prog_stmt->bind_param("i", $user_id);
+                $prog_stmt->execute();
+                $prog_result = $prog_stmt->get_result();
+                while($row = $prog_result->fetch_assoc()) {
+                    $user_purchased_programs[] = $row['program_id'];
+                }
+                $prog_stmt->close();
+            }
+        }
+    } elseif($_GET['payment'] == 'failed') {
+        $payment_message = '<div class="alert alert-danger text-center">❌ پرداخت ناموفق بود. لطفاً مجدداً تلاش کنید.</div>';
+    } elseif($_GET['payment'] == 'already') {
+        $payment_message = '<div class="alert alert-info text-center">ℹ️ این تراکنش قبلاً ثبت شده است.</div>';
+    }
+}
+?>
+
 <!doctype html>
 <html lang="fa" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>شب‌های تهران | پخش آنلاین برنامه‌های شبانه | خاطرات پایتخت</title>
-    <meta name="description"
-        content="شب‌های تهران - روایت دلنشین شب‌های پایتخت، خاطرات شهری، موسیقی ماندگار و لحظات ناب. با ما همراه شوید و از شنیدن بهترین برنامه‌های شبانه لذت ببرید.">
-    <meta name="keywords" content="شب‌های تهران, برنامه شبانه, خاطرات تهران, موسیقی ماندگار, رادیو تهران, پخش آنلاین">
-    <meta name="author" content="موسسه هفت هنر سیمرغ">
-    <meta name="robots" content="index, follow">
-
-    <!-- Open Graph -->
-    <meta property="og:title" content="شب‌های تهران | پخش آنلاین برنامه‌های شبانه">
-    <meta property="og:description" content="روایت دلنشین شب‌های پایتخت">
-    <meta property="og:image" content="../images/tehran-night.jpg">
-    <meta property="og:type" content="website">
-
+    <title>شب‌های تهران | پخش آنلاین برنامه‌های شبانه</title>
+    <meta name="description" content="شب‌های تهران - روایت دلنشین شب‌های پایتخت">
     <?php include "includes.php"; ?>
-
     <link rel="icon" href="../images/logo1.ico" type="image/x-icon">
-
     <style>
-    /* استایل اختصاصی شب‌های تهران */
     body {
         background: linear-gradient(135deg, #0a0a2a 0%, #1a1a3a 100%);
-        position: relative;
         min-height: 100vh;
     }
 
-    /* افکت ستاره‌ها */
     body::before {
         content: '';
         position: fixed;
@@ -54,7 +167,6 @@
         position: relative;
         overflow: hidden;
         border: 1px solid rgba(255, 215, 0, 0.3);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     }
 
     .tehran-header::before {
@@ -65,16 +177,6 @@
         bottom: -30px;
         right: -30px;
         animation: float 6s ease-in-out infinite;
-    }
-
-    .tehran-header::after {
-        content: '🏙️';
-        position: absolute;
-        font-size: 120px;
-        opacity: 0.1;
-        top: -20px;
-        left: -20px;
-        animation: float 8s ease-in-out infinite reverse;
     }
 
     @keyframes float {
@@ -89,31 +191,6 @@
         }
     }
 
-    .moon-glow {
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        width: 80px;
-        height: 80px;
-        background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, rgba(255, 215, 0, 0) 70%);
-        border-radius: 50%;
-        animation: pulseGlow 4s ease-in-out infinite;
-    }
-
-    @keyframes pulseGlow {
-
-        0%,
-        100% {
-            transform: scale(1);
-            opacity: 0.3;
-        }
-
-        50% {
-            transform: scale(1.3);
-            opacity: 0.6;
-        }
-    }
-
     .now-playing-card-tehran {
         background: linear-gradient(135deg, rgba(26, 26, 62, 0.95) 0%, rgba(45, 27, 78, 0.95) 100%);
         backdrop-filter: blur(10px);
@@ -122,8 +199,6 @@
         margin-bottom: 30px;
         color: white;
         border: 1px solid rgba(255, 215, 0, 0.3);
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-        position: relative;
     }
 
     .playlist-item-tehran {
@@ -133,9 +208,7 @@
         margin-bottom: 15px;
         padding: 15px 20px;
         transition: all 0.3s ease;
-        cursor: pointer;
         border: 1px solid rgba(255, 215, 0, 0.2);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         color: #f0f0f0;
     }
 
@@ -143,7 +216,6 @@
         transform: translateX(-5px);
         background: rgba(45, 27, 78, 0.95);
         border-color: rgba(255, 215, 0, 0.5);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
     }
 
     .playlist-item-tehran.active {
@@ -165,7 +237,6 @@
         border: none;
         color: #1a1a3e;
         font-size: 1.2rem;
-        font-weight: bold;
     }
 
     .play-btn-tehran:hover {
@@ -196,7 +267,6 @@
         padding: 5px 15px;
         border-radius: 20px;
         font-size: 12px;
-        font-weight: bold;
         background: rgba(255, 215, 0, 0.2);
         color: #ffd700;
         border: 1px solid rgba(255, 215, 0, 0.3);
@@ -209,12 +279,6 @@
         padding: 20px;
         text-align: center;
         border: 1px solid rgba(255, 215, 0, 0.2);
-        transition: all 0.3s;
-    }
-
-    .stat-card-tehran:hover {
-        transform: translateY(-5px);
-        border-color: rgba(255, 215, 0, 0.5);
     }
 
     .moon-icon {
@@ -246,11 +310,6 @@
         background: rgba(45, 27, 78, 0.95);
         border-color: #ffd700;
         color: white;
-        box-shadow: none;
-    }
-
-    .search-box-tehran::placeholder {
-        color: rgba(255, 255, 255, 0.5);
     }
 
     .audio-player-tehran {
@@ -265,28 +324,45 @@
         border-radius: 50px;
     }
 
-    audio::-webkit-media-controls-panel {
-        background: #2d1b4e;
-    }
-
-    audio::-webkit-media-controls-current-time-display,
-    audio::-webkit-media-controls-time-remaining-display {
-        color: white;
-    }
-
     .empty-state-tehran {
         text-align: center;
         padding: 60px 20px;
         background: rgba(26, 26, 62, 0.9);
         border-radius: 20px;
-        border: 1px solid rgba(255, 215, 0, 0.2);
     }
 
-    .date-badge {
-        font-size: 11px;
-        color: rgba(255, 215, 0, 0.6);
-        direction: ltr;
+    .buy-btn {
+        background: linear-gradient(135deg, #ff9800, #ff5722);
+        border: none;
+        border-radius: 50px;
+        padding: 8px 20px;
+        color: white;
+        font-weight: bold;
+        transition: all 0.3s;
+    }
+
+    .buy-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 15px rgba(255, 87, 34, 0.5);
+    }
+
+    .purchased-badge {
+        background: #28a745;
+        border-radius: 50px;
+        padding: 5px 15px;
+        font-size: 12px;
+        color: white;
+    }
+
+    .speaker-badge {
+        background: linear-gradient(135deg, #ffd700, #ff8c00);
+        border-radius: 50px;
+        padding: 8px 20px;
+        font-size: 14px;
+        color: #1a1a3e;
+        font-weight: bold;
         display: inline-block;
+        margin-bottom: 15px;
     }
 
     @media (max-width: 768px) {
@@ -306,82 +382,39 @@
 </head>
 
 <body>
-
-    <?php
-include 'header.php';
-include '../config.php';
-
-// اتصال به دیتابیس radio_tehran
-$conn = new mysqli($servername, $username, $password, $dbname);
-$conn->set_charset("utf8mb4");
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// دریافت لیست برنامه‌های شب‌های تهران از جدول radio_tehran
-$sql = "SELECT * FROM radio_tehran ORDER BY created_at DESC, id DESC";
-$result = $conn->query($sql);
-
-$programs = [];
-if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-        $programs[] = $row;
-    }
-}
-
-// تابع تبدیل تاریخ به شمسی (اگر needed)
-function formatDate($date) {
-    if ($date && $date != '0000-00-00 00:00:00') {
-        return date('Y/m/d', strtotime($date));
-    }
-    return '';
-}
-
-// شعر شبانه برای هدر
-$poems = [
-    "شب‌های تهران، قصه‌های ناگفته‌ی شهر...",
-];
-$randomPoem = $poems[array_rand($poems)];
-?>
-
+    <?php include 'header.php'; ?>
     <div class="container mt-4 mb-5" style="position: relative; z-index: 1;">
-        <!-- هدر شب‌های تهران -->
+        <?php echo $payment_message; ?>
+
+        <?php if($is_speaker): ?>
+        <div class="alert alert-success text-center mb-3"
+            style="background: linear-gradient(135deg, #c6d0cb, #0a5433); border: 1px solid #ffd700;">
+            🌟🌟 به پنل گویندگی خوش آمدید! شما به عنوان گوینده، دسترسی رایگان و کامل به تمام برنامه‌ها دارید. 🌟🌟
+        </div>
+        <?php endif; ?>
+
         <div class="tehran-header">
-            <div class="moon-glow"></div>
             <div class="text-center">
                 <div class="moon-icon">🌙</div>
-                <h1 class="display-4 fw-bold mb-3">شب‌های تهران</h1>
+                <h1 class="display-4 fw-bold mb-3"><?php echo $radio_info['name'] ?? 'شب‌های تهران'; ?></h1>
                 <p class="lead mb-2"><?php echo $randomPoem; ?></p>
-                <p class="mb-0 d-flex justify-content-center gap-3 flex-wrap">
-                    <small>🎙️ روایت دلنشین پایتخت</small>
-                    <small>📊 <?php echo count($programs); ?> برنامه شبانه</small>
-                </p>
+                <p class="mb-0"><?php echo $radio_info['description'] ?? ''; ?></p>
             </div>
         </div>
-
         <div class="row">
-            <!-- سمت راست: پلیر و آهنگ در حال پخش -->
             <div class="col-lg-5 mb-4">
                 <div class="now-playing-card-tehran">
                     <div class="text-center">
-                        <div style="font-size: 80px; margin-bottom: 20px; animation: moonGlow 3s ease-in-out infinite;"
-                            id="nowPlayingIconTehran">
-                            🌙
-                        </div>
+                        <div style="font-size: 80px; margin-bottom: 20px;" id="nowPlayingIconTehran">🌙</div>
                         <h3 id="nowPlayingTitleTehran" class="mb-2">شبانه‌ای انتخاب نشده</h3>
                         <p id="nowPlayingTypeTehran" class="mb-3" style="opacity: 0.8;">به شب‌های تهران خوش آمدید...</p>
-
                         <div class="audio-player-tehran">
-                            <audio id="mainAudioTehran" controls preload="metadata">
+                            <audio id="mainAudioTehran" controls controlsList="nodownload" preload="metadata">
                                 <source src="" type="audio/mpeg">
-                                مرورگر شما از پلیر صوتی پشتیبانی نمی‌کند.
                             </audio>
                         </div>
                     </div>
                 </div>
-
-                <!-- آمار و اطلاعات شبانه -->
                 <div class="row g-3 mt-2">
                     <div class="col-6">
                         <div class="stat-card-tehran">
@@ -392,71 +425,102 @@ $randomPoem = $poems[array_rand($poems)];
                     </div>
                     <div class="col-6">
                         <div class="stat-card-tehran">
-                            <div style="font-size: 30px;">🌙</div>
-                            <div class="h3 mb-0" style="color: #ffd700;">۲۴/۷</div>
-                            <small>پخش شبانه</small>
+                            <div style="font-size: 30px;">💰</div>
+                            <div class="h3 mb-0" style="color: #ffd700;">
+                                <?php echo $is_speaker ? 'رایگان' : 'پرداختی'; ?>
+                            </div>
+                            <small><?php echo $is_speaker ? 'دسترسی ویژه' : 'قیمت هر برنامه'; ?></small>
                         </div>
                     </div>
                 </div>
-
-                <!-- نقل قول شبانه -->
-                <div class="stat-card-tehran mt-3">
-                    <div style="font-size: 20px; color: #ffd700;">"</div>
-                    <p class="mb-0" style="font-size: 13px; line-height: 1.8;">
-                        تهران همیشه قشنگ نبود، اما شب‌هایش همیشه خاطره‌انگیزند...
-                    </p>
-                    <small class="text-muted">- شب‌های تهران</small>
-                </div>
             </div>
-
-            <!-- سمت چپ: لیست پخش -->
             <div class="col-lg-7">
+                <?php if(!isset($_SESSION['user_id'])): ?>
+                <div class="text-center mb-4">
+                    <div class="alert alert-warning">برای دسترسی به برنامه‌ها، لطفاً <a href="../login.php">وارد
+                            شوید</a></div>
+                    <button class="btn btn-info btn-lg" onclick="location.href='../login.php'">🔐 ورود یا
+                        ثبت‌نام</button>
+                </div>
+                <div id="playlistContainerTehran">
+                    <?php foreach($programs as $program): ?>
+                    <div class="playlist-item-tehran opacity-50" style="cursor: not-allowed;">
+                        <div class="row align-items-center">
+                            <div class="col-auto">
+                                <div class="play-btn-tehran" style="opacity:0.5;">🔒</div>
+                            </div>
+                            <div class="col">
+                                <h6 class="mb-1"><?php echo htmlspecialchars($program['title']); ?></h6>
+                                <span class="program-badge-tehran">🌙
+                                    <?php echo htmlspecialchars($program['program_type']); ?></span>
+                            </div>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+                <?php else: ?>
                 <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
                     <h3 class="mb-0" style="color: #ffd700;">📻 لیست پخش شبانه</h3>
                     <div class="input-group w-50">
                         <input type="text" id="searchPlaylistTehran" class="form-control search-box-tehran"
                             placeholder="جستجو در برنامه‌های شبانه..." style="border-radius: 50px;">
                         <span class="input-group-text"
-                            style="border-radius: 50px; background: rgba(26,26,62,0.9); border: 1px solid rgba(255,215,0,0.3); color: #ffd700;">
-                            🌙
-                        </span>
+                            style="border-radius: 50px; background: rgba(26,26,62,0.9); border: 1px solid rgba(255,215,0,0.3); color: #ffd700;">🌙</span>
                     </div>
                 </div>
-
                 <div id="playlistContainerTehran">
-                    <?php if (count($programs) > 0): ?>
-                    <?php foreach($programs as $index => $program): ?>
-                    <div class="playlist-item-tehran" data-id="<?php echo $program['id']; ?>"
-                        data-title="شب‌های تهران - <?php echo htmlspecialchars($program['title']); ?>"
+                    <?php if(count($programs) > 0): ?>
+                    <?php foreach($programs as $index => $program): 
+                        $has_access_to_this = $has_full_access || in_array($program['id'], $user_purchased_programs);
+                    ?>
+                    <div class="playlist-item-tehran" data-title="<?php echo htmlspecialchars($program['title']); ?>"
                         data-type="<?php echo htmlspecialchars($program['program_type']); ?>"
                         data-file="<?php echo htmlspecialchars($program['file_path']); ?>"
-                        data-date="<?php echo formatDate($program['created_at']); ?>"
-                        data-index="<?php echo $index; ?>">
+                        data-program-id="<?php echo $program['id']; ?>" data-index="<?php echo $index; ?>">
                         <div class="row align-items-center">
                             <div class="col-auto">
+                                <?php if($has_access_to_this): ?>
                                 <button class="play-btn-tehran"
-                                    onclick="playProgramTehran(this, <?php echo $index; ?>)">
-                                    ▶️
+                                    onclick="playProgramTehran(this, <?php echo $index; ?>)">▶️</button>
+                                <?php else: ?>
+                                <button class="play-btn-tehran" style="background: #555;"
+                                    onclick="buyProgram(<?php echo $program['id']; ?>, '<?php echo addslashes($program['title']); ?>', <?php echo ($program['price'] / 10); ?>)">
+                                    💰
                                 </button>
+                                <?php endif; ?>
                             </div>
                             <div class="col">
                                 <div class="d-flex align-items-center justify-content-between flex-wrap">
                                     <div>
-                                        <h6 class="mb-1 fw-bold"><?php echo htmlspecialchars($program['title']); ?></h6>
+                                        <h6 class="mb-1 fw-bold">
+                                            <?php echo htmlspecialchars($program['title']); ?>
+                                            <?php if($has_access_to_this): ?>
+                                            <span class="purchased-badge ms-2">✅ خریداری شده</span>
+                                            <?php endif; ?>
+                                            <?php if($is_speaker): ?>
+                                            <span class="purchased-badge ms-2"
+                                                style="background: #ffd700; color: #1a1a3e;">🎙️ گوینده</span>
+                                            <?php endif; ?>
+                                        </h6>
                                         <div class="d-flex align-items-center gap-2 flex-wrap">
-                                            <span class="program-badge-tehran">
-                                                🌙 <?php echo htmlspecialchars($program['program_type']); ?>
-                                            </span>
+                                            <span class="program-badge-tehran">🌙
+                                                <?php echo htmlspecialchars($program['program_type']); ?></span>
                                             <?php if(formatDate($program['created_at'])): ?>
-                                            <span class="date-badge">
-                                                📅 <?php echo formatDate($program['created_at']); ?>
-                                            </span>
+                                            <span class="date-badge">📅
+                                                <?php echo formatDate($program['created_at']); ?></span>
                                             <?php endif; ?>
                                         </div>
                                     </div>
-                                    <small style="color: #ffd700;">
-                                        🎙️ شبانه
+                                    <?php if(!$has_access_to_this && !$is_speaker): ?>
+                                    <small style="color: #ff9800; cursor:pointer;"
+                                        onclick="buyProgram(<?php echo $program['id']; ?>, '<?php echo addslashes($program['title']); ?>', <?php echo ($program['price'] / 10); ?>)">
+                                        💰 <?php echo number_format($program['price'] / 10); ?> تومان
                                     </small>
+                                    <?php elseif($is_speaker): ?>
+                                    <small style="color: #ffd700;">🎙️ دسترسی ویژه گوینده</small>
+                                    <?php else: ?>
+                                    <small style="color: #ffd700;">🎙️ شبانه</small>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
@@ -464,70 +528,52 @@ $randomPoem = $poems[array_rand($poems)];
                     <?php endforeach; ?>
                     <?php else: ?>
                     <div class="empty-state-tehran">
-                        <div style="font-size: 60px; margin-bottom: 20px;">🌙</div>
+                        <div style="font-size: 60px;">🌙</div>
                         <h4 style="color: #ffd700;">هیچ برنامه‌ای یافت نشد</h4>
-                        <p class="text-muted">به زودی با برنامه‌های جدید شب‌های تهران همراه باشید</p>
+                        <p class="text-muted">به زودی با برنامه‌های جدید همراه باشید</p>
                     </div>
                     <?php endif; ?>
                 </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>
-
     <?php include 'footer.php'; ?>
-    $conn->close();
-
-    ?>
-
+    <?php $conn->close(); ?>
     <script>
-    // پلیر شب‌های تهران
     const audioTehran = document.getElementById('mainAudioTehran');
     let currentPlayingButtonTehran = null;
     let currentPlayingIndexTehran = -1;
     let programsTehran = <?php echo json_encode($programs); ?>;
 
-    // تابع پخش برنامه
     function playProgramTehran(button, index) {
         const program = programsTehran[index];
         if (!program) return;
-
-        const filePath = program.file_path;
-        const title = "شب‌های تهران - " + program.title;
-        const programType = program.program_type;
-
-        // تنظیم منبع صوتی
-        audioTehran.src = filePath;
-
-        // به‌روزرسانی اطلاعات نمایش داده شده
-        document.getElementById('nowPlayingTitleTehran').innerHTML = title;
-        document.getElementById('nowPlayingTypeTehran').innerHTML = programType + " | شبانه";
-
-        // تنظیم آیکون ماه
+        audioTehran.src = program.file_path;
+        document.getElementById('nowPlayingTitleTehran').innerHTML = program.title;
+        document.getElementById('nowPlayingTypeTehran').innerHTML = program.program_type + " | شبانه";
         document.getElementById('nowPlayingIconTehran').innerHTML = '🌙';
-
-        // پخش فایل
         audioTehran.play().catch(e => console.log('Play error:', e));
-
-        // حذف کلاس playing از دکمه قبلی
         if (currentPlayingButtonTehran) {
             currentPlayingButtonTehran.classList.remove('playing');
             currentPlayingButtonTehran.innerHTML = '▶️';
         }
-
-        // اضافه کردن کلاس playing به دکمه جدید
         button.classList.add('playing');
         button.innerHTML = '⏸️';
         currentPlayingButtonTehran = button;
         currentPlayingIndexTehran = index;
-
-        // اضافه کردن کلاس active به آیتم لیست
-        document.querySelectorAll('.playlist-item-tehran').forEach(item => {
-            item.classList.remove('active');
-        });
+        document.querySelectorAll('.playlist-item-tehran').forEach(item => item.classList.remove('active'));
         button.closest('.playlist-item-tehran').classList.add('active');
     }
 
-    // رویداد پایان پخش
+    function buyProgram(programId, programTitle, programPrice) {
+        if (confirm(
+                `آیا می‌خواهید برنامه "${programTitle}" را به مبلغ ${new Intl.NumberFormat().format(programPrice)} تومان خریداری کنید؟`
+            )) {
+            window.location.href = `payment_program.php?program_id=${programId}`;
+        }
+    }
+
     audioTehran.addEventListener('ended', function() {
         if (currentPlayingButtonTehran) {
             currentPlayingButtonTehran.classList.remove('playing');
@@ -536,7 +582,6 @@ $randomPoem = $poems[array_rand($poems)];
         }
     });
 
-    // رویداد پلی/پاز
     audioTehran.addEventListener('play', function() {
         if (currentPlayingButtonTehran && currentPlayingButtonTehran.innerHTML !== '⏸️') {
             currentPlayingButtonTehran.innerHTML = '⏸️';
@@ -551,36 +596,26 @@ $randomPoem = $poems[array_rand($poems)];
         }
     });
 
-    // جستجوی زنده
-    document.getElementById('searchPlaylistTehran').addEventListener('keyup', function() {
-        const searchTerm = this.value.toLowerCase();
-        const items = document.querySelectorAll('.playlist-item-tehran');
-
-        items.forEach(item => {
-            const title = item.getAttribute('data-title').toLowerCase();
-            const type = item.getAttribute('data-type').toLowerCase();
-
-            if (title.includes(searchTerm) || type.includes(searchTerm)) {
-                item.style.display = '';
-            } else {
-                item.style.display = 'none';
-            }
+    const searchInput = document.getElementById('searchPlaylistTehran');
+    if (searchInput) {
+        searchInput.addEventListener('keyup', function() {
+            const searchTerm = this.value.toLowerCase();
+            document.querySelectorAll('.playlist-item-tehran').forEach(item => {
+                const title = item.getAttribute('data-title')?.toLowerCase() || '';
+                const type = item.getAttribute('data-type')?.toLowerCase() || '';
+                item.style.display = (title.includes(searchTerm) || type.includes(searchTerm)) ? '' :
+                    'none';
+            });
         });
-    });
+    }
 
-    // پشتیبانی از کیبورد (Space برای پلی/پاز)
     document.addEventListener('keydown', function(e) {
         if (e.code === 'Space' && !e.target.matches('input, textarea, button')) {
             e.preventDefault();
-            if (audioTehran.paused) {
-                audioTehran.play();
-            } else {
-                audioTehran.pause();
-            }
+            audioTehran.paused ? audioTehran.play() : audioTehran.pause();
         }
     });
     </script>
-
 </body>
 
 </html>

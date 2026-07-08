@@ -1,0 +1,30 @@
+Array
+(
+    [code] => 200
+    [content] => Array
+        (
+            [simTypeId] => 
+            [operatorId] => 
+            [productPrice] => 
+            [productId] => 
+            [serviceTypeId] => 1
+            [payGateTranDateEpoch] => 1781112419
+            [cardNumber] => 603769xxxx3298
+            [rrn] => 071441096527
+            [refID] => 75fc2d44bb204aa75
+            [amount] => 100000
+            [payGateTranID] => 2302738655
+            [salesOrderID] => 1781112392258
+            [hash] => BD07ACA97ACB8CF5299AEF25CDA35404B1D317C72AA1C148F4621935DC7750CF
+            [serviceStatusCode] => 1
+            [destinationMobile] => 
+            [productNameFa] => 
+            [operatorNameFa] => 
+            [simTypeTitleFa] => 
+            [billId] => 
+            [payId] => 
+            [billOrganizationNameFa] => 
+            [payGateTranDate] => 2026-06-10T20:56:59.8719083
+        )
+
+)

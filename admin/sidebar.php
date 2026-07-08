@@ -194,6 +194,13 @@ div.content {
     <a href="new_speaker" class="<?php if (basename($_SERVER['REQUEST_URI']) === 'new_speaker') echo 'active'; ?>">
         <i class="fas fa-microphone-alt"></i> افزودن گوینده
     </a>
+
+    <!-- ===== بخش مدیریت استوری‌ها ===== -->
+    <a href="new_story"
+        class="<?php if (basename($_SERVER['REQUEST_URI']) === 'new_story' || basename($_SERVER['REQUEST_URI']) === 'edit_story') echo 'active'; ?>">
+        <i class="fas fa-circle"></i> مدیریت استوری‌ها
+    </a>
+
     <a href="new_user" class="<?php if (basename($_SERVER['REQUEST_URI']) === 'new_user') echo 'active'; ?>">
         <i class="fas fa-users"></i> مدیریت یوزرها
     </a>
@@ -216,7 +223,6 @@ div.content {
     <a href="sounds" class="<?php if (basename($_SERVER['REQUEST_URI']) === 'sounds') echo 'active'; ?>">
         <i class="fas fa-music"></i> صداهای ارسالی
     </a>
-
 
 </div>
 

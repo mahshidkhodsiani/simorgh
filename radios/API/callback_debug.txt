@@ -1,0 +1,202 @@
+2026-06-10 21:02:59
+Array
+(
+    [code] => 200
+    [content] => Array
+        (
+            [simTypeId] => 
+            [operatorId] => 
+            [productPrice] => 
+            [productId] => 
+            [serviceTypeId] => 1
+            [payGateTranDateEpoch] => 1781112776
+            [cardNumber] => 603769xxxx3298
+            [rrn] => 071441190763
+            [refID] => 182bcd89c89338da4
+            [amount] => 100000
+            [payGateTranID] => 2302744267
+            [salesOrderID] => 1781112750463
+            [hash] => BD07ACA97ACB8CF5299AEF25CDA35404B1D317C72AA1C148F4621935DC7750CF
+            [serviceStatusCode] => 1
+            [destinationMobile] => 
+            [productNameFa] => 
+            [operatorNameFa] => 
+            [simTypeTitleFa] => 
+            [billId] => 
+            [payId] => 
+            [billOrganizationNameFa] => 
+            [payGateTranDate] => 2026-06-10T21:02:56.7330127
+        )
+
+)
+
+
+2026-06-10 21:06:16
+Array
+(
+    [code] => 200
+    [content] => Array
+        (
+            [simTypeId] => 
+            [operatorId] => 
+            [productPrice] => 
+            [productId] => 
+            [serviceTypeId] => 1
+            [payGateTranDateEpoch] => 1781112973
+            [cardNumber] => 603769xxxx3298
+            [rrn] => 071441253513
+            [refID] => a81e47c7e4425cb57
+            [amount] => 150000
+            [payGateTranID] => 2302747360
+            [salesOrderID] => 1781112937790
+            [hash] => BD07ACA97ACB8CF5299AEF25CDA35404B1D317C72AA1C148F4621935DC7750CF
+            [serviceStatusCode] => 1
+            [destinationMobile] => 
+            [productNameFa] => 
+            [operatorNameFa] => 
+            [simTypeTitleFa] => 
+            [billId] => 
+            [payId] => 
+            [billOrganizationNameFa] => 
+            [payGateTranDate] => 2026-06-10T21:06:13.1287276
+        )
+
+)
+
+
+2026-06-10 21:11:09
+Invoice: 1781113230566
+Array
+(
+    [code] => 200
+    [content] => Array
+        (
+            [simTypeId] => 
+            [operatorId] => 
+            [productPrice] => 
+            [productId] => 
+            [serviceTypeId] => 1
+            [payGateTranDateEpoch] => 1781113267
+            [cardNumber] => 603769xxxx7008
+            [rrn] => 071441465843
+            [refID] => b5c7f87a9a943c335
+            [amount] => 200000
+            [payGateTranID] => 2302751759
+            [salesOrderID] => 1781113230566
+            [hash] => 64397135BDB246802C7CF1504A003F912F3002B5357457502941FBE1C71391A6
+            [serviceStatusCode] => 1
+            [destinationMobile] => 
+            [productNameFa] => 
+            [operatorNameFa] => 
+            [simTypeTitleFa] => 
+            [billId] => 
+            [payId] => 
+            [billOrganizationNameFa] => 
+            [payGateTranDate] => 2026-06-10T21:11:07.3987771
+        )
+
+)
+
+--------------------------------------------------------------------------------
+2026-06-11 07:12:37
+Invoice: 1781149278169
+Array
+(
+    [code] => 200
+    [content] => Array
+        (
+            [simTypeId] => 
+            [operatorId] => 
+            [productPrice] => 
+            [productId] => 
+            [serviceTypeId] => 1
+            [payGateTranDateEpoch] => 1781149345
+            [cardNumber] => 603769xxxx7008
+            [rrn] => 071446087616
+            [refID] => d8ac6c107b89299d6
+            [amount] => 150000
+            [payGateTranID] => 2302871404
+            [salesOrderID] => 1781149278169
+            [hash] => 64397135BDB246802C7CF1504A003F912F3002B5357457502941FBE1C71391A6
+            [serviceStatusCode] => 1
+            [destinationMobile] => 
+            [productNameFa] => 
+            [operatorNameFa] => 
+            [simTypeTitleFa] => 
+            [billId] => 
+            [payId] => 
+            [billOrganizationNameFa] => 
+            [payGateTranDate] => 2026-06-11T07:12:25.4381822
+        )
+
+)
+
+--------------------------------------------------------------------------------
+2026-06-11 09:50:38
+Invoice: 1781158799722
+Array
+(
+    [code] => 200
+    [content] => Array
+        (
+            [simTypeId] => 
+            [operatorId] => 
+            [productPrice] => 
+            [productId] => 
+            [serviceTypeId] => 1
+            [payGateTranDateEpoch] => 1781158833
+            [cardNumber] => 603769xxxx7008
+            [rrn] => 071447802642
+            [refID] => 8b76b607d2d76e9fe
+            [amount] => 200000
+            [payGateTranID] => 2302887494
+            [salesOrderID] => 1781158799722
+            [hash] => 64397135BDB246802C7CF1504A003F912F3002B5357457502941FBE1C71391A6
+            [serviceStatusCode] => 1
+            [destinationMobile] => 
+            [productNameFa] => 
+            [operatorNameFa] => 
+            [simTypeTitleFa] => 
+            [billId] => 
+            [payId] => 
+            [billOrganizationNameFa] => 
+            [payGateTranDate] => 2026-06-11T09:50:33.2904878
+        )
+
+)
+
+--------------------------------------------------------------------------------
+2026-06-11 09:56:40
+Invoice: 1781159165946
+Array
+(
+    [code] => 200
+    [content] => Array
+        (
+            [simTypeId] => 
+            [operatorId] => 
+            [productPrice] => 
+            [productId] => 
+            [serviceTypeId] => 1
+            [payGateTranDateEpoch] => 1781159197
+            [cardNumber] => 603769xxxx3298
+            [rrn] => 071447853528
+            [refID] => 4bb914e0bd9ba7a13
+            [amount] => 200000
+            [payGateTranID] => 2302888572
+            [salesOrderID] => 1781159165946
+            [hash] => BD07ACA97ACB8CF5299AEF25CDA35404B1D317C72AA1C148F4621935DC7750CF
+            [serviceStatusCode] => 1
+            [destinationMobile] => 
+            [productNameFa] => 
+            [operatorNameFa] => 
+            [simTypeTitleFa] => 
+            [billId] => 
+            [payId] => 
+            [billOrganizationNameFa] => 
+            [payGateTranDate] => 2026-06-11T09:56:37.0597241
+        )
+
+)
+
+--------------------------------------------------------------------------------

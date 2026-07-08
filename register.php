@@ -18,16 +18,16 @@ session_start();
     <link rel="icon" href="images/logo1.ico" type="image/x-icon">
 
     <style>
-        body {
+    body {
 
-            a,
-            p,
-            label,
-            h6,
-            h5 {
-                font-weight: bold !important;
-            }
+        a,
+        p,
+        label,
+        h6,
+        h5 {
+            font-weight: bold !important;
         }
+    }
     </style>
 
 </head>
@@ -62,27 +62,11 @@ session_start();
                         <label for="lastname">نام خانوادگی</label>
                         <input type="text" class="form-control" name="lastname" id="lastname" required>
                     </div>
-                    <div class="form-group" style="text-align: right;">
-                        <label for="meli_code">کد ملی</label>
-                        <input
-                            type="text"
-                            class="form-control"
-                            name="meli_code"
-                            id="meli_code"
-                            pattern="\d{10}"
-                            title="کد ملی باید 10 رقم باشد"
-                            required>
-                    </div>
+
                     <div class="form-group" style="text-align: right;">
                         <label for="mobile">شماره همراه</label>
-                        <input
-                            type="text"
-                            class="form-control"
-                            name="mobile"
-                            id="mobile"
-                            pattern="\d{11}"
-                            title="شماره همراه باید 11 رقم باشد"
-                            required>
+                        <input type="text" class="form-control" name="mobile" id="mobile" pattern="\d{11}"
+                            title="شماره همراه باید 11 رقم باشد" required>
                     </div>
 
                     <div class="form-group" style="text-align: right;">
@@ -112,7 +96,9 @@ session_start();
                                 while ($row1 = $result1->fetch_assoc()) {
 
                             ?>
-                                    <option value="<?= $row1['course'] ?>">دوره <?= $row1['course'] . " به قیمت : " . number_format($row1['amount']) . "ریال" ?></option>
+                            <option value="<?= $row1['course'] ?>">دوره
+                                <?= $row1['course'] . " به قیمت : " . number_format($row1['amount']) . "ریال" ?>
+                            </option>
                             <?php
                                 }
                             }
@@ -129,7 +115,8 @@ session_start();
                     </div>
                     <div class="form-group" style="text-align: right;">
                         <label for="discount_code">کد تخفیف : (در صورت وجود )</label>
-                        <input type="text" class="form-control" name="discount_code" id="discount_code" style="width: 100px;">
+                        <input type="text" class="form-control" name="discount_code" id="discount_code"
+                            style="width: 100px;">
                     </div>
                     <div class="form-group" style="text-align: right;">
                         <p>نحوه آشنایی با موسسه :</p>
@@ -144,8 +131,8 @@ session_start();
                     </div>
 
 
-                    <input type="submit" value="انتقال به درگاه آپ"
-                        name="submit_register" class="btn mb-2 mb-md-0 btn-outline-info btn-block">
+                    <input type="submit" value="انتقال به درگاه آپ" name="submit_register"
+                        class="btn mb-2 mb-md-0 btn-outline-info btn-block">
                 </form>
 
 
@@ -160,70 +147,71 @@ session_start();
     <?php include 'footer.php'; ?>
 
     <script>
-        document.querySelectorAll('#meli_code, #mobile').forEach(input => {
-            input.addEventListener('input', function() {
-                if (this.id === 'meli_code' && !/^\d{10}$/.test(this.value)) {
-                    this.setCustomValidity('کد ملی باید 10 رقم باشد');
-                } else if (this.id === 'mobile' && !/^\d{11}$/.test(this.value)) {
-                    this.setCustomValidity('شماره همراه باید 11 رقم باشد');
-                } else {
-                    this.setCustomValidity('');
-                }
-            });
-        });
-    </script>
-    <script>
-        // Add a custom required message for all inputs
-        document.querySelectorAll('input[required]').forEach(input => {
-            input.addEventListener('invalid', function(event) {
-                if (this.validity.valueMissing) {
-                    // Show the custom Persian message for required fields
-                    this.setCustomValidity('لطفا این فیلد را پر کنید');
-                } else {
-                    this.setCustomValidity(''); // Clear message for other cases
-                }
-            });
-
-            // Clear the message when input is valid
-            input.addEventListener('input', function() {
-                this.setCustomValidity('');
-            });
-        });
-    </script>
-
-    <script>
-        // Custom required message for the select element
-        document.getElementById('course').addEventListener('invalid', function(event) {
-            if (this.validity.valueMissing) {
-                this.setCustomValidity('لطفا یک دوره را انتخاب کنید');
+    // Validation for mobile field only
+    document.querySelectorAll('#mobile').forEach(input => {
+        input.addEventListener('input', function() {
+            if (this.id === 'mobile' && !/^\d{11}$/.test(this.value)) {
+                this.setCustomValidity('شماره همراه باید 11 رقم باشد');
             } else {
-                this.setCustomValidity(''); // Clear the message for other cases
+                this.setCustomValidity('');
+            }
+        });
+    });
+    </script>
+
+    <script>
+    // Add a custom required message for all inputs
+    document.querySelectorAll('input[required]').forEach(input => {
+        input.addEventListener('invalid', function(event) {
+            if (this.validity.valueMissing) {
+                // Show the custom Persian message for required fields
+                this.setCustomValidity('لطفا این فیلد را پر کنید');
+            } else {
+                this.setCustomValidity(''); // Clear message for other cases
             }
         });
 
-        // Clear the message when the user makes a valid selection
-        document.getElementById('course').addEventListener('change', function() {
+        // Clear the message when input is valid
+        input.addEventListener('input', function() {
             this.setCustomValidity('');
         });
+    });
+    </script>
+
+    <script>
+    // Custom required message for the select element
+    document.getElementById('course').addEventListener('invalid', function(event) {
+        if (this.validity.valueMissing) {
+            this.setCustomValidity('لطفا یک دوره را انتخاب کنید');
+        } else {
+            this.setCustomValidity(''); // Clear the message for other cases
+        }
+    });
+
+    // Clear the message when the user makes a valid selection
+    document.getElementById('course').addEventListener('change', function() {
+        this.setCustomValidity('');
+    });
     </script>
 
 
 
     <script type="text/javascript">
-        ! function() {
-            var i = "4Ey6dG",
-                a = window,
-                d = document;
+    ! function() {
+        var i = "4Ey6dG",
+            a = window,
+            d = document;
 
-            function g() {
-                var g = d.createElement("script"),
-                    s = "https://www.goftino.com/widget/" + i,
-                    l = localStorage.getItem("goftino_" + i);
-                g.async = !0, g.src = l ? s + "?o=" + l : s;
-                d.getElementsByTagName("head")[0].appendChild(g);
-            }
-            "complete" === d.readyState ? g() : a.attachEvent ? a.attachEvent("onload", g) : a.addEventListener("load", g, !1);
-        }();
+        function g() {
+            var g = d.createElement("script"),
+                s = "https://www.goftino.com/widget/" + i,
+                l = localStorage.getItem("goftino_" + i);
+            g.async = !0, g.src = l ? s + "?o=" + l : s;
+            d.getElementsByTagName("head")[0].appendChild(g);
+        }
+        "complete" === d.readyState ? g() : a.attachEvent ? a.attachEvent("onload", g) : a.addEventListener("load", g, !
+            1);
+    }();
     </script>
 
 
@@ -248,7 +236,6 @@ if (isset($_POST['submit_register'])) {
     $mobile = $_POST['mobile'];
     $name = $_POST['name'];
     $lastname = $_POST['lastname'];
-    $meli_code = $_POST['meli_code'];
     $age = $_POST['age'];
     $email = $_POST['email'];
     $address = $_POST['address'];
@@ -314,8 +301,8 @@ if (isset($_POST['submit_register'])) {
     }
 
 
-    $sql = "INSERT INTO contacts (user_id, name, lastname, age, course,  email, introduce, meli_code, amount, mobile, know, address, created_at) 
-                VALUES ('$invoiceId', '$name', '$lastname', '$age', '$course', '$email', '$introduce', '$meli_code', '$amount', '$mobile', '$reference', '$address', NOW())";
+    $sql = "INSERT INTO contacts (user_id, name, lastname, age, course,  email, introduce, amount, mobile, know, address, created_at) 
+                VALUES ('$invoiceId', '$name', '$lastname', '$age', '$course', '$email', '$introduce', '$amount', '$mobile', '$reference', '$address', NOW())";
 
     // echo $sql;
 

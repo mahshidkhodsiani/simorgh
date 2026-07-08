@@ -1,0 +1,29 @@
+[04-Jun-2026 10:12:55 Asia/Tehran] PHP Warning:  require(ipgcfg.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/payment_radio.php on line 30
+[04-Jun-2026 10:12:55 Asia/Tehran] PHP Warning:  require(ipgcfg.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/payment_radio.php on line 30
+[04-Jun-2026 10:12:55 Asia/Tehran] PHP Fatal error:  Uncaught Error: Failed opening required 'ipgcfg.php' (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/payment_radio.php:30
+Stack trace:
+#0 {main}
+  thrown in /home3/vuqgpgoc/public_html/radios/payment_radio.php on line 30
+[04-Jun-2026 12:35:39 Asia/Tehran] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: NO) in /home3/vuqgpgoc/public_html/radios/tehran.php:10
+Stack trace:
+#0 /home3/vuqgpgoc/public_html/radios/tehran.php(10): mysqli->__construct('localhost', 'root', '', 'your_database_n...')
+#1 {main}
+  thrown in /home3/vuqgpgoc/public_html/radios/tehran.php on line 10
+[04-Jun-2026 12:35:39 Asia/Tehran] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: NO) in /home3/vuqgpgoc/public_html/radios/tehran.php:10
+Stack trace:
+#0 /home3/vuqgpgoc/public_html/radios/tehran.php(10): mysqli->__construct('localhost', 'root', '', 'your_database_n...')
+#1 {main}
+  thrown in /home3/vuqgpgoc/public_html/radios/tehran.php on line 10
+[04-Jun-2026 12:38:24 Asia/Tehran] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'vuqgpgoc_simorgh.user_radio_subscription' doesn't exist in /home3/vuqgpgoc/public_html/radios/tehran.php:328
+Stack trace:
+#0 /home3/vuqgpgoc/public_html/radios/tehran.php(328): mysqli->prepare('SELECT * FROM u...')
+#1 {main}
+  thrown in /home3/vuqgpgoc/public_html/radios/tehran.php on line 328
+[04-Jun-2026 12:40:32 Asia/Tehran] PHP Warning:  require_once(Gateway.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/payment_radio.php on line 57
+[04-Jun-2026 12:40:32 Asia/Tehran] PHP Fatal error:  Uncaught Error: Failed opening required 'Gateway.php' (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/payment_radio.php:57
+Stack trace:
+#0 {main}
+  thrown in /home3/vuqgpgoc/public_html/radios/payment_radio.php on line 57
+[04-Jun-2026 12:41:29 Asia/Tehran] Token generation error: {"errors":{"localInvoiceId":["Error converting value \"24_1780564289_tehran\" to type 'System.UInt64'. Path 'localInvoiceId', line 1, position 93."]},"type":"https://tools.ietf.org/html/rfc9110#section-15.5.1","title":"One or more validation errors occurred.","status":400,"traceId":"00-e54d3c13cf1d402a9d9878962a970b0a-8a7d65da84821c61-00"}
+[06-Jun-2026 12:39:28 Asia/Tehran] PHP Parse error:  Unclosed '{' on line 44 in /home3/vuqgpgoc/public_html/radios/tehran.php on line 458
+[06-Jun-2026 12:39:28 Asia/Tehran] PHP Parse error:  Unclosed '{' on line 44 in /home3/vuqgpgoc/public_html/radios/tehran.php on line 458

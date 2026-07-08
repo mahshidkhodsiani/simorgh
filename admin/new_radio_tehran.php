@@ -52,6 +52,11 @@ $id = $_SESSION["all_data"]['id'];
                             <label for="kind">نوع برنامه:</label>
                             <input type="text" id="kind" name="kind" class="form-control mb-2"
                                 placeholder="نوع برنامه را وارد کنید" required>
+
+                            <label for="price">قیمت (ریال):</label>
+                            <input type="number" id="price" name="price" class="form-control mb-2"
+                                placeholder="قیمت را وارد کنید" min="10000" value="10000" required>
+                            <small class="text-muted">حداقل قیمت مجاز ۱۰۰,۰۰۰ ریال (به دلیل محدودیت درگاه)</small>
                         </div>
                     </div>
 
@@ -98,6 +103,7 @@ $id = $_SESSION["all_data"]['id'];
                                         <th scope="col" class="text-center">ردیف</th>
                                         <th scope="col" class="text-center">عنوان</th>
                                         <th scope="col" class="text-center">نوع برنامه</th>
+                                        <th scope="col" class="text-center">قیمت (ریال)</th>
                                         <th scope="col" class="text-center">برنامه</th>
                                         <th scope="col" class="text-center">عملیات</th>
                                     </tr>
@@ -108,6 +114,7 @@ $id = $_SESSION["all_data"]['id'];
                                         <th scope="row" class="text-center"><?= $a ?></th>
                                         <td class="text-center"><?= htmlspecialchars($row['title']) ?></td>
                                         <td class="text-center"><?= htmlspecialchars($row['program_type']) ?></td>
+                                        <td class="text-center"><?= number_format($row['price']) ?></td>
                                         <td class="text-center">
                                             <audio controls>
                                                 <source src='<?= htmlspecialchars($row['file_path']) ?>'
@@ -188,49 +195,59 @@ if (isset($_POST['submit_radio_tehran'])) {
 
     $title = $_POST['title'];
     $programType = $_POST['kind'];
+    $price = (int)$_POST['price'];
 
-    $dest_path = null;
+    // بررسی حداقل قیمت
+    if ($price < 10000) {
+        echo "<script>alert('قیمت نمی‌تواند کمتر از ۱۰۰,۰۰۰ ریال باشد!');</script>";
+    } else {
 
-    if (isset($_FILES['mp3']) && $_FILES['mp3']['error'] === UPLOAD_ERR_OK) {
-        $fileTmpPath = $_FILES['mp3']['tmp_name'];
-        $fileName = $_FILES['mp3']['name'];
-        $fileNameCmps = explode(".", $fileName);
-        $fileExtension = strtolower(end($fileNameCmps));
+        $dest_path = null;
 
-        $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
-        $uploadFileDir = '../upload/radios/tehran/';
-        
-        // Create directory if not exists
-        if (!is_dir($uploadFileDir)) {
-            mkdir($uploadFileDir, 0777, true);
+        if (isset($_FILES['mp3']) && $_FILES['mp3']['error'] === UPLOAD_ERR_OK) {
+            $fileTmpPath = $_FILES['mp3']['tmp_name'];
+            $fileName = $_FILES['mp3']['name'];
+            $fileNameCmps = explode(".", $fileName);
+            $fileExtension = strtolower(end($fileNameCmps));
+
+            $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
+            $uploadFileDir = '../upload/radios/tehran/';
+            
+            // Create directory if not exists
+            if (!is_dir($uploadFileDir)) {
+                mkdir($uploadFileDir, 0777, true);
+            }
+
+            $dest_path = $uploadFileDir . $newFileName;
+
+            if (!move_uploaded_file($fileTmpPath, $dest_path)) {
+                echo "<script>alert('خطا در آپلود فایل');</script>";
+                $dest_path = null;
+            }
         }
 
-        $dest_path = $uploadFileDir . $newFileName;
-
-        if (!move_uploaded_file($fileTmpPath, $dest_path)) {
-            echo "<script>alert('خطا در آپلود فایل');</script>";
-            $dest_path = null;
-        }
-    }
-
-    if ($dest_path) {
-        $sql = "INSERT INTO radio_tehran (title, program_type, file_path) VALUES('$title', '$programType', '$dest_path')";
-        if ($conn->query($sql)) {
-            echo "<div id='successToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 20px; right: 20px; width: 300px;'>
-                    <div class='toast-header bg-success text-white'>
-                        <strong class='mr-auto'>موفق</strong>
-                        <button type='button' class='ml-2 mb-1 close' data-dismiss='toast'>&times;</button>
-                    </div>
-                    <div class='toast-body'>برنامه شب‌های تهران با موفقیت ثبت شد!</div>
-                  </div>
-                  <script>
-                    $(document).ready(function(){
-                        $('#successToast').toast('show');
-                        setTimeout(function(){ window.location.href = 'new_radio_tehran.php'; }, 2000);
-                    });
-                  </script>";
-        } else {
-            echo "<div class='alert alert-danger'>خطا در ثبت: " . $conn->error . "</div>";
+        if ($dest_path) {
+            $stmt = $conn->prepare("INSERT INTO radio_tehran (title, program_type, price, file_path) VALUES(?, ?, ?, ?)");
+            $stmt->bind_param("ssis", $title, $programType, $price, $dest_path);
+            
+            if ($stmt->execute()) {
+                echo "<div id='successToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 20px; right: 20px; width: 300px;'>
+                        <div class='toast-header bg-success text-white'>
+                            <strong class='mr-auto'>موفق</strong>
+                            <button type='button' class='ml-2 mb-1 close' data-dismiss='toast'>&times;</button>
+                        </div>
+                        <div class='toast-body'>برنامه شب‌های تهران با موفقیت ثبت شد!</div>
+                      </div>
+                      <script>
+                        $(document).ready(function(){
+                            $('#successToast').toast('show');
+                            setTimeout(function(){ window.location.href = 'new_radio_tehran.php'; }, 2000);
+                        });
+                      </script>";
+            } else {
+                echo "<div class='alert alert-danger'>خطا در ثبت: " . $conn->error . "</div>";
+            }
+            $stmt->close();
         }
     }
 }

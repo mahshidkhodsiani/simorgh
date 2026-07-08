@@ -6,6 +6,7 @@ if (!isset($_SESSION["all_data"])) {
     exit();
 }
 
+
 $id = $_SESSION["all_data"]['id'];
 ?>
 <!DOCTYPE html>

@@ -71,6 +71,11 @@ $id = $_SESSION["all_data"]['id'];
                             <label for="kind">نوع برنامه:</label>
                             <input type="text" id="kind" name="kind" class="form-control mb-2"
                                 value="<?= htmlspecialchars($row['program_type']) ?>">
+
+                            <label for="price">قیمت (تومان):</label>
+                            <input type="number" id="price" name="price" class="form-control mb-2"
+                                value="<?= $row['price'] ?>" min="10000" required>
+                            <small class="text-muted">حداقل قیمت مجاز ۱۰,۰۰۰ تومان (به دلیل محدودیت درگاه)</small>
                         </div>
                     </div>
 
@@ -113,110 +118,117 @@ if (isset($_POST['submit_edit_tehran']) && isset($_GET['id_radio'])) {
     $id_article = (int)$_GET['id_radio'];
     $title = $_POST['title'];
     $kind = $_POST['kind'];
+    $price = (int)$_POST['price'];
 
-    // Escape strings to prevent SQL injection
-    $title = $conn->real_escape_string($title);
-    $kind = $conn->real_escape_string($kind);
+    // بررسی حداقل قیمت
+    if ($price < 10000) {
+        echo "<script>alert('قیمت نمی‌تواند کمتر از ۱۰,۰۰۰ تومان باشد!');</script>";
+    } else {
 
-    $audioPath = '';
+        // Escape strings to prevent SQL injection
+        $title = $conn->real_escape_string($title);
+        $kind = $conn->real_escape_string($kind);
 
-    // Handle the audio file upload if new file is provided
-    if (isset($_FILES['mp3']) && $_FILES['mp3']['error'] === UPLOAD_ERR_OK) {
-        $fileTmpPath = $_FILES['mp3']['tmp_name'];
-        $fileName = $_FILES['mp3']['name'];
-        $fileNameCmps = explode(".", $fileName);
-        $fileExtension = strtolower(end($fileNameCmps));
+        $audioPath = '';
 
-        // Sanitize file name
-        $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
+        // Handle the audio file upload if new file is provided
+        if (isset($_FILES['mp3']) && $_FILES['mp3']['error'] === UPLOAD_ERR_OK) {
+            $fileTmpPath = $_FILES['mp3']['tmp_name'];
+            $fileName = $_FILES['mp3']['name'];
+            $fileNameCmps = explode(".", $fileName);
+            $fileExtension = strtolower(end($fileNameCmps));
 
-        // Directory for Tehran radio files
-        $uploadFileDir = '../upload/radios/tehran/';
-        
-        // Ensure the upload directory exists
-        if (!file_exists($uploadFileDir)) {
-            mkdir($uploadFileDir, 0777, true);
-        }
+            // Sanitize file name
+            $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
 
-        $dest_path = $uploadFileDir . $newFileName;
-
-        // Move the file to the target directory
-        if (move_uploaded_file($fileTmpPath, $dest_path)) {
-            $audioPath = $dest_path; // Save the full path for the database entry
+            // Directory for Tehran radio files
+            $uploadFileDir = '../upload/radios/tehran/';
             
-            // Delete old file if exists
-            $old_file_sql = "SELECT file_path FROM radio_tehran WHERE id = $id_article";
-            $old_result = $conn->query($old_file_sql);
-            if ($old_result->num_rows > 0) {
-                $old_row = $old_result->fetch_assoc();
-                if (!empty($old_row['file_path']) && file_exists($old_row['file_path'])) {
-                    unlink($old_row['file_path']);
-                }
+            // Ensure the upload directory exists
+            if (!file_exists($uploadFileDir)) {
+                mkdir($uploadFileDir, 0777, true);
             }
-            
-            $fileUploaded = true;
+
+            $dest_path = $uploadFileDir . $newFileName;
+
+            // Move the file to the target directory
+            if (move_uploaded_file($fileTmpPath, $dest_path)) {
+                $audioPath = $dest_path; // Save the full path for the database entry
+                
+                // Delete old file if exists
+                $old_file_sql = "SELECT file_path FROM radio_tehran WHERE id = $id_article";
+                $old_result = $conn->query($old_file_sql);
+                if ($old_result->num_rows > 0) {
+                    $old_row = $old_result->fetch_assoc();
+                    if (!empty($old_row['file_path']) && file_exists($old_row['file_path'])) {
+                        unlink($old_row['file_path']);
+                    }
+                }
+                
+                $fileUploaded = true;
+            } else {
+                echo "<div class='alert alert-danger'>خطا در آپلود فایل جدید!</div>";
+                exit;
+            }
+
+            // Update query when a new audio file is provided
+            $stmt = $conn->prepare("UPDATE radio_tehran SET title = ?, program_type = ?, price = ?, file_path = ? WHERE id = ?");
+            $stmt->bind_param("ssisi", $title, $kind, $price, $audioPath, $id_article);
         } else {
-            echo "<div class='alert alert-danger'>خطا در آپلود فایل جدید!</div>";
-            exit;
+            // Update query when no new audio file is provided
+            $stmt = $conn->prepare("UPDATE radio_tehran SET title = ?, program_type = ?, price = ? WHERE id = ?");
+            $stmt->bind_param("ssii", $title, $kind, $price, $id_article);
         }
 
-        // Update query when a new audio file is provided
-        $stmt = $conn->prepare("UPDATE radio_tehran SET title = ?, program_type = ?, file_path = ? WHERE id = ?");
-        $stmt->bind_param("sssi", $title, $kind, $audioPath, $id_article);
-    } else {
-        // Update query when no new audio file is provided
-        $stmt = $conn->prepare("UPDATE radio_tehran SET title = ?, program_type = ? WHERE id = ?");
-        $stmt->bind_param("ssi", $title, $kind, $id_article);
-    }
+        // Execute the query
+        if ($stmt->execute()) {
+            // Success Toast
+            echo "<div id='successToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 20px; right: 20px; width: 300px; z-index: 9999;'>
+                <div class='toast-header bg-success text-white'>
+                    <strong class='mr-auto'>موفق</strong>
+                    <button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>
+                        <span aria-hidden='true'>&times;</span>
+                    </button>
+                </div>
+                <div class='toast-body'>
+                    برنامه شب‌های تهران با موفقیت ویرایش شد!
+                </div>
+            </div>
+            <script>
+            $(document).ready(function(){
+                $('#successToast').toast({
+                    autohide: true,
+                    delay: 2000
+                }).toast('show');
+                setTimeout(function(){
+                    window.location.href = 'new_radio_tehran.php';
+                }, 2000);
+            });
+            </script>";
+        } else {
+            // Error Toast
+            echo "<div id='errorToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 20px; right: 20px; width: 300px; z-index: 9999;'>
+                <div class='toast-header bg-danger text-white'>
+                    <strong class='mr-auto'>خطا</strong>
+                    <button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>
+                        <span aria-hidden='true'>&times;</span>
+                    </button>
+                </div>
+                <div class='toast-body'>
+                    خطایی در ویرایش برنامه پیش آمده!<br>خطا: " . $conn->error . "
+                </div>
+            </div>
+            <script>
+            $(document).ready(function(){
+                $('#errorToast').toast({
+                    autohide: true,
+                    delay: 3000
+                }).toast('show');
+            });
+            </script>";
+        }
 
-    // Execute the query
-    if ($stmt->execute()) {
-        // Success Toast
-        echo "<div id='successToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 20px; right: 20px; width: 300px; z-index: 9999;'>
-            <div class='toast-header bg-success text-white'>
-                <strong class='mr-auto'>موفق</strong>
-                <button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>
-                    <span aria-hidden='true'>&times;</span>
-                </button>
-            </div>
-            <div class='toast-body'>
-                برنامه شب‌های تهران با موفقیت ویرایش شد!
-            </div>
-        </div>
-        <script>
-        $(document).ready(function(){
-            $('#successToast').toast({
-                autohide: true,
-                delay: 2000
-            }).toast('show');
-            setTimeout(function(){
-                window.location.href = 'new_radio_tehran.php';
-            }, 2000);
-        });
-        </script>";
-    } else {
-        // Error Toast
-        echo "<div id='errorToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 20px; right: 20px; width: 300px; z-index: 9999;'>
-            <div class='toast-header bg-danger text-white'>
-                <strong class='mr-auto'>خطا</strong>
-                <button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>
-                    <span aria-hidden='true'>&times;</span>
-                </button>
-            </div>
-            <div class='toast-body'>
-                خطایی در ویرایش برنامه پیش آمده!<br>خطا: " . $conn->error . "
-            </div>
-        </div>
-        <script>
-        $(document).ready(function(){
-            $('#errorToast').toast({
-                autohide: true,
-                delay: 3000
-            }).toast('show');
-        });
-        </script>";
+        $stmt->close();
     }
-
-    $stmt->close();
 }
 ?>

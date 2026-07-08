@@ -1,0 +1,25 @@
+2026-06-10 20:51:18
+Invoice: 1781112038332
+TransId: 2302733267
+Array
+(
+    [content] => 
+    [code] => 200
+)
+
+
+Array
+(
+    [content] => 
+    [code] => 200
+)
+2026-06-10 20:57:03
+Invoice: 1781112392258
+TransId: 2302738655
+Array
+(
+    [content] => 
+    [code] => 200
+)
+
+

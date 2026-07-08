@@ -1,0 +1,30 @@
+2026-06-11 10:22:51 - START - Invoice: 1781160735113
+TranResult Code: 200
+TranResult Content: Array
+(
+    [simTypeId] => 
+    [operatorId] => 
+    [productPrice] => 
+    [productId] => 
+    [serviceTypeId] => 1
+    [payGateTranDateEpoch] => 1781160768
+    [cardNumber] => 603769xxxx7008
+    [rrn] => 071448356301
+    [refID] => ae475ffddf966440b
+    [amount] => 200000
+    [payGateTranID] => 2302893865
+    [salesOrderID] => 1781160735113
+    [hash] => 64397135BDB246802C7CF1504A003F912F3002B5357457502941FBE1C71391A6
+    [serviceStatusCode] => 1
+    [destinationMobile] => 
+    [productNameFa] => 
+    [operatorNameFa] => 
+    [simTypeTitleFa] => 
+    [billId] => 
+    [payId] => 
+    [billOrganizationNameFa] => 
+    [payGateTranDate] => 2026-06-11T10:22:48.5338431
+)
+
+VERIFY FAILED - HTTP: 200, Body: 
+----------------------------------------
