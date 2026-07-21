@@ -25,7 +25,7 @@ if (isset($_POST['enter'])) {
 
          // --- اول سطح دسترسی را بررسی کن ---
          if ($user['admin'] == 1) {
-            header("Location: admin/index");
+            header("Location: /admin/index");
             exit();
          }
 
@@ -46,27 +46,52 @@ if (isset($_POST['enter'])) {
             unset($_SESSION['cart']); // پاک کردن سبد خرید موقت
 
             // هدایت به صفحه سبد خرید نهایی
-            header("Location: user/user_cart.php");
+            header("Location: /user/user_cart.php");
             exit();
          }
 
-         // ========== اضافه شدن کد جدید ==========
-         // چک کردن اینکه آیا صفحه قبلی برای برگشت ذخیره شده یا نه
-         if (isset($_SESSION['redirect_after_login'])) {
+         // ==========================================
+         // بررسی: آیا از PWA (وب اپ) آمده؟
+         // ==========================================
+         if (isset($_SESSION['is_pwa']) && $_SESSION['is_pwa'] === true) {
+            // پاک کردن وضعیت PWA تا دفعه بعد دوباره لاگین بخواد
+            // اگه میخواید همیشه لاگین بمونه، این دو خط رو کامنت کنید
+            // unset($_SESSION['is_pwa']);
+            // unset($_SESSION['redirect_after_login']);
+            
+            // هدایت به صفحه رادیو
+            header("Location: /radios/index.php");
+            exit();
+         }
+
+         // ==========================================
+         // بررسی آدرس برگشت (برای موارد دیگه)
+         // ==========================================
+         if (isset($_SESSION['redirect_after_login']) && !empty($_SESSION['redirect_after_login'])) {
             $redirect_url = $_SESSION['redirect_after_login'];
-            unset($_SESSION['redirect_after_login']); // پاک کردن بعد از استفاده
+            unset($_SESSION['redirect_after_login']);
+            
+            // اگر آدرس شامل رادیو هست، به همان برو
+            if (strpos($redirect_url, 'radios') !== false) {
+                header("Location: " . $redirect_url);
+                exit();
+            }
+            
+            // اگر آدرس دیگه‌ای بود، به آن برو
             header("Location: " . $redirect_url);
             exit();
          }
-         // ======================================
 
-         // هدایت پیش‌فرض برای کاربر عادی بدون سبد خرید
-         header("Location: user/profile");
+         // ==========================================
+         // هدایت پیش‌فرض برای کاربر عادی
+         // ==========================================
+         header("Location: /user/profile");
          exit();
+         
       } else {
          // رمز عبور اشتباه
          $_SESSION['login_error'] = 'نام کاربری یا رمز عبور اشتباه است.';
-         header("Location: login.php");
+         header("Location: /login.php");
          exit();
       }
    } else {

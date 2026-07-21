@@ -1,0 +1,25 @@
+{
+  "name": "رادیو سیمرغ",
+  "short_name": "رادیو سیمرغ",
+  "description": "پخش آنلاین برنامه‌های رادیویی سیمرغ، شب‌های تهران و کافه مه‌آلود",
+  "start_url": "../login.php?mode=pwa",
+  "id": "/radios/index.php",
+  "display": "standalone",
+  "background_color": "#1a1a2e",
+  "theme_color": "#764ba2",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "../images/41.jpg",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "../images/41.jpg",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

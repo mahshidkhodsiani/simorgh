@@ -1,35 +1,39 @@
+<?php
+session_start();
+?>
 <!doctype html>
 <html lang="fa" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <!-- Meta Tags سئو شده -->
-    <title>رادیو سیمرغ | پخش آنلاین برنامه‌های رادیویی | شب‌های تهران | کافه مه‌آلود</title>
-    <meta name="description"
-        content="رادیو سیمرغ، شب‌های تهران و کافه مه‌آلود - پخش آنلاین بهترین برنامه‌های رادیویی، موسیقی، فرهنگ و هنر. با ما همراه شوید و از محتوای جذاب لذت ببرید.">
-    <meta name="keywords"
-        content="رادیو سیمرغ, شب‌های تهران, کافه مه‌آلود, رادیو آنلاین, برنامه رادیویی, موسیقی, فرهنگ, هنر">
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#764ba2">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="رادیو سیمرغ">
+    <link rel="apple-touch-icon" href="../images/36.png">
+
+    <title>رادیو سیمرغ | پخش آنلاین برنامه‌های رادیویی</title>
+    <meta name="description" content="رادیو سیمرغ، شب‌های تهران و کافه مه‌آلود - پخش آنلاین بهترین برنامه‌های رادیویی">
+    <meta name="keywords" content="رادیو سیمرغ, شب‌های تهران, کافه مه‌آلود, رادیو آنلاین">
     <meta name="author" content="موسسه هفت هنر سیمرغ">
     <meta name="robots" content="index, follow">
 
-    <!-- Open Graph برای شبکه‌های اجتماعی -->
-    <meta property="og:title" content="رادیو سیمرغ | پخش آنلاین برنامه‌های رادیویی">
-    <meta property="og:description" content="بهترین برنامه‌های رادیویی با کیفیت عالی">
-    <meta property="og:image" content="../images/radio-simorgh.jpg">
-    <meta property="og:url" content="https://yourdomain.com/radio/index.php">
-    <meta property="og:type" content="website">
-
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://yourdomain.com/radio/index.php">
+    <link rel="canonical" href="https://simorghtv.com/radios/index.php">
 
     <?php include "includes.php"; ?>
 
     <link rel="icon" href="../images/logo1.ico" type="image/x-icon">
 
     <style>
-    /* استایل‌های سفارشی و جذاب */
+    body {
+        background: #f5f5f5;
+    }
+
     .hero-section {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         border-radius: 30px;
@@ -37,6 +41,8 @@
         margin-bottom: 50px;
         text-align: center;
         color: white;
+        position: relative;
+        overflow: hidden;
     }
 
     .hero-title {
@@ -52,6 +58,30 @@
         animation: fadeInUp 0.8s ease 0.2s both;
     }
 
+    /* دکمه نصب دائمی */
+    .install-permanent-btn {
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        color: white;
+        padding: 12px 30px;
+        border-radius: 50px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-size: 1rem;
+        margin-top: 20px;
+        animation: fadeInUp 0.8s ease 0.4s both;
+        display: inline-block;
+    }
+
+    .install-permanent-btn:hover {
+        background: white;
+        color: #764ba2;
+        transform: scale(1.05);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    }
+
     .radio-card {
         border-radius: 30px;
         text-align: center;
@@ -64,7 +94,6 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        /* تغییر: محتوا به دو بخش بالا و پایین تقسیم میشه */
         align-items: center;
         background-size: cover;
         background-position: center;
@@ -73,7 +102,6 @@
         padding-bottom: 40px;
     }
 
-    /* لایه تیره روی تصویر پس‌زمینه برای خوانایی بهتر متن */
     .radio-card::after {
         content: '';
         position: absolute;
@@ -90,7 +118,6 @@
         background: rgba(0, 0, 0, 0.6);
     }
 
-    /* همه محتویات داخل کارت باید بالای لایه تیره باشند */
     .radio-card>* {
         position: relative;
         z-index: 2;
@@ -101,79 +128,16 @@
         box-shadow: 0 30px 45px -15px rgba(0, 0, 0, 0.3);
     }
 
-    .radio-card::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
-        transform: rotate(45deg);
-        transition: all 0.6s;
-        opacity: 0;
-        z-index: 3;
-    }
-
-    .radio-card:hover::before {
-        opacity: 1;
-        transform: rotate(45deg) scale(1.2);
-    }
-
-    /* بخش بالایی کارت (برای آیکون یا فضای خالی) */
-    .card-top {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-    }
-
-    /* بخش پایینی کارت (متن‌ها و دکمه) */
-    .card-bottom {
-        width: 100%;
-        text-align: center;
-        margin-top: auto;
-    }
-
-    /* عکس پس‌زمینه برای رادیو سیمرغ */
     .card-simorgh {
         background-image: url('../images/36.png');
     }
 
-    /* عکس پس‌زمینه برای شب‌های تهران */
     .card-tehran {
         background-image: url('../images/34.png');
     }
 
-    /* عکس پس‌زمینه برای کافه مه‌آلود */
     .card-cafe {
         background-image: url('../images/35.png');
-        /* این رو می‌تونید تغییر بدید */
-    }
-
-    /* اگر عکس کافه مه‌آلود ندارید، می‌تونید از یک عکس پیش‌فرض استفاده کنید */
-    /* .card-cafe {
-        background-image: url('../images/default-cafe.jpg');
-    } */
-
-    .radio-icon {
-        font-size: 4rem;
-        background: rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(10px);
-        width: 100px;
-        height: 100px;
-        line-height: 100px;
-        border-radius: 50px;
-        transition: all 0.3s;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .radio-card:hover .radio-icon {
-        transform: scale(1.1) rotate(5deg);
-        background: rgba(255, 255, 255, 0.3);
     }
 
     .radio-title {
@@ -208,7 +172,7 @@
 
     .btn-listen:hover {
         background: white;
-        color: #f5576c;
+        color: #764ba2;
         transform: scale(1.05);
         text-decoration: none;
     }
@@ -226,10 +190,11 @@
     }
 
     .stats-section {
-        background: #f8f9fa;
+        background: white;
         border-radius: 30px;
         padding: 40px 20px;
         margin-top: 50px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
     }
 
     .stat-item {
@@ -253,9 +218,13 @@
             font-size: 1.8rem;
         }
 
+        .hero-subtitle {
+            font-size: 1rem;
+        }
+
         .radio-card {
             margin-bottom: 30px;
-            min-height: 380px;
+            min-height: 350px;
             padding: 20px;
             padding-bottom: 30px;
         }
@@ -268,15 +237,13 @@
             font-size: 0.85rem;
         }
 
-        .radio-icon {
-            width: 70px;
-            height: 70px;
-            line-height: 70px;
-            font-size: 2rem;
-        }
-
         .btn-listen {
             padding: 8px 20px;
+            font-size: 0.9rem;
+        }
+
+        .install-permanent-btn {
+            padding: 10px 20px;
             font-size: 0.9rem;
         }
     }
@@ -294,23 +261,23 @@
     ?>
 
     <div class="container mt-4">
-        <!-- بخش Hero جذاب -->
+
         <div class="hero-section">
             <h1 class="hero-title">🎙️ به رادیو سیمرغ خوش آمدید</h1>
             <p class="hero-subtitle">تجربه‌ای نو از شنیدن بهترین برنامه‌های رادیویی با کیفیت عالی</p>
+
+            <!-- دکمه نصب دائمی -->
+            <button id="installPermanentBtn" class="install-permanent-btn">
+                📲 نصب اپلیکیشن رادیو سیمرغ
+            </button>
         </div>
 
-        <!-- سه مستطیل اصلی با لینک‌ها -->
         <div class="row justify-content-center">
 
-
-            <!-- مستطیل 2: شب‌های تهران -->
             <div class="col-md-6 col-lg-4 mb-4">
                 <a href="tehran.php" style="text-decoration: none; display: block; height: 100%;">
                     <div class="radio-card card-tehran">
-                        <div class="card-top">
-
-                        </div>
+                        <div class="card-top"></div>
                         <div class="card-bottom">
                             <h2 class="radio-title">شب‌های تهران</h2>
                             <p class="radio-description">
@@ -325,15 +292,10 @@
                 </a>
             </div>
 
-
-
-            <!-- مستطیل 3: کافه مه‌آلود (جدید) -->
             <div class="col-md-6 col-lg-4 mb-4">
                 <a href="cafe_meh.php" style="text-decoration: none; display: block; height: 100%;">
                     <div class="radio-card card-cafe">
-                        <div class="card-top">
-
-                        </div>
+                        <div class="card-top"></div>
                         <div class="card-bottom">
                             <h2 class="radio-title">کافه مه‌آلود</h2>
                             <p class="radio-description">
@@ -348,18 +310,12 @@
                 </a>
             </div>
 
-
-
-
-            <!-- مستطیل 1: رادیو سیمرغ -->
             <div class="col-md-6 col-lg-4 mb-4">
                 <a href="radio_simorgh.php" style="text-decoration: none; display: block; height: 100%;">
                     <div class="radio-card card-simorgh">
-                        <div class="card-top">
-
-                        </div>
+                        <div class="card-top"></div>
                         <div class="card-bottom">
-                            <h2 class="radio-title">جمعه های سیمرغی</h2>
+                            <h2 class="radio-title">جمعه‌های سیمرغی</h2>
                             <p class="radio-description">
                                 پخش زنده و آرشیو بهترین برنامه‌های فرهنگی،<br>
                                 هنری و موسیقی با صدای گرم گویندگان حرفه‌ای
@@ -372,10 +328,8 @@
                 </a>
             </div>
 
-
         </div>
 
-        <!-- بخش آمار جذاب -->
         <div class="stats-section">
             <div class="row">
                 <div class="col-md-4">
@@ -399,7 +353,6 @@
             </div>
         </div>
 
-        <!-- بخش توضیحات اضافی برای سئو -->
         <div class="row mt-5">
             <div class="col-12">
                 <div class="card border-0 shadow-sm" style="border-radius: 20px;">
@@ -415,10 +368,6 @@
                             و لحظاتی آرامش‌بخش دعوت می‌کند. با ما همراه باشید و از شنیدن بهترین موسیقی‌ها، گفتگوهای
                             تخصصی و برنامه‌های متنوع لذت ببرید.
                         </p>
-                        <p class="text-justify">
-                            کافیست روی هر کدام از مستطیل‌های بالا کلیک کنید تا وارد دنیای جذاب رادیو سیمرغ، شب‌های تهران
-                            یا کافه مه‌آلود شوید.
-                        </p>
                     </div>
                 </div>
             </div>
@@ -428,20 +377,56 @@
     <?php include 'footer.php'; ?>
 
     <script>
-    // اضافه کردن افکت‌های جذاب با جاوااسکریپت
-    document.querySelectorAll('.radio-card').forEach(card => {
-        card.addEventListener('click', function(e) {
-            // اگر روی دکمه لینک کلیک شده، اجازه بده لینک باز شود
-            if (e.target.classList.contains('btn-listen')) {
-                return;
-            }
-            // در غیر این صورت لینک مربوطه را باز کن
-            const link = this.closest('a');
-            if (link && link.href) {
-                window.location.href = link.href;
-            }
-        });
+    // ============================================
+    // مدیریت نصب PWA (ساده و کوتاه)
+    // ============================================
+    let deferredPrompt;
+    const installBtn = document.getElementById('installPermanentBtn');
+
+    // بررسی نصب بودن
+    function isInstalled() {
+        return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+    }
+
+    // اگر نصب شده، دکمه را مخفی کن
+    if (isInstalled()) {
+        installBtn.style.display = 'none';
+    }
+
+    // رویداد beforeinstallprompt
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
     });
+
+    // نصب
+    installBtn.addEventListener('click', async () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const result = await deferredPrompt.userChoice;
+            if (result.outcome === 'accepted') {
+                installBtn.style.display = 'none';
+                alert('✅ رادیو سیمرغ با موفقیت نصب شد!');
+            }
+            deferredPrompt = null;
+        } else {
+            // راهنمای نصب دستی
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+            const msg = isIOS ?
+                'در Safari روی Share و سپس Add to Home Screen کلیک کنید.' :
+                'از منوی مرورگر گزینه Add to Home Screen را انتخاب کنید.';
+            alert('📱 ' + msg);
+        }
+    });
+
+    // ثبت سرویس‌ورکر
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js', {
+                scope: '/radios/'
+            });
+        });
+    }
     </script>
 
 </body>

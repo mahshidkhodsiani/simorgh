@@ -28,6 +28,19 @@ if (session_status() === PHP_SESSION_NONE) {
     <meta name="twitter:image" content="URL-to-your-image.jpg">
     <title>هفت هنر سیمرغ</title>
     <link rel="icon" href="/images/logo1.ico" type="image/x-icon">
+
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="radios/manifest.json">
+    <meta name="theme-color" content="#764ba2">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="رادیو سیمرغ">
+    <link rel="apple-touch-icon" href="images/36.png">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -47,16 +60,11 @@ if (session_status() === PHP_SESSION_NONE) {
 
     <?php
     include "includes.php";
-
     ?>
-
-
-
 
     <style>
     @font-face {
         font-family: 'estedad';
-        /* src: url('fonts/estedad.woff2') format('woff2'), */
         src:
             url('fonts/ttf/Estedad-Medium.ttf') format('truetype'),
     }
@@ -64,6 +72,71 @@ if (session_status() === PHP_SESSION_NONE) {
     body {
         font-family: 'estedad', sans-serif !important;
         line-height: 2 !important;
+    }
+
+    /* ===== دکمه ثابت نصب در سمت چپ ===== */
+    .install-fixed-btn {
+        position: fixed;
+        left: 20px;
+        bottom: 100px;
+        z-index: 9999;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 14px 20px;
+        border-radius: 50px;
+        font-weight: bold;
+        font-size: 0.95rem;
+        cursor: pointer;
+        box-shadow: 0 8px 25px rgba(118, 75, 162, 0.4);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: 'estedad', sans-serif !important;
+        writing-mode: horizontal-tb;
+        min-width: 160px;
+        justify-content: center;
+    }
+
+    .install-fixed-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 12px 35px rgba(118, 75, 162, 0.5);
+    }
+
+    .install-fixed-btn .icon {
+        font-size: 1.3rem;
+    }
+
+    /* مخفی کردن دکمه در موبایل کوچک */
+    @media (max-width: 576px) {
+        .install-fixed-btn {
+            left: 10px;
+            bottom: 80px;
+            padding: 10px 14px;
+            font-size: 0.8rem;
+            min-width: 120px;
+            gap: 6px;
+        }
+
+        .install-fixed-btn .icon {
+            font-size: 1rem;
+        }
+    }
+
+    @media (max-width: 400px) {
+        .install-fixed-btn {
+            left: 5px;
+            bottom: 70px;
+            padding: 8px 10px;
+            font-size: 0.7rem;
+            min-width: 90px;
+            border-radius: 30px;
+        }
+
+        .install-fixed-btn .icon {
+            font-size: 0.8rem;
+        }
     }
     </style>
 
@@ -78,48 +151,30 @@ if (session_status() === PHP_SESSION_NONE) {
     $sdate = new SDate();
     ?>
 
-
+    <!-- ===== دکمه ثابت نصب PWA ===== -->
+    <button id="installPwaBtn" class="install-fixed-btn">
+        <span class="icon">📲</span>
+        <span>نصب رادیو سیمرغ</span>
+    </button>
 
     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <img class="d-block w-100" src="images/29.jpg" alt="سیمرغ">
-                <!-- <div class="carousel-caption d-none d-md-block">
-                    <h5>استودیو صدا</h5>
-                    <p>بهترین استادیوی صدا برای ضبط کلاسها</p>
-                </div> -->
             </div>
             <div class="carousel-item">
                 <img class="d-block w-100" src="images/27.jpg" alt="سیمرغ">
-                <!-- <div class="carousel-caption d-none d-md-block">
-                    <h5>رادیو سیمرغ</h5>
-                    <p>برنامه های جدید و جذاب</p>
-                </div> -->
             </div>
             <div class="carousel-item">
                 <img class="d-block w-100" src="images/26.jpg" alt="سیمرغ">
-                <!-- <div class="carousel-caption d-none d-md-block">
-                    <h5>جمعه های سیمرغی</h5>
-                    <p>در جمعه های سیمرغی با شما هستیم </p>
-                </div> -->
             </div>
             <div class="carousel-item">
                 <img class="d-block w-100" src="images/28.jpg" alt="سیمرغ">
-                <!-- <div class="carousel-caption d-none d-md-block">
-                    <h5>جمعه های سیمرغی</h5>
-                    <p>در جمعه های سیمرغی با شما هستیم </p>
-                </div> -->
             </div>
-
             <div class="carousel-item">
                 <img class="d-block w-100" src="images/25.jpg" alt="سیمرغ">
-                <!-- <div class="carousel-caption d-none d-md-block">
-                    <h5>جمعه های سیمرغی</h5>
-                    <p>در جمعه های سیمرغی با شما هستیم </p>
-                </div> -->
             </div>
         </div>
-
 
         <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -131,18 +186,11 @@ if (session_status() === PHP_SESSION_NONE) {
         </a>
     </div>
 
-
-
-
-
-
-
     <!-- ===== بخش استوری‌ها ===== -->
     <div class="container-fluid px-4 mt-3">
         <div class="stories-wrapper">
             <div class="stories-scroll" id="storiesScroll">
                 <?php
-            // دریافت استوری‌های فعال
             $current_date = date('Y-m-d H:i:s');
             $sql_stories = "SELECT * FROM stories 
                            WHERE status = 1 
@@ -161,13 +209,10 @@ if (session_status() === PHP_SESSION_NONE) {
                         'unlimited' => '♾️'
                     ];
                     
-                    // درست کردن آدرس تصویر
                     $image_path = $story['image'];
-                    // اگه آدرس با http شروع نمیشه و با upload/ شروع نمیشه، اصلاح کن
                     if (strpos($image_path, 'http') !== 0 && strpos($image_path, 'upload/') !== 0) {
                         $image_path = 'upload/images/stories/' . $image_path;
                     }
-                    // اگه فایل وجود نداشت، از تصویر پیش‌فرض استفاده کن
                     if (!file_exists($image_path) && strpos($image_path, 'http') !== 0) {
                         $image_path = 'images/default-story.jpg';
                     }
@@ -200,32 +245,25 @@ if (session_status() === PHP_SESSION_NONE) {
     </div>
     <!-- ===== پایان بخش استوری‌ها ===== -->
 
-
-
-
-
     <div class="container-fluid px-4 mt-4">
-
-        <div class="row">
+        <div class="row align-items-center">
             <div class="col-md-4">
                 <div class="search-wrapper">
                     <div class="search-bubble"></div>
                     <div class="input-group search-box">
                         <input type="text" id="searchInput" name="search_word" class="form-control"
                             placeholder="دوره مورد نظر خود را جستجو کنید..." autocomplete="off">
-                        <span class="input-group-text">
-                            <i class="fas fa-magnifying-glass"></i>
+                        <span class="input-group-text search-icon">
+                            <i class="fas fa-search"></i>
                         </span>
                     </div>
                     <div id="suggestionsList" class="suggestions-list"></div>
                 </div>
             </div>
 
-            <div class="col-md-8">
-                <h3 class="alert-heading"><b>موسسه هفت هنر سیمرغ</b></h3>
-
-
-                <p style="font-size: 13px;">
+            <div class="col-md-8" style="text-align: right; direction: rtl;">
+                <h3 class="alert-heading mb-1"><b>موسسه هفت هنر سیمرغ</b></h3>
+                <p style="font-size: 13px; text-align: right; direction: rtl; margin-bottom: 5px;">
                     اگر به دنیای هنر و رسانه علاقه‌مند هستید، آموزشگاه سیمرغ فضایی حرفه‌ای برای کشف و پرورش استعدادهای
                     شما فراهم کرده است.
                     دوره‌های تخصصی ما شامل بازیگری ، دوبله و گویندگی ، گریم سینمایی، موشن گرافیک، هوش مصنوعی، عکاسی،
@@ -233,31 +271,22 @@ if (session_status() === PHP_SESSION_NONE) {
                     با آموزش‌های کاربردی و راهنمایی اساتید مجرب، مسیر یادگیری تا ورود به بازار کار را هدفمند و حرفه‌ای
                     طی خواهید کرد.
                 </p>
-                <hr>
-
+                <hr class="mt-1">
             </div>
         </div>
     </div>
 
-
-
-
     <div class="container-fluid px-4 mt-4">
-
         <section id="portfolio" class="py-5">
             <div class="container">
                 <div class="row align-items-center">
-
                     <div class="col-md-5 col-lg-4 text-center mb-4 mb-md-0">
                         <img class="img-fluid rounded shadow-lg" src="images/37.png" alt="تصویر سیمرغ"
                             style="max-height: 650px; object-fit: cover;">
                     </div>
 
-
-
                     <div class="col-md-7 col-lg-8">
                         <div class="row">
-
                             <div class="col-6 col-md-6 mb-4 card-spacing">
                                 <a href="radios" class="text-decoration-none" title="کلیک کنید">
                                     <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
@@ -268,7 +297,6 @@ if (session_status() === PHP_SESSION_NONE) {
                                     </div>
                                 </a>
                             </div>
-
 
                             <div class="col-6 col-md-6 mb-4 card-spacing">
                                 <a href="packages" class="text-decoration-none" title="کلیک کنید">
@@ -281,7 +309,6 @@ if (session_status() === PHP_SESSION_NONE) {
                                 </a>
                             </div>
 
-
                             <div class="col-6 col-md-6 mb-4 card-spacing">
                                 <a href="portofilo/pictures" class="text-decoration-none" title="کلیک کنید">
                                     <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
@@ -292,8 +319,6 @@ if (session_status() === PHP_SESSION_NONE) {
                                     </div>
                                 </a>
                             </div>
-
-
 
                             <div class="col-6 col-md-6 mb-4 card-spacing">
                                 <a href="articles/speakers_archive" class="text-decoration-none" title="کلیک کنید">
@@ -306,9 +331,6 @@ if (session_status() === PHP_SESSION_NONE) {
                                 </a>
                             </div>
 
-
-
-
                             <div class="col-6 col-md-6 mb-4 card-spacing">
                                 <a href="portofilo/videos" class="text-decoration-none" title="کلیک کنید">
                                     <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
@@ -319,7 +341,6 @@ if (session_status() === PHP_SESSION_NONE) {
                                     </div>
                                 </a>
                             </div>
-
 
                             <div class="col-6 col-md-6 mb-4 card-spacing">
                                 <a href="register" class="text-decoration-none" title="کلیک کنید">
@@ -332,8 +353,6 @@ if (session_status() === PHP_SESSION_NONE) {
                                 </a>
                             </div>
 
-
-
                             <div class="col-6 col-md-6 mb-4 card-spacing">
                                 <a href="register2" class="text-decoration-none" title="کلیک کنید">
                                     <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
@@ -345,8 +364,6 @@ if (session_status() === PHP_SESSION_NONE) {
                                 </a>
                             </div>
 
-
-
                             <div class="col-6 col-md-6 mb-4 card-spacing">
                                 <a href="pardakht" class="text-decoration-none" title="کلیک کنید">
                                     <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
@@ -357,21 +374,13 @@ if (session_status() === PHP_SESSION_NONE) {
                                     </div>
                                 </a>
                             </div>
-
-
-
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
 
-
         <hr>
-
-
-
 
         <section class="light">
             <div class="container py-2">
@@ -384,32 +393,24 @@ if (session_status() === PHP_SESSION_NONE) {
                 </a>
 
                 <?php
-                // تغییر کوئری به جدول packages
                 $sql = "SELECT * FROM packages ORDER BY id DESC LIMIT 4";
                 $result = $conn->query($sql);
                 if ($result->num_rows > 0) {
                     $counter = 0;
                     while ($row = $result->fetch_assoc()) {
-                        // تنظیم آدرس تصویر از فیلد pictures
                         if (is_object(json_decode($row["pictures"]))) {
                             $images = json_decode($row["pictures"], true);
                             $image_url = $images["images"]["original"];
                             $image_url = str_replace("/upload", "upload", $image_url);
                         } else {
                             $image_url = $row["pictures"];
-                            $image_url = str_replace(
-                                "../upload",
-                                "upload",
-                                $image_url
-                            );
+                            $image_url = str_replace("../upload", "upload", $image_url);
                         }
 
-                        // تغییر متن به فیلد description پکیج‌ها
                         $body_content = preg_replace('/<p>/', '<p style="color: black !important; margin-right: 5px !important; font-size: 16px !important;">', $row['description']);
 
                         if ($counter % 2 == 0) {
                 ?>
-
 
                 <article class="postcard light blue">
                     <a class="postcard__img_link" href="packages">
@@ -426,7 +427,6 @@ if (session_status() === PHP_SESSION_NONE) {
                         </ul>
                     </div>
                 </article>
-
 
                 <?php } else { ?>
 
@@ -456,17 +456,12 @@ if (session_status() === PHP_SESSION_NONE) {
             </div>
         </section>
 
-
         <hr class="my-4">
-
-
 
         <section id="team" class="pb-5">
             <div class="container">
                 <h5 class="section-title h1 fw-bold">تازه ترین ها</h5>
                 <div class="row">
-
-
                     <div class="col-6 col-sm-4 mb-4">
                         <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
                             <div class="mainflip">
@@ -668,7 +663,6 @@ if (session_status() === PHP_SESSION_NONE) {
 
         <hr class="my-4">
 
-
         <section class="border">
             <div class="container">
                 <a href="articles">
@@ -702,14 +696,7 @@ if (session_status() === PHP_SESSION_NONE) {
             </div>
         </section>
 
-        <style>
-
-        </style>
-
-
-
         <hr class="my-4">
-
 
         <section class="parallax-section">
             <div class="parallax-content">
@@ -719,8 +706,6 @@ if (session_status() === PHP_SESSION_NONE) {
                 <a href="register2" class="btn btn-light btn-lg mt-4 fw-bold">همین حالا ثبت نام کنید</a>
             </div>
         </section>
-
-
 
         <hr class="my-4">
         <script>
@@ -739,17 +724,13 @@ if (session_status() === PHP_SESSION_NONE) {
                             data: {
                                 search_word: search_word
                             },
-                            dataType: "html", // اطمینان از دریافت پاسخ HTML
+                            dataType: "html",
                             success: function(response) {
-                                console.log("Response received:",
-                                    response); // ✅ نمایش پاسخ در کنسول
-
+                                console.log("Response received:", response);
                                 if (response.trim().length > 0) {
-                                    $("#suggestionsList").html(response)
-                                        .show(); // نمایش لیست پیشنهادات
+                                    $("#suggestionsList").html(response).show();
                                 } else {
-                                    $("#suggestionsList")
-                                        .hide(); // در صورت خالی بودن نتیجه، لیست پنهان شود
+                                    $("#suggestionsList").hide();
                                 }
                             },
                             error: function(xhr, status, error) {
@@ -762,14 +743,12 @@ if (session_status() === PHP_SESSION_NONE) {
                 }
             });
 
-            // انتخاب پیشنهادات با کلیک
             $(document).on("click", ".suggestion-item", function() {
                 let selectedText = $(this).text();
                 $("#searchInput").val(selectedText);
                 $("#suggestionsList").hide();
             });
 
-            // بستن پیشنهادات هنگام کلیک بیرون
             $(document).on("click", function(e) {
                 if (!$(e.target).closest(".search-wrapper").length) {
                     $("#suggestionsList").hide();
@@ -777,8 +756,6 @@ if (session_status() === PHP_SESSION_NONE) {
             });
         });
         </script>
-
-
 
         <script type="text/javascript">
         ! function() {
@@ -798,27 +775,75 @@ if (session_status() === PHP_SESSION_NONE) {
         }();
         </script>
 
+        <!-- ===== اسکریپت PWA ===== -->
         <script>
+        // ============================================
+        // مدیریت نصب PWA (دکمه ثابت سمت چپ)
+        // ============================================
+        let deferredPrompt;
+        const installBtn = document.getElementById('installPwaBtn');
+
+        // بررسی نصب بودن
+        function isInstalled() {
+            return window.matchMedia('(display-mode: standalone)').matches ||
+                window.navigator.standalone === true;
+        }
+
+        // اگر نصب شده، دکمه را مخفی کن
+        if (isInstalled()) {
+            installBtn.style.display = 'none';
+        }
+
+        // رویداد beforeinstallprompt
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+        });
+
+        // نصب
+        installBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const result = await deferredPrompt.userChoice;
+                if (result.outcome === 'accepted') {
+                    installBtn.style.display = 'none';
+                    alert('✅ رادیو سیمرغ با موفقیت نصب شد!');
+                }
+                deferredPrompt = null;
+            } else {
+                // راهنمای نصب دستی
+                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+                const msg = isIOS ?
+                    'در Safari روی Share و سپس Add to Home Screen کلیک کنید.' :
+                    'از منوی مرورگر گزینه Add to Home Screen را انتخاب کنید.';
+                alert('📱 ' + msg);
+            }
+        });
+
+        // ثبت سرویس‌ورکر
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('radios/sw.js', {
+                    scope: '/radios/'
+                });
+            });
+        }
+
         // ===== استوری ها =====
         document.addEventListener('DOMContentLoaded', function() {
-            // انتخاب همه آیتم‌های استوری
             var storyItems = document.querySelectorAll('.story-item');
 
-            // افزودن رویداد کلیک به هر آیتم
             storyItems.forEach(function(item) {
                 item.addEventListener('click', function() {
-                    // گرفتن آدرس تصویر و عنوان از attribute های داده
                     var imgSrc = this.getAttribute('data-story');
                     var title = this.getAttribute('data-title');
 
-                    // اگر data-story وجود نداشت، از background-image استخراج کن
                     if (!imgSrc) {
                         var style = this.querySelector('.story-img').style.backgroundImage;
                         imgSrc = style.replace(/.*\(|\).*/g, '');
                         imgSrc = imgSrc.replace(/['"]/g, '');
                     }
 
-                    // اگر title وجود نداشت، از متن داخل .story-name بگیر
                     if (!title) {
                         var nameEl = this.querySelector('.story-name');
                         if (nameEl) {
@@ -828,13 +853,11 @@ if (session_status() === PHP_SESSION_NONE) {
                         }
                     }
 
-                    // نمایش مدال
                     openStoryModal(imgSrc, title);
                 });
             });
         });
 
-        // ===== توابع باز و بسته کردن مدال =====
         function openStoryModal(imageSrc, title) {
             var modal = document.getElementById('storyModal');
             var modalImg = document.getElementById('storyModalImage');
@@ -859,16 +882,20 @@ if (session_status() === PHP_SESSION_NONE) {
             }
         }
 
-        // ===== بستن با کلید ESC =====
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 closeStoryModal();
             }
         });
 
-        // ===== تست در کنسول =====
-        console.log('✅ بخش استوری‌ها فعال شد!');
-        console.log('تعداد استوری‌ها:', document.querySelectorAll('.story-item').length);
+        console.log('✅ دکمه نصب PWA در سمت چپ فعال شد');
+        </script>
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
+            integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous">
         </script>
 
     </div>

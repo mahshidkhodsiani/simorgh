@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آفلاین - رادیو سیمرغ</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Vazir', sans-serif;
+        }
+        .offline-card {
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            text-align: center;
+            max-width: 400px;
+        }
+        .offline-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        .offline-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+        .offline-text {
+            color: #666;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-card">
+        <div class="offline-icon">📡</div>
+        <div class="offline-title">شما آفلاین هستید</div>
+        <p class="offline-text">
+            لطفاً اتصال اینترنت خود را بررسی کنید.<br>
+            برخی از محتواها ممکن است در دسترس نباشند.
+        </p>
+        <button onclick="location.reload()" class="btn btn-primary mt-3">
+            تلاش مجدد
+        </button>
+    </div>
+</body>
+</html>
