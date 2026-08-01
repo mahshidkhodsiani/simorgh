@@ -6,21 +6,24 @@ if (isset($_GET['mode']) && $_GET['mode'] === 'pwa') {
     $_SESSION['is_pwa'] = true;
 }
 
+// ذخیره آدرس برگشت اگر در URL وجود داشته باشد
+if (isset($_GET['redirect']) && !empty($_GET['redirect'])) {
+    $_SESSION['redirect_after_login'] = $_GET['redirect'];
+}
+
 // اگر کاربر لاگین کرده
 if (isset($_SESSION['user_id'])) {
-    // اگر از PWA (وب اپ) آمده بود -> به رادیو برود
-    if (isset($_SESSION['is_pwa']) && $_SESSION['is_pwa'] === true) {
-        // پاک کردن وضعیت PWA (اختیاری - اگر میخواید每次都 لاگین بخواد، این خط رو حذف کنید)
-        // unset($_SESSION['is_pwa']);
-        header("Location: /radios/index.php");
-        exit();
-    }
-    
-    // اگر آدرس برگشت ذخیره شده بود (از رادیو اومده)
+    // اولویت 1: آدرس برگشت ذخیره شده (برای صفحات رادیو)
     if (isset($_SESSION['redirect_after_login']) && !empty($_SESSION['redirect_after_login'])) {
         $redirect = $_SESSION['redirect_after_login'];
         unset($_SESSION['redirect_after_login']);
         header("Location: " . $redirect);
+        exit();
+    }
+    
+    // اولویت 2: اگر از PWA (وب اپ) آمده بود -> به رادیو برود
+    if (isset($_SESSION['is_pwa']) && $_SESSION['is_pwa'] === true) {
+        header("Location: /radios/index.php");
         exit();
     }
     
@@ -39,6 +42,11 @@ if (isset($_SESSION['login_error'])) {
 // بررسی آیا از رادیو آمده (برای نمایش پیام)
 $from_radio = false;
 if (isset($_SESSION['redirect_after_login']) && strpos($_SESSION['redirect_after_login'], 'radios') !== false) {
+    $from_radio = true;
+}
+
+// اگر redirect در URL وجود دارد، از رادیو آمده
+if (isset($_GET['redirect']) && strpos($_GET['redirect'], 'radios') !== false) {
     $from_radio = true;
 }
 ?>

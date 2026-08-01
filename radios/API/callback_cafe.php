@@ -28,9 +28,7 @@ if ($conn->connect_error) {
 }
 $conn->set_charset("utf8mb4");
 
-// ==========================================
-// مثل back.php - گرفتن نتیجه
-// ==========================================
+// دریافت نتیجه از درگاه
 $gateway = Gateway::make()
     ->config($Username, $Password, $merchantConfigID)
     ->invoiceId($invoiceID);
@@ -38,48 +36,44 @@ $gateway = Gateway::make()
 $result = $gateway->TranResult();
 
 if ($result['code'] != 200) {
-    file_put_contents(__DIR__ . '/tran_error.txt', 
+    file_put_contents(__DIR__ . '/tran_error_cafe.txt', 
         date('Y-m-d H:i:s') . " - TranResult Failed: " . print_r($result, true) . PHP_EOL,
         FILE_APPEND
     );
-    header("Location: https://simorghtv.com/radios/tehran.php?payment=failed");
+    header("Location: https://simorghtv.com/radios/cafe_meh.php?payment=failed");
     exit;
 }
 
 $payGateTranID = $result['content']['payGateTranID'] ?? null;
 
 if (empty($payGateTranID)) {
-    header("Location: https://simorghtv.com/radios/tehran.php?payment=failed");
+    header("Location: https://simorghtv.com/radios/cafe_meh.php?payment=failed");
     exit;
 }
 
-// ==========================================
-// مثل back.php - Verify و Settlement پشت سر هم
-// ==========================================
+// Verify تراکنش
 $verify = $gateway->verify($payGateTranID);
 
 if ($verify['code'] != 200) {
-    file_put_contents(__DIR__ . '/verify_error.txt',
+    file_put_contents(__DIR__ . '/verify_error_cafe.txt',
         date('Y-m-d H:i:s') . " - Verify Failed: " . print_r($verify, true) . PHP_EOL,
         FILE_APPEND
     );
-    header("Location: https://simorghtv.com/radios/tehran.php?payment=failed");
+    header("Location: https://simorghtv.com/radios/cafe_meh.php?payment=failed");
     exit;
 }
 
-// مثل back.php - تسویه (Settlement)
+// تسویه (Settlement)
 $settlement = $gateway->settlement($payGateTranID);
 
 if ($settlement['code'] != 200) {
-    file_put_contents(__DIR__ . '/settlement_error.txt',
+    file_put_contents(__DIR__ . '/settlement_error_cafe.txt',
         date('Y-m-d H:i:s') . " - Settlement Failed: " . print_r($settlement, true) . PHP_EOL,
         FILE_APPEND
     );
 }
 
-// ==========================================
-// آپدیت دیتابیس - مثل back.php
-// ==========================================
+// آپدیت دیتابیس
 $rrn = $result['content']['rrn'] ?? null;
 $refID = $result['content']['refID'] ?? null;
 
@@ -90,17 +84,15 @@ $stmt = $conn->prepare("
         paygate_tran_id = ?, 
         ref_id = ?, 
         rrn = ? 
-    WHERE invoice_id = ?
+    WHERE invoice_id = ? AND radio_type = 'cafe'
 ");
 
 $stmt->bind_param("ssss", $payGateTranID, $refID, $rrn, $invoiceID);
 $stmt->execute();
 $stmt->close();
 
-// ============================================================
-// ★★★ مهم: بازیابی user_id و تنظیم مجدد سشن ★★★
-// ============================================================
-$get_user = $conn->prepare("SELECT user_id FROM user_radio WHERE invoice_id = ?");
+// بازیابی user_id و تنظیم مجدد سشن
+$get_user = $conn->prepare("SELECT user_id FROM user_radio WHERE invoice_id = ? AND radio_type = 'cafe'");
 $get_user->bind_param("s", $invoiceID);
 $get_user->execute();
 $user_result = $get_user->get_result();
@@ -126,21 +118,20 @@ if ($user_result->num_rows > 0) {
         $_SESSION['last_name'] = $user_info['last_name'];
         $_SESSION['phone'] = $user_info['phone'] ?? '';
         $_SESSION['speaker'] = $user_info['speaker'] ?? 0;
-        // هر فیلد دیگری که در سشن دارید
     }
     $user_stmt->close();
 }
 $get_user->close();
-// ============================================================
 
 $conn->close();
 
 // لاگ موفقیت
-file_put_contents(__DIR__ . '/payment_success.txt',
+file_put_contents(__DIR__ . '/payment_success_cafe.txt',
     date('Y-m-d H:i:s') . " - SUCCESS - Invoice: $invoiceID - TransId: $payGateTranID - UserID: " . ($_SESSION['user_id'] ?? 'unknown') . PHP_EOL,
     FILE_APPEND
 );
 
 // هدایت به صفحه موفقیت
-header("Location: https://simorghtv.com/radios/tehran.php?payment=success");
+header("Location: https://simorghtv.com/radios/cafe_meh.php?payment=success");
 exit;
+?>

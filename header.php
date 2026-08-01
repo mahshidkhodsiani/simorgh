@@ -158,7 +158,7 @@ li {
     .toggle-button {
         display: inline-block;
         /* افزایش اندازه آیکون */
-        font-size: 2.5rem;
+        font-size: 1.5rem;
         /* مثلاً 2.5 برابر اندازه پیش‌فرض */
         /* افزایش فضای قابل کلیک */
         padding: 15px;

@@ -33,7 +33,7 @@ session_start();
     body {
         background: #f5f5f5;
     }
-
+    
     .hero-section {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         border-radius: 30px;
@@ -79,7 +79,7 @@ session_start();
         background: white;
         color: #764ba2;
         transform: scale(1.05);
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 5px 20px rgba(0,0,0,0.2);
     }
 
     .radio-card {
@@ -182,7 +182,6 @@ session_start();
             opacity: 0;
             transform: translateY(30px);
         }
-
         to {
             opacity: 1;
             transform: translateY(0);
@@ -194,7 +193,7 @@ session_start();
         border-radius: 30px;
         padding: 40px 20px;
         margin-top: 50px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
     }
 
     .stat-item {
@@ -217,31 +216,25 @@ session_start();
         .hero-title {
             font-size: 1.8rem;
         }
-
         .hero-subtitle {
             font-size: 1rem;
         }
-
         .radio-card {
             margin-bottom: 30px;
             min-height: 350px;
             padding: 20px;
             padding-bottom: 30px;
         }
-
         .radio-title {
             font-size: 1.3rem;
         }
-
         .radio-description {
             font-size: 0.85rem;
         }
-
         .btn-listen {
             padding: 8px 20px;
             font-size: 0.9rem;
         }
-
         .install-permanent-btn {
             padding: 10px 20px;
             font-size: 0.9rem;
@@ -261,11 +254,11 @@ session_start();
     ?>
 
     <div class="container mt-4">
-
+        
         <div class="hero-section">
             <h1 class="hero-title">🎙️ به رادیو سیمرغ خوش آمدید</h1>
             <p class="hero-subtitle">تجربه‌ای نو از شنیدن بهترین برنامه‌های رادیویی با کیفیت عالی</p>
-
+            
             <!-- دکمه نصب دائمی -->
             <button id="installPermanentBtn" class="install-permanent-btn">
                 📲 نصب اپلیکیشن رادیو سیمرغ
@@ -279,10 +272,8 @@ session_start();
                     <div class="radio-card card-tehran">
                         <div class="card-top"></div>
                         <div class="card-bottom">
-                            <h2 class="radio-title">شب‌های تهران</h2>
+                            <h2 class="radio-title">سریال صوتی شب های تهران</h2>
                             <p class="radio-description">
-                                روایت دلنشین شب‌های پایتخت، خاطرات شهری،<br>
-                                موسیقی ماندگار و لحظات ناب
                             </p>
                             <div class="btn-listen">
                                 بشنو 🌙
@@ -297,10 +288,8 @@ session_start();
                     <div class="radio-card card-cafe">
                         <div class="card-top"></div>
                         <div class="card-bottom">
-                            <h2 class="radio-title">کافه مه‌آلود</h2>
+                            <h2 class="radio-title">سریال صوتی کافه مه‌آلود</h2>
                             <p class="radio-description">
-                                فضایی گرم و صمیمی با موسیقی ملایم،<br>
-                                گفتگوهای دلنشین و لحظاتی به یادماندنی
                             </p>
                             <div class="btn-listen">
                                 بنشین ☕
@@ -412,7 +401,7 @@ session_start();
         } else {
             // راهنمای نصب دستی
             const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-            const msg = isIOS ?
+            const msg = isIOS ? 
                 'در Safari روی Share و سپس Add to Home Screen کلیک کنید.' :
                 'از منوی مرورگر گزینه Add to Home Screen را انتخاب کنید.';
             alert('📱 ' + msg);
@@ -422,9 +411,7 @@ session_start();
     // ثبت سرویس‌ورکر
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-            navigator.serviceWorker.register('sw.js', {
-                scope: '/radios/'
-            });
+            navigator.serviceWorker.register('sw.js', { scope: '/radios/' });
         });
     }
     </script>

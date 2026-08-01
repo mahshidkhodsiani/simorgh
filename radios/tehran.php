@@ -53,7 +53,7 @@ function formatDate($date) {
     return '';
 }
 
-$poems = ["شب‌های تهران، قصه‌های ناگفته‌ی شهر..."];
+$poems = [""];
 $randomPoem = $poems[array_rand($poems)];
 
 // ========== بررسی دسترسی کاربر ==========

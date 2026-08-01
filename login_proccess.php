@@ -29,7 +29,35 @@ if (isset($_POST['enter'])) {
             exit();
          }
 
-         // اگر ادمین نبود، سبد خرید را منتقل کن
+         // ==========================================
+         // اولویت 1: آدرس برگشت ذخیره شده در سشن
+         // ==========================================
+         if (isset($_SESSION['redirect_after_login']) && !empty($_SESSION['redirect_after_login'])) {
+            $redirect_url = $_SESSION['redirect_after_login'];
+            unset($_SESSION['redirect_after_login']);
+            
+            // اگر آدرس شامل رادیو هست، به همان برو
+            header("Location: " . $redirect_url);
+            exit();
+         }
+
+         // ==========================================
+         // اولویت 2: بررسی PWA
+         // ==========================================
+         if (isset($_SESSION['is_pwa']) && $_SESSION['is_pwa'] === true) {
+            // پاک کردن وضعیت PWA تا دفعه بعد دوباره لاگین بخواد
+            // اگه میخواید همیشه لاگین بمونه، این دو خط رو کامنت کنید
+            // unset($_SESSION['is_pwa']);
+            // unset($_SESSION['redirect_after_login']);
+            
+            // هدایت به صفحه رادیو
+            header("Location: /radios/index.php");
+            exit();
+         }
+
+         // ==========================================
+         // اولویت 3: سبد خرید
+         // ==========================================
          if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
             $user_id = $_SESSION['user_id'];
 
@@ -47,38 +75,6 @@ if (isset($_POST['enter'])) {
 
             // هدایت به صفحه سبد خرید نهایی
             header("Location: /user/user_cart.php");
-            exit();
-         }
-
-         // ==========================================
-         // بررسی: آیا از PWA (وب اپ) آمده؟
-         // ==========================================
-         if (isset($_SESSION['is_pwa']) && $_SESSION['is_pwa'] === true) {
-            // پاک کردن وضعیت PWA تا دفعه بعد دوباره لاگین بخواد
-            // اگه میخواید همیشه لاگین بمونه، این دو خط رو کامنت کنید
-            // unset($_SESSION['is_pwa']);
-            // unset($_SESSION['redirect_after_login']);
-            
-            // هدایت به صفحه رادیو
-            header("Location: /radios/index.php");
-            exit();
-         }
-
-         // ==========================================
-         // بررسی آدرس برگشت (برای موارد دیگه)
-         // ==========================================
-         if (isset($_SESSION['redirect_after_login']) && !empty($_SESSION['redirect_after_login'])) {
-            $redirect_url = $_SESSION['redirect_after_login'];
-            unset($_SESSION['redirect_after_login']);
-            
-            // اگر آدرس شامل رادیو هست، به همان برو
-            if (strpos($redirect_url, 'radios') !== false) {
-                header("Location: " . $redirect_url);
-                exit();
-            }
-            
-            // اگر آدرس دیگه‌ای بود، به آن برو
-            header("Location: " . $redirect_url);
             exit();
          }
 

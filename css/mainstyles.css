@@ -1,758 +1,883 @@
 /* --- فونت و استایل پایه --- */
-/* @font-face {
-  font-family: "BNazanin";
-  src: url("../fonts/fonts/BNazanin.woff2") format("woff2"),
-    url("../fonts/fonts/BNazanin.woff") format("woff"),
-    url("../fonts/fonts/BNazanin.ttf") format("truetype"),
-    url("../fonts/fonts/BNazaninB.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-
-body {
-  font-family: "BNazanin" !important;
-} */
-
-
 @font-face {
     font-family: 'estedad';
-    /* src: url('fonts/estedad.woff2') format('woff2'), */
-    src:
-        url('../fonts/ttf/Estedad-Medium.ttf') format('truetype'),
+    src: url('../fonts/ttf/Estedad-Medium.ttf') format('truetype');
 }
 
-body , p, h1, h2, h3, h4, h5, h6, a, li, span, div {
+body, p, h1, h2, h3, h4, h5, h6, a, li, span, div {
     font-family: 'estedad', sans-serif !important;
     line-height: 2 !important;
 }
 
 html,
 body {
-  height: 100%;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Main content should take up remaining space */
 .main-content {
-  flex: 1;
+    flex: 1;
 }
 
 /* --- استایل های عمومی --- */
 section {
-  padding: 60px 0;
+    padding: 60px 0;
 }
 
 section .section-title {
-  text-align: center;
-  margin-bottom: 50px;
-  text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 50px;
+    text-transform: uppercase;
 }
 
 a,
 a:hover {
-  text-decoration: none;
-  transition: color 0.3s ease-in-out;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
 }
 
 /* --- دکمه ها --- */
 .btn-primary:hover,
 .btn-primary:focus {
-  background-color: #7a0d31;
-  border-color: #7a0d31;
-  box-shadow: none;
-  outline: none;
+    background-color: #7a0d31;
+    border-color: #7a0d31;
+    box-shadow: none;
+    outline: none;
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #4d0707;
-  border-color: #4d0707;
+    color: #fff;
+    background-color: #4d0707;
+    border-color: #4d0707;
 }
 
 /* --- بخش وبلاگ سیمرغ (مقالات) --- */
 .card-four {
-  position: relative; /* برای موقعیت‌دهی صحیح عنوان روی تصویر */
-  border-radius: 8px;
-  overflow: hidden;
-
-  /* این سه خاصیت برای چیدمان محتوا در صورت نیاز است و می‌توانید آنها را نگه دارید */
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end; /* برای قرار گرفتن عنوان در پایین */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* انیمیشن هاور روی کل کارت */
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-/* این کلاس img-fluid و w-100 از بوت استرپ است که به خوبی کار می‌کند. */
-/* hover-zoom را با card-img ترکیب می‌کنیم تا یکپارچه باشد. */
 .card-four img {
-  width: 100%;
-  height: 200px; /* ارتفاع ثابت برای تصاویر مقالات */
-  object-fit: cover;
-  transition: transform 0.5s ease; /* انیمیشن زوم روی تصویر */
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
 }
 
 .card-four .card-img {
-  position: absolute; /* تصویر کل کادر را می‌پوشاند */
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* اطمینان از پوشش کامل بدون کشیدگی */
-  transition: transform 0.5s ease; /* انیمیشن زوم روی تصویر */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
 }
 
 .card-four:hover .card-img {
-  transform: scale(1.08); /* زوم شدن تصویر با هاور */
+    transform: scale(1.08);
 }
 
 .card-body {
-  padding: 0; /* padding داخلی card-body را حذف کنید تا تصویر کل کادر را بگیرد */
+    padding: 0;
 }
 
 .title-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  /* اینجا تغییرات اصلی را اعمال می‌کنیم */
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.8),
-    transparent
-  ); /* گرادیانت تیره از پایین */
-  color: white;
-  padding: 15px;
-  text-align: right; /* راست‌چین برای زبان فارسی */
-  opacity: 1; /* **همیشه قابل مشاهده** */
-  transform: translateY(0); /* **همیشه در موقعیت اصلی** */
-  transition: none; /* **حذف انیمیشن هاور برای نمایش/مخفی کردن** */
-  z-index: 1; /* اطمینان از قرار گرفتن روی تصویر */
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end; /* محتوا را به پایین بچسباند */
-  height: auto; /* ارتفاع بر اساس محتوا تنظیم شود */
-  min-height: 80px; /* حداقل ارتفاع برای نمایش عنوان */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    color: white;
+    padding: 15px;
+    text-align: right;
+    opacity: 1;
+    transform: translateY(0);
+    transition: none;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: auto;
+    min-height: 80px;
 }
 
-/* این بخش هاور را حذف می‌کنیم چون نمی‌خواهیم با هاور تغییری در opacity و transform رخ دهد */
-/* .card-four:hover .title-overlay {
-  opacity: 1;
-  transform: translateY(0);
-} */
-
 .title-overlay h5 {
-  margin-bottom: 5px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: white; /* اطمینان از رنگ سفید */
-  padding: 0; /* padding داخلی p در HTML قبلاً 2px بود، اینجا حذف شده. */
+    margin-bottom: 5px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: white;
+    padding: 0;
 }
 
 .title-overlay .card-text {
-  font-size: 0.9rem;
-  line-height: 1.4;
-  color: rgba(
-    255,
-    255,
-    255,
-    0.9
-  ); /* رنگ کمی ملایم‌تر برای متن توضیحات (اگر اضافه شود) */
-  margin-bottom: 0; /* اگر توضیحاتی نباشد، margin-bottom هم نیازی نیست */
+    font-size: 0.9rem;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 0;
 }
 
 .card-four:hover .title-overlay {
-  opacity: 1; /* با هاور نمایش داده شود */
-  transform: translateY(0); /* به موقعیت اصلی برگردد */
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .title-overlay .btn {
-  margin-top: 10px;
-  display: inline-block; /* برای اینکه دکمه اندازه محتوایش باشد */
-  align-self: flex-end; /* برای راست چین کردن دکمه در فلکس باکس */
+    margin-top: 10px;
+    display: inline-block;
+    align-self: flex-end;
 }
 
-/* استایل دکمه مطالعه بیشتر */
 .btn-outline-quarternary {
-  color: white; /* رنگ متن دکمه */
-  border-color: white; /* رنگ border دکمه */
-  font-weight: bold;
+    color: white;
+    border-color: white;
+    font-weight: bold;
 }
 
 .btn-outline-quarternary:hover {
-  background-color: white; /* رنگ پس‌زمینه با هاور */
-  color: #4d0707 !important; /* رنگ متن با هاور (مثلاً رنگ اصلی دکمه‌های دیگرتان) */
-  box-shadow: none; /* حذف سایه اضافه احتمالی */
+    background-color: white;
+    color: #4d0707 !important;
+    box-shadow: none;
 }
 
-/* اصلاحات برای کلاس های موجود برای اطمینان از ظاهر صحیح */
 .rtl-title {
-  direction: rtl; /* Ensures the text is right-to-left */
-  text-align: right;
+    direction: rtl;
+    text-align: right;
 }
 
-/* --- استایل های بخش های دیگر (حفظ شده از کد شما) --- */
+/* --- استایل های بخش های دیگر --- */
 .postcard__preview-txt {
-  display: -webkit-box;
-  -webkit-line-clamp: 4; /* Limits the content to 4 lines */
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-/* Default font size for all devices */
 .desktop-font-size {
-  font-size: initial; /* Or your preferred smaller size for mobile */
+    font-size: initial;
 }
 
-/* Apply 25px font size only for screens wider than 768px (common breakpoint for desktops/tablets) */
 @media (min-width: 768px) {
-  .desktop-font-size {
-    font-size: 25px !important; /* Use !important to override inline style if present */
-  }
+    .desktop-font-size {
+        font-size: 25px !important;
+    }
 }
 
 .four:hover {
-  transform: scale(1.1) !important;
-  transition: transform 0.1s ease !important;
+    transform: scale(1.1) !important;
+    transition: transform 0.1s ease !important;
 }
 
+/* ============================================ */
+/* ===== کارت‌های Flip (تازه ترین ها) ===== */
+/* ============================================ */
+
 #team {
-  /* background: #d4c4e5 !important; */
-  background: #ddd22b !important;
+    background: #ddd22b !important;
+    padding: 40px 0 !important;
 }
 
 #team .card {
-  border: none;
-  background: #ffffff;
+    border: none;
+    background: #ffffff;
+    height: 100% !important;
+    min-height: 320px !important;
 }
 
 .image-flip:hover .backside,
 .image-flip.hover .backside {
-  -webkit-transform: rotateY(0deg);
-  -moz-transform: rotateY(0deg);
-  -o-transform: rotateY(0deg);
-  -ms-transform: rotateY(0deg);
-  transform: rotateY(0deg);
-  border-radius: 0.25rem;
+    -webkit-transform: rotateY(0deg);
+    -moz-transform: rotateY(0deg);
+    -o-transform: rotateY(0deg);
+    -ms-transform: rotateY(0deg);
+    transform: rotateY(0deg);
+    border-radius: 0.25rem;
 }
 
 .image-flip:hover .frontside,
 .image-flip.hover .frontside {
-  -webkit-transform: rotateY(180deg);
-  -moz-transform: rotateY(180deg);
-  -o-transform: rotateY(180deg);
-  transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    -o-transform: rotateY(180deg);
+    transform: rotateY(180deg);
 }
 
 .mainflip {
-  -webkit-transition: 1s;
-  -webkit-transform-style: preserve-3d;
-  -ms-transition: 1s;
-  -moz-transition: 1s;
-  -moz-transform: perspective(1000px);
-  -moz-transform-style: preserve-3d;
-  -ms-transform-style: preserve-3d;
-  transition: 1s;
-  transform-style: preserve-3d;
-  position: relative;
+    -webkit-transition: 1s;
+    -webkit-transform-style: preserve-3d;
+    -ms-transition: 1s;
+    -moz-transition: 1s;
+    -moz-transform: perspective(1000px);
+    -moz-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    transition: 1s;
+    transform-style: preserve-3d;
+    position: relative;
 }
 
 .frontside {
-  position: relative;
-  -webkit-transform: rotateY(0deg);
-  -ms-transform: rotateY(0deg);
-  z-index: 2;
-  margin-bottom: 30px;
+    position: relative;
+    -webkit-transform: rotateY(0deg);
+    -ms-transform: rotateY(0deg);
+    z-index: 2;
+    margin-bottom: 30px;
 }
 
 .backside {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: white;
-  -webkit-transform: rotateY(-180deg);
-  -moz-transform: rotateY(-180deg);
-  -o-transform: rotateY(-180deg);
-  -ms-transform: rotateY(-180deg);
-  transform: rotateY(-180deg);
-  -webkit-box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
-  -moz-box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
-  box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: white;
+    -webkit-transform: rotateY(-180deg);
+    -moz-transform: rotateY(-180deg);
+    -o-transform: rotateY(-180deg);
+    -ms-transform: rotateY(-180deg);
+    transform: rotateY(-180deg);
+    -webkit-box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
+    -moz-box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
+    box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
 }
 
 .frontside,
 .backside {
-  -webkit-backface-visibility: hidden;
-  -moz-backface-visibility: hidden;
-  -ms-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-transition: 1s;
-  -webkit-transform-style: preserve-3d;
-  -moz-transition: 1s;
-  -moz-transform-style: preserve-3d;
-  -o-transition: 1s;
-  -o-transform-style: preserve-3d;
-  -ms-transition: 1s;
-  -ms-transform-style: preserve-3d;
-  transition: 1s;
-  transform-style: preserve-3d;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transition: 1s;
+    -webkit-transform-style: preserve-3d;
+    -moz-transition: 1s;
+    -moz-transform-style: preserve-3d;
+    -o-transition: 1s;
+    -o-transform-style: preserve-3d;
+    -ms-transition: 1s;
+    -ms-transform-style: preserve-3d;
+    transition: 1s;
+    transform-style: preserve-3d;
 }
 
 .frontside .card,
 .backside .card {
-  min-height: 312px;
+    min-height: 312px;
 }
 
 .backside .card a {
-  font-size: 18px;
-  color: #4d0707 !important;
+    font-size: 18px;
+    color: #4d0707 !important;
 }
 
 .frontside .card .card-title,
 .backside .card .card-title {
-  color: #081a6b !important;
+    color: #081a6b !important;
 }
 
 .frontside .card .card-body img {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
 }
 
+/* ============================================ */
+/* ===== بخش جستجو ===== */
+/* ============================================ */
+
 .search-bubble {
-  position: absolute;
-  width: 250px;
-  height: 80px;
-  background: rgba(255, 0, 0, 0.1);
-  border-radius: 50px;
-  filter: blur(10px);
-  z-index: 0;
+    position: absolute;
+    width: 250px;
+    height: 80px;
+    background: rgba(255, 0, 0, 0.1);
+    border-radius: 50px;
+    filter: blur(10px);
+    z-index: 0;
 }
 
 .search-box {
-  border: black solid 2px;
-  position: relative;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  padding: 10px;
-  background: white;
-  border-radius: 50px;
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 400px;
+    border: black solid 2px;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 10px;
+    background: white;
+    border-radius: 50px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
 }
 
 .search-box input {
-  border: none;
-  outline: none;
-  flex: 1;
-  padding: 5px 10px;
+    border: none;
+    outline: none;
+    flex: 1;
+    padding: 5px 10px;
 }
 
 .search-box .btn {
-  box-shadow: none;
+    box-shadow: none;
 }
 
 .suggestions-list {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  background: white;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  display: none;
-  max-height: 200px;
-  overflow-y: auto;
-  z-index: 2;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    display: none;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 2;
 }
 
 .suggestion-item {
-  padding: 8px 12px;
-  cursor: pointer;
-  transition: background 0.3s;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background 0.3s;
 }
 
 .suggestion-item:hover {
-  background: #f0f0f0;
+    background: #f0f0f0;
 }
 
 .title {
-  font-size: 1.2em;
-  font-weight: bold;
-  margin-bottom: 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
 .coursedescibe {
-  font-size: 0.9em;
-  line-height: 1.4;
+    font-size: 0.9em;
+    line-height: 1.4;
 }
 
-/* Modal Styling */
+/* ============================================ */
+/* ===== مدال ===== */
+/* ============================================ */
+
 .modal {
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.8);
-  transition: opacity 0.5s ease;
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8);
+    transition: opacity 0.5s ease;
 }
 
 .modal-content {
-  background-color: #fefefe;
-  margin: 10% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-  max-width: 600px;
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
-  border-radius: 10px;
-  position: relative;
-  text-align: center;
-  animation: fadeIn 1s;
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    position: relative;
+    text-align: center;
+    animation: fadeIn 1s;
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 .close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
 }
 
 .close:hover,
 .close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 hr {
-  border: none;
-  border-top: 1px solid #ccc;
-  margin: 20px 0;
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 20px 0;
 }
 
 .postcard__preview-txt p {
-  color: black !important;
+    color: black !important;
 }
 
 .custom-text {
-  color: black !important;
-  font-weight: 400 !important;
+    color: black !important;
+    font-weight: 400 !important;
 }
 
+/* ============================================ */
+/* ===== پکیج‌ها (Postcard) ===== */
+/* ============================================ */
+
 .dark {
-  background: #110f16;
+    background: #110f16;
 }
 
 .light {
-  background: #f3f5f7;
+    background: #f3f5f7;
 }
 
 #pageHeaderTitle {
-  margin: 2rem 0;
-  text-transform: uppercase;
-  text-align: center;
-  font-size: 2.5rem;
+    margin: 2rem 0;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 2.5rem;
 }
 
-/* Cards */
 .postcard {
-  flex-wrap: wrap;
-  display: flex;
-  box-shadow: 0 4px 21px -12px rgba(0, 0, 0, 0.66);
-  border-radius: 10px;
-  margin: 0 0 2rem 0;
-  overflow: hidden;
-  position: relative;
-  color: #ffffff;
+    flex-wrap: wrap;
+    display: flex;
+    box-shadow: 0 4px 21px -12px rgba(0, 0, 0, 0.66);
+    border-radius: 10px;
+    margin: 0 0 2rem 0;
+    overflow: hidden;
+    position: relative;
+    color: #ffffff;
 }
+
 .postcard.dark {
-  background-color: #18151f;
+    background-color: #18151f;
 }
+
 .postcard.light {
-  background-color: #e1e5ea;
+    background-color: #e1e5ea;
 }
+
 .postcard .t-dark {
-  color: #18151f;
+    color: #18151f;
 }
+
 .postcard a {
-  color: inherit;
+    color: inherit;
 }
+
 .postcard h1,
 .postcard .h1 {
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-  line-height: 1.2;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    line-height: 1.2;
 }
+
 .postcard .small {
-  font-size: 80%;
+    font-size: 80%;
 }
+
 .postcard .postcard__title {
-  font-size: 1.75rem;
+    font-size: 1.75rem;
 }
+
 .postcard .postcard__img {
-  max-height: 180px;
-  width: 100%;
-  object-fit: cover;
-  position: relative;
+    max-height: 180px;
+    width: 100%;
+    object-fit: cover;
+    position: relative;
 }
+
 .postcard .postcard__img_link {
-  display: contents;
+    display: contents;
 }
+
 .postcard .postcard__bar {
-  width: 50px;
-  height: 10px;
-  margin: 10px 0;
-  border-radius: 5px;
-  background-color: #424242;
-  transition: width 0.2s ease;
+    width: 50px;
+    height: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    background-color: #424242;
+    transition: width 0.2s ease;
 }
+
 .postcard .postcard__text {
-  padding: 1.5rem;
-  position: relative;
-  display: flex;
-  flex-direction: column;
+    padding: 1.5rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
 }
+
 .postcard .postcard__preview-txt {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-align: justify;
-  height: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: justify;
+    height: 100%;
 }
+
 .postcard .postcard__tagbox {
-  display: flex;
-  flex-flow: row wrap;
-  font-size: 14px;
-  margin: 20px 0 0 0;
-  padding: 0;
-  justify-content: center;
+    display: flex;
+    flex-flow: row wrap;
+    font-size: 14px;
+    margin: 20px 0 0 0;
+    padding: 0;
+    justify-content: center;
 }
+
 .postcard .postcard__tagbox .tag__item {
-  display: inline-block;
-  background: rgba(83, 83, 83, 0.4);
-  border-radius: 3px;
-  padding: 2.5px 10px;
-  margin: 0 5px 5px 0;
-  cursor: default;
-  user-select: none;
-  transition: background-color 0.3s;
+    display: inline-block;
+    background: rgba(83, 83, 83, 0.4);
+    border-radius: 3px;
+    padding: 2.5px 10px;
+    margin: 0 5px 5px 0;
+    cursor: default;
+    user-select: none;
+    transition: background-color 0.3s;
 }
+
 .postcard .postcard__tagbox .tag__item:hover {
-  background: rgba(83, 83, 83, 0.8);
+    background: rgba(83, 83, 83, 0.8);
 }
+
 .postcard:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-image: linear-gradient(-70deg, #424242, transparent 50%);
-  opacity: 1;
-  border-radius: 10px;
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: linear-gradient(-70deg, #424242, transparent 50%);
+    opacity: 1;
+    border-radius: 10px;
 }
+
 .postcard:hover .postcard__bar {
-  width: 100px;
+    width: 100px;
 }
+
+/* ============================================ */
+/* ===== دسکتاپ پکیج‌ها ===== */
+/* ============================================ */
 
 @media screen and (min-width: 769px) {
-  .postcard {
-    flex-wrap: inherit;
-  }
-  .postcard .postcard__title {
-    font-size: 2rem;
-  }
-  .postcard .postcard__tagbox {
-    justify-content: start;
-  }
-  .postcard .postcard__img {
-    max-width: 300px;
-    max-height: 100%;
-    transition: transform 0.3s ease;
-  }
-  .postcard .postcard__text {
-    padding: 3rem;
-    width: 100%;
-  }
-  .postcard .media.postcard__text:before {
-    content: "";
-    position: absolute;
-    display: block;
-    background: #18151f;
-    top: -20%;
-    height: 130%;
-    width: 55px;
-  }
-  .postcard:hover .postcard__img {
-    transform: scale(1.1);
-  }
-  .postcard:nth-child(2n + 1) {
-    flex-direction: row;
-  }
-  .postcard:nth-child(2n + 0) {
-    flex-direction: row-reverse;
-  }
-  .postcard:nth-child(2n + 1) .postcard__text::before {
-    left: -12px !important;
-    transform: rotate(4deg);
-  }
-  .postcard:nth-child(2n + 0) .postcard__text::before {
-    right: -12px !important;
-    transform: rotate(-4deg);
-  }
-}
-@media screen and (min-width: 1024px) {
-  .postcard__text {
-    padding: 2rem 3.5rem;
-  }
-  .postcard__text:before {
-    content: "";
-    position: absolute;
-    display: block;
-    top: -20%;
-    height: 130%;
-    width: 55px;
-  }
-  .postcard.dark .postcard__text:before {
-    background: #18151f;
-  }
-  .postcard.light .postcard__text:before {
-    background: #e1e5ea;
-  }
+    .postcard {
+        flex-wrap: inherit;
+    }
+    .postcard .postcard__title {
+        font-size: 2rem;
+    }
+    .postcard .postcard__tagbox {
+        justify-content: start;
+    }
+    .postcard .postcard__img {
+        max-width: 300px;
+        max-height: 100%;
+        transition: transform 0.3s ease;
+    }
+    .postcard .postcard__text {
+        padding: 3rem;
+        width: 100%;
+    }
+    .postcard .media.postcard__text:before {
+        content: "";
+        position: absolute;
+        display: block;
+        background: #18151f;
+        top: -20%;
+        height: 130%;
+        width: 55px;
+    }
+    .postcard:hover .postcard__img {
+        transform: scale(1.1);
+    }
+    .postcard:nth-child(2n+1) {
+        flex-direction: row;
+    }
+    .postcard:nth-child(2n+0) {
+        flex-direction: row-reverse;
+    }
+    .postcard:nth-child(2n+1) .postcard__text::before {
+        left: -12px !important;
+        transform: rotate(4deg);
+    }
+    .postcard:nth-child(2n+0) .postcard__text::before {
+        right: -12px !important;
+        transform: rotate(-4deg);
+    }
 }
 
-/* Custom CSS for the carousel */
+@media screen and (min-width: 1024px) {
+    .postcard__text {
+        padding: 2rem 3.5rem;
+    }
+    .postcard__text:before {
+        content: "";
+        position: absolute;
+        display: block;
+        top: -20%;
+        height: 130%;
+        width: 55px;
+    }
+    .postcard.dark .postcard__text:before {
+        background: #18151f;
+    }
+    .postcard.light .postcard__text:before {
+        background: #e1e5ea;
+    }
+}
+
+/* ============================================ */
+/* ===== تنظیم پکیج‌ها در موبایل ===== */
+/* ============================================ */
+
+@media (max-width: 768px) {
+    .postcard {
+        flex-direction: column !important;
+        max-width: 100% !important;
+        margin-bottom: 20px !important;
+        border-radius: 12px !important;
+        overflow: hidden !important;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
+    }
+
+    .postcard .postcard__img {
+        height: 200px !important;
+        width: 100% !important;
+        object-fit: cover !important;
+        border-radius: 0 !important;
+        max-width: 100% !important;
+        max-height: 200px !important;
+    }
+
+    .postcard .postcard__text {
+        padding: 12px 15px !important;
+        width: 100% !important;
+        flex: 1 !important;
+    }
+
+    .postcard .postcard__title {
+        font-size: 16px !important;
+        margin-bottom: 4px !important;
+    }
+
+    .postcard .postcard__bar {
+        width: 50px !important;
+        height: 3px !important;
+        margin-bottom: 8px !important;
+    }
+
+    .postcard .postcard__preview-txt {
+        font-size: 13px !important;
+        line-height: 1.6 !important;
+        max-height: 80px !important;
+        overflow: hidden !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 3 !important;
+        -webkit-box-orient: vertical !important;
+        padding: 0 !important;
+        text-align: justify !important;
+    }
+
+    .postcard .postcard__preview-txt p {
+        font-size: 13px !important;
+        line-height: 1.6 !important;
+        margin-bottom: 4px !important;
+        padding: 0 !important;
+    }
+
+    .postcard .postcard__tagbox {
+        padding: 4px 0 !important;
+        margin-top: 4px !important;
+        justify-content: center !important;
+    }
+
+    .postcard .tag__item {
+        font-size: 12px !important;
+        padding: 4px 12px !important;
+    }
+
+    .postcard:before {
+        display: none !important;
+    }
+
+    .postcard:nth-child(2n+1),
+    .postcard:nth-child(2n+0) {
+        flex-direction: column !important;
+    }
+
+    #pageHeaderTitle {
+        font-size: 20px !important;
+    }
+
+    #pageHeaderTitle img {
+        height: 22px !important;
+        width: 22px !important;
+    }
+
+    .light .container {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+    }
+}
+
+/* موبایل خیلی کوچک */
+@media (max-width: 400px) {
+    .postcard .postcard__img {
+        height: 160px !important;
+        max-height: 160px !important;
+    }
+
+    .postcard .postcard__text {
+        padding: 8px 10px !important;
+    }
+
+    .postcard .postcard__title {
+        font-size: 14px !important;
+    }
+
+    .postcard .postcard__preview-txt {
+        font-size: 11px !important;
+        max-height: 60px !important;
+        -webkit-line-clamp: 2 !important;
+    }
+
+    .postcard .postcard__preview-txt p {
+        font-size: 11px !important;
+    }
+
+    .postcard .tag__item {
+        font-size: 10px !important;
+        padding: 2px 8px !important;
+    }
+
+    #pageHeaderTitle {
+        font-size: 17px !important;
+    }
+
+    #pageHeaderTitle img {
+        height: 18px !important;
+        width: 18px !important;
+    }
+}
+
+/* ============================================ */
+/* ===== کاروسل ===== */
+/* ============================================ */
+
 .carousel-item img {
-  height: 400px; /* ارتفاع پیش‌فرض برای دسکتاپ و تبلت */
-  object-fit: cover; /* اطمینان از پوشش کامل تصویر بدون کشیدگی */
-  height: auto; /* اجازه می‌دهد تا ارتفاع تصویر بر اساس عرض آن تنظیم شود */
+    height: 400px;
+    object-fit: cover;
+    height: auto;
 }
 
 .carousel-caption {
-  background-color: rgba(
-    0,
-    0,
-    0,
-    0.5
-  ); /* پس‌زمینه نیمه‌شفاف برای خوانایی بهتر */
-  padding: 15px;
-  border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 15px;
+    border-radius: 5px;
 }
 
-/* Media Query برای صفحه‌نمایش‌های کوچک (موبایل) */
 @media (max-width: 767.98px) {
-  .carousel-item img {
-    height: 250px; /* ارتفاع کمتر برای موبایل */
-  }
+    .carousel-item img {
+        height: 250px;
+    }
 
-  .carousel-caption {
-    font-size: 0.8em; /* کاهش اندازه فونت کپشن برای موبایل */
-    padding: 10px;
-  }
+    .carousel-caption {
+        font-size: 0.8em;
+        padding: 10px;
+    }
 }
 
-/* CSS برای بخش پارالاکس */
+/* ============================================ */
+/* ===== پارالاکس ===== */
+/* ============================================ */
+
 .parallax-section {
-  background-image: url("../images/33.webp"); /* تصویر پس‌زمینه پارالاکس */
-  min-height: 500px; /* حداقل ارتفاع بخش */
-  background-attachment: fixed; /* ایجاد افکت پارالاکس */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: white; /* رنگ متن روی پس‌زمینه پارالاکس */
-  position: relative;
-  z-index: 1; /* اطمینان از قرار گرفتن روی محتوای دیگر */
+    background-image: url("../images/33.webp");
+    min-height: 500px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    position: relative;
+    z-index: 1;
 }
 
 .parallax-section::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5); /* لایه تاریک برای خوانایی بیشتر متن */
-  z-index: -1; /* قرار گرفتن زیر متن */
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: -1;
 }
 
 .parallax-content h2 {
-  font-size: 3rem;
-  margin-bottom: 20px;
-  font-weight: bold;
+    font-size: 3rem;
+    margin-bottom: 20px;
+    font-weight: bold;
 }
 
 .parallax-content p {
-  font-size: 1.2rem;
-  max-width: 800px;
-  margin: 0 auto;
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
+/* ============================================ */
+/* ===== کارت‌های انیمیشنی ===== */
+/* ============================================ */
+
 .animated-card {
-  border-color: #d85353 !important;
-  border-width: 2px;
-  border-style: solid;
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-  border-radius: 12px;
+    border-color: #d85353 !important;
+    border-width: 2px;
+    border-style: solid;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    border-radius: 12px;
 }
 
 .animated-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
 
 .btn-primary-custom {
-  background-color: #f95074;
-  border-color: #f95074;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 8px;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+    background-color: #f95074;
+    border-color: #f95074;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .btn-primary-custom:hover {
-  background-color: #d13d5e;
-  border-color: #d13d5e;
-  color: white;
-  transform: translateY(-2px);
+    background-color: #d13d5e;
+    border-color: #d13d5e;
+    color: white;
+    transform: translateY(-2px);
 }
 
-.rtl-title {
-  text-align: right;
-  direction: rtl;
-}
+/* ============================================ */
+/* ===== استوری‌ها ===== */
+/* ============================================ */
 
-
-
-
-
-
-
-
-/* .... */
-/* ===== بخش استوری‌ها ===== */
 .stories-wrapper {
     background: #fff;
     border-radius: 12px;
@@ -919,7 +1044,10 @@ hr {
     font-weight: 700;
 }
 
-/* ریسپانسیو */
+/* ============================================ */
+/* ===== ریسپانسیو استوری‌ها ===== */
+/* ============================================ */
+
 @media (max-width: 576px) {
     .story-avatar {
         width: 68px;
@@ -943,5 +1071,385 @@ hr {
     }
     .story-modal-title {
         font-size: 17px;
+    }
+}
+
+/* ============================================ */
+/* ===== کارت‌های Flip دسکتاپ (۳ ستونه) ===== */
+/* ============================================ */
+
+@media (min-width: 992px) {
+    #team .row {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+    }
+
+    #team .col-6 {
+        flex: 0 0 33.333333% !important;
+        max-width: 33.333333% !important;
+        display: flex !important;
+    }
+    
+    #team .col-6 .image-flip {
+        width: 100% !important;
+        height: 100% !important;
+    }
+    
+    #team .col-6 .mainflip {
+        width: 100% !important;
+        height: 100% !important;
+    }
+}
+
+/* تبلت: ۲ ستونه */
+@media (min-width: 768px) and (max-width: 991px) {
+    #team .col-6 {
+        flex: 0 0 50% !important;
+        max-width: 50% !important;
+    }
+}
+
+/* موبایل: ۲ ستونه با ارتفاع کمتر */
+@media (max-width: 767px) {
+    #team .col-6 {
+        flex: 0 0 50% !important;
+        max-width: 50% !important;
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+    }
+    
+    #team .col-6 .card {
+        min-height: 220px !important;
+        max-height: 260px !important;
+        height: auto !important;
+    }
+
+    #team .col-6 .frontside .card-body p img {
+        max-height: 70px !important;
+        width: auto !important;
+    }
+
+    #team .col-6 .card-title {
+        font-size: 12px !important;
+        margin-bottom: 2px !important;
+    }
+
+    #team .col-6 .card-text {
+        font-size: 10px !important;
+        line-height: 1.3 !important;
+        margin-bottom: 3px !important;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    #team .col-6 .card-body {
+        padding: 6px 4px !important;
+    }
+
+    #team .col-6 .btn-sm {
+        padding: 2px 8px !important;
+        font-size: 10px !important;
+    }
+
+    #team .col-6 .backside .card {
+        min-height: 220px !important;
+        max-height: 260px !important;
+    }
+
+    #team .col-6 .backside .card-body {
+        padding: 6px 8px !important;
+        margin-top: 0 !important;
+    }
+
+    #team .col-6 .backside .card-text {
+        -webkit-line-clamp: 3 !important;
+        font-size: 9px !important;
+        line-height: 1.3 !important;
+    }
+
+    #team .col-6 .backside .card-title {
+        font-size: 11px !important;
+    }
+}
+
+/* موبایل خیلی کوچک */
+@media (max-width: 400px) {
+    #team .col-6 .card {
+        min-height: 180px !important;
+        max-height: 210px !important;
+    }
+
+    #team .col-6 .frontside .card-body p img {
+        max-height: 50px !important;
+    }
+
+    #team .col-6 .card-title {
+        font-size: 10px !important;
+    }
+
+    #team .col-6 .card-text {
+        font-size: 8px !important;
+        -webkit-line-clamp: 2 !important;
+    }
+
+    #team .col-6 .backside .card {
+        min-height: 180px !important;
+        max-height: 210px !important;
+    }
+
+    #team .col-6 .backside .card-text {
+        font-size: 8px !important;
+        -webkit-line-clamp: 3 !important;
+    }
+}
+
+/* ============================================ */
+/* ===== رفع مشکلات موبایل و دسکتاپ ===== */
+/* ============================================ */
+
+/* ----- ۱. رفع پکیج‌ها در موبایل ----- */
+@media (max-width: 768px) {
+    .postcard {
+        flex-direction: column !important;
+        max-width: 100% !important;
+        margin-bottom: 20px !important;
+        border-radius: 12px !important;
+        overflow: hidden !important;
+    }
+
+    .postcard .postcard__img {
+        height: 200px !important;
+        width: 100% !important;
+        object-fit: cover !important;
+        max-width: 100% !important;
+    }
+
+    .postcard .postcard__text {
+        padding: 12px 15px !important;
+        width: 100% !important;
+    }
+
+    .postcard .postcard__title {
+        font-size: 16px !important;
+        margin-bottom: 4px !important;
+    }
+
+    .postcard .postcard__preview-txt {
+        font-size: 13px !important;
+        line-height: 1.6 !important;
+        max-height: 80px !important;
+        overflow: hidden !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 3 !important;
+        -webkit-box-orient: vertical !important;
+    }
+
+    .postcard .postcard__preview-txt p {
+        font-size: 13px !important;
+        line-height: 1.6 !important;
+        margin-bottom: 4px !important;
+    }
+
+    .postcard .postcard__tagbox {
+        padding: 4px 0 !important;
+        margin-top: 4px !important;
+        justify-content: center !important;
+    }
+
+    .postcard .tag__item {
+        font-size: 12px !important;
+        padding: 4px 12px !important;
+    }
+
+    .postcard:before {
+        display: none !important;
+    }
+
+    .postcard:nth-child(2n+1),
+    .postcard:nth-child(2n+0) {
+        flex-direction: column !important;
+    }
+
+    #pageHeaderTitle {
+        font-size: 20px !important;
+    }
+
+    #pageHeaderTitle img {
+        height: 22px !important;
+        width: 22px !important;
+    }
+}
+
+@media (max-width: 400px) {
+    .postcard .postcard__img {
+        height: 160px !important;
+    }
+
+    .postcard .postcard__text {
+        padding: 8px 10px !important;
+    }
+
+    .postcard .postcard__title {
+        font-size: 14px !important;
+    }
+
+    .postcard .postcard__preview-txt {
+        font-size: 11px !important;
+        max-height: 60px !important;
+        -webkit-line-clamp: 2 !important;
+    }
+
+    .postcard .postcard__preview-txt p {
+        font-size: 11px !important;
+    }
+
+    .postcard .tag__item {
+        font-size: 10px !important;
+        padding: 2px 8px !important;
+    }
+
+    #pageHeaderTitle {
+        font-size: 17px !important;
+    }
+
+    #pageHeaderTitle img {
+        height: 18px !important;
+        width: 18px !important;
+    }
+}
+
+/* ----- ۲. رفع کارت‌های زرد در دسکتاپ ----- */
+@media (min-width: 992px) {
+    #team .row {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+    }
+
+    #team .col-6 {
+        flex: 0 0 33.333333% !important;
+        max-width: 33.333333% !important;
+        display: flex !important;
+    }
+    
+    #team .col-6 .image-flip {
+        width: 100% !important;
+        height: 100% !important;
+    }
+    
+    #team .col-6 .mainflip {
+        width: 100% !important;
+        height: 100% !important;
+    }
+}
+
+#team .card {
+    height: 100% !important;
+    min-height: 320px !important;
+}
+
+/* تبلت: ۲ ستونه */
+@media (min-width: 768px) and (max-width: 991px) {
+    #team .col-6 {
+        flex: 0 0 50% !important;
+        max-width: 50% !important;
+    }
+}
+
+/* موبایل: ۲ ستونه با ارتفاع کمتر */
+@media (max-width: 767px) {
+    #team .col-6 {
+        flex: 0 0 50% !important;
+        max-width: 50% !important;
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+    }
+    
+    #team .col-6 .card {
+        min-height: 220px !important;
+        max-height: 260px !important;
+        height: auto !important;
+    }
+
+    #team .col-6 .frontside .card-body p img {
+        max-height: 70px !important;
+        width: auto !important;
+    }
+
+    #team .col-6 .card-title {
+        font-size: 12px !important;
+        margin-bottom: 2px !important;
+    }
+
+    #team .col-6 .card-text {
+        font-size: 10px !important;
+        line-height: 1.3 !important;
+        margin-bottom: 3px !important;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    #team .col-6 .card-body {
+        padding: 6px 4px !important;
+    }
+
+    #team .col-6 .btn-sm {
+        padding: 2px 8px !important;
+        font-size: 10px !important;
+    }
+
+    #team .col-6 .backside .card {
+        min-height: 220px !important;
+        max-height: 260px !important;
+    }
+
+    #team .col-6 .backside .card-body {
+        padding: 6px 8px !important;
+        margin-top: 0 !important;
+    }
+
+    #team .col-6 .backside .card-text {
+        -webkit-line-clamp: 3 !important;
+        font-size: 9px !important;
+        line-height: 1.3 !important;
+    }
+
+    #team .col-6 .backside .card-title {
+        font-size: 11px !important;
+    }
+}
+
+@media (max-width: 400px) {
+    #team .col-6 .card {
+        min-height: 180px !important;
+        max-height: 210px !important;
+    }
+
+    #team .col-6 .frontside .card-body p img {
+        max-height: 50px !important;
+    }
+
+    #team .col-6 .card-title {
+        font-size: 10px !important;
+    }
+
+    #team .col-6 .card-text {
+        font-size: 8px !important;
+        -webkit-line-clamp: 2 !important;
+    }
+
+    #team .col-6 .backside .card {
+        min-height: 180px !important;
+        max-height: 210px !important;
+    }
+
+    #team .col-6 .backside .card-text {
+        font-size: 8px !important;
+        -webkit-line-clamp: 3 !important;
     }
 }

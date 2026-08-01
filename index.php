@@ -16,7 +16,8 @@ if (session_status() === PHP_SESSION_NONE) {
     <meta property="og:title" content="موسسه هفت هنر سیمرغ">
     <meta property="og:description"
         content="موسسه هفت هنر سیمرغ، پیشرو در آموزش گویندگی، انیمیشن، طراحی و موسیقی با دوره‌های تخصصی و کارگاه‌های عملی.">
-    <meta property="og:image" content="images/logo1.png">
+        
+    <meta property="og:image" content="https://simorghtv.com/images/logo1.png">
 
     <meta property="og:url" content="https://www.simorghtv.com">
     <meta property="og:type" content="website">
@@ -41,6 +42,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
+
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -62,18 +64,8 @@ if (session_status() === PHP_SESSION_NONE) {
     include "includes.php";
     ?>
 
+
     <style>
-    @font-face {
-        font-family: 'estedad';
-        src:
-            url('fonts/ttf/Estedad-Medium.ttf') format('truetype'),
-    }
-
-    body {
-        font-family: 'estedad', sans-serif !important;
-        line-height: 2 !important;
-    }
-
     /* ===== دکمه ثابت نصب در سمت چپ ===== */
     .install-fixed-btn {
         position: fixed;
@@ -108,7 +100,6 @@ if (session_status() === PHP_SESSION_NONE) {
         font-size: 1.3rem;
     }
 
-    /* مخفی کردن دکمه در موبایل کوچک */
     @media (max-width: 576px) {
         .install-fixed-btn {
             left: 10px;
@@ -139,6 +130,7 @@ if (session_status() === PHP_SESSION_NONE) {
         }
     }
     </style>
+
 
 </head>
 
