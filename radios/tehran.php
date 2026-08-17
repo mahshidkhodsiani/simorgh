@@ -126,6 +126,9 @@ if(isset($_GET['payment'])) {
         $payment_message = '<div class="alert alert-info text-center">ℹ️ این تراکنش قبلاً ثبت شده است.</div>';
     }
 }
+
+// آدرس فعلی برای بازگشت بعد از لاگین
+$current_url = $_SERVER['REQUEST_URI'];
 ?>
 
 <!doctype html>
@@ -365,6 +368,42 @@ if(isset($_GET['payment'])) {
         margin-bottom: 15px;
     }
 
+    /* استایل دکمه خروج */
+    .logout-btn {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 9999;
+        background: linear-gradient(135deg, #dc3545, #c82333);
+        color: white;
+        border: none;
+        border-radius: 60px;
+        padding: 12px 24px;
+        font-weight: bold;
+        font-size: 15px;
+        box-shadow: 0 8px 25px rgba(220, 53, 69, 0.4);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        font-family: inherit;
+        cursor: pointer;
+    }
+
+    .logout-btn:hover {
+        transform: translateY(-3px) scale(1.03);
+        box-shadow: 0 12px 35px rgba(220, 53, 69, 0.5);
+        color: white;
+        background: linear-gradient(135deg, #c82333, #a71d2a);
+    }
+
+    .logout-btn svg {
+        width: 20px;
+        height: 20px;
+        fill: currentColor;
+    }
+
     @media (max-width: 768px) {
         .tehran-header {
             padding: 30px 20px;
@@ -376,6 +415,14 @@ if(isset($_GET['payment'])) {
 
         .playlist-item-tehran {
             padding: 12px 15px;
+        }
+
+        .logout-btn {
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 18px;
+            font-size: 13px;
+            gap: 6px;
         }
     }
     </style>
@@ -437,9 +484,9 @@ if(isset($_GET['payment'])) {
             <div class="col-lg-7">
                 <?php if(!isset($_SESSION['user_id'])): ?>
                 <div class="text-center mb-4">
-                    <div class="alert alert-warning">برای دسترسی به برنامه‌ها، لطفاً <a href="../login.php">وارد
+                    <div class="alert alert-warning">برای دسترسی به برنامه‌ها، لطفاً <a href="../login.php?redirect=<?php echo urlencode($current_url); ?>">وارد
                             شوید</a></div>
-                    <button class="btn btn-info btn-lg" onclick="location.href='../login.php'">🔐 ورود یا
+                    <button class="btn btn-info btn-lg" onclick="location.href='../login.php?redirect=<?php echo urlencode($current_url); ?>'">🔐 ورود یا
                         ثبت‌نام</button>
                 </div>
                 <div id="playlistContainerTehran">
@@ -538,7 +585,17 @@ if(isset($_GET['payment'])) {
             </div>
         </div>
     </div>
+
     <?php include 'footer.php'; ?>
+
+    <!-- دکمه خروج - فقط در صورتی که کاربر وارد شده باشد نشان داده می‌شود -->
+    <?php if(isset($_SESSION['user_id'])): ?>
+    <a href="logout.php" class="logout-btn" title="خروج از حساب کاربری">
+        <svg viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+        خروج
+    </a>
+    <?php endif; ?>
+
     <?php $conn->close(); ?>
     <script>
     const audioTehran = document.getElementById('mainAudioTehran');
