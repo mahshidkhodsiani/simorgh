@@ -33,14 +33,105 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>رادیو سیمرغ | پخش آنلاین برنامه‌های شنیدنی</title>
-    <meta name="description"
-        content="رادیو سیمرغ - مجموعه‌ای از دلنوشته‌ها، دکلمه‌ها، طنزهای رادیویی و برنامه‌های شنیدنی">
 
+    <!-- ========================================== -->
+    <!-- تگ‌های سئو اصلی (بهینه‌شده)               -->
+    <!-- ========================================== -->
+    <title>رادیو سیمرغ | پادکست، داستان صوتی و برنامه‌های رادیویی آنلاین</title>
+    <meta name="description" content="رادیو سیمرغ: بزرگترین آرشیو پادکست، داستان صوتی و برنامه‌های رادیویی. دلنوشته‌ها، دکلمه‌ها، طنزهای رادیویی و محتوای شنیدنی با کیفیت بالا، رایگان و آنلاین.">
+    <meta name="keywords" content="رادیو سیمرغ, پادکست فارسی, داستان صوتی, کتاب صوتی, برنامه رادیویی, دلنوشته, دکلمه, طنز رادیویی, موسیقی سنتی, پادکست فرهنگی, رادیو آنلاین, محتوای شنیدنی">
+    <meta name="author" content="موسسه هفت هنر سیمرغ">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <link rel="canonical" href="https://simorghtv.com/radios/radio_simorgh.php">
+
+    <!-- ========================================== -->
+    <!-- Open Graph / Social Media                  -->
+    <!-- ========================================== -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="رادیو سیمرغ | پادکست، داستان صوتی و برنامه‌های رادیویی آنلاین">
+    <meta property="og:description" content="بزرگترین آرشیو پادکست، داستان صوتی و برنامه‌های رادیویی. دلنوشته‌ها، دکلمه‌ها و طنزهای رادیویی با کیفیت بالا.">
+    <meta property="og:url" content="https://simorghtv.com/radios/radio_simorgh.php">
+    <meta property="og:site_name" content="رادیو سیمرغ">
+    <meta property="og:image" content="https://simorghtv.com/images/36.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+
+    <!-- ========================================== -->
+    <!-- Twitter Card                               -->
+    <!-- ========================================== -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="رادیو سیمرغ | پادکست، داستان صوتی و برنامه‌های رادیویی آنلاین">
+    <meta name="twitter:description" content="آرشیو پادکست، داستان صوتی و برنامه‌های رادیویی با کیفیت بالا، رایگان و آنلاین.">
+    <meta name="twitter:image" content="https://simorghtv.com/images/36.png">
+
+    <!-- ========================================== -->
+    <!-- JSON-LD (Schema.org) - سئو پیشرفته         -->
+    <!-- ========================================== -->
+
+    <!-- وب‌سایت اصلی -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "رادیو سیمرغ",
+        "url": "https://simorghtv.com/radios/",
+        "description": "پخش آنلاین پادکست، داستان صوتی و برنامه‌های رادیویی",
+        "inLanguage": "fa-IR"
+    }
+    </script>
+
+    <!-- مجموعه پادکست (PodcastSeries) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "PodcastSeries",
+        "name": "رادیو سیمرغ",
+        "description": "مجموعه‌ای از دلنوشته‌ها، دکلمه‌ها، طنزهای رادیویی و برنامه‌های شنیدنی",
+        "url": "https://simorghtv.com/radios/radio_simorgh.php",
+        "language": "fa",
+        "genre": "پادکست فرهنگی، داستان صوتی، برنامه رادیویی",
+        "numberOfEpisodes": "<?php echo count($programs); ?>"
+    }
+    </script>
+
+    <!-- اگر حداقل یک برنامه وجود دارد، برای هر برنامه آیتم جداگانه ایجاد کن -->
+    <?php if(count($programs) > 0): ?>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": "لیست برنامه‌های رادیو سیمرغ",
+        "description": "لیست کامل پادکست‌ها و داستان‌های صوتی رادیو سیمرغ",
+        "numberOfItems": "<?php echo count($programs); ?>",
+        "itemListElement": [
+        <?php foreach($programs as $index => $program): ?>
+            {
+                "@type": "ListItem",
+                "position": <?php echo $index + 1; ?>,
+                "item": {
+                    "@type": "PodcastEpisode",
+                    "name": "<?php echo addslashes(htmlspecialchars($program['title'])); ?>",
+                    "description": "برنامه <?php echo addslashes(htmlspecialchars($program['program_type'])); ?> از رادیو سیمرغ",
+                    "contentUrl": "<?php echo htmlspecialchars($program['file_path']); ?>",
+                    "inLanguage": "fa",
+                    "genre": "<?php echo addslashes(htmlspecialchars($program['program_type'])); ?>"
+                }
+            }
+            <?php if($index < count($programs) - 1) echo ','; ?>
+        <?php endforeach; ?>
+        ]
+    }
+    </script>
+    <?php endif; ?>
+
+    <!-- ========================================== -->
+    <!-- PWA و فایل‌های اضافی                      -->
+    <!-- ========================================== -->
     <?php include "includes.php"; ?>
     <link rel="icon" href="../images/logo1.ico" type="image/x-icon">
 
     <style>
+    /* ===== استایل‌های صفحه (بدون تغییر در منطق) ===== */
     :root {
         --simorgh-gold: #D4AF37;
         --simorgh-dark: #1a1a2e;
@@ -125,15 +216,8 @@ $conn->close();
     }
 
     @keyframes float {
-
-        0%,
-        100% {
-            transform: translateY(0);
-        }
-
-        50% {
-            transform: translateY(-10px);
-        }
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
     }
 
     .now-playing-title {
@@ -220,17 +304,9 @@ $conn->close();
     }
 
     @keyframes pulse {
-        0% {
-            box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4);
-        }
-
-        70% {
-            box-shadow: 0 0 0 10px rgba(212, 175, 55, 0);
-        }
-
-        100% {
-            box-shadow: 0 0 0 0 rgba(212, 175, 55, 0);
-        }
+        0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
+        70% { box-shadow: 0 0 0 10px rgba(212, 175, 55, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
     }
 
     .program-title {
@@ -290,15 +366,12 @@ $conn->close();
         .simorgh-header h1 {
             font-size: 1.8rem;
         }
-
         .playlist-section {
             margin-top: 20px;
         }
-
         .program-item {
             padding: 10px 12px;
         }
-
         .play-btn {
             width: 38px;
             height: 38px;
@@ -313,20 +386,30 @@ $conn->close();
     <?php include 'header.php'; ?>
 
     <div class="container mt-4 mb-5">
+        <!-- ========================================== -->
+        <!-- هدر صفحه با کلمات کلیدی سئو                -->
+        <!-- ========================================== -->
         <div class="simorgh-header">
-            <h1>🎙️ رادیو سیمرغ</h1>
-            <p class="text-white-50 mb-0">دلنوشته‌ها، دکلمه‌ها، طنزهای رادیویی و برنامه‌های شنیدنی</p>
-            <small class="text-muted">🎧 <?php echo count($programs); ?> برنامه برای لحظات ناب شما</small>
+            <h1>🎙️ رادیو سیمرغ | پادکست و داستان‌های صوتی</h1>
+            <p class="text-white-50 mb-0">دلنوشته‌ها، دکلمه‌ها، طنزهای رادیویی و برنامه‌های شنیدنی با کیفیت بالا</p>
+            <small class="text-muted">🎧 <strong><?php echo count($programs); ?></strong> پادکست و داستان صوتی برای لحظات ناب شما</small>
+            <div class="mt-2">
+                <span class="badge bg-warning text-dark ms-1">پادکست فرهنگی</span>
+                <span class="badge bg-warning text-dark ms-1">داستان صوتی</span>
+                <span class="badge bg-warning text-dark ms-1">برنامه رادیویی</span>
+            </div>
         </div>
 
         <div class="row">
+            <!-- ========================================== -->
+            <!-- بخش پلیر (سمت چپ)                          -->
+            <!-- ========================================== -->
             <div class="col-lg-5 mb-4">
                 <div class="player-card">
                     <div class="text-center">
                         <div class="simorgh-icon" id="nowPlayingIcon">🦚</div>
                         <h3 id="nowPlayingTitle" class="now-playing-title">هیچ برنامه‌ای انتخاب نشده</h3>
-                        <span id="nowPlayingType" class="now-playing-type">برای شروع یکی از برنامه‌ها را انتخاب
-                            کنید</span>
+                        <span id="nowPlayingType" class="now-playing-type">برای شروع یکی از پادکست‌ها را انتخاب کنید</span>
 
                         <div class="mt-4">
                             <audio id="mainAudio" controls preload="metadata" style="width: 100%; border-radius: 50px;">
@@ -336,11 +419,12 @@ $conn->close();
                     </div>
                 </div>
 
+                <!-- آمار -->
                 <div class="stats-card">
                     <div class="row">
                         <div class="col-6">
                             <div class="stat-number"><?php echo count($programs); ?></div>
-                            <small>برنامه شنیدنی</small>
+                            <small>پادکست و داستان صوتی</small>
                         </div>
                         <div class="col-6">
                             <div class="stat-number">🎧</div>
@@ -350,13 +434,16 @@ $conn->close();
                 </div>
             </div>
 
+            <!-- ========================================== -->
+            <!-- لیست برنامه‌ها (سمت راست)                 -->
+            <!-- ========================================== -->
             <div class="col-lg-7">
                 <div class="playlist-section">
                     <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
-                        <h3 class="playlist-title">📻 لیست برنامه‌ها</h3>
+                        <h3 class="playlist-title">📻 لیست پادکست‌ها و داستان‌های صوتی</h3>
                         <div class="input-group w-50" style="min-width: 180px;">
                             <input type="text" id="searchPlaylist" class="form-control search-input"
-                                placeholder="جستجو...">
+                                placeholder="جستجوی پادکست...">
                             <span class="input-group-text">🔍</span>
                         </div>
                     </div>
@@ -364,22 +451,25 @@ $conn->close();
                     <div id="playlistContainer">
                         <?php if(count($programs) > 0): ?>
                         <?php foreach($programs as $index => $program): ?>
-                        <div class="program-item" data-title="<?php echo htmlspecialchars($program['title']); ?>"
-                            data-type="<?php echo htmlspecialchars($program['program_type']); ?>"
-                            data-file="<?php echo htmlspecialchars($program['file_path']); ?>"
-                            data-index="<?php echo $index; ?>">
+                        <div class="program-item" 
+                             data-title="<?php echo htmlspecialchars($program['title']); ?>"
+                             data-type="<?php echo htmlspecialchars($program['program_type']); ?>"
+                             data-file="<?php echo htmlspecialchars($program['file_path']); ?>"
+                             data-index="<?php echo $index; ?>">
                             <div class="row align-items-center">
                                 <div class="col-auto">
-                                    <button class="play-btn"
-                                        onclick="playProgram(this, <?php echo $index; ?>)">▶️</button>
+                                    <button class="play-btn" onclick="playProgram(this, <?php echo $index; ?>)"
+                                            aria-label="پخش <?php echo htmlspecialchars($program['title']); ?>">
+                                        ▶️
+                                    </button>
                                 </div>
                                 <div class="col">
                                     <div class="d-flex justify-content-between align-items-center flex-wrap">
                                         <div>
                                             <h6 class="program-title mb-1">
-                                                <?php echo htmlspecialchars($program['title']); ?></h6>
-                                            <span class="program-badge">🎙️
-                                                <?php echo htmlspecialchars($program['program_type']); ?></span>
+                                                <?php echo htmlspecialchars($program['title']); ?>
+                                            </h6>
+                                            <span class="program-badge">🎙️ <?php echo htmlspecialchars($program['program_type']); ?></span>
                                         </div>
                                         <small style="color: #D4AF37;">🎵 MP3</small>
                                     </div>
@@ -390,10 +480,42 @@ $conn->close();
                         <?php else: ?>
                         <div class="text-center py-5">
                             <div style="font-size: 60px;">🎙️</div>
-                            <h4 style="color: #D4AF37;">هنوز برنامه‌ای اضافه نشده</h4>
-                            <p class="text-muted">به زودی با برنامه‌های جدید در خدمت شما خواهیم بود</p>
+                            <h4 style="color: #D4AF37;">هنوز پادکستی اضافه نشده</h4>
+                            <p class="text-muted">به زودی با پادکست‌ها و داستان‌های صوتی جدید در خدمت شما خواهیم بود</p>
                         </div>
                         <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- بخش محتوای متنی برای سئو                   -->
+        <!-- ========================================== -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="player-card" style="border-color: rgba(212, 175, 55, 0.2);">
+                    <div class="card-body">
+                        <h2 class="text-center" style="color: #D4AF37; margin-bottom: 20px;">
+                            🎙️ بهترین پادکست‌ها و داستان‌های صوتی را در رادیو سیمرغ بشنوید
+                        </h2>
+                        <p style="color: #ddd; text-align: justify; line-height: 1.8;">
+                            <strong>رادیو سیمرغ</strong> بزرگترین آرشیو <strong>پادکست فارسی</strong>، 
+                            <strong>داستان صوتی</strong> و <strong>برنامه‌های رادیویی</strong> با کیفیت بالا است. 
+                            اگر به دنبال <strong>پادکست فرهنگی</strong>، <strong>دلنوشته‌های صوتی</strong>، 
+                            <strong>دکلمه‌های زیبا</strong> یا <strong>طنزهای رادیویی</strong> هستید، 
+                            رادیو سیمرغ بهترین انتخاب برای شماست.
+                        </p>
+                        <p style="color: #ddd; text-align: justify; line-height: 1.8;">
+                            تمام محتوای <strong>رادیو سیمرغ</strong> به صورت <strong>رایگان</strong> و 
+                            <strong>آنلاین</strong> در دسترس شماست. با ما همراه باشید و از شنیدن 
+                            بهترین <strong>پادکست‌ها و داستان‌های صوتی</strong> لذت ببرید.
+                        </p>
+                        <p style="color: #ddd; text-align: justify; line-height: 1.8;">
+                            <strong>کلمات کلیدی:</strong> 
+                            رادیو سیمرغ، پادکست فارسی، داستان صوتی، کتاب صوتی، برنامه رادیویی، 
+                            دلنوشته، دکلمه، طنز رادیویی، موسیقی سنتی، پادکست فرهنگی، رادیو آنلاین.
+                        </p>
                     </div>
                 </div>
             </div>

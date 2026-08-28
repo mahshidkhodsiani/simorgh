@@ -1,0 +1,35 @@
+[02-Dec-2025 11:03:06 Asia/Tehran] PHP Warning:  Undefined array key "spotplayer_id" in /home3/vuqgpgoc/public_html/admin/edit_package.php on line 251
+[02-Dec-2025 11:03:21 Asia/Tehran] PHP Warning:  Undefined array key "spotplayer_id" in /home3/vuqgpgoc/public_html/admin/edit_package.php on line 251
+[02-Dec-2025 11:03:30 Asia/Tehran] PHP Warning:  Undefined array key "spotplayer_id" in /home3/vuqgpgoc/public_html/admin/edit_package.php on line 251
+[02-Dec-2025 11:03:59 Asia/Tehran] PHP Warning:  Undefined array key "spotplayer_id" in /home3/vuqgpgoc/public_html/admin/edit_package.php on line 251
+[02-Dec-2025 11:04:14 Asia/Tehran] PHP Warning:  Undefined array key "spotplayer_id" in /home3/vuqgpgoc/public_html/admin/edit_package.php on line 251
+[02-Dec-2025 11:04:30 Asia/Tehran] PHP Warning:  Undefined array key "spotplayer_id" in /home3/vuqgpgoc/public_html/admin/edit_package.php on line 251
+[02-Dec-2025 11:04:48 Asia/Tehran] PHP Warning:  Undefined array key "spotplayer_id" in /home3/vuqgpgoc/public_html/admin/edit_package.php on line 251
+[02-Dec-2025 11:19:50 Asia/Tehran] PHP Fatal error:  Uncaught mysqli_sql_exception: Conversion from collation utf8mb4_0900_ai_ci into utf8mb3_general_ci impossible for parameter in /home3/vuqgpgoc/public_html/admin/edit_package.php:63
+Stack trace:
+#0 /home3/vuqgpgoc/public_html/admin/edit_package.php(63): mysqli_stmt->execute()
+#1 {main}
+  thrown in /home3/vuqgpgoc/public_html/admin/edit_package.php on line 63
+[02-Dec-2025 11:22:40 Asia/Tehran] PHP Fatal error:  Uncaught mysqli_sql_exception: Conversion from collation utf8mb4_0900_ai_ci into utf8mb3_general_ci impossible for parameter in /home3/vuqgpgoc/public_html/admin/edit_package.php:63
+Stack trace:
+#0 /home3/vuqgpgoc/public_html/admin/edit_package.php(63): mysqli_stmt->execute()
+#1 {main}
+  thrown in /home3/vuqgpgoc/public_html/admin/edit_package.php on line 63
+[02-Dec-2025 11:29:43 Asia/Tehran] PHP Fatal error:  Uncaught mysqli_sql_exception: Conversion from collation utf8mb4_0900_ai_ci into utf8mb3_general_ci impossible for parameter in /home3/vuqgpgoc/public_html/admin/edit_package.php:63
+Stack trace:
+#0 /home3/vuqgpgoc/public_html/admin/edit_package.php(63): mysqli_stmt->execute()
+#1 {main}
+  thrown in /home3/vuqgpgoc/public_html/admin/edit_package.php on line 63
+[02-Dec-2025 11:31:02 Asia/Tehran] PHP Fatal error:  Uncaught mysqli_sql_exception: Conversion from collation utf8mb4_0900_ai_ci into utf8mb3_general_ci impossible for parameter in /home3/vuqgpgoc/public_html/admin/edit_package.php:63
+Stack trace:
+#0 /home3/vuqgpgoc/public_html/admin/edit_package.php(63): mysqli_stmt->execute()
+#1 {main}
+  thrown in /home3/vuqgpgoc/public_html/admin/edit_package.php on line 63
+[02-Dec-2025 11:31:41 Asia/Tehran] PHP Fatal error:  Uncaught mysqli_sql_exception: Conversion from collation utf8mb4_0900_ai_ci into utf8mb3_general_ci impossible for parameter in /home3/vuqgpgoc/public_html/admin/edit_package.php:63
+Stack trace:
+#0 /home3/vuqgpgoc/public_html/admin/edit_package.php(63): mysqli_stmt->execute()
+#1 {main}
+  thrown in /home3/vuqgpgoc/public_html/admin/edit_package.php on line 63
+[21-Jun-2026 08:13:57 Asia/Tehran] PHP Warning:  move_uploaded_file(): Unable to move &quot;/tmp/phpPzOCAM&quot; to &quot;../upload/radios/2024/fc9f60c020c3009c07eab9cc61621c10.mp3&quot; in /home3/vuqgpgoc/public_html/admin/new_radio.php on line 261
+[21-Jun-2026 08:17:52 Asia/Tehran] PHP Warning:  move_uploaded_file(): Unable to move &quot;/tmp/phpnOPrqI&quot; to &quot;../upload/radios/2024/fdd475c71fa066803b3487396289c7f3.mp3&quot; in /home3/vuqgpgoc/public_html/admin/new_radio.php on line 261
+[21-Jun-2026 08:22:34 Asia/Tehran] PHP Warning:  move_uploaded_file(): Unable to move &quot;/tmp/phpscVxG2&quot; to &quot;../upload/radios/2024/2b4bf2160edc4674b9bdc0688a5228a6.mp3&quot; in /home3/vuqgpgoc/public_html/admin/new_radio.php on line 261

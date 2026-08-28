@@ -70,9 +70,103 @@ $current_url = $_SERVER['REQUEST_URI'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>کافه مه آلود | فضایی گرم با موسیقی و گفتگوهای دلنشین</title>
+
+    <!-- ========================================== -->
+    <!-- تگ‌های سئو اصلی (بهینه‌شده)               -->
+    <!-- ========================================== -->
+    <title>کافه مه‌آلود | پادکست صوتی، داستان صوتی و برنامه رادیویی آرامش‌بخش</title>
+    <meta name="description" content="کافه مه‌آلود: پادکست صوتی و داستان صوتی با فضایی گرم و آرامش‌بخش. داستان یک کافه قدیمی، موسیقی ملایم و گفتگوهای دلنشین. بهترین پادکست فارسی برای لحظات آرام شما.">
+    <meta name="keywords" content="کافه مه آلود, پادکست صوتی, داستان صوتی, پادکست فارسی, برنامه رادیویی, پادکست آرامش‌بخش, داستان شب, موسیقی ملایم, کافه قدیمی, باریستا, رادیو آنلاین, محتوای شنیدنی">
+    <meta name="author" content="موسسه هفت هنر سیمرغ">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <link rel="canonical" href="https://simorghtv.com/radios/cafe_meh.php">
+
+    <!-- ========================================== -->
+    <!-- Open Graph / Social Media                  -->
+    <!-- ========================================== -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="کافه مه‌آلود | پادکست صوتی، داستان صوتی و برنامه رادیویی آرامش‌بخش">
+    <meta property="og:description" content="پادکست صوتی و داستان صوتی کافه مه‌آلود. فضایی گرم با موسیقی ملایم و گفتگوهای دلنشین. بهترین پادکست فارسی برای لحظات آرام شما.">
+    <meta property="og:url" content="https://simorghtv.com/radios/cafe_meh.php">
+    <meta property="og:site_name" content="رادیو سیمرغ">
+    <meta property="og:image" content="https://simorghtv.com/images/35.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+
+    <!-- ========================================== -->
+    <!-- Twitter Card                               -->
+    <!-- ========================================== -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="کافه مه‌آلود | پادکست صوتی، داستان صوتی و برنامه رادیویی آرامش‌بخش">
+    <meta name="twitter:description" content="پادکست صوتی و داستان صوتی کافه مه‌آلود با فضایی گرم و آرامش‌بخش.">
+    <meta name="twitter:image" content="https://simorghtv.com/images/35.png">
+
+    <!-- ========================================== -->
+    <!-- JSON-LD (Schema.org) - سئو پیشرفته         -->
+    <!-- ========================================== -->
+
+    <!-- مجموعه پادکست کافه مه‌آلود -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "PodcastSeries",
+        "name": "کافه مه‌آلود",
+        "description": "پادکست صوتی و داستان صوتی کافه مه‌آلود، فضایی گرم با موسیقی ملایم و گفتگوهای دلنشین",
+        "url": "https://simorghtv.com/radios/cafe_meh.php",
+        "language": "fa",
+        "genre": "پادکست صوتی، داستان صوتی، برنامه رادیویی، پادکست فارسی",
+        "numberOfEpisodes": "<?php echo count($programs); ?>"
+    }
+    </script>
+
+    <!-- وب‌سایت اصلی -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "رادیو سیمرغ - کافه مه‌آلود",
+        "url": "https://simorghtv.com/radios/cafe_meh.php",
+        "description": "پادکست صوتی و داستان صوتی کافه مه‌آلود",
+        "inLanguage": "fa-IR"
+    }
+    </script>
+
+    <!-- اگر حداقل یک برنامه وجود دارد، لیست آیتم‌ها -->
+    <?php if(count($programs) > 0): ?>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": "لیست پادکست‌های کافه مه‌آلود",
+        "description": "لیست کامل پادکست‌های صوتی و داستان‌های صوتی کافه مه‌آلود",
+        "numberOfItems": "<?php echo count($programs); ?>",
+        "itemListElement": [
+        <?php foreach($programs as $index => $program): ?>
+            {
+                "@type": "ListItem",
+                "position": <?php echo $index + 1; ?>,
+                "item": {
+                    "@type": "PodcastEpisode",
+                    "name": "<?php echo addslashes(htmlspecialchars($program['title'])); ?>",
+                    "description": "اپیزود <?php echo addslashes(htmlspecialchars($program['title'])); ?> از پادکست صوتی کافه مه‌آلود",
+                    "contentUrl": "<?php echo htmlspecialchars($program['file_path']); ?>",
+                    "inLanguage": "fa",
+                    "genre": "پادکست صوتی، داستان صوتی"
+                }
+            }
+            <?php if($index < count($programs) - 1) echo ','; ?>
+        <?php endforeach; ?>
+        ]
+    }
+    </script>
+    <?php endif; ?>
+
+    <!-- ========================================== -->
+    <!-- PWA و فایل‌های اضافی                      -->
+    <!-- ========================================== -->
     <?php include "includes.php"; ?>
     <link rel="icon" href="../images/logo1.ico" type="image/x-icon">
+
     <style>
     :root { --cafe-brown: #6F4E37; --cafe-cream: #F5E6D3; --cafe-dark: #2C1810; --cafe-warm: #D4A373; }
     body { background: linear-gradient(135deg, #2c1810 0%, #3e2723 60%, #4a3028 100%); min-height: 100vh; position: relative; }
@@ -99,16 +193,13 @@ $current_url = $_SERVER['REQUEST_URI'];
     audio::-webkit-media-controls-panel {
         width: calc(100% + 30px);
     }
-    /* مخفی کردن دکمه سه نقطه (download) در کروم */
     audio::-webkit-media-controls-current-time-display,
     audio::-webkit-media-controls-time-remaining-display {
         display: none;
     }
-    /* جلوگیری از نمایش دکمه دانلود در فایرفاکس */
     audio::-moz-media-controls-download-button {
         display: none !important;
     }
-    /* جلوگیری از نمایش دکمه دانلود در اج */
     audio::-ms-media-controls-download-button {
         display: none !important;
     }
@@ -154,14 +245,12 @@ $current_url = $_SERVER['REQUEST_URI'];
         font-family: inherit;
         cursor: pointer;
     }
-
     .logout-btn:hover {
         transform: translateY(-3px) scale(1.03);
         box-shadow: 0 12px 35px rgba(220, 53, 69, 0.5);
         color: white;
         background: linear-gradient(135deg, #c82333, #a71d2a);
     }
-
     .logout-btn svg {
         width: 20px;
         height: 20px;
@@ -208,18 +297,29 @@ if(isset($_GET['payment']) && $_GET['payment'] == 'failed') {
         <?php if($is_speaker): ?>
         <div class="alert alert-success text-center mb-3" style="background: linear-gradient(135deg, #D4A373, #b8956a); color: #2c1810; border: none;">🌟🌟 به پنل گویندگی خوش آمدید! دسترسی رایگان و کامل به تمام برنامه‌ها. 🌟🌟</div>
         <?php endif; ?>
+        
+        <!-- ========================================== -->
+        <!-- هدر صفحه با کلمات کلیدی سئو                -->
+        <!-- ========================================== -->
         <div class="cafe-header fade-up">
-            <h1>☕ کافه مه آلود</h1>
-            <p class="lead">داستان یک کافه قدیمی در نزدیکی ایستگاه قطار متروکه، با باریستای مرموز که فقط نیمه شبها باز میشه.</p>
-            <small>🎧 <?php echo count($programs); ?> برنامه برای لحظات آرام شما</small>
+            <h1>☕ کافه مه‌آلود | پادکست صوتی و داستان صوتی</h1>
+            <p class="lead">داستان یک کافه قدیمی در نزدیکی ایستگاه قطار متروکه، با باریستای مرموز که فقط نیمه‌شب‌ها باز می‌شود. <strong>پادکست صوتی</strong> و <strong>داستان صوتی</strong> با فضایی گرم و آرامش‌بخش.</p>
+            <small>🎧 <strong><?php echo count($programs); ?></strong> پادکست و داستان صوتی برای لحظات آرام شما</small>
+            <div class="mt-2">
+                <span class="badge bg-warning text-dark ms-1">پادکست صوتی</span>
+                <span class="badge bg-warning text-dark ms-1">داستان صوتی</span>
+                <span class="badge bg-warning text-dark ms-1">برنامه رادیویی</span>
+                <span class="badge bg-warning text-dark ms-1">پادکست فارسی</span>
+            </div>
         </div>
+        
         <div class="row">
             <div class="col-lg-5 mb-4">
                 <div class="cafe-player-card fade-up" style="animation-delay: 0.1s;">
                     <div class="text-center">
                         <div class="coffee-cup-icon" id="nowPlayingIcon">☕</div>
-                        <h3 id="nowPlayingTitle" class="now-playing-title">هیچ برنامه‌ای انتخاب نشده</h3>
-                        <span id="nowPlayingType" class="now-playing-type">برای شروع یکی از برنامه‌ها را انتخاب کنید</span>
+                        <h3 id="nowPlayingTitle" class="now-playing-title">هیچ پادکستی انتخاب نشده</h3>
+                        <span id="nowPlayingType" class="now-playing-type">برای شروع یکی از پادکست‌ها را انتخاب کنید</span>
                         <div class="custom-audio-player">
                             <audio id="mainAudio" controls controlsList="nodownload noremoteplayback" preload="metadata" style="width: 100%;" oncontextmenu="return false;">
                                 <source src="" type="audio/mpeg">
@@ -229,34 +329,34 @@ if(isset($_GET['payment']) && $_GET['payment'] == 'failed') {
                 </div>
                 <div class="cafe-stats fade-up" style="animation-delay: 0.2s;">
                     <div class="row">
-                        <div class="col-6"><div class="stat-item-cafe"><div class="stat-number-cafe"><?php echo count($programs); ?></div><small>برنامه در منو</small></div></div>
-                        <div class="col-6"><div class="stat-item-cafe"><div class="stat-number-cafe"><?php echo $is_speaker ? '🎙️' : '💰'; ?></div><small><?php echo $is_speaker ? 'دسترسی ویژه' : 'اشتراک کامل'; ?></small></div></div>
+                        <div class="col-6"><div class="stat-item-cafe"><div class="stat-number-cafe"><?php echo count($programs); ?></div><small>پادکست در منو</small></div></div>
+                        <div class="col-6"><div class="stat-item-cafe"><div class="stat-number-cafe"><?php echo $is_speaker ? '🎙️' : '☕'; ?></div><small><?php echo $is_speaker ? 'دسترسی ویژه' : 'فضای آرامش‌بخش'; ?></small></div></div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-7 fade-up" style="animation-delay: 0.15s;">
                 <div class="menu-section">
                     <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
-                        <h3 class="menu-title">📋 منوی امروز</h3>
+                        <h3 class="menu-title">📋 لیست پادکست‌ها و داستان‌های صوتی</h3>
                         <div class="input-group w-50" style="min-width: 180px;">
-                            <input type="text" id="searchPlaylist" class="form-control search-input-cafe" placeholder="جستجو در منو...">
+                            <input type="text" id="searchPlaylist" class="form-control search-input-cafe" placeholder="جستجوی پادکست...">
                             <span class="input-group-text">🔍</span>
                         </div>
                     </div>
                     <?php if(!isset($_SESSION['user_id'])): ?>
                         <div class="text-center mb-4">
-                            <div class="alert alert-warning">برای دسترسی به برنامه‌ها، لطفاً <a href="../login.php?redirect=<?php echo urlencode($current_url); ?>">وارد شوید</a></div>
+                            <div class="alert alert-warning">برای دسترسی به پادکست‌ها، لطفاً <a href="../login.php?redirect=<?php echo urlencode($current_url); ?>">وارد شوید</a></div>
                             <button class="btn btn-info btn-lg" onclick="location.href='../login.php?redirect=<?php echo urlencode($current_url); ?>'">🔐 ورود یا ثبت‌نام</button>
                         </div>
                     <?php else: ?>
                         <div class="alert text-center mb-4" style="background: rgba(212, 163, 115, 0.15); border: 1px solid #D4A373; color: #f0e0c0; border-radius: 20px;">
                             <?php if($is_speaker): ?>
-                                <span style="color: #D4A373; font-weight: bold; font-size: 1.1rem;">🎙️ دسترسی ویژه گوینده به تمام برنامه‌ها فعال است!</span>
+                                <span style="color: #D4A373; font-weight: bold; font-size: 1.1rem;">🎙️ دسترسی ویژه گوینده به تمام پادکست‌ها فعال است!</span>
                             <?php elseif($has_full_cafe_access): ?>
-                                <span style="color: #D4A373; font-weight: bold; font-size: 1.1rem;">✅ دسترسی کامل به تمام برنامه‌های کافه مه‌آلود برای شما فعال است! ☕</span>
+                                <span style="color: #D4A373; font-weight: bold; font-size: 1.1rem;">✅ دسترسی کامل به تمام پادکست‌های کافه مه‌آلود برای شما فعال است! ☕</span>
                             <?php else: ?>
-                                <strong>☕ دسترسی به همه اپیزودها یک‌جا</strong><br>
-                                <small>با خرید اشتراک کامل، تمام برنامه‌های کافه برای شما باز می‌شود.</small><br>
+                                <strong>☕ دسترسی به همه پادکست‌ها یک‌جا</strong><br>
+                                <small>با خرید اشتراک کامل، تمام پادکست‌ها و داستان‌های صوتی کافه برای شما باز می‌شود.</small><br>
                              
                              <a href="buy_cafe.php" class="btn cafe-buy-btn mt-2">💰 خرید اشتراک کامل (<?php echo number_format($cafe_price); ?> تومان)</a>
                             <?php endif; ?>
@@ -269,9 +369,9 @@ if(isset($_GET['payment']) && $_GET['payment'] == 'failed') {
                             <div class="row align-items-center">
                                 <div class="col-auto">
                                     <?php if(isset($_SESSION['user_id']) && ($is_speaker || $has_full_cafe_access)): ?>
-                                        <button class="play-btn-cafe" onclick="playProgram(this, <?php echo $index; ?>)">▶️</button>
+                                        <button class="play-btn-cafe" onclick="playProgram(this, <?php echo $index; ?>)" aria-label="پخش پادکست <?php echo htmlspecialchars($program['title']); ?>">▶️</button>
                                     <?php else: ?>
-                                        <button class="play-btn-cafe" style="background: #555; cursor: not-allowed;" title="برای شنیدن این برنامه، اشتراک کامل کافه را بخرید.">🔒</button>
+                                        <button class="play-btn-cafe" style="background: #555; cursor: not-allowed;" title="برای شنیدن این پادکست، اشتراک کامل کافه را بخرید.">🔒</button>
                                     <?php endif; ?>
                                 </div>
                                 <div class="col">
@@ -287,8 +387,40 @@ if(isset($_GET['payment']) && $_GET['payment'] == 'failed') {
                         </div>
                         <?php endforeach; ?>
                         <?php else: ?>
-                        <div class="text-center py-5"><div style="font-size: 60px; margin-bottom: 20px;">☕</div><h4 style="color: #f0e0c0;">هنوز برنامه‌ای به منو اضافه نشده</h4><p class="text-muted" style="color: #b8a88a;">به زودی با برنامه‌های گرم و دلنشین در خدمت شما خواهیم بود</p></div>
+                        <div class="text-center py-5"><div style="font-size: 60px; margin-bottom: 20px;">☕</div><h4 style="color: #f0e0c0;">هنوز پادکستی به منو اضافه نشده</h4><p class="text-muted" style="color: #b8a88a;">به زودی با پادکست‌های گرم و دلنشین در خدمت شما خواهیم بود</p></div>
                         <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- بخش محتوای متنی برای سئو                   -->
+        <!-- ========================================== -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="cafe-player-card" style="border-color: rgba(212, 163, 115, 0.2);">
+                    <div class="card-body">
+                        <h2 class="text-center" style="color: #f0e0c0; margin-bottom: 20px;">
+                            ☕ بهترین پادکست صوتی و داستان صوتی را در کافه مه‌آلود بشنوید
+                        </h2>
+                        <p style="color: #d4c4a8; text-align: justify; line-height: 1.8;">
+                            <strong>کافه مه‌آلود</strong> یکی از محبوب‌ترین <strong>پادکست‌های صوتی</strong> و 
+                            <strong>داستان‌های صوتی</strong> فارسی است. این <strong>پادکست</strong> با فضایی گرم و 
+                            آرامش‌بخش، شما را به دنیای یک کافه قدیمی در نزدیکی ایستگاه قطار متروکه می‌برد. 
+                            باریستای مرموز کافه که فقط نیمه‌شب‌ها باز می‌شود، داستان‌هایی شنیدنی را روایت می‌کند.
+                        </p>
+                        <p style="color: #d4c4a8; text-align: justify; line-height: 1.8;">
+                            اگر به دنبال یک <strong>پادکست فارسی</strong> با کیفیت بالا، <strong>موسیقی ملایم</strong> 
+                            و گفتگوهای دلنشین هستید، <strong>کافه مه‌آلود</strong> بهترین انتخاب برای شماست. 
+                            این <strong>برنامه رادیویی</strong> با روایت‌های شنیدنی، لحظاتی آرام و به‌یادماندنی 
+                            را برای شما خلق می‌کند.
+                        </p>
+                        <p style="color: #d4c4a8; text-align: justify; line-height: 1.8;">
+                            <strong>کلمات کلیدی:</strong> 
+                            کافه مه آلود، پادکست صوتی، داستان صوتی، پادکست فارسی، برنامه رادیویی، 
+                            پادکست آرامش‌بخش، داستان شب، موسیقی ملایم، رادیو آنلاین.
+                        </p>
                     </div>
                 </div>
             </div>

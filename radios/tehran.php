@@ -137,10 +137,103 @@ $current_url = $_SERVER['REQUEST_URI'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>شب‌های تهران | پخش آنلاین برنامه‌های شبانه</title>
-    <meta name="description" content="شب‌های تهران - روایت دلنشین شب‌های پایتخت">
+
+    <!-- ========================================== -->
+    <!-- تگ‌های سئو اصلی (بهینه‌شده)               -->
+    <!-- ========================================== -->
+    <title>شب‌های تهران | پادکست صوتی، داستان صوتی و برنامه رادیویی شبانه</title>
+    <meta name="description" content="شب‌های تهران: پادکست صوتی و داستان صوتی شبانه با روایت‌های دلنشین از پایتخت ایران. برنامه رادیویی شب‌های تهران، داستان‌های شنیدنی از کوچه پس کوچه‌های خاطره‌انگیز تهران.">
+    <meta name="keywords" content="شب های تهران, پادکست صوتی, داستان صوتی, برنامه رادیویی, پادکست فارسی, داستان شب, تهران قدیم, روایت شهری, برنامه شبانه, رادیو آنلاین, محتوای شنیدنی, پادکست فرهنگی">
+    <meta name="author" content="موسسه هفت هنر سیمرغ">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <link rel="canonical" href="https://simorghtv.com/radios/tehran.php">
+
+    <!-- ========================================== -->
+    <!-- Open Graph / Social Media                  -->
+    <!-- ========================================== -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="شب‌های تهران | پادکست صوتی، داستان صوتی و برنامه رادیویی شبانه">
+    <meta property="og:description" content="پادکست صوتی و داستان صوتی شب‌های تهران. روایت‌های دلنشین از پایتخت ایران، داستان‌های شنیدنی از کوچه پس کوچه‌های خاطره‌انگیز تهران.">
+    <meta property="og:url" content="https://simorghtv.com/radios/tehran.php">
+    <meta property="og:site_name" content="رادیو سیمرغ">
+    <meta property="og:image" content="https://simorghtv.com/images/34.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+
+    <!-- ========================================== -->
+    <!-- Twitter Card                               -->
+    <!-- ========================================== -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="شب‌های تهران | پادکست صوتی، داستان صوتی و برنامه رادیویی شبانه">
+    <meta name="twitter:description" content="پادکست صوتی و داستان صوتی شب‌های تهران. روایت‌های دلنشین از پایتخت ایران.">
+    <meta name="twitter:image" content="https://simorghtv.com/images/34.png">
+
+    <!-- ========================================== -->
+    <!-- JSON-LD (Schema.org) - سئو پیشرفته         -->
+    <!-- ========================================== -->
+
+    <!-- مجموعه پادکست شب‌های تهران -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "PodcastSeries",
+        "name": "شب‌های تهران",
+        "description": "پادکست صوتی و داستان صوتی شب‌های تهران، روایت‌های دلنشین از پایتخت ایران",
+        "url": "https://simorghtv.com/radios/tehran.php",
+        "language": "fa",
+        "genre": "پادکست صوتی، داستان صوتی، برنامه رادیویی، پادکست فارسی، داستان شب",
+        "numberOfEpisodes": "<?php echo count($programs); ?>"
+    }
+    </script>
+
+    <!-- وب‌سایت اصلی -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "رادیو سیمرغ - شب‌های تهران",
+        "url": "https://simorghtv.com/radios/tehran.php",
+        "description": "پادکست صوتی و داستان صوتی شب‌های تهران",
+        "inLanguage": "fa-IR"
+    }
+    </script>
+
+    <!-- اگر حداقل یک برنامه وجود دارد، لیست آیتم‌ها -->
+    <?php if(count($programs) > 0): ?>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": "لیست پادکست‌های شب‌های تهران",
+        "description": "لیست کامل پادکست‌های صوتی و داستان‌های صوتی شب‌های تهران",
+        "numberOfItems": "<?php echo count($programs); ?>",
+        "itemListElement": [
+        <?php foreach($programs as $index => $program): ?>
+            {
+                "@type": "ListItem",
+                "position": <?php echo $index + 1; ?>,
+                "item": {
+                    "@type": "PodcastEpisode",
+                    "name": "<?php echo addslashes(htmlspecialchars($program['title'])); ?>",
+                    "description": "اپیزود <?php echo addslashes(htmlspecialchars($program['title'])); ?> از پادکست صوتی شب‌های تهران",
+                    "contentUrl": "<?php echo htmlspecialchars($program['file_path']); ?>",
+                    "inLanguage": "fa",
+                    "genre": "پادکست صوتی، داستان صوتی، برنامه شبانه"
+                }
+            }
+            <?php if($index < count($programs) - 1) echo ','; ?>
+        <?php endforeach; ?>
+        ]
+    }
+    </script>
+    <?php endif; ?>
+
+    <!-- ========================================== -->
+    <!-- PWA و فایل‌های اضافی                      -->
+    <!-- ========================================== -->
     <?php include "includes.php"; ?>
     <link rel="icon" href="../images/logo1.ico" type="image/x-icon">
+
     <style>
     body {
         background: linear-gradient(135deg, #0a0a2a 0%, #1a1a3a 100%);
@@ -183,15 +276,8 @@ $current_url = $_SERVER['REQUEST_URI'];
     }
 
     @keyframes float {
-
-        0%,
-        100% {
-            transform: translateY(0px);
-        }
-
-        50% {
-            transform: translateY(-20px);
-        }
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
     }
 
     .now-playing-card-tehran {
@@ -254,15 +340,8 @@ $current_url = $_SERVER['REQUEST_URI'];
     }
 
     @keyframes glowPulse {
-
-        0%,
-        100% {
-            box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4);
-        }
-
-        50% {
-            box-shadow: 0 0 0 10px rgba(255, 215, 0, 0);
-        }
+        0%, 100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4); }
+        50% { box-shadow: 0 0 0 10px rgba(255, 215, 0, 0); }
     }
 
     .program-badge-tehran {
@@ -291,15 +370,8 @@ $current_url = $_SERVER['REQUEST_URI'];
     }
 
     @keyframes moonGlow {
-
-        0%,
-        100% {
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-        }
-
-        50% {
-            text-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
-        }
+        0%, 100% { text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+        50% { text-shadow: 0 0 30px rgba(255, 215, 0, 0.8); }
     }
 
     .search-box-tehran {
@@ -408,15 +480,12 @@ $current_url = $_SERVER['REQUEST_URI'];
         .tehran-header {
             padding: 30px 20px;
         }
-
         .tehran-header::before {
             font-size: 100px;
         }
-
         .playlist-item-tehran {
             padding: 12px 15px;
         }
-
         .logout-btn {
             bottom: 20px;
             right: 20px;
@@ -440,20 +509,31 @@ $current_url = $_SERVER['REQUEST_URI'];
         </div>
         <?php endif; ?>
 
+        <!-- ========================================== -->
+        <!-- هدر صفحه با کلمات کلیدی سئو                -->
+        <!-- ========================================== -->
         <div class="tehran-header">
             <div class="text-center">
                 <div class="moon-icon">🌙</div>
-                <h1 class="display-4 fw-bold mb-3"><?php echo $radio_info['name'] ?? 'شب‌های تهران'; ?></h1>
+                <h1 class="display-4 fw-bold mb-3"><?php echo $radio_info['name'] ?? 'شب‌های تهران'; ?> | پادکست صوتی و داستان صوتی شبانه</h1>
                 <p class="lead mb-2"><?php echo $randomPoem; ?></p>
-                <p class="mb-0"><?php echo $radio_info['description'] ?? ''; ?></p>
+                <p class="mb-2"><?php echo $radio_info['description'] ?? 'روایت‌های دلنشین از پایتخت ایران، داستان‌های شنیدنی از کوچه پس کوچه‌های خاطره‌انگیز تهران'; ?></p>
+                <small>🎧 <strong><?php echo count($programs); ?></strong> پادکست و داستان صوتی برای شب‌های به‌یادماندنی</small>
+                <div class="mt-2">
+                    <span class="badge bg-warning text-dark ms-1">پادکست صوتی</span>
+                    <span class="badge bg-warning text-dark ms-1">داستان صوتی</span>
+                    <span class="badge bg-warning text-dark ms-1">برنامه رادیویی</span>
+                    <span class="badge bg-warning text-dark ms-1">پادکست فارسی</span>
+                </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-lg-5 mb-4">
                 <div class="now-playing-card-tehran">
                     <div class="text-center">
                         <div style="font-size: 80px; margin-bottom: 20px;" id="nowPlayingIconTehran">🌙</div>
-                        <h3 id="nowPlayingTitleTehran" class="mb-2">شبانه‌ای انتخاب نشده</h3>
+                        <h3 id="nowPlayingTitleTehran" class="mb-2">هیچ پادکستی انتخاب نشده</h3>
                         <p id="nowPlayingTypeTehran" class="mb-3" style="opacity: 0.8;">به شب‌های تهران خوش آمدید...</p>
                         <div class="audio-player-tehran">
                             <audio id="mainAudioTehran" controls controlsList="nodownload" preload="metadata">
@@ -467,16 +547,16 @@ $current_url = $_SERVER['REQUEST_URI'];
                         <div class="stat-card-tehran">
                             <div style="font-size: 30px;">🎧</div>
                             <div class="h3 mb-0" style="color: #ffd700;"><?php echo count($programs); ?></div>
-                            <small>برنامه شبانه</small>
+                            <small>پادکست و داستان صوتی</small>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="stat-card-tehran">
-                            <div style="font-size: 30px;">💰</div>
+                            <div style="font-size: 30px;">🌙</div>
                             <div class="h3 mb-0" style="color: #ffd700;">
-                                <?php echo $is_speaker ? 'رایگان' : 'پرداختی'; ?>
+                                <?php echo $is_speaker ? 'رایگان' : 'شبانه'; ?>
                             </div>
-                            <small><?php echo $is_speaker ? 'دسترسی ویژه' : 'قیمت هر برنامه'; ?></small>
+                            <small><?php echo $is_speaker ? 'دسترسی ویژه' : 'برنامه‌های شبانه'; ?></small>
                         </div>
                     </div>
                 </div>
@@ -484,10 +564,8 @@ $current_url = $_SERVER['REQUEST_URI'];
             <div class="col-lg-7">
                 <?php if(!isset($_SESSION['user_id'])): ?>
                 <div class="text-center mb-4">
-                    <div class="alert alert-warning">برای دسترسی به برنامه‌ها، لطفاً <a href="../login.php?redirect=<?php echo urlencode($current_url); ?>">وارد
-                            شوید</a></div>
-                    <button class="btn btn-info btn-lg" onclick="location.href='../login.php?redirect=<?php echo urlencode($current_url); ?>'">🔐 ورود یا
-                        ثبت‌نام</button>
+                    <div class="alert alert-warning">برای دسترسی به پادکست‌ها، لطفاً <a href="../login.php?redirect=<?php echo urlencode($current_url); ?>">وارد شوید</a></div>
+                    <button class="btn btn-info btn-lg" onclick="location.href='../login.php?redirect=<?php echo urlencode($current_url); ?>'">🔐 ورود یا ثبت‌نام</button>
                 </div>
                 <div id="playlistContainerTehran">
                     <?php foreach($programs as $program): ?>
@@ -498,8 +576,7 @@ $current_url = $_SERVER['REQUEST_URI'];
                             </div>
                             <div class="col">
                                 <h6 class="mb-1"><?php echo htmlspecialchars($program['title']); ?></h6>
-                                <span class="program-badge-tehran">🌙
-                                    <?php echo htmlspecialchars($program['program_type']); ?></span>
+                                <span class="program-badge-tehran">🌙 <?php echo htmlspecialchars($program['program_type']); ?></span>
                             </div>
                         </div>
                     </div>
@@ -507,10 +584,10 @@ $current_url = $_SERVER['REQUEST_URI'];
                 </div>
                 <?php else: ?>
                 <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
-                    <h3 class="mb-0" style="color: #ffd700;">📻 لیست پخش شبانه</h3>
+                    <h3 class="mb-0" style="color: #ffd700;">📻 لیست پادکست‌های شبانه</h3>
                     <div class="input-group w-50">
                         <input type="text" id="searchPlaylistTehran" class="form-control search-box-tehran"
-                            placeholder="جستجو در برنامه‌های شبانه..." style="border-radius: 50px;">
+                            placeholder="جستجوی پادکست..." style="border-radius: 50px;">
                         <span class="input-group-text"
                             style="border-radius: 50px; background: rgba(26,26,62,0.9); border: 1px solid rgba(255,215,0,0.3); color: #ffd700;">🌙</span>
                     </div>
@@ -527,11 +604,11 @@ $current_url = $_SERVER['REQUEST_URI'];
                         <div class="row align-items-center">
                             <div class="col-auto">
                                 <?php if($has_access_to_this): ?>
-                                <button class="play-btn-tehran"
-                                    onclick="playProgramTehran(this, <?php echo $index; ?>)">▶️</button>
+                                <button class="play-btn-tehran" onclick="playProgramTehran(this, <?php echo $index; ?>)" aria-label="پخش پادکست <?php echo htmlspecialchars($program['title']); ?>">▶️</button>
                                 <?php else: ?>
                                 <button class="play-btn-tehran" style="background: #555;"
-                                    onclick="buyProgram(<?php echo $program['id']; ?>, '<?php echo addslashes($program['title']); ?>', <?php echo ($program['price'] / 10); ?>)">
+                                    onclick="buyProgram(<?php echo $program['id']; ?>, '<?php echo addslashes($program['title']); ?>', <?php echo ($program['price'] / 10); ?>)"
+                                    aria-label="خرید پادکست <?php echo htmlspecialchars($program['title']); ?>">
                                     💰
                                 </button>
                                 <?php endif; ?>
@@ -550,11 +627,9 @@ $current_url = $_SERVER['REQUEST_URI'];
                                             <?php endif; ?>
                                         </h6>
                                         <div class="d-flex align-items-center gap-2 flex-wrap">
-                                            <span class="program-badge-tehran">🌙
-                                                <?php echo htmlspecialchars($program['program_type']); ?></span>
+                                            <span class="program-badge-tehran">🌙 <?php echo htmlspecialchars($program['program_type']); ?></span>
                                             <?php if(formatDate($program['created_at'])): ?>
-                                            <span class="date-badge">📅
-                                                <?php echo formatDate($program['created_at']); ?></span>
+                                            <span class="date-badge">📅 <?php echo formatDate($program['created_at']); ?></span>
                                             <?php endif; ?>
                                         </div>
                                     </div>
@@ -566,7 +641,7 @@ $current_url = $_SERVER['REQUEST_URI'];
                                     <?php elseif($is_speaker): ?>
                                     <small style="color: #ffd700;">🎙️ دسترسی ویژه گوینده</small>
                                     <?php else: ?>
-                                    <small style="color: #ffd700;">🎙️ شبانه</small>
+                                    <small style="color: #ffd700;">🌙 پادکست شبانه</small>
                                     <?php endif; ?>
                                 </div>
                             </div>
@@ -576,12 +651,45 @@ $current_url = $_SERVER['REQUEST_URI'];
                     <?php else: ?>
                     <div class="empty-state-tehran">
                         <div style="font-size: 60px;">🌙</div>
-                        <h4 style="color: #ffd700;">هیچ برنامه‌ای یافت نشد</h4>
-                        <p class="text-muted">به زودی با برنامه‌های جدید همراه باشید</p>
+                        <h4 style="color: #ffd700;">هیچ پادکستی یافت نشد</h4>
+                        <p class="text-muted">به زودی با پادکست‌های جدید همراه باشید</p>
                     </div>
                     <?php endif; ?>
                 </div>
                 <?php endif; ?>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- بخش محتوای متنی برای سئو                   -->
+        <!-- ========================================== -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="now-playing-card-tehran" style="border-color: rgba(255, 215, 0, 0.2);">
+                    <div class="card-body">
+                        <h2 class="text-center" style="color: #ffd700; margin-bottom: 20px;">
+                            🌙 بهترین پادکست صوتی و داستان صوتی شب‌های تهران را بشنوید
+                        </h2>
+                        <p style="color: #e0e0e0; text-align: justify; line-height: 1.8;">
+                            <strong>شب‌های تهران</strong> یکی از محبوب‌ترین <strong>پادکست‌های صوتی</strong> و 
+                            <strong>داستان‌های صوتی</strong> فارسی است. این <strong>برنامه رادیویی</strong> با 
+                            روایت‌های دلنشین از پایتخت ایران، شما را به سفری در کوچه پس کوچه‌های خاطره‌انگیز 
+                            تهران می‌برد. هر اپیزود از این <strong>پادکست فارسی</strong> داستانی شنیدنی از 
+                            شب‌های تهران را روایت می‌کند.
+                        </p>
+                        <p style="color: #e0e0e0; text-align: justify; line-height: 1.8;">
+                            اگر به دنبال یک <strong>پادکست صوتی</strong> با کیفیت بالا، <strong>داستان شب</strong> 
+                            و محتوای فرهنگی غنی هستید، <strong>شب‌های تهران</strong> بهترین انتخاب برای شماست. 
+                            این <strong>داستان صوتی</strong> با روایت‌های شنیدنی، لحظاتی به‌یادماندنی را 
+                            برای شما خلق می‌کند.
+                        </p>
+                        <p style="color: #e0e0e0; text-align: justify; line-height: 1.8;">
+                            <strong>کلمات کلیدی:</strong> 
+                            شب های تهران، پادکست صوتی، داستان صوتی، برنامه رادیویی، پادکست فارسی، 
+                            داستان شب، تهران قدیم، روایت شهری، برنامه شبانه، رادیو آنلاین.
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -608,7 +716,7 @@ $current_url = $_SERVER['REQUEST_URI'];
         if (!program) return;
         audioTehran.src = program.file_path;
         document.getElementById('nowPlayingTitleTehran').innerHTML = program.title;
-        document.getElementById('nowPlayingTypeTehran').innerHTML = program.program_type + " | شبانه";
+        document.getElementById('nowPlayingTypeTehran').innerHTML = program.program_type + " | پادکست شبانه";
         document.getElementById('nowPlayingIconTehran').innerHTML = '🌙';
         audioTehran.play().catch(e => console.log('Play error:', e));
         if (currentPlayingButtonTehran) {
@@ -625,7 +733,7 @@ $current_url = $_SERVER['REQUEST_URI'];
 
     function buyProgram(programId, programTitle, programPrice) {
         if (confirm(
-                `آیا می‌خواهید برنامه "${programTitle}" را به مبلغ ${new Intl.NumberFormat().format(programPrice)} تومان خریداری کنید؟`
+                `آیا می‌خواهید پادکست "${programTitle}" را به مبلغ ${new Intl.NumberFormat().format(programPrice)} تومان خریداری کنید؟`
             )) {
             window.location.href = `payment_program.php?program_id=${programId}`;
         }

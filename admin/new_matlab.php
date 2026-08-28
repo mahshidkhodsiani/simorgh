@@ -20,11 +20,24 @@ $id = $_SESSION["all_data"]['id'];
     include 'includes.php';
     include '../config.php';
     ?>
+
+    <!-- پیش‌اتصال زودهنگام به دامنه‌های CDN تا DNS/TLS handshake از قبل انجام بشه -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://code.jquery.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://code.jquery.com">
+
+    <!-- فقط CSS ای که برای نمایش اولیه‌ی صفحه لازمه اینجا لود می‌شه (رندر-بلاکینگ ولی سبک) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/jodit/build/jodit.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/jodit/build/jodit.min.js"></script>
+
+    <!--
+        نکته: CSS ادیتور Jodit عمداً از اینجا حذف و پایین صفحه، هم‌زمان با خود اسکریپت
+        Jodit به‌صورت تنبل (lazy) لود می‌شه؛ چون این ادیتور سنگین‌ترین بخش صفحه است
+        و لود اولیه رو به‌شدت کند می‌کرد.
+    -->
 
     <style>
         body {
@@ -63,6 +76,11 @@ $id = $_SESSION["all_data"]['id'];
             bottom: 20px;
             right: 20px;
             z-index: 1050;
+        }
+
+        /* جای‌نگهدار ادیتور تا زمانی که Jodit واقعی لود بشه، صفحه پرش (layout shift) نداشته باشه */
+        #editor {
+            min-height: 300px;
         }
     </style>
 </head>
@@ -116,7 +134,7 @@ $id = $_SESSION["all_data"]['id'];
                         </div>
                         <div class="mb-3">
                             <label for="editor" class="form-label">محتوای اصلی:</label>
-                            <textarea id="editor" name="content" class="form-control"></textarea>
+                            <textarea id="editor" name="content" class="form-control" placeholder="برای شروع نوشتن کلیک کنید..."></textarea>
                         </div>
                         <div class="d-flex justify-content-center mt-4">
                             <button name="submit_post" class="btn btn-outline-success">
@@ -239,12 +257,64 @@ $id = $_SESSION["all_data"]['id'];
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        const editor = new Jodit('#editor');
+    <!--
+        اسکریپت‌ها به انتهای body منتقل شدن و از defer استفاده می‌کنن،
+        تا مرورگر HTML را قبل از دانلود/اجرای JS به‌طور کامل پارس و رندر کنه.
+        این خودش باعث می‌شه صفحه خیلی زودتر قابل مشاهده و تعامل بشه.
+    -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
 
-        $('form').submit(function() {
-            $('#editor').val(editor.getEditorValue());
+    <script>
+        // ---------------------------------------------------------------
+        // لود تنبل (Lazy Load) ادیتور Jodit
+        // ادیتور سنگین‌ترین بخش صفحه است (چند صد کیلوبایت CSS+JS).
+        // به‌جای لود شدنش هم‌زمان با باز شدن صفحه، فقط وقتی که کاربر
+        // واقعاً روی فیلد "محتوای اصلی" کلیک/فوکوس کنه لود و فعال می‌شه.
+        // اگر هم کاربر بدون کلیک روی فیلد، مستقیم دکمه‌ی ثبت رو بزنه،
+        // قبل از سابمیت به‌صورت خودکار لود و مقداردهی می‌شه تا محتوا گم نشه.
+        // ---------------------------------------------------------------
+        let joditLoaded = false;
+        let joditLoadingPromise = null;
+        let editorInstance = null;
+
+        function loadJodit() {
+            if (joditLoadingPromise) return joditLoadingPromise;
+
+            joditLoadingPromise = new Promise(function(resolve, reject) {
+                // CSS ادیتور
+                var link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.href = 'https://cdn.jsdelivr.net/npm/jodit/build/jodit.min.css';
+                document.head.appendChild(link);
+
+                // JS ادیتور
+                var script = document.createElement('script');
+                script.src = 'https://cdn.jsdelivr.net/npm/jodit/build/jodit.min.js';
+                script.onload = function() {
+                    editorInstance = new Jodit('#editor');
+                    joditLoaded = true;
+                    resolve(editorInstance);
+                };
+                script.onerror = reject;
+                document.body.appendChild(script);
+            });
+
+            return joditLoadingPromise;
+        }
+
+        // فعال‌سازی با اولین فوکوس/کلیک روی فیلد محتوا
+        document.getElementById('editor').addEventListener('focus', loadJodit, {
+            once: true
+        });
+
+        // شبکه‌ی ایمنی: قبل از ارسال فرم، مطمئن می‌شویم مقدار ادیتور (اگر لود شده) در textarea نشسته
+        document.querySelector('form').addEventListener('submit', function(e) {
+            if (joditLoaded && editorInstance) {
+                document.getElementById('editor').value = editorInstance.getEditorValue();
+            }
+            // اگر ادیتور اصلاً لود نشده باشه (کاربر روش کلیک نکرده)، مقدار ساده‌ی
+            // خود textarea همون‌طور که هست ارسال می‌شه.
         });
 
         document.getElementById('category').addEventListener('change', function() {
