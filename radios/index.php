@@ -18,71 +18,55 @@ session_start();
     <link rel="apple-touch-icon" href="../images/36.png">
 
     <!-- ========================================== -->
-    <!-- عنوان و توضیحات بهینه‌شده برای سئو          -->
+    <!-- تگ‌های سئو (فقط اضافه شده - متن اصلی حفظ شد) -->
     <!-- ========================================== -->
-    <title>رادیو سیمرغ | پادکست و داستان‌های صوتی شب‌های تهران و کافه مه‌آلود</title>
-    <meta name="description" content="رادیو سیمرغ: پخش آنلاین پادکست و داستان‌های صوتی شب‌های تهران و کافه مه‌آلود. بهترین برنامه‌های رادیویی، داستان‌های صوتی و پادکست‌های فرهنگی را با کیفیت عالی بشنوید.">
-    <meta name="keywords" content="رادیو, رادیو آنلاین, پادکست, داستان صوتی, کتاب صوتی, شب‌های تهران, کافه مه‌آلود, رادیو سیمرغ, پادکست فارسی, داستان شب, برنامه رادیویی, موسیقی سنتی, فرهنگ و هنر">
+    <title>رادیو سیمرغ | پخش آنلاین برنامه‌های رادیویی</title>
+    <meta name="description" content="رادیو سیمرغ، شب‌های تهران و کافه مه‌آلود - پخش آنلاین بهترین برنامه‌های رادیویی">
+    <meta name="keywords" content="رادیو سیمرغ, شب‌های تهران, کافه مه‌آلود, رادیو آنلاین, برنامه رادیویی">
     <meta name="author" content="موسسه هفت هنر سیمرغ">
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://simorghtv.com/radios/index.php">
 
-    <!-- ========================================== -->
-    <!-- تگ‌های Open Graph برای شبکه‌های اجتماعی    -->
-    <!-- ========================================== -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="رادیو سیمرغ | پادکست و داستان‌های صوتی شب‌های تهران و کافه مه‌آلود">
-    <meta property="og:description" content="رادیو سیمرغ، پخش آنلاین پادکست و داستان‌های صوتی با کیفیت بالا. شب‌های تهران، کافه مه‌آلود و جمعه‌های سیمرغی.">
+    <meta property="og:title" content="رادیو سیمرغ | پخش آنلاین برنامه‌های رادیویی">
+    <meta property="og:description" content="رادیو سیمرغ، شب‌های تهران و کافه مه‌آلود - پخش آنلاین بهترین برنامه‌های رادیویی">
     <meta property="og:url" content="https://simorghtv.com/radios/index.php">
     <meta property="og:site_name" content="رادیو سیمرغ">
     <meta property="og:image" content="https://simorghtv.com/images/36.png">
     <meta property="og:image:width" content="512">
     <meta property="og:image:height" content="512">
 
-    <!-- ========================================== -->
-    <!-- تگ‌های Twitter Card                         -->
-    <!-- ========================================== -->
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="رادیو سیمرغ | پادکست و داستان‌های صوتی شب‌های تهران و کافه مه‌آلود">
-    <meta name="twitter:description" content="رادیو سیمرغ، پخش آنلاین پادکست و داستان‌های صوتی با کیفیت بالا.">
+    <meta name="twitter:title" content="رادیو سیمرغ | پخش آنلاین برنامه‌های رادیویی">
+    <meta name="twitter:description" content="رادیو سیمرغ، شب‌های تهران و کافه مه‌آلود - پخش آنلاین بهترین برنامه‌های رادیویی">
     <meta name="twitter:image" content="https://simorghtv.com/images/36.png">
 
-    <!-- ========================================== -->
-    <!-- دیتاهای ساختاریافته (JSON-LD) برای سئو پیشرفته -->
-    <!-- ========================================== -->
+    <!-- JSON-LD Schema.org -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "WebSite",
         "name": "رادیو سیمرغ",
         "url": "https://simorghtv.com/radios/",
-        "description": "پخش آنلاین پادکست و داستان‌های صوتی شب‌های تهران و کافه مه‌آلود",
-        "potentialAction": {
-            "@type": "SearchAction",
-            "target": "https://simorghtv.com/radios/search?q={search_term_string}",
-            "query-input": "required name=search_term_string"
-        },
-        "sameAs": [
-            "https://www.instagram.com/simorghtv/",
-            "https://t.me/simorgh_radio"
-        ]
+        "description": "پخش آنلاین برنامه‌های رادیویی",
+        "inLanguage": "fa-IR"
     }
     </script>
 
-    <!-- Schema.org برای برنامه رادیویی -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "RadioBroadcastService",
         "name": "رادیو سیمرغ",
-        "description": "پخش آنلاین پادکست و داستان‌های صوتی",
+        "description": "پخش آنلاین برنامه‌های رادیویی",
         "url": "https://simorghtv.com/radios/",
         "broadcastDisplayName": "رادیو سیمرغ",
         "inLanguage": "fa-IR"
     }
     </script>
 
-    <!-- Schema.org برای هر سریال صوتی -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -91,7 +75,7 @@ session_start();
         "description": "سریال صوتی شب‌های تهران، روایت‌های شنیدنی از پایتخت ایران",
         "url": "https://simorghtv.com/radios/tehran.php",
         "language": "fa",
-        "genre": "داستان صوتی"
+        "genre": "برنامه رادیویی"
     }
     </script>
 
@@ -103,7 +87,7 @@ session_start();
         "description": "سریال صوتی کافه مه‌آلود، فضایی آرامش‌بخش با موسیقی و گفتگو",
         "url": "https://simorghtv.com/radios/cafe_meh.php",
         "language": "fa",
-        "genre": "پادکست فرهنگی"
+        "genre": "برنامه رادیویی"
     }
     </script>
 
@@ -119,14 +103,10 @@ session_start();
     }
     </script>
 
-    <!-- ========================================== -->
-    <!-- لینک‌های هدر (فاوآیکن و ...)              -->
-    <!-- ========================================== -->
     <?php include "includes.php"; ?>
     <link rel="icon" href="../images/logo1.ico" type="image/x-icon">
 
     <style>
-    /* ===== استایل‌های صفحه (بدون تغییر در منطق) ===== */
     body {
         background: #f5f5f5;
     }
@@ -352,8 +332,8 @@ session_start();
     <div class="container mt-4">
         
         <div class="hero-section">
-            <h1 class="hero-title">🎙️ رادیو سیمرغ | پادکست و داستان‌های صوتی</h1>
-            <p class="hero-subtitle">بهترین برنامه‌های رادیویی، پادکست‌های فرهنگی و داستان‌های صوتی را با کیفیت عالی بشنوید</p>
+            <h1 class="hero-title">🎙️ به رادیو سیمرغ خوش آمدید</h1>
+            <p class="hero-subtitle">تجربه‌ای نو از شنیدن بهترین برنامه‌های رادیویی با کیفیت عالی</p>
             
             <button id="installPermanentBtn" class="install-permanent-btn">
                 📲 نصب اپلیکیشن رادیو سیمرغ
@@ -367,9 +347,8 @@ session_start();
                     <div class="radio-card card-tehran">
                         <div class="card-top"></div>
                         <div class="card-bottom">
-                            <h2 class="radio-title">سریال صوتی شب‌های تهران</h2>
+                            <h2 class="radio-title">سریال صوتی شب های تهران</h2>
                             <p class="radio-description">
-                                داستان‌های شنیدنی از پایتخت ایران، روایت‌هایی دلنشین از تهران قدیم
                             </p>
                             <div class="btn-listen">
                                 بشنو 🌙
@@ -386,7 +365,6 @@ session_start();
                         <div class="card-bottom">
                             <h2 class="radio-title">سریال صوتی کافه مه‌آلود</h2>
                             <p class="radio-description">
-                                پادکستی آرامش‌بخش با موسیقی ملایم، گفتگوهای صمیمی و لحظاتی ناب
                             </p>
                             <div class="btn-listen">
                                 بنشین ☕
@@ -403,7 +381,8 @@ session_start();
                         <div class="card-bottom">
                             <h2 class="radio-title">جمعه‌های سیمرغی</h2>
                             <p class="radio-description">
-                                پخش زنده و آرشیو بهترین برنامه‌های فرهنگی، هنری و موسیقی با صدای گرم گویندگان حرفه‌ای
+                                پخش زنده و آرشیو بهترین برنامه‌های فرهنگی،<br>
+                                هنری و موسیقی با صدای گرم گویندگان حرفه‌ای
                             </p>
                             <div class="btn-listen">
                                 گوش کن 🎧
@@ -420,19 +399,19 @@ session_start();
                 <div class="col-md-4">
                     <div class="stat-item">
                         <div class="stat-number">+۱۰۰,۰۰۰</div>
-                        <div class="stat-label">شنونده فعال پادکست و رادیو</div>
+                        <div class="stat-label">شنونده فعال</div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="stat-item">
                         <div class="stat-number">+۵۰۰</div>
-                        <div class="stat-label">داستان صوتی و برنامه</div>
+                        <div class="stat-label">برنامه متنوع</div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="stat-item">
                         <div class="stat-number">۲۴/۷</div>
-                        <div class="stat-label">پخش آنلاین رادیو و پادکست</div>
+                        <div class="stat-label">پخش آنلاین</div>
                     </div>
                 </div>
             </div>
@@ -442,21 +421,16 @@ session_start();
             <div class="col-12">
                 <div class="card border-0 shadow-sm" style="border-radius: 20px;">
                     <div class="card-body p-4">
-                        <h2 class="text-center mb-4">بهترین انتخاب برای شنیدن پادکست و داستان‌های صوتی</h2>
+                        <h3 class="text-center mb-4">بهترین انتخاب برای شنیدن برنامه‌های رادیویی</h3>
                         <p class="text-justify">
-                            <strong>رادیو سیمرغ</strong> با سال‌ها تجربه در تولید محتوای فرهنگی و هنری، همواره تلاش کرده است تا بهترین
-                            <strong>پادکست‌ها و داستان‌های صوتی</strong> را برای مخاطبان عزیز فراهم آورد. 
-                            <strong>سریال صوتی شب‌های تهران</strong> با روایت‌های شنیدنی از پایتخت ایران، شما را به سفری 
-                            دلنشین در کوچه پس کوچه‌های خاطره‌انگیز تهران می‌برد.
+                            رادیو سیمرغ با سال‌ها تجربه در تولید محتوای فرهنگی و هنری، همواره تلاش کرده است تا بهترین
+                            برنامه‌های رادیویی را برای مخاطبان عزیز فراهم آورد. برنامه "شب‌های تهران" با روایت‌های
+                            شنیدنی از پایتخت ایران، شما را به سفری دلنشین در کوچه پس کوچه‌های خاطره‌انگیز تهران می‌برد.
                         </p>
                         <p class="text-justify">
-                            <strong>سریال صوتی کافه مه‌آلود</strong> فضایی تازه و متفاوت است که شما را به دنیایی از 
-                            موسیقی ملایم، گفتگوهای صمیمی و لحظاتی آرامش‌بخش دعوت می‌کند. 
-                            با ما همراه باشید و از شنیدن بهترین موسیقی‌ها، گفتگوهای تخصصی و برنامه‌های متنوع لذت ببرید.
-                        </p>
-                        <p class="text-justify">
-                            اگر به دنبال <strong>پادکست فارسی</strong>، <strong>داستان صوتی</strong> یا 
-                            <strong>برنامه رادیویی</strong> با کیفیت بالا هستید، رادیو سیمرغ بهترین انتخاب برای شماست.
+                            "کافه مه‌آلود" فضایی تازه و متفاوت است که شما را به دنیایی از موسیقی ملایم، گفتگوهای صمیمی
+                            و لحظاتی آرامش‌بخش دعوت می‌کند. با ما همراه باشید و از شنیدن بهترین موسیقی‌ها، گفتگوهای
+                            تخصصی و برنامه‌های متنوع لذت ببرید.
                         </p>
                     </div>
                 </div>
@@ -467,9 +441,6 @@ session_start();
     <?php include 'footer.php'; ?>
 
     <script>
-    // ============================================
-    // مدیریت نصب PWA (دقیقاً مشابه قبل - بدون تغییر)
-    // ============================================
     let deferredPrompt;
     const installBtn = document.getElementById('installPermanentBtn');
 

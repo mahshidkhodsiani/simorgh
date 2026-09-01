@@ -62,3 +62,9 @@ Stack trace:
 Stack trace:
 #0 {main}
   thrown in /home3/vuqgpgoc/public_html/radios/payment_radio_cafe.php on line 9
+[29-Aug-2026 19:51:40 Asia/Tehran] PHP Fatal error:  Uncaught mysqli_sql_exception: Too many connections in /home3/vuqgpgoc/public_html/config.php:11
+Stack trace:
+#0 /home3/vuqgpgoc/public_html/config.php(11): mysqli_connect('89.32.250.180', 'vuqgpgoc_admin', 'ZKdN]DZ1kEuJ', 'vuqgpgoc_simorg...')
+#1 /home3/vuqgpgoc/public_html/radios/tehran.php(8): include('/home3/vuqgpgoc...')
+#2 {main}
+  thrown in /home3/vuqgpgoc/public_html/config.php on line 11
