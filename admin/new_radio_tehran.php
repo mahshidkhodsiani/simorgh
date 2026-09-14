@@ -19,64 +19,121 @@ $id = $_SESSION["all_data"]['id'];
     <link rel="icon" href="../images/logo1.ico" type="image/x-icon">
 
     <?php
-    include 'includes.php';
+    // فقط config رو include کن، includes رو حذف کن
     include '../config.php';
     ?>
+
+    <!-- پیش‌اتصال زودهنگام به دامنه‌های CDN -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://code.jquery.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://code.jquery.com">
+
+    <!-- CSS ضروری (سبک و سریع) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f0f2f5;
+        }
+        .main-content {
+            padding: 20px;
+        }
+        .card-form, .table-section {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+            margin-bottom: 30px;
+            border: none;
+        }
+        .table-header {
+            background-color: #4a5d73;
+            color: white;
+            padding: 10px;
+            border-radius: 8px 8px 0 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: rgba(0, 0, 0, 0.03);
+        }
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1050;
+        }
+        /* پلیر صوتی کوچک‌تر و بهینه */
+        audio {
+            width: 150px;
+            height: 30px;
+        }
+        /* لود تنبل برای پلیرها - مخفی کردن پلیرها تا وقتی که اسکرول بشن */
+        audio[data-src] {
+            display: none;
+        }
+        audio.loaded {
+            display: inline;
+        }
+    </style>
 </head>
 
 <body>
 
     <?php include 'header.php'; ?>
     <div class="container-fluid">
-
         <div class="row">
             <div class="col-md-3 d-flex">
                 <?php include 'sidebar.php'; ?>
             </div>
 
-            <div class="col-md-8 mt-5">
+            <div class="col-md-9 main-content">
+                <h3 class="text-center mb-4">مدیریت شب‌های تهران</h3>
 
-                <!-- فرم ثبت برنامه شب‌های تهران -->
-                <form id="articleForm" enctype="multipart/form-data" method="POST" class="border p-2">
-                    <div class="row">
-                        <div class="col-6">
-                            <label for="title">نام برنامه (شب‌های تهران):</label>
-                            <input type="text" id="title" name="title" class="form-control mb-2"
-                                placeholder="عنوان برنامه را وارد کنید" required>
-
-                            <label for="mp3">آپلود فایل صوتی:</label>
-                            <input type="file" name="mp3" class="form-control" id="inputGroupFile02" accept="audio/*"
-                                required>
+                <!-- فرم ثبت برنامه -->
+                <div class="card-form">
+                    <form id="articleForm" enctype="multipart/form-data" method="POST" novalidate>
+                        <div class="alert alert-info text-center" role="alert">
+                            <i class="fas fa-info-circle me-2"></i><strong>دقت کنید:</strong> فایل صوتی با فرمت MP3 آپلود شود.
                         </div>
-                        <div class="col-6">
-                            <label for="kind">نوع برنامه:</label>
-                            <input type="text" id="kind" name="kind" class="form-control mb-2"
-                                placeholder="نوع برنامه را وارد کنید" required>
-
-                            <label for="price">قیمت (ریال):</label>
-                            <input type="number" id="price" name="price" class="form-control mb-2"
-                                placeholder="قیمت را وارد کنید" min="10000" value="10000" required>
-                            <small class="text-muted">حداقل قیمت مجاز ۱۰۰,۰۰۰ ریال (به دلیل محدودیت درگاه)</small>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="title" class="form-label">نام برنامه (شب‌های تهران):</label>
+                                <input type="text" id="title" name="title" class="form-control" placeholder="عنوان برنامه را وارد کنید" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="kind" class="form-label">نوع برنامه:</label>
+                                <input type="text" id="kind" name="kind" class="form-control" placeholder="نوع برنامه را وارد کنید" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="price" class="form-label">قیمت (ریال):</label>
+                                <input type="number" id="price" name="price" class="form-control" placeholder="قیمت را وارد کنید" min="10000" value="10000" required>
+                                <small class="text-muted">حداقل قیمت ۱۰۰,۰۰۰ ریال (به دلیل محدودیت درگاه)</small>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="mp3" class="form-label">آپلود فایل صوتی (MP3):</label>
+                                <input type="file" name="mp3" class="form-control" id="mp3" accept="audio/mpeg" required>
+                            </div>
                         </div>
+                        <div class="d-flex justify-content-center mt-4">
+                            <button class="btn btn-outline-success" type="submit" name="submit_radio_tehran">
+                                <i class="fas fa-plus-circle me-2"></i>ثبت برنامه شب‌های تهران
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- لیست برنامه‌ها -->
+                <div class="table-section">
+                    <div class="table-header">
+                        <i class="fas fa-list-alt me-2"></i>لیست برنامه‌های شب‌های تهران
                     </div>
-
-                    <br>
-
-                    <div class="row">
-                        <div class="col-md-4"></div>
-                        <div class="col-md-6">
-                            <button class="btn btn-outline-success" type="submit" name="submit_radio_tehran">ثبت برنامه
-                                شب‌های تهران</button>
-                        </div>
-                    </div>
-                </form>
-
-                <br>
-
-                <div class="row mt-5">
-                    <div class="col-md-11">
-                        <div class="table-responsive">
-                            <?php
+                    <div class="table-responsive mt-3">
+                        <?php
                         // Pagination configuration
                         $items_per_page = 10;
                         $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
@@ -96,11 +153,10 @@ $id = $_SESSION["all_data"]['id'];
                         if ($result->num_rows > 0) {
                             $a = ($current_page - 1) * $items_per_page + 1;
                         ?>
-                            <table class="table border border-4">
-                                <h4>لیست برنامه‌های شب‌های تهران :</h4>
+                            <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th scope="col" class="text-center">ردیف</th>
+                                        <th scope="col" class="text-center">#</th>
                                         <th scope="col" class="text-center">عنوان</th>
                                         <th scope="col" class="text-center">نوع برنامه</th>
                                         <th scope="col" class="text-center">قیمت (ریال)</th>
@@ -116,17 +172,19 @@ $id = $_SESSION["all_data"]['id'];
                                         <td class="text-center"><?= htmlspecialchars($row['program_type']) ?></td>
                                         <td class="text-center"><?= number_format($row['price']) ?></td>
                                         <td class="text-center">
-                                            <audio controls>
-                                                <source src='<?= htmlspecialchars($row['file_path']) ?>'
-                                                    type='audio/mpeg'>
+                                            <!-- پلیر صوتی با لود تنبل -->
+                                            <audio controls preload="none" data-src="<?= htmlspecialchars($row['file_path']) ?>">
+                                                <source src="" type="audio/mpeg">
+                                                مرورگر شما از پخش صوتی پشتیبانی نمی‌کند.
                                             </audio>
                                         </td>
                                         <td class="text-center">
-                                            <a href="edit_radio_tehran.php?id_radio=<?= $row['id'] ?>"
-                                                class="btn btn-outline-warning btn-sm">ویرایش</a>
-                                            <a href="?delete_radio_tehran=<?= $row['id'] ?>"
-                                                class="btn btn-outline-danger btn-sm"
-                                                onclick="return confirmDelete()">حذف</a>
+                                            <a href="edit_radio_tehran.php?id_radio=<?= $row['id'] ?>" class="btn btn-outline-warning btn-sm">
+                                                <i class="fas fa-edit me-1"></i>ویرایش
+                                            </a>
+                                            <a href="?delete_radio_tehran=<?= $row['id'] ?>" class="btn btn-outline-danger btn-sm" onclick="return confirmDelete()">
+                                                <i class="fas fa-trash-alt me-1"></i>حذف
+                                            </a>
                                         </td>
                                     </tr>
                                     <?php $a++; } ?>
@@ -152,17 +210,17 @@ $id = $_SESSION["all_data"]['id'];
                                     </li>
                                     <?php } ?>
                                     <li class="page-item <?= $current_page == $total_pages ? 'disabled' : '' ?>">
-                                        <a class="page-link"
-                                            href="?page=<?= min($total_pages, $current_page + 1) ?>">بعدی</a>
+                                        <a class="page-link" href="?page=<?= min($total_pages, $current_page + 1) ?>">بعدی</a>
                                     </li>
                                 </ul>
                             </nav>
                             <?php } ?>
 
-                            <?php } else { ?>
-                            <p>هیچ برنامه‌ای برای شب‌های تهران یافت نشد.</p>
-                            <?php } ?>
-                        </div>
+                        <?php } else { ?>
+                            <div class="alert alert-warning text-center" role="alert">
+                                هیچ برنامه‌ای برای شب‌های تهران یافت نشد.
+                            </div>
+                        <?php } ?>
                     </div>
                 </div>
 
@@ -170,24 +228,88 @@ $id = $_SESSION["all_data"]['id'];
         </div>
     </div>
 
-    <script>
-    function confirmDelete() {
-        return confirm("آیا مطمئن هستید که می‌خواهید این برنامه را حذف کنید؟");
-    }
-    </script>
+    <!-- Toast notifications -->
+    <div class="toast-container">
+        <div id="successToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
+            <div class="toast-header bg-success text-white">
+                <strong class="me-auto">موفقیت</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                عملیات با موفقیت انجام شد!
+            </div>
+        </div>
+        <div id="errorToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
+            <div class="toast-header bg-danger text-white">
+                <strong class="me-auto">خطا</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                خطایی در انجام عملیات رخ داد!
+            </div>
+        </div>
+    </div>
+
+    <!-- اسکریپت‌ها با defer -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
 
     <script>
-    $(document).ready(function() {
-        $('.nav-link').click(function() {
-            $('.nav-link').removeClass('active');
-            $(this).addClass('active');
+        // ============================================================
+        // ۱. لود تنبل پلیرهای صوتی (Intersection Observer)
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const audioElements = document.querySelectorAll('audio[data-src]');
+            
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            const audio = entry.target;
+                            const src = audio.getAttribute('data-src');
+                            if (src) {
+                                // فقط وقتی وارد viewport شد، فایل صوتی لود بشه
+                                audio.querySelector('source').src = src;
+                                audio.load();
+                                audio.classList.add('loaded');
+                                audio.removeAttribute('data-src');
+                                observer.unobserve(audio);
+                            }
+                        }
+                    });
+                }, {
+                    rootMargin: '50px' // 50 پیکسل قبل از ورود به viewport شروع به لود کنه
+                });
+
+                audioElements.forEach(function(audio) {
+                    observer.observe(audio);
+                });
+            } else {
+                // Fallback برای مرورگرهای قدیمی
+                audioElements.forEach(function(audio) {
+                    const src = audio.getAttribute('data-src');
+                    if (src) {
+                        audio.querySelector('source').src = src;
+                        audio.load();
+                        audio.classList.add('loaded');
+                        audio.removeAttribute('data-src');
+                    }
+                });
+            }
         });
-    });
+
+        // ============================================================
+        // ۲. تابع تایید حذف
+        // ============================================================
+        function confirmDelete() {
+            return confirm("آیا مطمئن هستید که می‌خواهید این برنامه را حذف کنید؟");
+        }
     </script>
 
 </body>
 
 </html>
+
 
 <?php
 // ========== پردازش فرم ثبت ==========
@@ -199,7 +321,14 @@ if (isset($_POST['submit_radio_tehran'])) {
 
     // بررسی حداقل قیمت
     if ($price < 10000) {
-        echo "<script>alert('قیمت نمی‌تواند کمتر از ۱۰۰,۰۰۰ ریال باشد!');</script>";
+        echo "<script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var errorToast = new bootstrap.Toast(document.getElementById('errorToast'));
+                var toastBody = errorToast._element.querySelector('.toast-body');
+                toastBody.innerText = 'قیمت نمی‌تواند کمتر از ۱۰۰,۰۰۰ ریال باشد!';
+                errorToast.show();
+            });
+            </script>";
     } else {
 
         $dest_path = null;
@@ -209,6 +338,19 @@ if (isset($_POST['submit_radio_tehran'])) {
             $fileName = $_FILES['mp3']['name'];
             $fileNameCmps = explode(".", $fileName);
             $fileExtension = strtolower(end($fileNameCmps));
+
+            // فقط پسوند MP3 مجاز
+            if ($fileExtension !== 'mp3') {
+                echo "<script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        var errorToast = new bootstrap.Toast(document.getElementById('errorToast'));
+                        var toastBody = errorToast._element.querySelector('.toast-body');
+                        toastBody.innerText = 'فقط فایل‌های MP3 مجاز هستند!';
+                        errorToast.show();
+                    });
+                    </script>";
+                exit;
+            }
 
             $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
             $uploadFileDir = '../upload/radios/tehran/';
@@ -221,7 +363,14 @@ if (isset($_POST['submit_radio_tehran'])) {
             $dest_path = $uploadFileDir . $newFileName;
 
             if (!move_uploaded_file($fileTmpPath, $dest_path)) {
-                echo "<script>alert('خطا در آپلود فایل');</script>";
+                echo "<script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        var errorToast = new bootstrap.Toast(document.getElementById('errorToast'));
+                        var toastBody = errorToast._element.querySelector('.toast-body');
+                        toastBody.innerText = 'خطا در آپلود فایل!';
+                        errorToast.show();
+                    });
+                    </script>";
                 $dest_path = null;
             }
         }
@@ -231,21 +380,22 @@ if (isset($_POST['submit_radio_tehran'])) {
             $stmt->bind_param("ssis", $title, $programType, $price, $dest_path);
             
             if ($stmt->execute()) {
-                echo "<div id='successToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 20px; right: 20px; width: 300px;'>
-                        <div class='toast-header bg-success text-white'>
-                            <strong class='mr-auto'>موفق</strong>
-                            <button type='button' class='ml-2 mb-1 close' data-dismiss='toast'>&times;</button>
-                        </div>
-                        <div class='toast-body'>برنامه شب‌های تهران با موفقیت ثبت شد!</div>
-                      </div>
-                      <script>
-                        $(document).ready(function(){
-                            $('#successToast').toast('show');
-                            setTimeout(function(){ window.location.href = 'new_radio_tehran.php'; }, 2000);
-                        });
-                      </script>";
+                echo "<script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        var successToast = new bootstrap.Toast(document.getElementById('successToast'));
+                        successToast.show();
+                        setTimeout(function(){ window.location.href = 'new_radio_tehran.php'; }, 2000);
+                    });
+                    </script>";
             } else {
-                echo "<div class='alert alert-danger'>خطا در ثبت: " . $conn->error . "</div>";
+                echo "<script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        var errorToast = new bootstrap.Toast(document.getElementById('errorToast'));
+                        var toastBody = errorToast._element.querySelector('.toast-body');
+                        toastBody.innerText = 'خطا در ثبت: " . addslashes($conn->error) . "';
+                        errorToast.show();
+                    });
+                    </script>";
             }
             $stmt->close();
         }
@@ -267,23 +417,25 @@ if (isset($_GET['delete_radio_tehran'])) {
         }
     }
 
-    $sql = "DELETE FROM radio_tehran WHERE id = $id_radio";
-    if ($conn->query($sql)) {
-        echo "<div id='successToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 20px; right: 20px; width: 300px;'>
-                <div class='toast-header bg-success text-white'>
-                    <strong>موفق</strong>
-                    <button type='button' class='close' data-dismiss='toast'>&times;</button>
-                </div>
-                <div class='toast-body'>برنامه مورد نظر حذف شد.</div>
-              </div>
-              <script>
-                $(document).ready(function(){
-                    $('#successToast').toast('show');
-                    setTimeout(function(){ window.location.href = 'new_radio_tehran.php'; }, 1500);
-                });
-              </script>";
+    $stmt = $conn->prepare("DELETE FROM radio_tehran WHERE id = ?");
+    $stmt->bind_param("i", $id_radio);
+    
+    if ($stmt->execute()) {
+        echo "<script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var successToast = new bootstrap.Toast(document.getElementById('successToast'));
+                successToast.show();
+                setTimeout(function(){ window.location.href = 'new_radio_tehran.php'; }, 1500);
+            });
+            </script>";
     } else {
-        echo "<div class='alert alert-danger'>خطا در حذف: " . $conn->error . "</div>";
+        echo "<script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var errorToast = new bootstrap.Toast(document.getElementById('errorToast'));
+                errorToast.show();
+            });
+            </script>";
     }
+    $stmt->close();
 }
 ?>

@@ -416,63 +416,60 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                         <h4 class="h5 mb-0"><i class="fas fa-layer-group me-2"></i>دیگر پکیج‌های سیمرغ</h4>
                     </div>
 
-                    <div class="accordion accordion-flush" id="packagesAccordion">
-                        <?php
-                        // کوئری اصلاح شده: از ستون 'description' به جای 'short_description' استفاده می‌کند.
-                        $other_packages_sql = "SELECT id, name, description FROM `packages` WHERE `id` != ? ORDER BY name ASC";
-                        $other_stmt = $conn->prepare($other_packages_sql);
-                        
-                        // بررسی موفقیت آماده‌سازی
-                        if ($other_stmt === false) {
-                            echo "<div class='p-3 text-center text-danger'>خطا در آماده‌سازی کوئری پکیج‌ها.</div>";
-                        } else {
-                            $other_stmt->bind_param("i", $package_id);
-                            $other_stmt->execute();
-                            $other_result = $other_stmt->get_result();
+                <div class="accordion accordion-flush" id="packagesAccordion">
+    <?php
+    $other_packages_sql = "SELECT id, name, description FROM `packages` WHERE `id` != ? ORDER BY name ASC";
+    $other_stmt = $conn->prepare($other_packages_sql);
+    
+    if ($other_stmt === false) {
+        echo "<div class='p-3 text-center text-danger'>خطا در آماده‌سازی کوئری پکیج‌ها.</div>";
+    } else {
+        $other_stmt->bind_param("i", $package_id);
+        $other_stmt->execute();
+        $other_result = $other_stmt->get_result();
 
-                            if ($other_result->num_rows > 0) {
-                                while ($other_package = $other_result->fetch_assoc()) {
-                                    $target_id = "collapse-" . $other_package['id'];
-                                    $heading_id = "heading-" . $other_package['id'];
-                                    $package_link = "package.php?id=" . htmlspecialchars($other_package['id'], ENT_QUOTES, 'UTF-8');
-                                    $package_name = htmlspecialchars($other_package['name'], ENT_QUOTES, 'UTF-8');
-                                    
-                                    // 🌟🌟🌟 قسمت اصلاح شده برای کوتاه کردن توضیحات 🌟🌟🌟
-                                    $raw_description = strip_tags($other_package['description']); // حذف تگ‌های HTML
-                                    $description_text = mb_substr($raw_description, 0, 100, 'UTF-8'); // برش متن تا ۱۰۰ کاراکتر
-                                    if (mb_strlen($raw_description, 'UTF-8') > 100) {
-                                        $description_text .= '...'; // افزودن سه‌نقطه در صورت برش
-                                    }
-                                    // 🌟🌟🌟 پایان قسمت اصلاح شده 🌟🌟🌟
-                            ?>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="<?= $heading_id ?>">
-                                <button class="btn btn-info" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#<?= $target_id ?>" aria-expanded="false"
-                                    aria-controls="<?= $target_id ?>">
-                                    <?= $package_name ?>
-                                </button>
-                            </h2>
-                            <div id="<?= $target_id ?>" class="accordion-collapse collapse"
-                                aria-labelledby="<?= $heading_id ?>" data-bs-parent="#packagesAccordion">
-                                <div class="accordion-body">
-                                    <p class="text-muted small">
-                                        <?= htmlspecialchars($description_text, ENT_QUOTES, 'UTF-8') ?></p>
-                                    <a href="<?= $package_link ?>" class="btn btn-sm btn-outline-primary w-100 mt-2">
-                                        <i class="fas fa-eye me-1"></i> مشاهده کامل پکیج
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <?php
-                                }
-                                $other_stmt->close();
-                            } else {
-                                echo "<div class='p-3 text-center text-muted'>پکیج دیگری موجود نیست.</div>";
-                            }
-                        }
-                        ?>
-                    </div>
+        if ($other_result->num_rows > 0) {
+            while ($other_package = $other_result->fetch_assoc()) {
+                $target_id = "collapse-" . $other_package['id'];
+                $heading_id = "heading-" . $other_package['id'];
+                $package_link = "package.php?id=" . htmlspecialchars($other_package['id'], ENT_QUOTES, 'UTF-8');
+                $package_name = htmlspecialchars($other_package['name'], ENT_QUOTES, 'UTF-8');
+                
+                $raw_description = strip_tags($other_package['description']);
+                // تعداد کاراکترها را برای سایدبار از 100 به 70 کاهش دادیم تا جمع‌وجورتر شود
+                $description_text = mb_substr($raw_description, 0, 70, 'UTF-8'); 
+                if (mb_strlen($raw_description, 'UTF-8') > 70) {
+                    $description_text .= '...';
+                }
+        ?>
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="<?= $heading_id ?>">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#<?= $target_id ?>" aria-expanded="false"
+                aria-controls="<?= $target_id ?>">
+                <i class="fas fa-cube me-2 text-muted"></i> <?= $package_name ?>
+            </button>
+        </h2>
+        <div id="<?= $target_id ?>" class="accordion-collapse collapse"
+            aria-labelledby="<?= $heading_id ?>" data-bs-parent="#packagesAccordion">
+            <div class="accordion-body">
+                <p><?= htmlspecialchars($description_text, ENT_QUOTES, 'UTF-8') ?></p>
+                <a href="<?= $package_link ?>" class="btn btn-outline-primary w-100 btn-compact">
+                    مشاهده پکیج
+                </a>
+            </div>
+        </div>
+    </div>
+    <?php
+            }
+            $other_stmt->close();
+        } else {
+            echo "<div class='p-3 text-center text-muted' style='font-size:0.85rem;'>پکیج دیگری موجود نیست.</div>";
+        }
+    }
+    ?>
+</div>
+
                 </div>
 
 
