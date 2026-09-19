@@ -892,6 +892,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
     </div>
     <?php include "footer.php"; ?>
+<?php include 'pwa-install-button.php'; ?>
 </body>
 
 </html>

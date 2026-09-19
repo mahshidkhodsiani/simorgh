@@ -34,7 +34,6 @@
 
 .site-menu.main-menu li {
     margin-left: 20px;
-    /* Adjust spacing between menu items */
 }
 
 .site-menu.main-menu li.has-children {
@@ -43,21 +42,16 @@
 
 .site-menu.main-menu li.has-children .dropdown {
     display: none;
-    /* Hide dropdowns by default */
 }
 
 .site-menu.main-menu li.has-children:hover .dropdown {
     display: block;
-    /* Show dropdown on hover */
     position: absolute;
     top: 100%;
     left: 0;
     background: white;
-    /* Background color for dropdown */
     border: 1px solid #ddd;
-    /* Border for dropdown */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    /* Shadow for dropdown */
 }
 
 .site-menu.main-menu li.has-children .dropdown li {
@@ -66,48 +60,10 @@
 
 .site-logo {
     margin-left: auto;
-    /* Push the logo to the far right */
 }
 
-/* Ensure the toggle button is visible on smaller screens */
 .toggle-button {
     display: none;
-}
-
-/* Show toggle button on small screens */
-@media (max-width: 991px) {
-    .toggle-button {
-        display: inline-block;
-    }
-
-    .site-menu.main-menu {
-        display: none;
-        /* Hide menu items */
-    }
-
-    .site-menu.main-menu.js-clone-nav {
-        display: block;
-        /* Show menu items in mobile view */
-        flex-direction: column;
-        position: absolute;
-        top: 60px;
-        /* Adjust as needed */
-        right: 0;
-        background: white;
-        width: 100%;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .site-menu.main-menu li {
-        margin: 0;
-        /* Remove margin for mobile view */
-    }
-
-    .site-menu.main-menu li a {
-        padding: 10px;
-        /* Adjust padding for mobile view */
-        display: block;
-    }
 }
 
 .btn-outline-quarternary {
@@ -122,31 +78,21 @@
     border-color: #621e52;
 }
 
-
-/* Style for the welcome message */
 .welcome-text {
     color: #d9534f;
-    /* A soft red color */
     font-size: 14px;
-    /* Larger font size for prominence */
     font-family: "BNaznnBd" !important;
     left: 0;
     font-weight: bold;
-    /* Make the font bold */
     margin-bottom: 10px;
-    /* Add space below the paragraph */
 }
 
-/* Style for the workshop message */
 .workshop-text {
     color: #d9534f;
-    /* Match the color with the welcome text */
     font-size: 22px;
-    /* Slightly smaller font size */
     text-align: right;
     font-family: "BNaznnBd" !important;
     font-weight: bold;
-    /* Regular font weight */
 }
 
 li {
@@ -154,25 +100,6 @@ li {
     font-size: 14px;
 }
 
-@media (max-width: 991px) {
-    .toggle-button {
-        display: inline-block;
-        /* افزایش اندازه آیکون */
-        font-size: 1.5rem;
-        /* مثلاً 2.5 برابر اندازه پیش‌فرض */
-        /* افزایش فضای قابل کلیک */
-        padding: 15px;
-        /* فضای اطراف آیکون برای راحتی کلیک */
-        border: 1px solid #ccc;
-        /* افزودن یک کادر برای برجسته‌سازی */
-        border-radius: 5px;
-        /* گوشه‌های گرد برای زیبایی */
-        background-color: #f8f8f8;
-        /* یک پس‌زمینه روشن */
-    }
-}
-
-/* Style for the badge on the cart icon */
 .cart-badge {
     position: absolute;
     top: -10px;
@@ -183,6 +110,111 @@ li {
     color: white;
     font-size: 12px;
     font-weight: bold;
+}
+
+/* ========================================= */
+/* ===== حالت موبایل (max-width: 991px) ===== */
+/* ========================================= */
+@media (max-width: 991px) {
+
+    /* مخفی کردن منوی دسکتاپ */
+    .site-menu.main-menu {
+        display: none !important;
+    }
+
+    /* دکمه همبرگری */
+    .toggle-button {
+        display: inline-block;
+        font-size: 1.5rem;
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f8f8f8;
+    }
+
+    /* ===== منوی کلون شده در offcanvas ===== */
+    .site-mobile-menu .site-nav-wrap {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+    .site-mobile-menu .site-nav-wrap li {
+        display: block;
+        position: relative;
+        width: 100%;
+    }
+
+    .site-mobile-menu .site-nav-wrap li a {
+        padding: 12px 20px;
+        display: block;
+        color: #212529;
+        border-bottom: 1px solid #f0f0f0;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    .site-mobile-menu .site-nav-wrap li a:hover {
+        color: #007bff;
+        background: #f8f9fa;
+    }
+
+    /* ===== زیرمنوها در موبایل ===== */
+    .site-mobile-menu .site-nav-wrap li ul.dropdown,
+    .site-mobile-menu .site-nav-wrap li ul.collapse {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        background: #f9f9f9;
+        position: static;
+        box-shadow: none;
+        border: none;
+        display: none;
+    }
+
+    .site-mobile-menu .site-nav-wrap li ul.dropdown.show,
+    .site-mobile-menu .site-nav-wrap li ul.collapse.show {
+        display: block !important;
+    }
+
+    .site-mobile-menu .site-nav-wrap li ul li a {
+        padding: 10px 40px;
+        font-size: 13px;
+        font-weight: normal;
+        border-bottom: 1px solid #eee;
+    }
+
+    /* ===== فلش باز/بسته شدن ===== */
+    .site-mobile-menu .arrow-collapse {
+        position: absolute;
+        right: 15px;
+        top: 12px;
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        cursor: pointer;
+        z-index: 20;
+        border-radius: 50%;
+        line-height: 30px;
+        transition: transform 0.3s;
+        background: transparent;
+    }
+
+    .site-mobile-menu .arrow-collapse:before {
+        content: "▼";
+        font-size: 10px;
+        color: #666;
+        display: inline-block;
+        transition: transform 0.3s;
+    }
+
+    .site-mobile-menu .arrow-collapse.active:before {
+        transform: rotate(180deg);
+    }
+
+    .site-mobile-menu .arrow-collapse:hover {
+        background: #e9ecef;
+    }
 }
 </style>
 
@@ -217,18 +249,13 @@ li {
                 <a href="courses">دوره های آموزشی</a>
                 <ul class="dropdown arrow-top">
                     <?php
-                    // فرض بر این است که اتصال به دیتابیس در اینجا برقرار شده است (با استفاده از $conn)
-                    include 'config.php'; // فایل کانفیگ که اتصال به دیتابیس را شامل می‌شود.
+                    include 'config.php';
 
-                    // پرس و جو برای دریافت دوره‌های آموزشی که show_header = 1 دارند.
                     $sql = "SELECT * FROM courses WHERE show_header = 1 ORDER BY id DESC";
                     $result = $conn->query($sql);
 
-                    // چک کردن اینکه آیا نتایج در دیتابیس وجود دارند
-                    if ($result->num_rows > 0) {
-                        // نمایش هر دوره آموزشی
+                    if ($result && $result->num_rows > 0) {
                         while ($course = $result->fetch_assoc()) {
-                            // درست کردن لینک برای صفحه دوره
                             echo '<li><a href="courses/course.php?slug=' . urlencode($course['slug']) . '" class="nav-link">' . htmlspecialchars($course['title']) . '</a></li>';
                         }
                     }
@@ -247,11 +274,7 @@ li {
             </li>
 
             <li><a href="articles" class="nav-link">وبلاگ سیمرغ</a></li>
-
-
             <li><a href="packages" class="nav-link">پکیج ها</a></li>
-
-
             <li><a href="login" style="font-weight: bold !important;">ورود/ ثبت نام</a></li>
 
             <li>
@@ -259,11 +282,7 @@ li {
                     <i class="fas fa-shopping-cart"></i>
                     سبد خرید
                     <?php
-                    
-                    // تعداد آیتم‌ها را از سبد خرید موقت می‌خواند
                     $cart_count = isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
-
-                    // اگر تعداد بیشتر از 0 بود، badge را نمایش می‌دهد
                     if ($cart_count > 0) {
                         echo '<span class="cart-badge">' . $cart_count . '</span>';
                     }
@@ -307,3 +326,60 @@ li {
         </a>
     </div>
 </header>
+
+<!-- ===== اسکریپت مخصوص زیرمنوهای موبایل ===== -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    // فقط در حالت موبایل
+    function isMobile() {
+        return window.innerWidth <= 991;
+    }
+
+    // مدیریت کلیک روی فلش‌های باز/بسته کردن زیرمنو
+    document.addEventListener('click', function (e) {
+        var arrow = e.target.closest('.arrow-collapse');
+        if (!arrow) return;
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        var $li = arrow.closest('li.has-children');
+        if (!$li) return;
+
+        var $submenu = $li.querySelector('ul.dropdown, ul.collapse');
+        if (!$submenu) return;
+
+        // بستن سایر زیرمنوهای باز
+        document.querySelectorAll('.site-mobile-menu li.has-children ul.show').forEach(function (ul) {
+            if (ul !== $submenu) {
+                ul.classList.remove('show');
+                ul.style.display = 'none';
+                var otherArrow = ul.closest('li').querySelector('.arrow-collapse');
+                if (otherArrow) otherArrow.classList.remove('active');
+            }
+        });
+
+        // باز/بسته کردن زیرمنوی فعلی
+        if ($submenu.classList.contains('show')) {
+            $submenu.classList.remove('show');
+            $submenu.style.display = 'none';
+            arrow.classList.remove('active');
+        } else {
+            $submenu.classList.add('show');
+            $submenu.style.display = 'block';
+            arrow.classList.add('active');
+        }
+    });
+
+    // جلوگیری از بسته شدن منو وقتی روی لینک‌های داخل زیرمنو کلیک می‌شود
+    document.addEventListener('click', function (e) {
+        var link = e.target.closest('.site-mobile-menu .site-nav-wrap li ul li a');
+        if (link) {
+            // اجازه بده لینک به مقصد برود
+            return;
+        }
+    });
+
+});
+</script>

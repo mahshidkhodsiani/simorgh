@@ -1,23 +1,55 @@
 <?php
-session_start();
+// ============================================
+// ✅ شروع سشن با تنظیمات واحد
+// ============================================
+if (session_status() === PHP_SESSION_NONE) {
+    $isSecure = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
+    if (!$isSecure && isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
+        $isSecure = true;
+    }
+    session_set_cookie_params([
+        'lifetime' => 0,
+        'path'     => '/',
+        'domain'   => '',
+        'secure'   => $isSecure,
+        'httponly' => true,
+        'samesite' => 'Lax',
+    ]);
+    session_start();
+}
 
-if(!isset($_SESSION['user_id'])){
+// ============================================
+// ✅ ذخیره آدرس فعلی برای بازگشت بعد از لاگین
+// ============================================
+if (!isset($_SESSION['user_id'])) {
     $_SESSION['redirect_after_login'] = $_SERVER['REQUEST_URI'];
+}
+
+// ============================================
+// ✅ تشخیص حالت PWA
+// ============================================
+$is_pwa_mode = false;
+if (isset($_SESSION['is_pwa']) && $_SESSION['is_pwa'] === true) {
+    $is_pwa_mode = true;
+}
+if (isset($_GET['mode']) && $_GET['mode'] === 'pwa') {
+    $is_pwa_mode = true;
+    $_SESSION['is_pwa'] = true;
 }
 
 include '../config.php';
 
 // ========== بررسی گوینده بودن کاربر ==========
 $is_speaker = false;
-if(isset($_SESSION['user_id'])) {
+if (isset($_SESSION['user_id'])) {
     $speaker_check_sql = "SELECT speaker FROM users WHERE id = ?";
     $speaker_stmt = $conn->prepare($speaker_check_sql);
     $speaker_stmt->bind_param("i", $_SESSION['user_id']);
     $speaker_stmt->execute();
     $speaker_result = $speaker_stmt->get_result();
-    if($speaker_result->num_rows > 0) {
+    if ($speaker_result->num_rows > 0) {
         $speaker_data = $speaker_result->fetch_assoc();
-        if(isset($speaker_data['speaker']) && $speaker_data['speaker'] == 1) {
+        if (isset($speaker_data['speaker']) && $speaker_data['speaker'] == 1) {
             $is_speaker = true;
         }
     }
@@ -31,7 +63,7 @@ $radio_price = 0;
 
 $radio_query = "SELECT * FROM radios WHERE slug = '$radio_slug'";
 $radio_result = $conn->query($radio_query);
-if($radio_result->num_rows > 0) {
+if ($radio_result->num_rows > 0) {
     $radio_info = $radio_result->fetch_assoc();
     $radio_price = $radio_info['price'];
 }
@@ -40,8 +72,8 @@ if($radio_result->num_rows > 0) {
 $programs = [];
 $sql = "SELECT * FROM radio_tehran ORDER BY created_at DESC";
 $result = $conn->query($sql);
-if($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
         $programs[] = $row;
     }
 }
@@ -62,73 +94,79 @@ $user_purchased_programs = [];
 $payment_message = '';
 
 // اگر گوینده باشه، همه چی براش مجانی و کامل هست
-if($is_speaker) {
-    $has_full_access = true;  // گوینده به همه چیز دسترسی کامل داره
-} 
-elseif(isset($_SESSION['user_id'])) {
-    // بقیه کاربرها مثل قبل، فقط اونایی که خرید کردن
+if ($is_speaker) {
+    $has_full_access = true;
+} elseif (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
-    
+
     $check_full_sql = "SELECT * FROM user_radio WHERE user_id = ? AND radio_type = 'tehran' AND paid = 1 AND program_id IS NULL LIMIT 1";
     $check_stmt = $conn->prepare($check_full_sql);
     $check_stmt->bind_param("i", $user_id);
     $check_stmt->execute();
-    if($check_stmt->get_result()->num_rows > 0) {
+    if ($check_stmt->get_result()->num_rows > 0) {
         $has_full_access = true;
     }
     $check_stmt->close();
-    
-    if(!$has_full_access) {
+
+    if (!$has_full_access) {
         $prog_sql = "SELECT program_id FROM user_radio WHERE user_id = ? AND radio_type = 'tehran' AND paid = 1 AND program_id IS NOT NULL";
         $prog_stmt = $conn->prepare($prog_sql);
         $prog_stmt->bind_param("i", $user_id);
         $prog_stmt->execute();
         $prog_result = $prog_stmt->get_result();
-        while($row = $prog_result->fetch_assoc()) {
+        while ($row = $prog_result->fetch_assoc()) {
             $user_purchased_programs[] = $row['program_id'];
         }
         $prog_stmt->close();
     }
 }
 
-if(isset($_GET['payment'])) {
-    if($_GET['payment'] == 'success') {
+if (isset($_GET['payment'])) {
+    if ($_GET['payment'] == 'success') {
         $payment_message = '<div class="alert alert-success text-center">✅ پرداخت شما با موفقیت انجام شد! از شنیدن برنامه‌ها لذت ببرید. 🌙</div>';
-        if(isset($_SESSION['user_id'])) {
+        if (isset($_SESSION['user_id'])) {
             $user_id = $_SESSION['user_id'];
             $has_full_access = false;
             $user_purchased_programs = [];
-            
+
             $check_full_sql = "SELECT * FROM user_radio WHERE user_id = ? AND radio_type = 'tehran' AND paid = 1 AND program_id IS NULL LIMIT 1";
             $check_stmt = $conn->prepare($check_full_sql);
             $check_stmt->bind_param("i", $user_id);
             $check_stmt->execute();
-            if($check_stmt->get_result()->num_rows > 0) {
+            if ($check_stmt->get_result()->num_rows > 0) {
                 $has_full_access = true;
             }
             $check_stmt->close();
-            
-            if(!$has_full_access) {
+
+            if (!$has_full_access) {
                 $prog_sql = "SELECT program_id FROM user_radio WHERE user_id = ? AND radio_type = 'tehran' AND paid = 1 AND program_id IS NOT NULL";
                 $prog_stmt = $conn->prepare($prog_sql);
                 $prog_stmt->bind_param("i", $user_id);
                 $prog_stmt->execute();
                 $prog_result = $prog_stmt->get_result();
-                while($row = $prog_result->fetch_assoc()) {
+                while ($row = $prog_result->fetch_assoc()) {
                     $user_purchased_programs[] = $row['program_id'];
                 }
                 $prog_stmt->close();
             }
         }
-    } elseif($_GET['payment'] == 'failed') {
+    } elseif ($_GET['payment'] == 'failed') {
         $payment_message = '<div class="alert alert-danger text-center">❌ پرداخت ناموفق بود. لطفاً مجدداً تلاش کنید.</div>';
-    } elseif($_GET['payment'] == 'already') {
+    } elseif ($_GET['payment'] == 'already') {
         $payment_message = '<div class="alert alert-info text-center">ℹ️ این تراکنش قبلاً ثبت شده است.</div>';
     }
 }
 
 // آدرس فعلی برای بازگشت بعد از لاگین
 $current_url = $_SERVER['REQUEST_URI'];
+
+// ============================================
+// ✅ ساخت لینک ورود با redirect و mode=pwa
+// ============================================
+$login_url = '../login.php?redirect=' . urlencode($current_url);
+if ($is_pwa_mode) {
+    $login_url .= '&mode=pwa';
+}
 ?>
 
 <!doctype html>
@@ -138,9 +176,6 @@ $current_url = $_SERVER['REQUEST_URI'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- ========================================== -->
-    <!-- تگ‌های سئو (فقط اضافه شده - متن اصلی حفظ شد) -->
-    <!-- ========================================== -->
     <title>شب‌های تهران | پخش آنلاین برنامه‌های شبانه</title>
     <meta name="description" content="شب‌های تهران - روایت دلنشین شب‌های پایتخت">
     <meta name="keywords" content="شب های تهران, برنامه رادیویی, رادیو آنلاین, سریال صوتی">
@@ -189,7 +224,7 @@ $current_url = $_SERVER['REQUEST_URI'];
     }
     </script>
 
-    <?php if(count($programs) > 0): ?>
+    <?php if (count($programs) > 0): ?>
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -198,7 +233,7 @@ $current_url = $_SERVER['REQUEST_URI'];
         "description": "لیست کامل برنامه‌های سریال صوتی شب‌های تهران",
         "numberOfItems": "<?php echo count($programs); ?>",
         "itemListElement": [
-            <?php foreach($programs as $index => $program): ?> {
+            <?php foreach ($programs as $index => $program): ?> {
                 "@type": "ListItem",
                 "position": <?php echo $index + 1; ?>,
                 "item": {
@@ -210,7 +245,7 @@ $current_url = $_SERVER['REQUEST_URI'];
                     "genre": "برنامه رادیویی"
                 }
             }
-            <?php if($index < count($programs) - 1) echo ','; ?>
+            <?php if ($index < count($programs) - 1) echo ','; ?>
             <?php endforeach; ?>
         ]
     }
@@ -531,7 +566,7 @@ $current_url = $_SERVER['REQUEST_URI'];
     <div class="container mt-4 mb-5" style="position: relative; z-index: 1;">
         <?php echo $payment_message; ?>
 
-        <?php if($is_speaker): ?>
+        <?php if ($is_speaker): ?>
         <div class="alert alert-success text-center mb-3"
             style="background: linear-gradient(135deg, #c6d0cb, #0a5433); border: 1px solid #ffd700;">
             🌟🌟 به پنل گویندگی خوش آمدید! شما به عنوان گوینده، دسترسی رایگان و کامل به تمام برنامه‌ها دارید. 🌟🌟
@@ -587,18 +622,19 @@ $current_url = $_SERVER['REQUEST_URI'];
                 </div>
             </div>
             <div class="col-lg-7">
-                <?php if(!isset($_SESSION['user_id'])): ?>
+                <?php if (!isset($_SESSION['user_id'])): ?>
                 <div class="text-center mb-4">
-                    <div class="alert alert-warning">برای دسترسی به برنامه‌ها، لطفاً <a
-                            href="../login.php?redirect=<?php echo urlencode($current_url); ?>">وارد
-                            شوید</a></div>
+                    <div class="alert alert-warning">
+                        برای دسترسی به برنامه‌ها، لطفاً
+                        <a href="<?php echo htmlspecialchars($login_url); ?>">وارد شوید</a>
+                    </div>
                     <button class="btn btn-info btn-lg"
-                        onclick="location.href='../login.php?redirect=<?php echo urlencode($current_url); ?>'">🔐 ورود
-                        یا
-                        ثبت‌نام</button>
+                        onclick="location.href='<?php echo htmlspecialchars($login_url); ?>'">
+                        🔐 ورود یا ثبت‌نام
+                    </button>
                 </div>
                 <div id="playlistContainerTehran">
-                    <?php foreach($programs as $program): ?>
+                    <?php foreach ($programs as $program): ?>
                     <div class="playlist-item-tehran opacity-50" style="cursor: not-allowed;">
                         <div class="row align-items-center">
                             <div class="col-auto">
@@ -624,8 +660,8 @@ $current_url = $_SERVER['REQUEST_URI'];
                     </div>
                 </div>
                 <div id="playlistContainerTehran">
-                    <?php if(count($programs) > 0): ?>
-                    <?php foreach($programs as $index => $program): 
+                    <?php if (count($programs) > 0): ?>
+                    <?php foreach ($programs as $index => $program): 
                         $has_access_to_this = $has_full_access || in_array($program['id'], $user_purchased_programs);
                     ?>
                     <div class="playlist-item-tehran" data-title="<?php echo htmlspecialchars($program['title']); ?>"
@@ -634,7 +670,7 @@ $current_url = $_SERVER['REQUEST_URI'];
                         data-program-id="<?php echo $program['id']; ?>" data-index="<?php echo $index; ?>">
                         <div class="row align-items-center">
                             <div class="col-auto">
-                                <?php if($has_access_to_this): ?>
+                                <?php if ($has_access_to_this): ?>
                                 <button class="play-btn-tehran"
                                     onclick="playProgramTehran(this, <?php echo $index; ?>)">▶️</button>
                                 <?php else: ?>
@@ -649,10 +685,10 @@ $current_url = $_SERVER['REQUEST_URI'];
                                     <div>
                                         <h6 class="mb-1 fw-bold">
                                             <?php echo htmlspecialchars($program['title']); ?>
-                                            <?php if($has_access_to_this): ?>
+                                            <?php if ($has_access_to_this): ?>
                                             <span class="purchased-badge ms-2">✅ خریداری شده</span>
                                             <?php endif; ?>
-                                            <?php if($is_speaker): ?>
+                                            <?php if ($is_speaker): ?>
                                             <span class="purchased-badge ms-2"
                                                 style="background: #ffd700; color: #1a1a3e;">🎙️ گوینده</span>
                                             <?php endif; ?>
@@ -660,18 +696,18 @@ $current_url = $_SERVER['REQUEST_URI'];
                                         <div class="d-flex align-items-center gap-2 flex-wrap">
                                             <span class="program-badge-tehran">🌙
                                                 <?php echo htmlspecialchars($program['program_type']); ?></span>
-                                            <?php if(formatDate($program['created_at'])): ?>
+                                            <?php if (formatDate($program['created_at'])): ?>
                                             <span class="date-badge">📅
                                                 <?php echo formatDate($program['created_at']); ?></span>
                                             <?php endif; ?>
                                         </div>
                                     </div>
-                                    <?php if(!$has_access_to_this && !$is_speaker): ?>
+                                    <?php if (!$has_access_to_this && !$is_speaker): ?>
                                     <small style="color: #ff9800; cursor:pointer;"
                                         onclick="buyProgram(<?php echo $program['id']; ?>, '<?php echo addslashes($program['title']); ?>', <?php echo ($program['price'] / 10); ?>)">
                                         💰 <?php echo number_format($program['price'] / 10); ?> تومان
                                     </small>
-                                    <?php elseif($is_speaker): ?>
+                                    <?php elseif ($is_speaker): ?>
                                     <small style="color: #ffd700;">🎙️ دسترسی ویژه گوینده</small>
                                     <?php else: ?>
                                     <small style="color: #ffd700;">🎙️ شبانه</small>
@@ -697,7 +733,7 @@ $current_url = $_SERVER['REQUEST_URI'];
     <?php include 'footer.php'; ?>
 
     <!-- دکمه خروج - فقط در صورتی که کاربر وارد شده باشد نشان داده می‌شود -->
-    <?php if(isset($_SESSION['user_id'])): ?>
+    <?php if (isset($_SESSION['user_id'])): ?>
     <a href="logout.php" class="logout-btn" title="خروج از حساب کاربری">
         <svg viewBox="0 0 24 24">
             <path

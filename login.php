@@ -1,5 +1,22 @@
 <?php
-session_start();
+// ============================================
+// ✅ شروع سشن با تنظیمات واحد (باید دقیقاً مثل tehran.php و login_proccess.php باشه)
+// ============================================
+if (session_status() === PHP_SESSION_NONE) {
+    $isSecure = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
+    if (!$isSecure && isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
+        $isSecure = true;
+    }
+    session_set_cookie_params([
+        'lifetime' => 0,
+        'path'     => '/',
+        'domain'   => '',
+        'secure'   => $isSecure,
+        'httponly' => true,
+        'samesite' => 'Lax',
+    ]);
+    session_start();
+}
 
 // اگر کاربر از PWA آمده، این پارامتر رو ست کن
 if (isset($_GET['mode']) && $_GET['mode'] === 'pwa') {
