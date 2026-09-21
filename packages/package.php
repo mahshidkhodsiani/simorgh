@@ -1,29 +1,82 @@
 <?php
-// این بخش در <head> قرار می‌گیرد، بنابراین کد زیر از فایل قبلی حفظ می‌شود
-// اگر id معتبر ارسال شده باشد، برای تولید متاها از دیتابیس استفاده می‌کنیم
-$meta_description = "جزئیات پکیج آموزشی";
+// ==========================================
+// منطق سئو (قبل از هر خروجی) - یک بار واکشی همه چیز
+// ==========================================
+include_once '../config.php';
+
+$site_url  = 'https://simorghtv.com';
+$page_path = '/packages/';
+
+$package = null;
+$package_id = 0;
+$not_found = false;
+
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-    include_once '../config.php';
-    $tmp_id = (int)$_GET['id'];
-    if (isset($conn) && $conn instanceof mysqli) {
-        $q = $conn->prepare("SELECT * FROM `packages` WHERE `id` = ?");
-        if ($q) {
-            $q->bind_param("i", $tmp_id);
-            $q->execute();
-            $r = $q->get_result();
-            if ($r && $r->num_rows) {
-                $p_tmp = $r->fetch_assoc();
-                // 160 کاراکتر برای توضیحات متا
-                $meta_description = mb_substr(strip_tags($p_tmp['description'] ?: $p_tmp['name']), 0, 160, 'UTF-8');
-                // عنوان صفحه را در تگ title هم قرار می‌دهیم
-                echo '<script>document.title = "جزئیات پکیج: ' . htmlspecialchars($p_tmp['name'], ENT_QUOTES, 'UTF-8') . '";</script>';
-            }
-            $q->close();
+    $package_id = (int)$_GET['id'];
+
+    $sql = "SELECT id, name, pictures, description, teacher, address, course, price, spotplayer, file1, file2, file3 
+            FROM `packages` WHERE `id` = ?";
+    $stmt = $conn->prepare($sql);
+
+    if ($stmt) {
+        $stmt->bind_param("i", $package_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result && $result->num_rows > 0) {
+            $package = $result->fetch_assoc();
+        } else {
+            $not_found = true;
         }
-        // اگر اتصال باز باشد، آن را می‌بندیم. (این اتصال موقت برای متاها بود)
-        $conn->close();
-        unset($conn);
+        $stmt->close();
+    } else {
+        $not_found = true;
     }
+} else {
+    $not_found = true;
+}
+
+// ==========================================
+// آماده‌سازی متاها بر اساس نتیجه
+// ==========================================
+if ($package) {
+    // عنوان صفحه
+    $page_title = 'پکیج آموزشی ' . $package['name'] . ' | موسسه هفت هنر سیمرغ';
+
+    // توضیحات متا (160 کاراکتر)
+    $raw_desc = strip_tags($package['description']);
+    $raw_desc = trim(preg_replace('/\s+/', ' ', $raw_desc));
+    if (mb_strlen($raw_desc, 'UTF-8') < 30) {
+        $raw_desc = 'پکیج آموزشی ' . $package['name'] . ' در موسسه هفت هنر سیمرغ. آموزش پروژه‌محور، پشتیبانی آنلاین و ارائه مدرک معتبر.';
+    }
+    $meta_description = mb_substr($raw_desc, 0, 160, 'UTF-8');
+
+    // URL و تصویر
+    $canonical_url = $site_url . $page_path . 'package.php?id=' . $package_id;
+
+    // تصویر social (مطلق)
+    if (!empty($package['pictures'])) {
+        $og_image = $site_url . '/' . ltrim($package['pictures'], '/');
+    } else {
+        $og_image = $site_url . '/images/30.jpg';
+    }
+
+    // مسیر تصویر برای نمایش
+    $picture = !empty($package['pictures'])
+        ? ('../' . ltrim($package['pictures'], '/'))
+        : '../images/default-course.jpg';
+
+    // قیمت
+    $price_toman = (int)($package['price'] / 10);
+    $price_text  = $package['price'] > 0
+        ? number_format($price_toman) . ' تومان'
+        : 'رایگان';
+
+} else {
+    // پکیج پیدا نشد
+    $page_title       = 'پکیج مورد نظر یافت نشد | موسسه هفت هنر سیمرغ';
+    $meta_description = 'پکیج مورد نظر یافت نشد. لطفاً از صفحه پکیج‌های آموزشی سیمرغ، پکیج مورد نظر خود را انتخاب کنید.';
+    $canonical_url    = $site_url . $page_path;
+    $og_image         = $site_url . '/images/30.jpg';
 }
 ?>
 <!doctype html>
@@ -32,40 +85,48 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جزئیات پکیج</title>
+    <title><?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?></title>
+
+    <!-- SEO Core -->
+    <meta name="description" content="<?= htmlspecialchars($meta_description, ENT_QUOTES, 'UTF-8') ?>">
+    <link rel="canonical" href="<?= htmlspecialchars($canonical_url, ENT_QUOTES, 'UTF-8') ?>" />
+    <meta name="robots"
+        content="<?= $package ? 'index, follow, max-image-preview:large, max-snippet:-1' : 'noindex, follow' ?>" />
+    <meta name="author" content="موسسه هفت هنر سیمرغ">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="product" />
+    <meta property="og:site_name" content="موسسه هفت هنر سیمرغ" />
+    <meta property="og:title" content="<?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?>" />
+    <meta property="og:description" content="<?= htmlspecialchars($meta_description, ENT_QUOTES, 'UTF-8') ?>" />
+    <meta property="og:url" content="<?= htmlspecialchars($canonical_url, ENT_QUOTES, 'UTF-8') ?>" />
+    <meta property="og:locale" content="fa_IR" />
+    <meta property="og:image" content="<?= htmlspecialchars($og_image, ENT_QUOTES, 'UTF-8') ?>" />
+    <meta property="og:image:secure_url" content="<?= htmlspecialchars($og_image, ENT_QUOTES, 'UTF-8') ?>" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt"
+        content="<?= htmlspecialchars($package['name'] ?? 'پکیج آموزشی سیمرغ', ENT_QUOTES, 'UTF-8') ?>" />
+
+    <?php if ($package && $price_toman > 0): ?>
+    <meta property="product:price:amount" content="<?= $price_toman ?>" />
+    <meta property="product:price:currency" content="IRR" />
+    <?php endif; ?>
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="<?= htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') ?>" />
+    <meta name="twitter:description" content="<?= htmlspecialchars($meta_description, ENT_QUOTES, 'UTF-8') ?>" />
+    <meta name="twitter:image" content="<?= htmlspecialchars($og_image, ENT_QUOTES, 'UTF-8') ?>" />
+    <meta name="twitter:image:alt"
+        content="<?= htmlspecialchars($package['name'] ?? 'پکیج آموزشی سیمرغ', ENT_QUOTES, 'UTF-8') ?>" />
 
     <?php include "includes.php"; ?>
 
     <link rel="icon" href="../images/logo1.ico" type="image/x-icon">
-
-    <meta name="description" content="<?php echo htmlspecialchars($meta_description, ENT_QUOTES, 'UTF-8'); ?>">
-
-    <meta name="author" content="موسسه هفت هنر سیمرغ">
-    <meta property="og:title" content="موسسه هفت هنر سیمرغ">
-    <meta property="og:description" content="<?php echo htmlspecialchars($meta_description, ENT_QUOTES, 'UTF-8'); ?>">
-    <meta property="og:image" content="<?= $p_tmp['pictures'] ?>">
-
-    <meta property="og:url" content="https://www.simorghtv.com">
-    <meta property="og:type" content="website">
-    <meta property="og:locale" content="fa_IR">
-
-    <meta name="twitter:title" content="موسسه هفت هنر سیمرغ">
-    <meta name="twitter:description" content="<?php echo htmlspecialchars($meta_description, ENT_QUOTES, 'UTF-8'); ?>">
-    <meta name="twitter:image" content="<?= $p_tmp['pictures'] ?>">
-
-
-
-
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
-
     <link rel="stylesheet" href="../css/mainstyles.css">
 
-
     <style>
-    /* استایل سفارشی برای نمایش بهتر جزئیات */
     .detail-item strong {
         display: inline-block;
         min-width: 150px;
@@ -134,7 +195,6 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         }
     }
 
-    /* --- استایل جدید برای لیست جلسات --- */
     .session-item {
         display: flex;
         justify-content: space-between;
@@ -178,18 +238,14 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 
     .play-icon {
         color: #dc3545;
-        /* رنگ قرمز برای هشدار */
         margin-left: 10px;
     }
 
-    /* اصلاح استایل توضیحات */
     .description-content img {
         max-width: 100%;
         height: auto;
         object-fit: cover;
-        /* این خط معجزه می‌کند: تصویر را متناسب برش می‌زند و نمی‌کشد */
         object-position: center;
-        /* تمرکز روی وسط تصویر */
     }
 
     .description-content p {
@@ -204,8 +260,6 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         color: #555;
     }
 
-
-    /* ........ */
     .description-content {
         position: relative;
         background: #fff;
@@ -264,47 +318,109 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 
 <body>
 
-    <?php 
-    // اینکلود هدر
-    include 'header.php'; 
-    // ایجاد مجدد اتصال دیتابیس برای ادامه صفحه
-    include '../config.php';
-    ?>
+    <?php include 'header.php'; ?>
 
+    <?php if (!$package): ?>
+
+    <!-- =========================================== -->
+    <!-- حالت پکیج پیدا نشد -->
+    <!-- =========================================== -->
+    <div class="container mt-5 mb-5">
+        <div class="alert alert-danger text-center">
+            ⚠️ پکیج مورد نظر پیدا نشد. لطفاً از صفحه
+            <a href="./">پکیج‌های آموزشی سیمرغ</a>
+            پکیج مورد نظر خود را انتخاب کنید.
+        </div>
+    </div>
+
+    <?php else: ?>
+
+    <!-- =========================================== -->
+    <!-- اسکیمای Course + Breadcrumb + Product -->
+    <!-- =========================================== -->
+    <script type="application/ld+json">
     <?php
-    // --- منطق بازیابی اطلاعات ---
-    if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-        $package_id = (int)$_GET['id'];
+    $schema_course = [
+        "@context" => "https://schema.org",
+        "@type" => "Course",
+        "name" => htmlspecialchars($package['name'], ENT_QUOTES, 'UTF-8'),
+        "description" => htmlspecialchars(mb_substr(strip_tags($package['description']), 0, 300, 'UTF-8'), ENT_QUOTES, 'UTF-8'),
+        "image" => $og_image,
+        "url" => $canonical_url,
+        "inLanguage" => "fa-IR",
+        "provider" => [
+            "@type" => "Organization",
+            "name" => "موسسه هفت هنر سیمرغ",
+            "url" => $site_url,
+            "logo" => $site_url . "/images/logo1.png"
+        ],
+        "offers" => [
+            "@type" => "Offer",
+            "price" => (string)$price_toman,
+            "priceCurrency" => "IRR",
+            "availability" => "https://schema.org/InStock",
+            "url" => $canonical_url,
+            "seller" => [
+                "@type" => "Organization",
+                "name" => "موسسه هفت هنر سیمرغ"
+            ]
+        ],
+        "hasCourseInstance" => [
+            "@type" => "CourseInstance",
+            "courseMode" => "online",
+            "courseWorkload" => "PT" . max(1, count(explode("\n", $package['description']))) . "H"
+        ]
+    ];
 
-        // کوئری برای دریافت تمام ستون‌های پکیج
-        $sql = "SELECT id, name, pictures, description, teacher, address, course, price, spotplayer, file1, file2, file3 FROM `packages` WHERE `id` = ?";
-        $stmt = $conn->prepare($sql);
-        if ($stmt === false) {
-            echo "<div class='container mt-5'><div class='alert alert-danger text-center'>خطا در آماده‌سازی کوئری.</div></div>";
-            $conn->close(); // بستن اتصال در صورت خطا
-            include 'footer.php';
-            exit;
-        }
-        $stmt->bind_param("i", $package_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
+    // اگر مدرس داریم، به عنوان instructor اضافه کن
+    if (!empty($package['teacher'])) {
+        $schema_course["provider"]["employee"] = [
+            "@type" => "Person",
+            "name" => htmlspecialchars($package['teacher'], ENT_QUOTES, 'UTF-8'),
+            "jobTitle" => "مدرس"
+        ];
+    }
 
-        if ($result->num_rows > 0) {
-            $package = $result->fetch_assoc();
-            // عنوان صفحه را به‌روز می‌کنیم 
-            echo "<script>document.title = 'جزئیات پکیج: " . htmlspecialchars($package['name'], ENT_QUOTES, 'UTF-8') . "';</script>";
-            // مسیر تصویر را امن‌سازی می‌کنیم
-            $picture = !empty($package['pictures']) ? ('../' . ltrim($package['pictures'], '/')) : '../images/default-course.jpg';
-            $price_text = !empty($package['price']) ? htmlspecialchars($package['price'], ENT_QUOTES, 'UTF-8') . ' ریال' : 'رایگان';
+    echo json_encode($schema_course, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
     ?>
+    </script>
 
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+                "@type": "ListItem",
+                "position": 1,
+                "name": "صفحه اصلی",
+                "item": "<?= $site_url ?>/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "پکیج‌های آموزشی",
+                "item": "<?= $site_url . $page_path ?>"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "<?= htmlspecialchars($package['name'], ENT_QUOTES, 'UTF-8') ?>",
+                "item": "<?= htmlspecialchars($canonical_url, ENT_QUOTES, 'UTF-8') ?>"
+            }
+        ]
+    }
+    </script>
+
+    <!-- =========================================== -->
+    <!-- Hero / Promo Card -->
+    <!-- =========================================== -->
     <section class="promo-card">
         <div class="row align-items-center">
             <div class="col-md-6 text-center mb-4 mb-md-0">
                 <img class="promo-avatar rounded-circle shadow-lg"
-                    src="<?php echo htmlspecialchars($picture, ENT_QUOTES, 'UTF-8'); ?>"
-                    alt="تصویر پکیج <?php echo htmlspecialchars($package['name'], ENT_QUOTES, 'UTF-8'); ?>"
-                    loading="lazy" width="300" height="300">
+                    src="<?= htmlspecialchars($picture, ENT_QUOTES, 'UTF-8') ?>"
+                    alt="پکیج آموزشی <?= htmlspecialchars($package['name'], ENT_QUOTES, 'UTF-8') ?> - موسسه سیمرغ"
+                    loading="eager" width="300" height="300">
 
                 <div class="mt-4">
                     <div class="feature-item text-dark">پشتیبانی آنلاین</div>
@@ -313,7 +429,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 
                 <div class="mt-4">
                     <form action="cart_handler.php" method="POST">
-                        <input type="hidden" name="package_id" value="<?php echo $package['id']; ?>">
+                        <input type="hidden" name="package_id" value="<?= (int)$package['id'] ?>">
                         <button type="submit" class="register-btn">
                             🛒 افزودن به سبد خرید
                         </button>
@@ -322,29 +438,34 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             </div>
 
             <div class="col-md-6 text-md-right">
-                <h2 class="mb-1 bold"><?= htmlspecialchars($package['name'], ENT_QUOTES, 'UTF-8'); ?></h2>
+                <h1 class="mb-1 bold h2"><?= htmlspecialchars($package['name'], ENT_QUOTES, 'UTF-8') ?></h1>
                 <p>دوره مخصوص ورود به بازار کار</p>
-                <h5>با تدریس <?= $package['teacher'] ?></h5>
+                <?php if (!empty($package['teacher'])): ?>
+                <h3 class="h5">با تدریس <?= htmlspecialchars($package['teacher'], ENT_QUOTES, 'UTF-8') ?></h3>
+                <?php endif; ?>
 
                 <hr>
 
                 <div class="my-3">
                     <strong>قیمت</strong>
-                    <h3 class="text-white fw-bold"><?= number_format($package['price'] / 10) ?> تومان</h3>
+                    <h2 class="text-white fw-bold h4">
+                        <?= $price_toman > 0 ? number_format($price_toman) . ' تومان' : 'رایگان' ?>
+                    </h2>
                 </div>
 
+                <?php if (!empty($package['file1'])): ?>
                 <div class="my-4">
-                    <video controls class="w-100 rounded shadow-sm">
+                    <video controls class="w-100 rounded shadow-sm" preload="metadata"
+                        poster="<?= htmlspecialchars($picture, ENT_QUOTES, 'UTF-8') ?>">
                         <source src="../<?= htmlspecialchars($package['file1'], ENT_QUOTES, 'UTF-8') ?>"
                             type="video/mp4">
                         مرورگر شما از تگ ویدئو پشتیبانی نمی‌کند.
                     </video>
                 </div>
+                <?php endif; ?>
             </div>
         </div>
     </section>
-
-
 
 
     <div class="container mt-4">
@@ -352,43 +473,51 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         <div class="row mt-5">
 
             <div class="col-lg-9">
-                <div class="course-card mb-4">
-                    <h4 class="h6 mb-3"><i class="fas fa-file-alt me-2"></i>توضیحات کامل پکیج</h4>
+                <!-- =========================================== -->
+                <!-- توضیحات پکیج -->
+                <!-- =========================================== -->
+                <section class="course-card mb-4">
+                    <h2 class="h6 mb-3"><i class="fas fa-file-alt me-2"></i>توضیحات کامل پکیج
+                        <?= htmlspecialchars($package['name'], ENT_QUOTES, 'UTF-8') ?>
+                    </h2>
                     <div class="description-content">
-                        <?php 
-                        // محتوا به صورت HTML رندر می‌شود و اگر HTML شامل تگ‌های نامناسب باشد، مشکل از آنجاست.
-                        echo $package['description']; 
-                        ?>
+                        <?php echo $package['description']; ?>
                     </div>
-                </div>
+                </section>
 
-                <div class="course-card">
-                    <h4 class="h6 mb-3"><i class="fas fa-list-ol me-2"></i>سرفصل‌ها و جلسات دوره</h4>
+                <!-- =========================================== -->
+                <!-- سرفصل‌ها و جلسات -->
+                <!-- =========================================== -->
+                <section class="course-card">
+                    <h2 class="h6 mb-3"><i class="fas fa-list-ol me-2"></i>سرفصل‌ها و جلسات دوره</h2>
 
                     <?php
-                    // کوئری برای دریافت جلسات مربوط به این پکیج
                     $sessions_sql = "SELECT * FROM `sessions` WHERE `package_id` = ? ORDER BY id ASC";
                     $sessions_stmt = $conn->prepare($sessions_sql);
-                    $sessions_stmt->bind_param("i", $package_id);
-                    $sessions_stmt->execute();
-                    $sessions_result = $sessions_stmt->get_result();
 
-                    if ($sessions_result->num_rows > 0) {
-                        $session_count = 1;
-                        while ($session = $sessions_result->fetch_assoc()) {
-                            $duration = (int)$session['duration_minutes'];
-                            // تبدیل دقیقه به قالب M:S
-                            $minutes = floor($duration);
-                            // 3 ثانیه برای حالت پیش‌فرض و 3 ثانیه برای کلیک
-                            $seconds = str_pad(round(($duration - $minutes) * 60), 2, '0', STR_PAD_LEFT); 
-                            $duration_formatted = $duration > 0 ? $minutes . ':' . $seconds : 'نامشخص';
-                        ?>
-                    <div class="session-item" onclick="showSpotPlayerAlert()">
+                    if ($sessions_stmt) {
+                        $sessions_stmt->bind_param("i", $package_id);
+                        $sessions_stmt->execute();
+                        $sessions_result = $sessions_stmt->get_result();
+
+                        if ($sessions_result && $sessions_result->num_rows > 0) {
+                            $session_count = 1;
+                            while ($session = $sessions_result->fetch_assoc()) {
+                                $duration = (int)$session['duration_minutes'];
+                                $minutes = floor($duration);
+                                $seconds = str_pad(round(($duration - $minutes) * 60), 2, '0', STR_PAD_LEFT);
+                                $duration_formatted = $duration > 0 ? $minutes . ':' . $seconds : 'نامشخص';
+                            ?>
+                    <div class="session-item" onclick="showSpotPlayerAlert()" role="button" tabindex="0">
                         <div class="session-info">
                             <span class="session-number">درس <?= $session_count ?></span>
                             <span
                                 class="session-title"><?= htmlspecialchars($session['title'], ENT_QUOTES, 'UTF-8') ?></span>
-                            <p id="des_session"><?= $session['description'] ?></p>
+                            <?php if (!empty($session['description'])): ?>
+                            <p id="des_session">
+                                <?= htmlspecialchars(mb_substr(strip_tags($session['description']), 0, 200, 'UTF-8'), ENT_QUOTES, 'UTF-8') ?>
+                            </p>
+                            <?php endif; ?>
                         </div>
                         <div class="session-duration">
                             <?= $duration_formatted ?> دقیقه
@@ -398,100 +527,110 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                         </div>
                     </div>
                     <?php
-                            $session_count++;
+                                $session_count++;
+                            }
+                            $sessions_stmt->close();
+                        } else {
+                            echo "<div class='alert alert-info text-center'>هنوز هیچ جلسه‌ای برای این پکیج ثبت نشده است.</div>";
                         }
-                        $sessions_stmt->close();
                     } else {
-                        echo "<div class='alert alert-info text-center'>هنوز هیچ جلسه‌ای برای این پکیج ثبت نشده است.</div>";
+                        echo "<div class='alert alert-warning text-center'>خطا در واکشی جلسات.</div>";
                     }
                     ?>
 
-                </div>
+                </section>
             </div>
 
 
             <div class="col-lg-3">
+                <!-- =========================================== -->
+                <!-- سایدبار: پکیج‌های دیگر -->
+                <!-- =========================================== -->
                 <div class="card shadow-sm border-0 mb-5">
                     <div class="card-header bg-dark text-white text-center">
-                        <h4 class="h5 mb-0"><i class="fas fa-layer-group me-2"></i>دیگر پکیج‌های سیمرغ</h4>
+                        <h2 class="h5 mb-0"><i class="fas fa-layer-group me-2"></i>دیگر پکیج‌های سیمرغ</h2>
                     </div>
 
-                <div class="accordion accordion-flush" id="packagesAccordion">
-    <?php
-    $other_packages_sql = "SELECT id, name, description FROM `packages` WHERE `id` != ? ORDER BY name ASC";
-    $other_stmt = $conn->prepare($other_packages_sql);
-    
-    if ($other_stmt === false) {
-        echo "<div class='p-3 text-center text-danger'>خطا در آماده‌سازی کوئری پکیج‌ها.</div>";
-    } else {
-        $other_stmt->bind_param("i", $package_id);
-        $other_stmt->execute();
-        $other_result = $other_stmt->get_result();
+                    <div class="accordion accordion-flush" id="packagesAccordion">
+                        <?php
+                        $other_packages_sql = "SELECT id, name, description FROM `packages` WHERE `id` != ? ORDER BY name ASC";
+                        $other_stmt = $conn->prepare($other_packages_sql);
 
-        if ($other_result->num_rows > 0) {
-            while ($other_package = $other_result->fetch_assoc()) {
-                $target_id = "collapse-" . $other_package['id'];
-                $heading_id = "heading-" . $other_package['id'];
-                $package_link = "package.php?id=" . htmlspecialchars($other_package['id'], ENT_QUOTES, 'UTF-8');
-                $package_name = htmlspecialchars($other_package['name'], ENT_QUOTES, 'UTF-8');
-                
-                $raw_description = strip_tags($other_package['description']);
-                // تعداد کاراکترها را برای سایدبار از 100 به 70 کاهش دادیم تا جمع‌وجورتر شود
-                $description_text = mb_substr($raw_description, 0, 70, 'UTF-8'); 
-                if (mb_strlen($raw_description, 'UTF-8') > 70) {
-                    $description_text .= '...';
-                }
-        ?>
-    <div class="accordion-item">
-        <h2 class="accordion-header" id="<?= $heading_id ?>">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                data-bs-target="#<?= $target_id ?>" aria-expanded="false"
-                aria-controls="<?= $target_id ?>">
-                <i class="fas fa-cube me-2 text-muted"></i> <?= $package_name ?>
-            </button>
-        </h2>
-        <div id="<?= $target_id ?>" class="accordion-collapse collapse"
-            aria-labelledby="<?= $heading_id ?>" data-bs-parent="#packagesAccordion">
-            <div class="accordion-body">
-                <p><?= htmlspecialchars($description_text, ENT_QUOTES, 'UTF-8') ?></p>
-                <a href="<?= $package_link ?>" class="btn btn-outline-primary w-100 btn-compact">
-                    مشاهده پکیج
-                </a>
-            </div>
-        </div>
-    </div>
-    <?php
-            }
-            $other_stmt->close();
-        } else {
-            echo "<div class='p-3 text-center text-muted' style='font-size:0.85rem;'>پکیج دیگری موجود نیست.</div>";
-        }
-    }
-    ?>
-</div>
+                        if ($other_stmt === false) {
+                            echo "<div class='p-3 text-center text-danger'>خطا در آماده‌سازی کوئری پکیج‌ها.</div>";
+                        } else {
+                            $other_stmt->bind_param("i", $package_id);
+                            $other_stmt->execute();
+                            $other_result = $other_stmt->get_result();
 
+                            if ($other_result->num_rows > 0) {
+                                while ($other_package = $other_result->fetch_assoc()) {
+                                    $target_id = "collapse-" . $other_package['id'];
+                                    $heading_id = "heading-" . $other_package['id'];
+                                    $package_link = "package.php?id=" . htmlspecialchars($other_package['id'], ENT_QUOTES, 'UTF-8');
+                                    $package_name = htmlspecialchars($other_package['name'], ENT_QUOTES, 'UTF-8');
+
+                                    $raw_description = strip_tags($other_package['description']);
+                                    $description_text = mb_substr($raw_description, 0, 70, 'UTF-8');
+                                    if (mb_strlen($raw_description, 'UTF-8') > 70) {
+                                        $description_text .= '...';
+                                    }
+                            ?>
+                        <div class="accordion-item">
+                            <h3 class="accordion-header" id="<?= $heading_id ?>">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#<?= $target_id ?>" aria-expanded="false"
+                                    aria-controls="<?= $target_id ?>">
+                                    <i class="fas fa-cube me-2 text-muted"></i> <?= $package_name ?>
+                                </button>
+                            </h3>
+                            <div id="<?= $target_id ?>" class="accordion-collapse collapse"
+                                aria-labelledby="<?= $heading_id ?>" data-bs-parent="#packagesAccordion">
+                                <div class="accordion-body">
+                                    <p><?= htmlspecialchars($description_text, ENT_QUOTES, 'UTF-8') ?></p>
+                                    <a href="<?= $package_link ?>" class="btn btn-outline-primary w-100 btn-compact"
+                                        title="مشاهده پکیج <?= $package_name ?>">
+                                        مشاهده پکیج
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                                }
+                                $other_stmt->close();
+                            } else {
+                                echo "<div class='p-3 text-center text-muted' style='font-size:0.85rem;'>پکیج دیگری موجود نیست.</div>";
+                            }
+                        }
+                        ?>
+                    </div>
                 </div>
 
 
+                <!-- =========================================== -->
+                <!-- سایدبار: جدیدترین مقالات -->
+                <!-- =========================================== -->
                 <div class="card sidebar-card mb-5">
                     <div class="card-header bg-dark text-white text-center">
-                        <h5 class="m-0">📚 جدیدترین مقالات</h5>
+                        <h2 class="h5 m-0">📚 جدیدترین مقالات</h2>
                     </div>
                     <div class="list-group list-group-flush sidebar-list">
                         <?php
                         $recentStmt = $conn->prepare("SELECT title FROM articles ORDER BY created_at DESC LIMIT 6");
-                        $recentStmt->execute();
-                        $recentResult = $recentStmt->get_result();
+                        if ($recentStmt) {
+                            $recentStmt->execute();
+                            $recentResult = $recentStmt->get_result();
 
-                        if ($recentResult->num_rows > 0) {
-                            while ($recentRow = $recentResult->fetch_assoc()) {
-                                $recentTitle = htmlspecialchars($recentRow['title']);
-                                echo '<a href="../articles/article.php?slug=' . urlencode($recentTitle) . '" class="list-group-item list-group-item-action sidebar-item"><i class="fas fa-arrow-left"></i>' . $recentTitle . '</a>';
+                            if ($recentResult->num_rows > 0) {
+                                while ($recentRow = $recentResult->fetch_assoc()) {
+                                    $recentTitle = htmlspecialchars($recentRow['title'], ENT_QUOTES, 'UTF-8');
+                                    echo '<a href="../articles/article.php?slug=' . urlencode($recentRow['title']) . '" class="list-group-item list-group-item-action sidebar-item"><i class="fas fa-arrow-left"></i>' . $recentTitle . '</a>';
+                                }
+                            } else {
+                                echo '<p class="text-center p-3 m-0 text-muted">مقاله‌ای برای نمایش نیست.</p>';
                             }
-                        } else {
-                            echo '<p class="text-center p-3 m-0 text-muted">مقاله‌ای برای نمایش نیست.</p>';
+                            $recentStmt->close();
                         }
-                        $recentStmt->close();
                         ?>
                     </div>
                     <div class="card-footer text-center bg-white">
@@ -505,6 +644,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 
         <br><br><br>
 
+        <!-- =========================================== -->
+        <!-- Toast هشدار Spot Player -->
+        <!-- =========================================== -->
         <div class="toast-container position-fixed bottom-0 end-0 p-3">
             <div id="spotPlayerAlert" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
                 data-bs-delay="3000">
@@ -515,29 +657,21 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                         aria-label="Close"></button>
                 </div>
                 <div class="toast-body text-danger">
-                    ⚠️ تماشای جلسات فقط از طریق **نرم‌افزار اسپات پلیر (Spot Player)** امکان‌پذیر است. لطفاً دوره را
+                    ⚠️ تماشای جلسات فقط از طریق نرم‌افزار اسپات پلیر (Spot Player) امکان‌پذیر است. لطفاً دوره را
                     خریداری کرده و لایسنس را در پلیر خود وارد کنید.
                 </div>
             </div>
         </div>
 
-
     </div>
 
+    <?php endif; ?>
 
     <?php
-        } else {
-            // پکیجی با این ID پیدا نشد
-            echo "<div class='container mt-5'><div class='alert alert-danger text-center'>⚠️ پکیج مورد نظر با شناسه " . htmlspecialchars($package_id, ENT_QUOTES, 'UTF-8') . " پیدا نشد.</div></div>";
-        }
-        $stmt->close();
-    } else {
-        // پارامتر ID در آدرس وجود نداشت
-        echo "<div class='container mt-5'><div class='alert alert-warning text-center'>⚠️ شناسه پکیج (ID) به درستی تعیین نشده است. لطفاً از طریق صفحه اصلی اقدام کنید.</div></div>";
+    // بستن اتصال دیتابیس (اگر باز است)
+    if (isset($conn) && $conn instanceof mysqli) {
+        $conn->close();
     }
-
-    $conn->close();
-    // اینکلود فوتر
     include 'footer.php';
     ?>
 
@@ -562,8 +696,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 
     <script>
     function showSpotPlayerAlert() {
-        // ایجاد و نمایش Toast
         var toastEl = document.getElementById('spotPlayerAlert');
+        if (!toastEl) return;
         var toast = new bootstrap.Toast(toastEl);
         toast.show();
     }

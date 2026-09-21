@@ -16,7 +16,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <meta property="og:title" content="موسسه هفت هنر سیمرغ">
     <meta property="og:description"
         content="موسسه هفت هنر سیمرغ، پیشرو در آموزش گویندگی، انیمیشن، طراحی و موسیقی با دوره‌های تخصصی و کارگاه‌های عملی.">
-        
+
     <meta property="og:image" content="https://simorghtv.com/images/logo1.png">
 
     <meta property="og:url" content="https://www.simorghtv.com">
@@ -149,7 +149,9 @@ if (session_status() === PHP_SESSION_NONE) {
         <span>نصب رادیو سیمرغ</span>
     </button>
 
-    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+
+
+    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <img class="d-block w-100" src="images/29.jpg" alt="سیمرغ">
@@ -168,15 +170,18 @@ if (session_status() === PHP_SESSION_NONE) {
             </div>
         </div>
 
-        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+            data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+            data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
+            <span class="visually-hidden">Next</span>
+        </button>
     </div>
+
 
     <!-- ===== بخش استوری‌ها ===== -->
     <div class="container-fluid px-4 mt-3">
@@ -892,7 +897,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
     </div>
     <?php include "footer.php"; ?>
-<?php include 'pwa-install-button.php'; ?>
+
 </body>
 
 </html>

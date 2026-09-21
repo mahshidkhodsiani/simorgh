@@ -1,61 +1,172 @@
 <?php
-require 'vendor/autoload.php';
-include 'config.php'; // فایل اتصال به دیتابیس که متغیر $conn در آن است
-
-use samdark\sitemap\Sitemap;
-
-// تنظیم مسیر خروجی (دقیقاً در پوشه simorgh)
-$sitemapPath = __DIR__ . '/sitemap.xml';
-$sitemap = new Sitemap($sitemapPath);
+// ==========================================
+// Sitemap Generator - بدون نیاز به Composer/vendor
+// ==========================================
+include 'config.php';
 
 $baseUrl = 'https://simorghtv.com';
+$urls = [];
 
-// 1. صفحه اصلی سایت
-$sitemap->addItem($baseUrl . '/', time(), Sitemap::DAILY, 1.0);
+// ==========================================
+// اولویت ۱: صفحه اصلی
+// ==========================================
+$urls[] = [
+    'loc' => $baseUrl . '/',
+    'lastmod' => date('c'),
+    'changefreq' => 'daily',
+    'priority' => '1.0'
+];
 
-// 2. صفحات اصلی بخش‌ها (ایندکس‌ها)
-$sitemap->addItem($baseUrl . '/radios/', time(), Sitemap::WEEKLY, 0.9);
-$sitemap->addItem($baseUrl . '/articles/', time(), Sitemap::DAILY, 0.9);
-$sitemap->addItem($baseUrl . '/packages/', time(), Sitemap::DAILY, 0.9);
+// ==========================================
+// اولویت ۲: بخش رادیو (اصلی)
+// ==========================================
+$urls[] = [
+    'loc' => $baseUrl . '/radios/',
+    'lastmod' => date('c'),
+    'changefreq' => 'daily',
+    'priority' => '0.95'
+];
 
-// 3. صفحات ثابت رادیو
-$sitemap->addItem($baseUrl . '/radios/radio_simorgh.php', time(), Sitemap::WEEKLY, 0.8);
-$sitemap->addItem($baseUrl . '/radios/tehran.php', time(), Sitemap::WEEKLY, 0.8);
-$sitemap->addItem($baseUrl . '/radios/cafe_meh.php', time(), Sitemap::WEEKLY, 0.8);
+// ==========================================
+// اولویت ۳: سه رادیوی اصلی
+// ==========================================
+$urls[] = ['loc' => $baseUrl . '/radios/radio_simorgh.php', 'lastmod' => date('c'), 'changefreq' => 'weekly', 'priority' => '0.9'];
+$urls[] = ['loc' => $baseUrl . '/radios/tehran.php',        'lastmod' => date('c'), 'changefreq' => 'weekly', 'priority' => '0.9'];
+$urls[] = ['loc' => $baseUrl . '/radios/cafe_meh.php',      'lastmod' => date('c'), 'changefreq' => 'weekly', 'priority' => '0.9'];
 
-// 4. دریافت و افزودن مقالات از دیتابیس
+// ==========================================
+// اولویت ۴: بخش پکیج‌ها (اصلی)
+// ==========================================
+$urls[] = [
+    'loc' => $baseUrl . '/packages/',
+    'lastmod' => date('c'),
+    'changefreq' => 'daily',
+    'priority' => '0.9'
+];
+
+// ==========================================
+// اولویت ۵: تک‌تک پکیج‌ها
+// ==========================================
+$packagesQuery = "SELECT id FROM packages ORDER BY id DESC";
+$packagesResult = $conn->query($packagesQuery);
+$total_packages = 0;
+
+if ($packagesResult && $packagesResult->num_rows > 0) {
+    $total_packages = $packagesResult->num_rows;
+    while ($row = $packagesResult->fetch_assoc()) {
+        $urls[] = [
+            'loc' => $baseUrl . '/packages/package.php?id=' . (int)$row['id']
+            // بدون lastmod چون فیلد تاریخ نداریم
+        ];
+    }
+}
+
+// ==========================================
+// اولویت ۶: بخش مقالات (اصلی)
+// ==========================================
+$urls[] = [
+    'loc' => $baseUrl . '/articles/',
+    'lastmod' => date('c'),
+    'changefreq' => 'daily',
+    'priority' => '0.85'
+];
+
+// ==========================================
+// اولویت ۷: تک‌تک مقالات
+// ==========================================
 $articlesQuery = "SELECT slug, created_at, updated_at FROM articles";
 $articlesResult = $conn->query($articlesQuery);
 
 if ($articlesResult && $articlesResult->num_rows > 0) {
     while ($row = $articlesResult->fetch_assoc()) {
-        // انکود کردن نامک فارسی برای جلوگیری از خطای XML
-        $slug = urlencode($row['slug']);
-        $url = $baseUrl . '/articles/article?slug=' . $slug;
-        
-        // اولویت با تاریخ آپدیت است، اگر نبود تاریخ ساخت
+        // اصلاح مهم: rawurlencode به جای urlencode
+        $slug = rawurlencode($row['slug']);
+
         $date = !empty($row['updated_at']) ? $row['updated_at'] : $row['created_at'];
-        $lastModified = $date ? strtotime($date) : time();
 
-        $sitemap->addItem($url, $lastModified, Sitemap::WEEKLY, 0.7);
+        // اگه article.php بدون .htaccess باز می‌شه:
+        $url = $baseUrl . '/articles/article.php?slug=' . $slug;
+
+        $urls[] = [
+            'loc' => $url,
+            'lastmod' => $date ? date('c', strtotime($date)) : date('c'),
+            'changefreq' => 'weekly',
+            'priority' => '0.7'
+        ];
     }
 }
 
-// 5. دریافت و افزودن پکیج‌ها از دیتابیس
-$packagesQuery = "SELECT id FROM packages ORDER BY id DESC";
-$packagesResult = $conn->query($packagesQuery);
+// ==========================================
+// اولویت ۸: دوره‌ها (courses) - جدید
+// ==========================================
+$coursesQuery = "SELECT slug FROM courses WHERE show_header = 1 ORDER BY id DESC";
+$coursesResult = $conn->query($coursesQuery);
 
-if ($packagesResult && $packagesResult->num_rows > 0) {
-    while ($row = $packagesResult->fetch_assoc()) {
-        $url = $baseUrl . '/packages/package.php?id=' . $row['id'];
-        
-        // چون در جدول packages فیلد تاریخ ندارید، زمان حال را در نظر می‌گیریم
-        $sitemap->addItem($url, time(), Sitemap::WEEKLY, 0.8);
+if ($coursesResult && $coursesResult->num_rows > 0) {
+    while ($row = $coursesResult->fetch_assoc()) {
+        $slug = rawurlencode($row['slug']);
+        $urls[] = [
+            'loc' => $baseUrl . '/courses/course.php?slug=' . $slug,
+            'lastmod' => date('c'),
+            'changefreq' => 'weekly',
+            'priority' => '0.8'
+        ];
     }
 }
 
-// تولید و ذخیره فایل XML
-$sitemap->write();
+// ==========================================
+// اولویت ۹: صفحات ثابت مهم
+// ==========================================
+$urls[] = ['loc' => $baseUrl . '/articles/about',            'lastmod' => date('c'), 'changefreq' => 'monthly', 'priority' => '0.6'];
+$urls[] = ['loc' => $baseUrl . '/articles/speakers_archive', 'lastmod' => date('c'), 'changefreq' => 'weekly',  'priority' => '0.7'];
+$urls[] = ['loc' => $baseUrl . '/portofilo/pictures',        'lastmod' => date('c'), 'changefreq' => 'weekly',  'priority' => '0.6'];
+$urls[] = ['loc' => $baseUrl . '/portofilo/videos',          'lastmod' => date('c'), 'changefreq' => 'weekly',  'priority' => '0.6'];
 
-echo 'Sitemap generated successfully!';
+// ==========================================
+// اولویت ۱۰: پیجینیشن پکیج‌ها
+// ==========================================
+$limit = 9;
+$total_pages = (int)ceil($total_packages / $limit);
+
+for ($p = 2; $p <= $total_pages; $p++) {
+    $urls[] = [
+        'loc' => $baseUrl . '/packages/?page=' . $p,
+        'lastmod' => date('c'),
+        'changefreq' => 'weekly',
+        'priority' => '0.5'
+    ];
+}
+
+// ==========================================
+// ساخت XML
+// ==========================================
+$xml  = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+$xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+
+foreach ($urls as $u) {
+    $xml .= "  <url>\n";
+    $xml .= "    <loc>" . htmlspecialchars($u['loc'], ENT_XML1, 'UTF-8') . "</loc>\n";
+
+    if (!empty($u['lastmod'])) {
+        $xml .= "    <lastmod>" . $u['lastmod'] . "</lastmod>\n";
+    }
+    if (!empty($u['changefreq'])) {
+        $xml .= "    <changefreq>" . $u['changefreq'] . "</changefreq>\n";
+    }
+    if (!empty($u['priority'])) {
+        $xml .= "    <priority>" . $u['priority'] . "</priority>\n";
+    }
+
+    $xml .= "  </url>\n";
+}
+
+$xml .= '</urlset>';
+
+// ==========================================
+// ذخیره در فایل sitemap.xml
+// ==========================================
+$sitemapPath = __DIR__ . '/sitemap.xml';
+file_put_contents($sitemapPath, $xml);
+
+echo 'Sitemap generated successfully! (' . count($urls) . ' URLs)';
 ?>
