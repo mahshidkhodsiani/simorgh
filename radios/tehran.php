@@ -157,6 +157,56 @@ if (isset($_GET['payment'])) {
     }
 }
 
+// ============================================
+// ✅ پردازش ارسال کامنت جدید
+// ============================================
+$comment_message = '';
+$comment_message_type = '';
+$for_id = $radio_info['id'] ?? 1;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_comment'])) {
+    $full_name = trim($_POST['full_name'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $comment_text = trim($_POST['comment_text'] ?? '');
+
+    if ($full_name === '' || $comment_text === '') {
+        $comment_message = '❌ لطفاً نام و متن کامنت را وارد کنید.';
+        $comment_message_type = 'danger';
+    } elseif ($email !== '' && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $comment_message = '❌ ایمیل وارد شده معتبر نیست.';
+        $comment_message_type = 'danger';
+    } else {
+        $email_val = $email !== '' ? $email : null;
+        $for_type = 'radio';
+        $insert_sql = "INSERT INTO comments (full_name, email, comment_text, for_type, for_id) VALUES (?, ?, ?, ?, ?)";
+        $insert_stmt = $conn->prepare($insert_sql);
+        $insert_stmt->bind_param("ssssi", $full_name, $email_val, $comment_text, $for_type, $for_id);
+        if ($insert_stmt->execute()) {
+            $comment_message = '✅ کامنت شما با موفقیت ثبت شد.';
+            $comment_message_type = 'success';
+        } else {
+            $comment_message = '❌ خطا در ثبت کامنت. لطفاً دوباره تلاش کنید.';
+            $comment_message_type = 'danger';
+        }
+        $insert_stmt->close();
+    }
+}
+
+// ============================================
+// ✅ دریافت لیست کامنت‌ها
+// ============================================
+$comments = [];
+$comments_sql = "SELECT id, full_name, comment_text, admin_reply, created_at
+                 FROM comments
+                 WHERE for_type = 'radio' AND for_id = " . (int)$for_id . "
+                 ORDER BY created_at DESC";
+$comments_result = $conn->query($comments_sql);
+if ($comments_result && $comments_result->num_rows > 0) {
+    while ($row = $comments_result->fetch_assoc()) {
+        $comments[] = $row;
+    }
+}
+
 // آدرس فعلی برای بازگشت بعد از لاگین
 $current_url = $_SERVER['REQUEST_URI'];
 
@@ -558,12 +608,222 @@ if ($is_pwa_mode) {
         transform: scale(1.03);
         box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
     }
+
+    /* ============ بردکرامب ============ */
+    .breadcrumb-nav {
+        margin-bottom: 20px;
+        padding: 12px 20px;
+        background: rgba(26, 26, 62, 0.7);
+        border-radius: 50px;
+        border: 1px solid rgba(255, 215, 0, 0.2);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.9rem;
+    }
+
+    .breadcrumb-nav a {
+        color: #ffd700;
+        text-decoration: none;
+        transition: all 0.3s;
+    }
+
+    .breadcrumb-nav a:hover {
+        color: #fff;
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    }
+
+    .breadcrumb-nav .separator {
+        color: #a09080;
+    }
+
+    .breadcrumb-nav .current {
+        color: #e0e0e0;
+        font-weight: bold;
+    }
+
+    /* ============ کامنت‌ها ============ */
+    .comments-section {
+        background: linear-gradient(135deg, rgba(26, 26, 62, 0.95) 0%, rgba(45, 27, 78, 0.95) 100%);
+        border-radius: 30px;
+        padding: 35px 30px;
+        margin-top: 40px;
+        border: 1px solid rgba(255, 215, 0, 0.3);
+        color: #f0f0f0;
+    }
+
+    .comments-title {
+        color: #ffd700;
+        font-weight: bold;
+        border-bottom: 2px solid #ffd700;
+        display: inline-block;
+        padding-bottom: 8px;
+        margin-bottom: 25px;
+    }
+
+    .comment-form-card {
+        background: rgba(15, 15, 45, 0.8);
+        border-radius: 20px;
+        padding: 15px 18px;
+        border: 1px solid rgba(255, 215, 0, 0.25);
+        margin-bottom: 25px;
+        max-width: 50%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .comment-form-card h5 {
+        color: #ffd700;
+        font-size: 1rem;
+        margin-bottom: 12px;
+    }
+
+    .comment-form-card .form-control {
+        background: rgba(26, 26, 62, 0.9);
+        border: 1px solid rgba(255, 215, 0, 0.3);
+        color: #f0f0f0;
+        border-radius: 12px;
+        padding: 8px 14px;
+        font-size: 0.9rem;
+    }
+
+    .comment-form-card .form-control:focus {
+        background: rgba(45, 27, 78, 0.95);
+        border-color: #ffd700;
+        color: #fff;
+        box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.15);
+    }
+
+    .comment-form-card .form-control::placeholder {
+        color: #a09080;
+    }
+
+    .comment-form-card label {
+        color: #ffd700;
+        font-size: 12px;
+        margin-bottom: 4px;
+    }
+
+    .comment-form-card textarea.form-control {
+        min-height: 70px;
+    }
+
+    .comment-submit-btn {
+        background: linear-gradient(135deg, #ffd700, #ff8c00);
+        color: #1a1a3e;
+        font-weight: bold;
+        border: none;
+        border-radius: 50px;
+        padding: 8px 25px;
+        font-size: 0.9rem;
+        transition: all 0.3s;
+    }
+
+    .comment-submit-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        color: #1a1a3e;
+    }
+
+    .comment-item {
+        background: rgba(15, 15, 45, 0.7);
+        border-radius: 18px;
+        padding: 20px;
+        margin-bottom: 18px;
+        border: 1px solid rgba(255, 215, 0, 0.15);
+        transition: all 0.3s;
+    }
+
+    .comment-item:hover {
+        border-color: rgba(255, 215, 0, 0.4);
+        transform: translateX(-3px);
+    }
+
+    .comment-author {
+        color: #ffd700;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .comment-date {
+        color: #a09080;
+        font-size: 12px;
+    }
+
+    .comment-text {
+        color: #e0e0e0;
+        margin-top: 10px;
+        line-height: 1.8;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+
+    .admin-reply-box {
+        background: rgba(255, 215, 0, 0.08);
+        border-right: 3px solid #ffd700;
+        border-radius: 12px;
+        padding: 12px 18px;
+        margin-top: 15px;
+        margin-right: 20px;
+    }
+
+    .admin-reply-label {
+        color: #ffd700;
+        font-weight: bold;
+        font-size: 13px;
+        margin-bottom: 5px;
+    }
+
+    .admin-reply-text {
+        color: #d0d0d0;
+        line-height: 1.7;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+
+    .no-comments {
+        text-align: center;
+        padding: 40px 20px;
+        color: #a09080;
+    }
+
+    .no-comments .icon {
+        font-size: 50px;
+        margin-bottom: 15px;
+    }
+
+    .comments-count-badge {
+        background: rgba(255, 215, 0, 0.2);
+        color: #ffd700;
+        border-radius: 50px;
+        padding: 3px 12px;
+        font-size: 13px;
+        margin-right: 10px;
+    }
+
+    @media (max-width: 768px) {
+        .comment-form-card {
+            max-width: 100%;
+        }
+        .breadcrumb-nav {
+            font-size: 0.8rem;
+            padding: 10px 15px;
+        }
+    }
     </style>
 </head>
 
 <body>
     <?php include 'header.php'; ?>
     <div class="container mt-4 mb-5" style="position: relative; z-index: 1;">
+
+        <!-- بردکرامب -->
+        <div class="breadcrumb-nav">
+            <a href="index.php">🎙️ همه رادیو ها</a>
+            <span class="separator">›</span>
+            <span class="current">🌙 رادیو تهران</span>
+        </div>
+
         <?php echo $payment_message; ?>
 
         <?php if ($is_speaker): ?>
@@ -728,6 +988,81 @@ if ($is_pwa_mode) {
                 <?php endif; ?>
             </div>
         </div>
+
+        <!-- ============================================ -->
+        <!-- ✅ بخش کامنت‌ها -->
+        <!-- ============================================ -->
+        <div class="comments-section">
+            <h3 class="comments-title">
+                💬 نظرات شما
+                <span class="comments-count-badge"><?php echo count($comments); ?></span>
+            </h3>
+
+            <?php if ($comment_message !== ''): ?>
+            <div class="alert alert-<?php echo $comment_message_type; ?> text-center">
+                <?php echo htmlspecialchars($comment_message); ?>
+            </div>
+            <?php endif; ?>
+
+            <div class="comment-form-card">
+                <h5>✍️ نظر خود را بنویسید</h5>
+                <form method="POST" action="">
+                    <div class="row g-2">
+                        <div class="col-md-6">
+                            <label for="full_name">نام و فامیل <span style="color: #ff5555;">*</span></label>
+                            <input type="text" class="form-control" id="full_name" name="full_name"
+                                placeholder="مثال: علی رضایی" required maxlength="120">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="email">ایمیل (اختیاری)</label>
+                            <input type="email" class="form-control" id="email" name="email"
+                                placeholder="example@mail.com" maxlength="150">
+                        </div>
+                        <div class="col-12">
+                            <label for="comment_text">متن کامنت <span style="color: #ff5555;">*</span></label>
+                            <textarea class="form-control" id="comment_text" name="comment_text" rows="3"
+                                placeholder="نظر خود را درباره شب‌های تهران بنویسید..." required></textarea>
+                        </div>
+                        <div class="col-12 text-center">
+                            <button type="submit" name="submit_comment" class="comment-submit-btn">
+                                📩 ارسال کامنت
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="comments-list">
+                <?php if (count($comments) > 0): ?>
+                <?php foreach ($comments as $comment): ?>
+                <div class="comment-item">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap">
+                        <div class="comment-author">👤 <?php echo htmlspecialchars($comment['full_name']); ?></div>
+                        <div class="comment-date">
+                            🕐 <?php echo date('Y/m/d H:i', strtotime($comment['created_at'])); ?>
+                        </div>
+                    </div>
+                    <div class="comment-text"><?php echo nl2br(htmlspecialchars($comment['comment_text'])); ?></div>
+
+                    <?php if (!empty($comment['admin_reply'])): ?>
+                    <div class="admin-reply-box">
+                        <div class="admin-reply-label">🎙️ پاسخ ادمین:</div>
+                        <div class="admin-reply-text"><?php echo nl2br(htmlspecialchars($comment['admin_reply'])); ?>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+                </div>
+                <?php endforeach; ?>
+                <?php else: ?>
+                <div class="no-comments">
+                    <div class="icon">💬</div>
+                    <h5>هنوز کامنتی ثبت نشده</h5>
+                    <p>اولین نفری باشید که نظر خود را می‌نویسید!</p>
+                </div>
+                <?php endif; ?>
+            </div>
+        </div>
+
     </div>
 
     <?php include 'footer.php'; ?>

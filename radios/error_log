@@ -4,3 +4,8 @@
 [17-Sep-2026 11:03:04 Asia/Tehran] [11:03:04] [tehran.php] SID=tr6l1vl6p80unnastufmec54qc | user_id=NULL | cookie_sent=NONE | redirect_after_login=NONE
 [17-Sep-2026 11:03:07 Asia/Tehran] [11:03:07] [tehran.php] SID=tr6l1vl6p80unnastufmec54qc | user_id=NULL | cookie_sent=tr6l1vl6p80unnastufmec54qc | redirect_after_login=/radios/tehran.php
 [17-Sep-2026 11:03:11 Asia/Tehran] [11:03:11] [tehran.php] SID=tr6l1vl6p80unnastufmec54qc | user_id=24 | cookie_sent=tr6l1vl6p80unnastufmec54qc | redirect_after_login=NONE
+[09-Oct-2026 18:02:53 Asia/Tehran] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'status' in 'where clause' in /home3/vuqgpgoc/public_html/radios/tehran.php:203
+Stack trace:
+#0 /home3/vuqgpgoc/public_html/radios/tehran.php(203): mysqli->query('SELECT id, full...')
+#1 {main}
+  thrown in /home3/vuqgpgoc/public_html/radios/tehran.php on line 203

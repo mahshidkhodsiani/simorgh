@@ -152,6 +152,13 @@ div.content {
     <a href="index" class="<?php if (basename($_SERVER['REQUEST_URI']) === 'index') echo 'active'; ?>">
         <i class="fas fa-home"></i> صفحه اول
     </a>
+
+    <!-- ===== مدیریت کامنت‌ها ===== -->
+    <a href="comments"
+        class="<?php if (basename($_SERVER['REQUEST_URI']) === 'comments' || basename($_SERVER['REQUEST_URI']) === 'comments.php') echo 'active'; ?>">
+        <i class="fas fa-comments"></i> مدیریت کامنت‌ها
+    </a>
+
     <a href="code_takhfif" class="<?php if (basename($_SERVER['REQUEST_URI']) === 'code_takhfif') echo 'active'; ?>">
         <i class="fas fa-tags"></i> وارد کردن کد تخفیف
     </a>

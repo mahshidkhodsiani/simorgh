@@ -50,6 +50,56 @@ $og_image = $site_url . '/images/30.jpg';
 if (!empty($packages_list[0]['pictures'])) {
     $og_image = $site_url . '/' . ltrim($packages_list[0]['pictures'], '/');
 }
+
+// ============================================
+// ✅ بخش کامنت‌ها برای صفحه ایندکس پکیج‌ها
+// ============================================
+$comment_message = '';
+$comment_message_type = '';
+$for_type = 'package';
+$for_id = 0; // 0 = کامنت‌های صفحه ایندکس پکیج‌ها (نه یک پکیج خاص)
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_comment'])) {
+    $full_name = trim($_POST['full_name'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $comment_text = trim($_POST['comment_text'] ?? '');
+
+    if ($full_name === '' || $comment_text === '') {
+        $comment_message = '❌ لطفاً نام و متن کامنت را وارد کنید.';
+        $comment_message_type = 'danger';
+    } elseif ($email !== '' && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $comment_message = '❌ ایمیل وارد شده معتبر نیست.';
+        $comment_message_type = 'danger';
+    } else {
+        $email_val = $email !== '' ? $email : null;
+        $insert_sql = "INSERT INTO comments (full_name, email, comment_text, for_type, for_id) VALUES (?, ?, ?, ?, ?)";
+        $insert_stmt = $conn->prepare($insert_sql);
+        $insert_stmt->bind_param("ssssi", $full_name, $email_val, $comment_text, $for_type, $for_id);
+        if ($insert_stmt->execute()) {
+            $comment_message = '✅ کامنت شما با موفقیت ثبت شد.';
+            $comment_message_type = 'success';
+        } else {
+            $comment_message = '❌ خطا در ثبت کامنت. لطفاً دوباره تلاش کنید.';
+            $comment_message_type = 'danger';
+        }
+        $insert_stmt->close();
+    }
+}
+
+// ============================================
+// ✅ دریافت لیست کامنت‌ها
+// ============================================
+$comments = [];
+$comments_sql = "SELECT id, full_name, comment_text, admin_reply, created_at
+                 FROM comments
+                 WHERE for_type = 'package' AND for_id = " . (int)$for_id . "
+                 ORDER BY created_at DESC";
+$comments_result = $conn->query($comments_sql);
+if ($comments_result && $comments_result->num_rows > 0) {
+    while ($row = $comments_result->fetch_assoc()) {
+        $comments[] = $row;
+    }
+}
 ?>
 <!doctype html>
 <html lang="fa" dir="rtl">
@@ -227,6 +277,162 @@ if (!empty($packages_list[0]['pictures'])) {
     .packages-pagination .page-link:hover {
         background-color: #e9ecef;
     }
+
+    /* ============ کامنت‌ها ============ */
+    .comments-section {
+        background: #ffffff;
+        border-radius: 25px;
+        padding: 35px 30px;
+        margin-top: 40px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+        border: 1px solid #e9ecef;
+    }
+
+    .comments-title {
+        color: #212529;
+        font-weight: 800;
+        border-bottom: 3px solid var(--primary-color);
+        display: inline-block;
+        padding-bottom: 8px;
+        margin-bottom: 25px;
+    }
+
+    .comment-form-card {
+        background: #f8f9fa;
+        border-radius: 18px;
+        padding: 20px 22px;
+        border: 1px solid #e9ecef;
+        margin-bottom: 30px;
+        max-width: 60%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .comment-form-card h5 {
+        color: var(--primary-color);
+        font-size: 1.05rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .comment-form-card .form-control {
+        border-radius: 10px;
+        border: 1px solid #ced4da;
+        padding: 9px 14px;
+        font-size: 0.9rem;
+    }
+
+    .comment-form-card .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.12);
+    }
+
+    .comment-form-card label {
+        font-size: 13px;
+        font-weight: 600;
+        color: #495057;
+        margin-bottom: 4px;
+    }
+
+    .comment-submit-btn {
+        background: linear-gradient(135deg, #007bff, #0056b3);
+        color: white;
+        font-weight: 700;
+        border: none;
+        border-radius: 50px;
+        padding: 10px 30px;
+        font-size: 0.95rem;
+        transition: all 0.3s;
+    }
+
+    .comment-submit-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 18px rgba(0, 123, 255, 0.4);
+        color: white;
+    }
+
+    .comment-item {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 18px 20px;
+        margin-bottom: 15px;
+        border: 1px solid #e9ecef;
+        transition: all 0.3s;
+    }
+
+    .comment-item:hover {
+        border-color: var(--primary-color);
+        box-shadow: 0 4px 15px rgba(0, 123, 255, 0.08);
+    }
+
+    .comment-author {
+        color: var(--primary-color);
+        font-weight: 700;
+        margin-bottom: 4px;
+    }
+
+    .comment-date {
+        color: #adb5bd;
+        font-size: 12px;
+    }
+
+    .comment-text {
+        color: #343a40;
+        margin-top: 10px;
+        line-height: 1.8;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+
+    .admin-reply-box {
+        background: #e8f5e9;
+        border-right: 4px solid var(--success-color);
+        border-radius: 10px;
+        padding: 12px 16px;
+        margin-top: 15px;
+        margin-right: 15px;
+    }
+
+    .admin-reply-label {
+        color: var(--success-color);
+        font-weight: 700;
+        font-size: 13px;
+        margin-bottom: 5px;
+    }
+
+    .admin-reply-text {
+        color: #2e7d32;
+        line-height: 1.7;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+
+    .no-comments {
+        text-align: center;
+        padding: 40px 20px;
+        color: #adb5bd;
+    }
+
+    .no-comments .icon {
+        font-size: 50px;
+        margin-bottom: 15px;
+    }
+
+    .comments-count-badge {
+        background: rgba(0, 123, 255, 0.15);
+        color: var(--primary-color);
+        border-radius: 50px;
+        padding: 3px 14px;
+        font-size: 13px;
+        font-weight: 700;
+        margin-right: 10px;
+    }
+
+    @media (max-width: 768px) {
+        .comment-form-card {
+            max-width: 100%;
+        }
+    }
     </style>
 </head>
 
@@ -270,13 +476,15 @@ if (!empty($packages_list[0]['pictures'])) {
             <article class="col-lg-4 col-md-6 mb-5">
                 <div class="card h-100">
                     <div class="card-img-container">
-                        <img class="card-img-top" src="../<?php echo htmlspecialchars($package['pictures']); ?>"
+                        <img class="card-img-top"
+                            src="../<?php echo htmlspecialchars($package['pictures']); ?>"
                             alt="پکیج آموزشی <?php echo htmlspecialchars($package['name']); ?> - موسسه سیمرغ"
                             loading="lazy" width="400" height="270">
                     </div>
                     <div class="card-body">
                         <h3 class="card-title">
-                            <a href="<?= $package_url ?>" style="color:inherit; text-decoration:none;">
+                            <a href="<?= $package_url ?>"
+                                style="color:inherit; text-decoration:none;">
                                 <?php echo htmlspecialchars($package['name']); ?>
                             </a>
                         </h3>
@@ -303,7 +511,8 @@ if (!empty($packages_list[0]['pictures'])) {
                                     🛒 افزودن به سبد خرید
                                 </button>
                             </form>
-                            <a href="<?= $package_url ?>" class="btn btn-outline-primary btn-details btn-block w-100"
+                            <a href="<?= $package_url ?>"
+                                class="btn btn-outline-primary btn-details btn-block w-100"
                                 title="مشاهده سرفصل‌های پکیج <?= htmlspecialchars($package['name']) ?>">
                                 مشاهده سرفصل‌ها
                             </a>
@@ -328,7 +537,10 @@ if (!empty($packages_list[0]['pictures'])) {
 
                 <?php if ($page > 1): ?>
                 <li class="page-item">
-                    <a class="page-link" href="?page=<?= $page - 1 ?>" rel="prev" aria-label="صفحه قبل">
+                    <a class="page-link"
+                        href="?page=<?= $page - 1 ?>"
+                        rel="prev"
+                        aria-label="صفحه قبل">
                         &laquo; قبلی
                     </a>
                 </li>
@@ -348,7 +560,9 @@ if (!empty($packages_list[0]['pictures'])) {
                 for ($i = $start_p; $i <= $end_p; $i++):
                 ?>
                 <li class="page-item <?= ($i == $page) ? 'active' : '' ?>">
-                    <a class="page-link" href="?page=<?= $i ?>" <?= ($i == $page) ? 'aria-current="page"' : '' ?>>
+                    <a class="page-link"
+                        href="?page=<?= $i ?>"
+                        <?= ($i == $page) ? 'aria-current="page"' : '' ?>>
                         <?= $i ?>
                     </a>
                 </li>
@@ -362,7 +576,10 @@ if (!empty($packages_list[0]['pictures'])) {
 
                 <?php if ($page < $total_pages): ?>
                 <li class="page-item">
-                    <a class="page-link" href="?page=<?= $page + 1 ?>" rel="next" aria-label="صفحه بعد">
+                    <a class="page-link"
+                        href="?page=<?= $page + 1 ?>"
+                        rel="next"
+                        aria-label="صفحه بعد">
                         بعدی &raquo;
                     </a>
                 </li>
@@ -371,6 +588,80 @@ if (!empty($packages_list[0]['pictures'])) {
             </ul>
         </nav>
         <?php endif; ?>
+
+        <!-- =========================================== -->
+        <!-- ✅ بخش کامنت‌ها -->
+        <!-- =========================================== -->
+        <div class="comments-section">
+            <h3 class="comments-title">
+                💬 نظرات شما درباره پکیج‌های آموزشی
+                <span class="comments-count-badge"><?php echo count($comments); ?></span>
+            </h3>
+
+            <?php if ($comment_message !== ''): ?>
+            <div class="alert alert-<?php echo $comment_message_type; ?> text-center">
+                <?php echo htmlspecialchars($comment_message); ?>
+            </div>
+            <?php endif; ?>
+
+            <div class="comment-form-card">
+                <h5>✍️ نظر خود را بنویسید</h5>
+                <form method="POST" action="">
+                    <div class="row g-2">
+                        <div class="col-md-6">
+                            <label for="full_name">نام و فامیل <span style="color: #dc3545;">*</span></label>
+                            <input type="text" class="form-control" id="full_name" name="full_name"
+                                placeholder="مثال: علی رضایی" required maxlength="120">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="email">ایمیل (اختیاری)</label>
+                            <input type="email" class="form-control" id="email" name="email"
+                                placeholder="example@mail.com" maxlength="150">
+                        </div>
+                        <div class="col-12">
+                            <label for="comment_text">متن کامنت <span style="color: #dc3545;">*</span></label>
+                            <textarea class="form-control" id="comment_text" name="comment_text" rows="3"
+                                placeholder="نظر خود را درباره پکیج‌های آموزشی سیمرغ بنویسید..." required></textarea>
+                        </div>
+                        <div class="col-12 text-center">
+                            <button type="submit" name="submit_comment" class="comment-submit-btn">
+                                📩 ارسال کامنت
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="comments-list">
+                <?php if (count($comments) > 0): ?>
+                <?php foreach ($comments as $comment): ?>
+                <div class="comment-item">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap">
+                        <div class="comment-author">👤 <?php echo htmlspecialchars($comment['full_name']); ?></div>
+                        <div class="comment-date">
+                            🕐 <?php echo date('Y/m/d H:i', strtotime($comment['created_at'])); ?>
+                        </div>
+                    </div>
+                    <div class="comment-text"><?php echo nl2br(htmlspecialchars($comment['comment_text'])); ?></div>
+
+                    <?php if (!empty($comment['admin_reply'])): ?>
+                    <div class="admin-reply-box">
+                        <div class="admin-reply-label">🎙️ پاسخ ادمین:</div>
+                        <div class="admin-reply-text"><?php echo nl2br(htmlspecialchars($comment['admin_reply'])); ?>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+                </div>
+                <?php endforeach; ?>
+                <?php else: ?>
+                <div class="no-comments">
+                    <div class="icon">💬</div>
+                    <h5>هنوز کامنتی ثبت نشده</h5>
+                    <p>اولین نفری باشید که نظر خود را می‌نویسید!</p>
+                </div>
+                <?php endif; ?>
+            </div>
+        </div>
 
         <!-- =========================================== -->
         <!-- اسکیمای ItemList + Course برای Rich Snippet -->
@@ -425,7 +716,8 @@ if (!empty($packages_list[0]['pictures'])) {
         {
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
-            "itemListElement": [{
+            "itemListElement": [
+                {
                     "@type": "ListItem",
                     "position": 1,
                     "name": "صفحه اصلی",
@@ -437,7 +729,8 @@ if (!empty($packages_list[0]['pictures'])) {
                     "name": "پکیج‌های آموزشی",
                     "item": "<?= $site_url . $page_path ?>"
                 }
-                <?php if ($page > 1): ?>, {
+                <?php if ($page > 1): ?>
+                ,{
                     "@type": "ListItem",
                     "position": 3,
                     "name": "صفحه <?= $page ?>",

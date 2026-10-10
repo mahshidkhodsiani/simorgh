@@ -1,0 +1,19 @@
+2026-09-19 10:22:53 - TranResult Failed: Array
+(
+    [code] => 472
+    [content] => Array
+        (
+            [error] => Array
+                (
+                    [code] => 1034
+                    [message] => No record found.
+                    [args] => Array
+                        (
+                        )
+
+                )
+
+        )
+
+)
+

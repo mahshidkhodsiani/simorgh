@@ -31,32 +31,98 @@ $id = $_SESSION["all_data"]['id'];
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+    /* استایل‌های اختصاصی برای ریسپانسیو شدن بهتر */
+    .users-table th,
+    .users-table td {
+        white-space: nowrap;
+        vertical-align: middle;
+        font-size: 0.95rem;
+    }
+
+    .users-table .action-btns {
+        display: inline-flex;
+        gap: 4px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .users-table .action-btns .btn {
+        font-size: 0.8rem;
+        padding: 4px 8px;
+    }
+
+    @media (max-width: 767.98px) {
+        .users-table th,
+        .users-table td {
+            font-size: 0.82rem;
+            padding: 6px 4px;
+        }
+
+        .users-table .action-btns {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .users-table .action-btns .btn {
+            font-size: 0.75rem;
+            padding: 3px 6px;
+            width: 100%;
+        }
+
+        .form-section {
+            padding: 12px !important;
+            margin-top: 15px !important;
+        }
+
+        .form-section .form-control {
+            font-size: 0.9rem;
+        }
+
+        h4 {
+            font-size: 1.05rem;
+        }
+
+        .pagination {
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .pagination .page-link {
+            font-size: 0.85rem;
+            padding: 5px 9px;
+        }
+    }
+    </style>
 </head>
 
 <body>
 
 
-
     <?php include 'header.php'; ?>
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-3 d-flex">
+        <div class="row g-0">
+            <div class="col-12 col-md-3 d-flex">
                 <?php
                 include 'sidebar.php';
                 ?>
 
             </div>
 
-            <div class="col-md-8 col-sm-12">
-                <form action="new_user.php" method="POST" enctype="multipart/form-data" class="p-3 border mt-4">
-                    <div class="row">
-                        <div class="col-md-6">
+            <div class="col-12 col-md-9 px-3 px-md-4">
+                <form action="new_user.php" method="POST" enctype="multipart/form-data"
+                    class="p-3 border mt-4 rounded form-section bg-white">
+                    <h5 class="mb-3 text-center text-md-start">افزودن کاربر جدید</h5>
+                    <div class="row g-3">
+                        <div class="col-12 col-md-6">
                             <label for="name" class="form-label fw-semibold">
                                 نام
                             </label>
                             <input type="text" name="name" class="form-control" required autocomplete="off">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-12 col-md-6">
                             <label for="family" class="form-label fw-semibold">
                                 نام خانوادگی
                             </label>
@@ -64,14 +130,14 @@ $id = $_SESSION["all_data"]['id'];
                         </div>
                     </div>
 
-                    <div class="row mt-1">
-                        <div class="col-md-6">
+                    <div class="row g-3 mt-1">
+                        <div class="col-12 col-md-6">
                             <label for="username" class="form-label fw-semibold">
                                 یوزرنیم
                             </label>
                             <input type="username" name="username" class="form-control" required autocomplete="off">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-12 col-md-6">
                             <label for="password" class="form-label fw-semibold">
                                 پسوورد(عدد)
                             </label>
@@ -79,9 +145,8 @@ $id = $_SESSION["all_data"]['id'];
                         </div>
                     </div>
 
-                    <div class="row mt-2">
-
-                        <div class="col-md-1">
+                    <div class="row mt-3">
+                        <div class="col-12">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="" id="isAdmin" name="isAdmin">
                                 <label class="form-check-label" for="isAdmin">
@@ -89,34 +154,21 @@ $id = $_SESSION["all_data"]['id'];
                                 </label>
                             </div>
                         </div>
-                        <div class="col-md-10">
-
-                        </div>
                     </div>
                     <div class="row mt-4">
-                        <div class="col-md-6">
-                            <button name="enter" class="btn btn-outline-success">ثبت</button>
+                        <div class="col-12 col-md-6">
+                            <button name="enter" class="btn btn-outline-success w-100 w-md-auto">ثبت</button>
                         </div>
                     </div>
                 </form>
 
-
-                <script>
-                document.getElementById('userForm').addEventListener('submit', function(event) {
-
-                    event.preventDefault();
-
-
-                    document.getElementById('userForm').reset();
-                });
-                </script>
-
                 <div class="row mt-4">
-                    <div class="col-md-10">
+                    <div class="col-12">
                         <?php
                         // Pagination configuration
                         $items_per_page = 10; // Number of items per page
-                        $current_page = isset($_GET['page']) ? $_GET['page'] : 1; // Current page, default is 1
+                        $current_page = isset($_GET['page']) ? intval($_GET['page']) : 1; // Current page, default is 1
+                        if ($current_page < 1) $current_page = 1;
 
                         // Calculate the offset for the SQL query
                         $offset = ($current_page - 1) * $items_per_page;
@@ -126,13 +178,13 @@ $id = $_SESSION["all_data"]['id'];
                         $result = $conn->query($sql);
 
                         // Display the table
-                        if ($result->num_rows > 0) {
+                        if ($result && $result->num_rows > 0) {
                             $a = ($current_page - 1) * $items_per_page + 1; // Counter for row numbers
                             ?>
+                        <h4 class="mb-2">نگاه کلی :</h4>
                         <div class="table-responsive">
-                            <table class="table border border-4">
-                                <h4>نگاه کلی :</h4>
-                                <thead>
+                            <table class="table table-bordered users-table align-middle">
+                                <thead class="table-light">
                                     <tr>
                                         <th scope="col" class="text-center">ردیف</th>
                                         <th scope="col" class="text-center">نام</th>
@@ -152,33 +204,37 @@ $id = $_SESSION["all_data"]['id'];
                                         <td class="text-center"><?= htmlspecialchars($row['name']) ?></td>
                                         <td class="text-center"><?= htmlspecialchars($row['family']) ?></td>
                                         <td class="text-center"><?= htmlspecialchars($row['meli_code']) ?></td>
-                                        <td class="text-center"><?= $row['level'] == 'admin'? 'ادمین' : 'کاربر عادی' ?>
+                                        <td class="text-center">
+                                            <?= $row['level'] == 'admin' ? '<span class="badge bg-danger">ادمین</span>' : '<span class="badge bg-secondary">کاربر عادی</span>' ?>
                                         </td>
                                         <td class="text-center">
                                             <?php if (isset($row['speaker']) && $row['speaker'] == 1): ?>
-                                            <form method="POST" action="" style="display: inline;" onsubmit="return confirm('آیا مطمئن هستید که می‌خواهید دسترسی گویندگی این کاربر را بردارید؟');">
+                                            <form method="POST" action="" style="display: inline;"
+                                                onsubmit="return confirm('آیا مطمئن هستید که می‌خواهید دسترسی گویندگی این کاربر را بردارید؟');">
                                                 <input type="hidden" name="user_id" value="<?= $row['id'] ?>">
                                                 <input type="hidden" name="remove_speaker" value="1">
-                                                <button type="submit" class="btn btn-sm btn-outline-danger">
-                                                    🎙️ برداشتن از گویندگی
-                                                </button>
+                                                <input type="hidden" name="page" value="<?= $current_page ?>">
+                                                <button type="submit"
+                                                    class="btn btn-sm btn-outline-danger w-100">🎙️ برداشتن</button>
                                             </form>
                                             <?php else: ?>
-                                            <form method="POST" action="" style="display: inline;" onsubmit="return confirm('آیا مطمئن هستید که می‌خواهید این کاربر را به گوینده تبدیل کنید؟');">
+                                            <form method="POST" action="" style="display: inline;"
+                                                onsubmit="return confirm('آیا مطمئن هستید که می‌خواهید این کاربر را به گوینده تبدیل کنید؟');">
                                                 <input type="hidden" name="user_id" value="<?= $row['id'] ?>">
                                                 <input type="hidden" name="make_speaker" value="1">
-                                                <button type="submit" class="btn btn-sm btn-outline-primary">
-                                                    تبدیل به گوینده
-                                                </button>
+                                                <input type="hidden" name="page" value="<?= $current_page ?>">
+                                                <button type="submit" class="btn btn-sm btn-outline-primary w-100">تبدیل
+                                                    به گوینده</button>
                                             </form>
                                             <?php endif; ?>
                                         </td>
                                         <td class="text-center">
-                                            <form method="POST" action="" style="display: inline;" onsubmit="return confirm('آیا مطمئن هستید که می‌خواهید این کاربر را حذف کنید؟');">
+                                            <form method="POST" action="" style="display: inline;"
+                                                onsubmit="return confirm('آیا مطمئن هستید که می‌خواهید این کاربر را حذف کنید؟');">
                                                 <input type="hidden" name="delete_user_id" value="<?= $row['id'] ?>">
-                                                <button type="submit" name="delete_user" class="btn btn-sm btn-outline-danger">
-                                                    🗑️ حذف
-                                                </button>
+                                                <input type="hidden" name="page" value="<?= $current_page ?>">
+                                                <button type="submit" name="delete_user"
+                                                    class="btn btn-sm btn-outline-danger w-100">🗑️ حذف</button>
                                             </form>
                                         </td>
                                     </tr>
@@ -200,28 +256,54 @@ $id = $_SESSION["all_data"]['id'];
                             $total_pages = ceil($total_items / $items_per_page);
 
                             // Display pagination links
+                            if ($total_pages > 1) {
                             ?>
-                        <nav aria-label="Page navigation">
-                            <ul class="pagination justify-content-center">
+                        <nav aria-label="Page navigation" class="mt-3">
+                            <ul class="pagination justify-content-center mb-0">
+                                <?php if ($current_page > 1): ?>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=<?= $current_page - 1 ?>">قبلی</a>
+                                </li>
+                                <?php endif; ?>
+
                                 <?php
-                                    for ($i = 1; $i <= $total_pages; $i++) {
-                                        ?>
+                                // محدود کردن تعداد لینک‌های نمایش داده شده در موبایل
+                                $start = max(1, $current_page - 2);
+                                $end = min($total_pages, $current_page + 2);
+
+                                if ($start > 1) {
+                                    echo '<li class="page-item"><a class="page-link" href="?page=1">1</a></li>';
+                                    if ($start > 2) echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
+                                }
+
+                                for ($i = $start; $i <= $end; $i++) {
+                                    ?>
                                 <li class="page-item <?= $i == $current_page ? 'active' : '' ?>">
                                     <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
                                 </li>
                                 <?php
-                                    }
-                                    ?>
+                                }
+
+                                if ($end < $total_pages) {
+                                    if ($end < $total_pages - 1) echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
+                                    echo '<li class="page-item"><a class="page-link" href="?page=' . $total_pages . '">' . $total_pages . '</a></li>';
+                                }
+                                ?>
+
+                                <?php if ($current_page < $total_pages): ?>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=<?= $current_page + 1 ?>">بعدی</a>
+                                </li>
+                                <?php endif; ?>
                             </ul>
                         </nav>
                         <?php
+                            }
                         } else {
-                            echo "<p>No records found.</p>";
+                            echo "<p class='text-center mt-3'>هیچ رکوردی یافت نشد.</p>";
                         }
                         ?>
-
                     </div>
-
                 </div>
 
             </div>
@@ -245,20 +327,15 @@ $id = $_SESSION["all_data"]['id'];
 
 if(isset($_POST['enter'])){
 
-    // die();
     $name = $_POST['name'];
     $family = $_POST['family'];
     $username = $_POST['username'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    //  password_hash($mobile, PASSWORD_DEFAULT);
     if(isset($_POST['isAdmin'])){
         $isAdmin = 1 ;
     }else{
         $isAdmin = 0 ;
     }
-
-  
-
 
     $SQL1 = "SELECT * FROM users WHERE username = '$username'";
     $result1 = $conn->query($SQL1);
@@ -341,25 +418,20 @@ if(isset($_POST['enter'])){
                     Error: " . $sql . "<br>" . $conn->error . "
                   </div>";
         }
-        
-
     }
-
-    
-    
 }
 
 // منطق تبدیل کاربر به گوینده (ست کردن 1)
 if (isset($_POST['make_speaker'])) {
     $user_id_to_update = intval($_POST['user_id']);
+    $return_page = isset($_POST['page']) ? intval($_POST['page']) : 1;
     
-    // کوئری برای آپدیت کردن فیلد speaker به 1
     $update_sql = "UPDATE users SET speaker = 1 WHERE id = $user_id_to_update";
     
     if ($conn->query($update_sql) === TRUE) {
         echo "<script>
                 alert('✅ کاربر با موفقیت به گوینده تبدیل شد');
-                window.location.href = window.location.href.split('?')[0] + '?page=$current_page';
+                window.location.href = 'new_user.php?page=$return_page';
               </script>";
     } else {
         echo "<script>alert('❌ خطا در بروزرسانی: " . $conn->error . "');</script>";
@@ -369,14 +441,14 @@ if (isset($_POST['make_speaker'])) {
 // منطق برداشتن از گویندگی (ست کردن 0)
 if (isset($_POST['remove_speaker'])) {
     $user_id_to_update = intval($_POST['user_id']);
+    $return_page = isset($_POST['page']) ? intval($_POST['page']) : 1;
     
-    // کوئری برای آپدیت کردن فیلد speaker به 0
     $update_sql = "UPDATE users SET speaker = 0 WHERE id = $user_id_to_update";
     
     if ($conn->query($update_sql) === TRUE) {
         echo "<script>
                 alert('🗑️ دسترسی گویندگی از کاربر برداشته شد');
-                window.location.href = window.location.href.split('?')[0] + '?page=$current_page';
+                window.location.href = 'new_user.php?page=$return_page';
               </script>";
     } else {
         echo "<script>alert('❌ خطا در بروزرسانی: " . $conn->error . "');</script>";
@@ -386,18 +458,17 @@ if (isset($_POST['remove_speaker'])) {
 // منطق حذف کاربر
 if (isset($_POST['delete_user'])) {
     $user_id_to_delete = intval($_POST['delete_user_id']);
+    $return_page = isset($_POST['page']) ? intval($_POST['page']) : 1;
     
-    // جلوگیری از حذف خود کاربر فعلی
     if ($user_id_to_delete == $id) {
         echo "<script>alert('❌ شما نمی‌توانید خودتان را حذف کنید!');</script>";
     } else {
-        // کوئری برای حذف کاربر
         $delete_sql = "DELETE FROM users WHERE id = $user_id_to_delete";
         
         if ($conn->query($delete_sql) === TRUE) {
             echo "<script>
                     alert('✅ کاربر با موفقیت حذف شد');
-                    window.location.href = window.location.href.split('?')[0] + '?page=$current_page';
+                    window.location.href = 'new_user.php?page=$return_page';
                   </script>";
         } else {
             echo "<script>alert('❌ خطا در حذف کاربر: " . $conn->error . "');</script>";
