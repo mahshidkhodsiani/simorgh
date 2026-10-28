@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["all_data"])) {
+if (!isset($_SESSION["all_data"]) AND $_SESSION["all_data"]['admin'] != 1) {
     header("Location: ../login.php");
     exit();
 }
@@ -39,28 +39,28 @@ if (isset($_GET['search_meli_code'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body {
-            background-color: #f0f2f5;
-        }
+    body {
+        background-color: #f0f2f5;
+    }
 
-        .main-content {
-            padding: 20px;
-        }
+    .main-content {
+        padding: 20px;
+    }
 
-        .card-form,
-        .result-card {
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            padding: 20px;
-            margin-bottom: 30px;
-            border: none;
-        }
+    .card-form,
+    .result-card {
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        padding: 20px;
+        margin-bottom: 30px;
+        border: none;
+    }
 
-        .result-card .table th,
-        .result-card .table td {
-            font-size: 15px;
-        }
+    .result-card .table th,
+    .result-card .table td {
+        font-size: 15px;
+    }
     </style>
 </head>
 
@@ -79,7 +79,8 @@ if (isset($_GET['search_meli_code'])) {
                         <div class="row g-3 align-items-center">
                             <div class="col-md-8">
                                 <label for="search_meli_code" class="form-label">کد ملی ثبت‌نام‌کننده:</label>
-                                <input type="text" id="search_meli_code" name="search_meli_code" class="form-control" placeholder="کد ملی را اینجا وارد کنید" required>
+                                <input type="text" id="search_meli_code" name="search_meli_code" class="form-control"
+                                    placeholder="کد ملی را اینجا وارد کنید" required>
                             </div>
                             <div class="col-md-4 mt-4 d-flex justify-content-center">
                                 <button class="btn btn-outline-primary" type="submit">
@@ -92,63 +93,67 @@ if (isset($_GET['search_meli_code'])) {
 
 
                 <?php if ($search_result): ?>
-                    <div class="result-card">
-                        <h5 class="text-center">اطلاعات کامل کاربر</h5>
-                        <div class="table-responsive mt-4">
-                            <table class="table table-bordered table-striped">
-                                <tbody>
-                                    <tr>
-                                        <th style="width: 25%;">نام و نام خانوادگی:</th>
-                                        <td><?= htmlspecialchars($search_result['name']) . ' ' . htmlspecialchars($search_result['family']) ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>کد ملی:</th>
-                                        <td><?= htmlspecialchars($search_result['meli_code']) ?></td>
-                                    </tr>
+                <div class="result-card">
+                    <h5 class="text-center">اطلاعات کامل کاربر</h5>
+                    <div class="table-responsive mt-4">
+                        <table class="table table-bordered table-striped">
+                            <tbody>
+                                <tr>
+                                    <th style="width: 25%;">نام و نام خانوادگی:</th>
+                                    <td><?= htmlspecialchars($search_result['name']) . ' ' . htmlspecialchars($search_result['family']) ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>کد ملی:</th>
+                                    <td><?= htmlspecialchars($search_result['meli_code']) ?></td>
+                                </tr>
 
-                                    <tr>
-                                        <th>شماره موبایل:</th>
-                                        <td><?= htmlspecialchars($search_result['mobile']) ?></td>
-                                    </tr>
+                                <tr>
+                                    <th>شماره موبایل:</th>
+                                    <td><?= htmlspecialchars($search_result['mobile']) ?></td>
+                                </tr>
 
-                                    <tr>
-                                        <th>عکس پرسنلی:</th>
-                                        <td>
-                                            <?php if (!empty($search_result['personely'])): ?>
-                                                <a href="../user/<?= htmlspecialchars($search_result['personely']) ?>" target="_blank" class="btn btn-sm btn-info">مشاهده عکس</a>
-                                            <?php else: ?>
-                                                <span>ندارد</span>
-                                            <?php endif; ?>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>عکس شناسنامه:</th>
-                                        <td>
-                                            <?php if (!empty($search_result['shenasname'])): ?>
-                                                <a href="../user/<?= htmlspecialchars($search_result['shenasname']) ?>" target="_blank" class="btn btn-sm btn-info">مشاهده عکس</a>
-                                            <?php else: ?>
-                                                <span>ندارد</span>
-                                            <?php endif; ?>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>عکس کارت ملی:</th>
-                                        <td>
-                                            <?php if (!empty($search_result['photo_meli'])): ?>
-                                                <a href="../user/<?= htmlspecialchars($search_result['photo_meli']) ?>" target="_blank" class="btn btn-sm btn-info">مشاهده عکس</a>
-                                            <?php else: ?>
-                                                <span>ندارد</span>
-                                            <?php endif; ?>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                                <tr>
+                                    <th>عکس پرسنلی:</th>
+                                    <td>
+                                        <?php if (!empty($search_result['personely'])): ?>
+                                        <a href="../user/<?= htmlspecialchars($search_result['personely']) ?>"
+                                            target="_blank" class="btn btn-sm btn-info">مشاهده عکس</a>
+                                        <?php else: ?>
+                                        <span>ندارد</span>
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>عکس شناسنامه:</th>
+                                    <td>
+                                        <?php if (!empty($search_result['shenasname'])): ?>
+                                        <a href="../user/<?= htmlspecialchars($search_result['shenasname']) ?>"
+                                            target="_blank" class="btn btn-sm btn-info">مشاهده عکس</a>
+                                        <?php else: ?>
+                                        <span>ندارد</span>
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>عکس کارت ملی:</th>
+                                    <td>
+                                        <?php if (!empty($search_result['photo_meli'])): ?>
+                                        <a href="../user/<?= htmlspecialchars($search_result['photo_meli']) ?>"
+                                            target="_blank" class="btn btn-sm btn-info">مشاهده عکس</a>
+                                        <?php else: ?>
+                                        <span>ندارد</span>
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
+                </div>
                 <?php elseif (isset($_GET['search_meli_code'])): ?>
-                    <div class="alert alert-warning text-center" role="alert">
-                        <?= htmlspecialchars($error_message) ?>
-                    </div>
+                <div class="alert alert-warning text-center" role="alert">
+                    <?= htmlspecialchars($error_message) ?>
+                </div>
                 <?php endif; ?>
 
 
@@ -169,44 +174,44 @@ if (isset($_GET['search_meli_code'])) {
                 if ($result->num_rows > 0) {
                     $a = ($current_page - 1) * $items_per_page + 1; // Counter for row numbers
                 ?>
-                    <div class="table-responsive">
-                        <table class="table border border-4">
-                            <h4>نگاه کلی :</h4>
-                            <thead>
-                                <tr>
-                                    <th scope="col" class="text-center">ردیف</th>
-                                    <th scope="col" class="text-center">نام</th>
-                                    <th scope="col" class="text-center">نام خانوادگی</th>
-                                    <th scope="col" class="text-center">کد ملی</th>
-                                    <th scope="col" class="text-center">نقش</th>
-                                    <th scope="col" class="text-center">مدارک</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
+                <div class="table-responsive">
+                    <table class="table border border-4">
+                        <h4>نگاه کلی :</h4>
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-center">ردیف</th>
+                                <th scope="col" class="text-center">نام</th>
+                                <th scope="col" class="text-center">نام خانوادگی</th>
+                                <th scope="col" class="text-center">کد ملی</th>
+                                <th scope="col" class="text-center">نقش</th>
+                                <th scope="col" class="text-center">مدارک</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
                                 while ($row = $result->fetch_assoc()) {
                                 ?>
-                                    <tr>
-                                        <th scope="row" class="text-center"><?= $a ?></th>
-                                        <td class="text-center"><?= $row['name'] ?></td>
-                                        <td class="text-center"><?= $row['family'] ?></td>
-                                        <td class="text-center"><?= $row['meli_code'] ?></td>
-                                        <td class="text-center"><?= $row['level'] == 'admin' ? 'ادمین' : 'کاربر عادی' ?></td>
-                                        <td class="text-center">
+                            <tr>
+                                <th scope="row" class="text-center"><?= $a ?></th>
+                                <td class="text-center"><?= $row['name'] ?></td>
+                                <td class="text-center"><?= $row['family'] ?></td>
+                                <td class="text-center"><?= $row['meli_code'] ?></td>
+                                <td class="text-center"><?= $row['level'] == 'admin' ? 'ادمین' : 'کاربر عادی' ?></td>
+                                <td class="text-center">
 
-                                            <?= !empty($row['personely'])
+                                    <?= !empty($row['personely'])
                                                 ? '<span style="color:green; font-weight:bold;">دارد</span>'
                                                 : 'ندارد' ?>
-                                        </td>
-                                    </tr>
-                                <?php
+                                </td>
+                            </tr>
+                            <?php
                                     $a++;
                                 }
                                 ?>
-                            </tbody>
-                        </table>
-                    </div>
-                    <?php
+                        </tbody>
+                    </table>
+                </div>
+                <?php
 
                     // Pagination links
                     $sql = "SELECT COUNT(*) AS total FROM users";
@@ -217,19 +222,19 @@ if (isset($_GET['search_meli_code'])) {
 
                     // Display pagination links
                     ?>
-                    <nav aria-label="Page navigation">
-                        <ul class="pagination justify-content-center">
-                            <?php
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        <?php
                             for ($i = 1; $i <= $total_pages; $i++) {
                             ?>
-                                <li class="page-item <?= $i == $current_page ? 'active' : '' ?>">
-                                    <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
-                                </li>
-                            <?php
+                        <li class="page-item <?= $i == $current_page ? 'active' : '' ?>">
+                            <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                        </li>
+                        <?php
                             }
                             ?>
-                        </ul>
-                    </nav>
+                    </ul>
+                </nav>
                 <?php
                 } else {
                     echo "<p>No records found.</p>";

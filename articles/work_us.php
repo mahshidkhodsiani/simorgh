@@ -52,7 +52,7 @@
                             <li><strong>واتساپ یا تلگرام:</strong> ۰۹۳۵۴۶۳۷۰۵۵</li>
                             <li><strong>اینستاگرام:</strong> <a href="https://www.instagram.com/haft_simorgh/"
                                     target="_blank">haft_simorgh@</a></li>
-                            <li><strong>ایمیل:</strong> <a href="mailto:info@simorghtv.com">info@simorghtv.com</a></li>
+                            <li><strong>ایمیل:</strong> <a href="mailto:info@simorghtv.com">haftsimorgh@yahoo.com</a></li>
                             <li><strong>تلفن مستقیم:</strong> ۹۱۳۰۰۵۱۷-۰۲۱</li>
                             <li><strong>سامانه پیامکی:</strong> ۳۰۰۰۱۶۳۴۳۰۰۰</li>
 

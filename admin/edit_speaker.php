@@ -1,7 +1,6 @@
 <?php
 session_start();
-
-if (!isset($_SESSION["all_data"])) {
+if (!isset($_SESSION["all_data"]) AND $_SESSION["all_data"]['admin'] != 1) {
     header("Location: ../login.php");
     exit();
 }
@@ -30,7 +29,7 @@ $id = $_SESSION["all_data"]['id'];
 
 <body>
 
-<?php include 'header.php'; ?>
+    <?php include 'header.php'; ?>
     <div class="container-fluid">
 
         <div class="row">
@@ -42,7 +41,7 @@ $id = $_SESSION["all_data"]['id'];
 
             <div class="col-md-8 mt-5">
 
-            <?php
+                <?php
             if (isset($_GET['id_speaker'])) {
                 $id_article = intval($_GET['id_speaker']);
                 $stmt = $conn->prepare("SELECT * FROM speakers WHERE id = ?");
@@ -83,58 +82,61 @@ $id = $_SESSION["all_data"]['id'];
                     }
                     ?>
 
-                    <form id="articleForm" enctype="multipart/form-data" method="POST" class="border p-2">
-                        <input type="hidden" name="id_speaker" value="<?= $row['id'] ?>">
+                <form id="articleForm" enctype="multipart/form-data" method="POST" class="border p-2">
+                    <input type="hidden" name="id_speaker" value="<?= $row['id'] ?>">
 
-                        <div class="row">
-                            <div class="col-6">
-                                <label for="name">نام و نام خانوادگی گوینده:</label>
-                                <input type="text" id="name" name="name" class="form-control mb-2" value="<?= htmlspecialchars($row['name']) ?>" required>
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="name">نام و نام خانوادگی گوینده:</label>
+                            <input type="text" id="name" name="name" class="form-control mb-2"
+                                value="<?= htmlspecialchars($row['name']) ?>" required>
 
-                                <label for="mp3">اپلود صدای جدید (اختیاری):</label>
-                                <input type="file" name="mp3" class="form-control" id="inputGroupFile02" accept="audio/*">
-                                <?php if (!empty($mp3Src)): ?>
-                                    <div class="mt-2">
-                                        <small class="text-muted">صدای فعلی:</small><br>
-                                        <audio controls preload="none" style="width: 100%;">
-                                            <source src="<?= htmlspecialchars($mp3Src) ?>" type="audio/mpeg">
-                                            مرورگر شما از پخش صدا پشتیبانی نمی‌کند.
-                                        </audio>
-                                    </div>
-                                <?php else: ?>
-                                    <small class="text-danger">هنوز فایل صوتی برای این گوینده ثبت نشده است.</small>
-                                <?php endif; ?>
+                            <label for="mp3">اپلود صدای جدید (اختیاری):</label>
+                            <input type="file" name="mp3" class="form-control" id="inputGroupFile02" accept="audio/*">
+                            <?php if (!empty($mp3Src)): ?>
+                            <div class="mt-2">
+                                <small class="text-muted">صدای فعلی:</small><br>
+                                <audio controls preload="none" style="width: 100%;">
+                                    <source src="<?= htmlspecialchars($mp3Src) ?>" type="audio/mpeg">
+                                    مرورگر شما از پخش صدا پشتیبانی نمی‌کند.
+                                </audio>
                             </div>
-
-                            <div class="col-6">
-                                <label for="kind">نوع صدا:</label>
-                                <input type="text" id="kind" name="kind" class="form-control mb-2" value="<?= htmlspecialchars($row['kind']) ?>" required>
-
-                                <label for="image">اپلود عکس جدید (اختیاری):</label>
-                                <input type="file" name="image" class="form-control" id="inputGroupFile02" accept="image/*">
-                                <?php if (!empty($imgSrc)): ?>
-                                    <div class="mt-2">
-                                        <small class="text-muted">عکس فعلی:</small><br>
-                                        <img src="<?= htmlspecialchars($imgSrc) ?>" height="80px" class="border">
-                                    </div>
-                                <?php else: ?>
-                                    <small class="text-danger">هنوز عکسی برای این گوینده ثبت نشده است.</small>
-                                <?php endif; ?>
-                            </div>
+                            <?php else: ?>
+                            <small class="text-danger">هنوز فایل صوتی برای این گوینده ثبت نشده است.</small>
+                            <?php endif; ?>
                         </div>
 
-                        <br>
+                        <div class="col-6">
+                            <label for="kind">نوع صدا:</label>
+                            <input type="text" id="kind" name="kind" class="form-control mb-2"
+                                value="<?= htmlspecialchars($row['kind']) ?>" required>
 
-                        <div class="row">
-                            <div class="col-md-4"></div>
-                            <div class="col-md-6">
-                                <button class="btn btn-outline-success" type="submit" name="submit_speaker">ذخیره تغییرات</button>
-                                <a href="new_speaker" class="btn btn-outline-secondary">انصراف</a>
+                            <label for="image">اپلود عکس جدید (اختیاری):</label>
+                            <input type="file" name="image" class="form-control" id="inputGroupFile02" accept="image/*">
+                            <?php if (!empty($imgSrc)): ?>
+                            <div class="mt-2">
+                                <small class="text-muted">عکس فعلی:</small><br>
+                                <img src="<?= htmlspecialchars($imgSrc) ?>" height="80px" class="border">
                             </div>
+                            <?php else: ?>
+                            <small class="text-danger">هنوز عکسی برای این گوینده ثبت نشده است.</small>
+                            <?php endif; ?>
                         </div>
-                    </form>
+                    </div>
 
-            <?php
+                    <br>
+
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-6">
+                            <button class="btn btn-outline-success" type="submit" name="submit_speaker">ذخیره
+                                تغییرات</button>
+                            <a href="new_speaker" class="btn btn-outline-secondary">انصراف</a>
+                        </div>
+                    </div>
+                </form>
+
+                <?php
                 } else {
                     $stmt->close();
                     echo "<h2 style='text-align: center'>چنین فایلی پیدا نشد دوباره تلاش کنید !</h2>";
@@ -150,12 +152,12 @@ $id = $_SESSION["all_data"]['id'];
 
 
     <script>
-        $(document).ready(function() {
-            $('.nav-link').click(function() {
-                $('.nav-link').removeClass('active');
-                $(this).addClass('active');
-            });
+    $(document).ready(function() {
+        $('.nav-link').click(function() {
+            $('.nav-link').removeClass('active');
+            $(this).addClass('active');
         });
+    });
     </script>
 
 </body>

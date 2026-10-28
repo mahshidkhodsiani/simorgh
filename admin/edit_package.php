@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["all_data"])) {
+if (!isset($_SESSION["all_data"]) AND $_SESSION["all_data"]['admin'] != 1) {
     header("Location: ../login.php");
     exit();
 }

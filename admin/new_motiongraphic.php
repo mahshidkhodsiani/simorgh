@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["all_data"])) {
+if (!isset($_SESSION["all_data"]) AND $_SESSION["all_data"]['admin'] != 1) {
     header("Location: ../login.php");
     exit();
 }
@@ -35,42 +35,41 @@ $id = $_SESSION["all_data"]['id'];
 
 <body>
 
-   
 
-<?php include 'header.php'; ?>
+
+    <?php include 'header.php'; ?>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3 d-flex">
                 <?php
                 include 'sidebar.php';
                 ?>
-              
+
             </div>
 
             <div class="col-md-8">
 
-              
-
-
-              
 
 
 
-                
 
-                
+
+
+
+
+
+
             </div>
         </div>
     </div>
 
     <script>
-        $(document).ready(function() {
-            $('.nav-link').click(function() {
-                $('.nav-link').removeClass('active');
-                $(this).addClass('active');
-            });
+    $(document).ready(function() {
+        $('.nav-link').click(function() {
+            $('.nav-link').removeClass('active');
+            $(this).addClass('active');
         });
-
+    });
     </script>
 </body>
 

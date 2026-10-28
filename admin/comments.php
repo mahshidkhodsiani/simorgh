@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["all_data"])) {
+if (!isset($_SESSION["all_data"]) AND $_SESSION["all_data"]['admin'] != 1) {
     header("Location: ../login.php");
     exit();
 }
@@ -74,177 +74,177 @@ if (isset($_GET['delete'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-        body {
-            background-color: #f0f2f5;
-        }
+    body {
+        background-color: #f0f2f5;
+    }
 
-        .main-content {
-            padding: 20px;
-        }
+    .main-content {
+        padding: 20px;
+    }
 
-        .card-form,
-        .table-section {
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            padding: 20px;
-            margin-bottom: 30px;
-            border: none;
-        }
+    .card-form,
+    .table-section {
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        padding: 20px;
+        margin-bottom: 30px;
+        border: none;
+    }
 
-        .card-header-custom {
-            background-color: #4a5d73;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 8px 8px 0 0;
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin: -20px -20px 20px -20px;
-        }
+    .card-header-custom {
+        background-color: #4a5d73;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px 8px 0 0;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: -20px -20px 20px -20px;
+    }
 
-        .table-striped tbody tr:nth-of-type(odd) {
-            background-color: rgba(0, 0, 0, 0.03);
-        }
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: rgba(0, 0, 0, 0.03);
+    }
 
-        .toast-container {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1050;
-        }
+    .toast-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1050;
+    }
 
-        .comment-text-cell {
-            max-width: 320px;
-            white-space: normal;
-            word-wrap: break-word;
-            line-height: 1.7;
-        }
+    .comment-text-cell {
+        max-width: 320px;
+        white-space: normal;
+        word-wrap: break-word;
+        line-height: 1.7;
+    }
 
-        .reply-text-cell {
-            max-width: 280px;
-            white-space: normal;
-            word-wrap: break-word;
-            line-height: 1.7;
-            color: #198754;
-        }
+    .reply-text-cell {
+        max-width: 280px;
+        white-space: normal;
+        word-wrap: break-word;
+        line-height: 1.7;
+        color: #198754;
+    }
 
-        .badge-type {
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.78rem;
-            font-weight: 600;
-        }
+    .badge-type {
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.78rem;
+        font-weight: 600;
+    }
 
-        .badge-article {
-            background: #0d6efd;
-            color: white;
-        }
+    .badge-article {
+        background: #0d6efd;
+        color: white;
+    }
 
-        .badge-radio {
-            background: #6f42c1;
-            color: white;
-        }
+    .badge-radio {
+        background: #6f42c1;
+        color: white;
+    }
 
-        .badge-package {
-            background: #fd7e14;
-            color: white;
-        }
+    .badge-package {
+        background: #fd7e14;
+        color: white;
+    }
 
-        .badge-no-reply {
-            background: #ffc107;
-            color: #212529;
-        }
+    .badge-no-reply {
+        background: #ffc107;
+        color: #212529;
+    }
 
-        .badge-replied {
-            background: #198754;
-            color: white;
-        }
+    .badge-replied {
+        background: #198754;
+        color: white;
+    }
 
-        .filter-bar {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
-            border: 1px solid #e9ecef;
-        }
+    .filter-bar {
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid #e9ecef;
+    }
 
-        /* استایل فرم ریپلای داخل مودال */
-        .reply-form textarea {
-            border-radius: 10px;
-            border: 1px solid #ced4da;
-            padding: 10px 14px;
-            font-size: 0.95rem;
-            min-height: 110px;
-            resize: vertical;
-        }
+    /* استایل فرم ریپلای داخل مودال */
+    .reply-form textarea {
+        border-radius: 10px;
+        border: 1px solid #ced4da;
+        padding: 10px 14px;
+        font-size: 0.95rem;
+        min-height: 110px;
+        resize: vertical;
+    }
 
-        .reply-form textarea:focus {
-            border-color: #4a5d73;
-            box-shadow: 0 0 0 3px rgba(74, 93, 115, 0.15);
-        }
+    .reply-form textarea:focus {
+        border-color: #4a5d73;
+        box-shadow: 0 0 0 3px rgba(74, 93, 115, 0.15);
+    }
 
-        .original-comment-box {
-            background: #f8f9fa;
-            border-right: 4px solid #4a5d73;
-            border-radius: 8px;
-            padding: 12px 16px;
-            margin-bottom: 15px;
-        }
+    .original-comment-box {
+        background: #f8f9fa;
+        border-right: 4px solid #4a5d73;
+        border-radius: 8px;
+        padding: 12px 16px;
+        margin-bottom: 15px;
+    }
 
-        .original-comment-box .author {
-            font-weight: 600;
-            color: #4a5d73;
-        }
+    .original-comment-box .author {
+        font-weight: 600;
+        color: #4a5d73;
+    }
 
-        .original-comment-box .text {
-            margin-top: 6px;
-            color: #495057;
-            line-height: 1.7;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
+    .original-comment-box .text {
+        margin-top: 6px;
+        color: #495057;
+        line-height: 1.7;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
 
-        .modal-header-custom {
-            background: linear-gradient(135deg, #4a5d73, #3a4a5c);
-            color: white;
-        }
+    .modal-header-custom {
+        background: linear-gradient(135deg, #4a5d73, #3a4a5c);
+        color: white;
+    }
 
-        .modal-header-custom .btn-close {
-            filter: invert(1);
-        }
+    .modal-header-custom .btn-close {
+        filter: invert(1);
+    }
 
-        .btn-reply {
-            background: linear-gradient(135deg, #4a5d73, #3a4a5c);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            padding: 5px 15px;
-            font-size: 0.85rem;
-            transition: all 0.3s;
-        }
+    .btn-reply {
+        background: linear-gradient(135deg, #4a5d73, #3a4a5c);
+        color: white;
+        border: none;
+        border-radius: 50px;
+        padding: 5px 15px;
+        font-size: 0.85rem;
+        transition: all 0.3s;
+    }
 
-        .btn-reply:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(74, 93, 115, 0.4);
-            color: white;
-        }
+    .btn-reply:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(74, 93, 115, 0.4);
+        color: white;
+    }
 
-        .btn-reply:disabled {
-            background: #adb5bd;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
+    .btn-reply:disabled {
+        background: #adb5bd;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
 
-        .pagination .page-link {
-            color: #4a5d73;
-        }
+    .pagination .page-link {
+        color: #4a5d73;
+    }
 
-        .pagination .page-item.active .page-link {
-            background-color: #4a5d73;
-            border-color: #4a5d73;
-            color: white;
-        }
+    .pagination .page-item.active .page-link {
+        background-color: #4a5d73;
+        border-color: #4a5d73;
+        color: white;
+    }
     </style>
 </head>
 
@@ -271,17 +271,22 @@ if (isset($_GET['delete'])) {
                             <label class="form-label mb-1"><i class="fas fa-filter me-1"></i>نوع محتوا</label>
                             <select name="type" class="form-select form-select-sm">
                                 <option value="">همه</option>
-                                <option value="article" <?= (($_GET['type'] ?? '') === 'article') ? 'selected' : '' ?>>مقاله</option>
-                                <option value="radio" <?= (($_GET['type'] ?? '') === 'radio') ? 'selected' : '' ?>>رادیو</option>
-                                <option value="package" <?= (($_GET['type'] ?? '') === 'package') ? 'selected' : '' ?>>پکیج</option>
+                                <option value="article" <?= (($_GET['type'] ?? '') === 'article') ? 'selected' : '' ?>>
+                                    مقاله</option>
+                                <option value="radio" <?= (($_GET['type'] ?? '') === 'radio') ? 'selected' : '' ?>>رادیو
+                                </option>
+                                <option value="package" <?= (($_GET['type'] ?? '') === 'package') ? 'selected' : '' ?>>
+                                    پکیج</option>
                             </select>
                         </div>
                         <div class="col-md-3">
                             <label class="form-label mb-1"><i class="fas fa-reply me-1"></i>وضعیت پاسخ</label>
                             <select name="reply" class="form-select form-select-sm">
                                 <option value="">همه</option>
-                                <option value="no" <?= (($_GET['reply'] ?? '') === 'no') ? 'selected' : '' ?>>بدون پاسخ</option>
-                                <option value="yes" <?= (($_GET['reply'] ?? '') === 'yes') ? 'selected' : '' ?>>پاسخ داده شده</option>
+                                <option value="no" <?= (($_GET['reply'] ?? '') === 'no') ? 'selected' : '' ?>>بدون پاسخ
+                                </option>
+                                <option value="yes" <?= (($_GET['reply'] ?? '') === 'yes') ? 'selected' : '' ?>>پاسخ
+                                    داده شده</option>
                             </select>
                         </div>
                         <div class="col-md-4">
@@ -301,15 +306,15 @@ if (isset($_GET['delete'])) {
                 </div>
 
                 <?php if ($reply_message !== ''): ?>
-                    <div class="alert alert-<?= $reply_message_type ?> text-center">
-                        <?= htmlspecialchars($reply_message) ?>
-                    </div>
+                <div class="alert alert-<?= $reply_message_type ?> text-center">
+                    <?= htmlspecialchars($reply_message) ?>
+                </div>
                 <?php endif; ?>
 
                 <?php if (isset($_GET['deleted'])): ?>
-                    <div class="alert alert-success text-center">
-                        🗑️ کامنت با موفقیت حذف شد.
-                    </div>
+                <div class="alert alert-success text-center">
+                    🗑️ کامنت با موفقیت حذف شد.
+                </div>
                 <?php endif; ?>
 
                 <!-- ============================================================ -->
@@ -387,21 +392,21 @@ if (isset($_GET['delete'])) {
                         if ($result->num_rows > 0) {
                             $a = ($current_page - 1) * $items_per_page + 1;
                         ?>
-                            <table class="table table-striped table-hover align-middle">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">#</th>
-                                        <th class="text-center">نام و فامیل</th>
-                                        <th class="text-center">ایمیل</th>
-                                        <th class="text-center">نوع</th>
-                                        <th class="text-center">متن کامنت</th>
-                                        <th class="text-center">پاسخ ادمین</th>
-                                        <th class="text-center">تاریخ</th>
-                                        <th class="text-center">عملیات</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php while ($row = $result->fetch_assoc()) {
+                        <table class="table table-striped table-hover align-middle">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">#</th>
+                                    <th class="text-center">نام و فامیل</th>
+                                    <th class="text-center">ایمیل</th>
+                                    <th class="text-center">نوع</th>
+                                    <th class="text-center">متن کامنت</th>
+                                    <th class="text-center">پاسخ ادمین</th>
+                                    <th class="text-center">تاریخ</th>
+                                    <th class="text-center">عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php while ($row = $result->fetch_assoc()) {
                                         // نوع محتوا
                                         $type_labels = [
                                             'article' => ['label' => 'مقاله', 'class' => 'badge-article'],
@@ -413,103 +418,103 @@ if (isset($_GET['delete'])) {
                                         // وضعیت پاسخ
                                         $has_reply = !empty($row['admin_reply']);
                                     ?>
-                                        <tr>
-                                            <td class="text-center"><?= $a ?></td>
-                                            <td class="text-center"><?= htmlspecialchars($row['full_name']) ?></td>
-                                            <td class="text-center">
-                                                <?php if (!empty($row['email'])): ?>
-                                                    <small dir="ltr"><?= htmlspecialchars($row['email']) ?></small>
-                                                <?php else: ?>
-                                                    <span class="text-muted">—</span>
-                                                <?php endif; ?>
-                                            </td>
-                                            <td class="text-center">
-                                                <span class="badge-type <?= $type_info['class'] ?>">
-                                                    <?= $type_info['label'] ?> (<?= (int)$row['for_id'] ?>)
-                                                </span>
-                                            </td>
-                                            <td class="comment-text-cell"><?= nl2br(htmlspecialchars($row['comment_text'])) ?></td>
-                                            <td class="reply-text-cell">
-                                                <?php if ($has_reply): ?>
-                                                    <i class="fas fa-check-circle text-success me-1"></i>
-                                                    <?= nl2br(htmlspecialchars($row['admin_reply'])) ?>
-                                                <?php else: ?>
-                                                    <span class="badge badge-no-reply">بدون پاسخ</span>
-                                                <?php endif; ?>
-                                            </td>
-                                            <td class="text-center">
-                                                <small><?= date('Y/m/d H:i', strtotime($row['created_at'])) ?></small>
-                                            </td>
-                                            <td class="text-center">
-                                                <?php if (!$has_reply): ?>
-                                                    <button type="button" class="btn btn-reply btn-sm"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#replyModal"
-                                                        data-comment-id="<?= (int)$row['id'] ?>"
-                                                        data-comment-author="<?= htmlspecialchars($row['full_name']) ?>"
-                                                        data-comment-text="<?= htmlspecialchars($row['comment_text']) ?>">
-                                                        <i class="fas fa-reply me-1"></i>پاسخ
-                                                    </button>
-                                                <?php else: ?>
-                                                    <button type="button" class="btn btn-reply btn-sm" disabled title="قبلاً پاسخ داده شده">
-                                                        <i class="fas fa-check me-1"></i>پاسخ داده
-                                                    </button>
-                                                <?php endif; ?>
+                                <tr>
+                                    <td class="text-center"><?= $a ?></td>
+                                    <td class="text-center"><?= htmlspecialchars($row['full_name']) ?></td>
+                                    <td class="text-center">
+                                        <?php if (!empty($row['email'])): ?>
+                                        <small dir="ltr"><?= htmlspecialchars($row['email']) ?></small>
+                                        <?php else: ?>
+                                        <span class="text-muted">—</span>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="badge-type <?= $type_info['class'] ?>">
+                                            <?= $type_info['label'] ?> (<?= (int)$row['for_id'] ?>)
+                                        </span>
+                                    </td>
+                                    <td class="comment-text-cell"><?= nl2br(htmlspecialchars($row['comment_text'])) ?>
+                                    </td>
+                                    <td class="reply-text-cell">
+                                        <?php if ($has_reply): ?>
+                                        <i class="fas fa-check-circle text-success me-1"></i>
+                                        <?= nl2br(htmlspecialchars($row['admin_reply'])) ?>
+                                        <?php else: ?>
+                                        <span class="badge badge-no-reply">بدون پاسخ</span>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td class="text-center">
+                                        <small><?= date('Y/m/d H:i', strtotime($row['created_at'])) ?></small>
+                                    </td>
+                                    <td class="text-center">
+                                        <?php if (!$has_reply): ?>
+                                        <button type="button" class="btn btn-reply btn-sm" data-bs-toggle="modal"
+                                            data-bs-target="#replyModal" data-comment-id="<?= (int)$row['id'] ?>"
+                                            data-comment-author="<?= htmlspecialchars($row['full_name']) ?>"
+                                            data-comment-text="<?= htmlspecialchars($row['comment_text']) ?>">
+                                            <i class="fas fa-reply me-1"></i>پاسخ
+                                        </button>
+                                        <?php else: ?>
+                                        <button type="button" class="btn btn-reply btn-sm" disabled
+                                            title="قبلاً پاسخ داده شده">
+                                            <i class="fas fa-check me-1"></i>پاسخ داده
+                                        </button>
+                                        <?php endif; ?>
 
-                                                <a href="?delete=<?= (int)$row['id'] ?>"
-                                                    class="btn btn-outline-danger btn-sm"
-                                                    onclick="return confirm('آیا از حذف این کامنت مطمئن هستید؟')">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    <?php $a++;
+                                        <a href="?delete=<?= (int)$row['id'] ?>" class="btn btn-outline-danger btn-sm"
+                                            onclick="return confirm('آیا از حذف این کامنت مطمئن هستید؟')">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <?php $a++;
                                     } ?>
-                                </tbody>
-                            </table>
+                            </tbody>
+                        </table>
 
-                            <!-- ===== Pagination ===== -->
-                            <?php if ($total_pages > 1) {
+                        <!-- ===== Pagination ===== -->
+                        <?php if ($total_pages > 1) {
                                 // ساخت URL با حفظ فیلترها
                                 $query_params = $_GET;
                                 unset($query_params['page']);
                                 $base_url = '?' . http_build_query($query_params);
                                 $base_url = $base_url === '?' ? '?' : $base_url . '&';
                             ?>
-                                <nav aria-label="Page navigation">
-                                    <ul class="pagination justify-content-center">
-                                        <li class="page-item <?= $current_page == 1 ? 'disabled' : '' ?>">
-                                            <a class="page-link" href="<?= $base_url ?>page=<?= max(1, $current_page - 1) ?>">
-                                                <i class="fas fa-chevron-right"></i> قبلی
-                                            </a>
-                                        </li>
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item <?= $current_page == 1 ? 'disabled' : '' ?>">
+                                    <a class="page-link" href="<?= $base_url ?>page=<?= max(1, $current_page - 1) ?>">
+                                        <i class="fas fa-chevron-right"></i> قبلی
+                                    </a>
+                                </li>
 
-                                        <?php
+                                <?php
                                         $start_page = max(1, $current_page - 1);
                                         $end_page = min($total_pages, $start_page + 2);
                                         if ($end_page - $start_page < 2 && $start_page > 1) {
                                             $start_page = max(1, $end_page - 2);
                                         }
                                         for ($i = $start_page; $i <= $end_page; $i++) { ?>
-                                            <li class="page-item <?= $i == $current_page ? 'active' : '' ?>">
-                                                <a class="page-link" href="<?= $base_url ?>page=<?= $i ?>"><?= $i ?></a>
-                                            </li>
-                                        <?php } ?>
+                                <li class="page-item <?= $i == $current_page ? 'active' : '' ?>">
+                                    <a class="page-link" href="<?= $base_url ?>page=<?= $i ?>"><?= $i ?></a>
+                                </li>
+                                <?php } ?>
 
-                                        <li class="page-item <?= $current_page == $total_pages ? 'disabled' : '' ?>">
-                                            <a class="page-link" href="<?= $base_url ?>page=<?= min($total_pages, $current_page + 1) ?>">
-                                                بعدی <i class="fas fa-chevron-left"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            <?php } ?>
+                                <li class="page-item <?= $current_page == $total_pages ? 'disabled' : '' ?>">
+                                    <a class="page-link"
+                                        href="<?= $base_url ?>page=<?= min($total_pages, $current_page + 1) ?>">
+                                        بعدی <i class="fas fa-chevron-left"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <?php } ?>
 
                         <?php } else { ?>
-                            <div class="text-center text-muted py-4">
-                                <i class="fas fa-inbox fa-3x mb-3 d-block"></i>
-                                <p>هیچ کامنتی یافت نشد!</p>
-                            </div>
+                        <div class="text-center text-muted py-4">
+                            <i class="fas fa-inbox fa-3x mb-3 d-block"></i>
+                            <p>هیچ کامنتی یافت نشد!</p>
+                        </div>
                         <?php } ?>
                         <?php $stmt->close(); ?>
                     </div>
@@ -593,23 +598,23 @@ if (isset($_GET['delete'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
 
     <script>
-        // ===== پر کردن مودال با اطلاعات کامنت انتخاب‌شده =====
-        document.addEventListener('DOMContentLoaded', function() {
-            var replyModal = document.getElementById('replyModal');
-            if (replyModal) {
-                replyModal.addEventListener('show.bs.modal', function(event) {
-                    var button = event.relatedTarget;
-                    var commentId = button.getAttribute('data-comment-id');
-                    var author = button.getAttribute('data-comment-author');
-                    var text = button.getAttribute('data-comment-text');
+    // ===== پر کردن مودال با اطلاعات کامنت انتخاب‌شده =====
+    document.addEventListener('DOMContentLoaded', function() {
+        var replyModal = document.getElementById('replyModal');
+        if (replyModal) {
+            replyModal.addEventListener('show.bs.modal', function(event) {
+                var button = event.relatedTarget;
+                var commentId = button.getAttribute('data-comment-id');
+                var author = button.getAttribute('data-comment-author');
+                var text = button.getAttribute('data-comment-text');
 
-                    document.getElementById('modalCommentId').value = commentId;
-                    document.getElementById('modalAuthor').textContent = author;
-                    document.getElementById('modalCommentText').textContent = text;
-                    document.getElementById('admin_reply').value = '';
-                });
-            }
-        });
+                document.getElementById('modalCommentId').value = commentId;
+                document.getElementById('modalAuthor').textContent = author;
+                document.getElementById('modalCommentText').textContent = text;
+                document.getElementById('admin_reply').value = '';
+            });
+        }
+    });
     </script>
 
 </body>

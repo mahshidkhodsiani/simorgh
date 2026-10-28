@@ -30,15 +30,6 @@ if (session_status() === PHP_SESSION_NONE) {
     <title>هفت هنر سیمرغ</title>
     <link rel="icon" href="/images/logo1.ico" type="image/x-icon">
 
-    <!-- PWA Meta Tags -->
-    <link rel="manifest" href="radios/manifest.json">
-    <meta name="theme-color" content="#764ba2">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="رادیو سیمرغ">
-    <link rel="apple-touch-icon" href="images/36.png">
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
@@ -64,74 +55,6 @@ if (session_status() === PHP_SESSION_NONE) {
     include "includes.php";
     ?>
 
-
-    <style>
-    /* ===== دکمه ثابت نصب در سمت چپ ===== */
-    .install-fixed-btn {
-        position: fixed;
-        left: 20px;
-        bottom: 100px;
-        z-index: 9999;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        border: none;
-        padding: 14px 20px;
-        border-radius: 50px;
-        font-weight: bold;
-        font-size: 0.95rem;
-        cursor: pointer;
-        box-shadow: 0 8px 25px rgba(118, 75, 162, 0.4);
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-family: 'estedad', sans-serif !important;
-        writing-mode: horizontal-tb;
-        min-width: 160px;
-        justify-content: center;
-    }
-
-    .install-fixed-btn:hover {
-        transform: scale(1.05);
-        box-shadow: 0 12px 35px rgba(118, 75, 162, 0.5);
-    }
-
-    .install-fixed-btn .icon {
-        font-size: 1.3rem;
-    }
-
-    @media (max-width: 576px) {
-        .install-fixed-btn {
-            left: 10px;
-            bottom: 80px;
-            padding: 10px 14px;
-            font-size: 0.8rem;
-            min-width: 120px;
-            gap: 6px;
-        }
-
-        .install-fixed-btn .icon {
-            font-size: 1rem;
-        }
-    }
-
-    @media (max-width: 400px) {
-        .install-fixed-btn {
-            left: 5px;
-            bottom: 70px;
-            padding: 8px 10px;
-            font-size: 0.7rem;
-            min-width: 90px;
-            border-radius: 30px;
-        }
-
-        .install-fixed-btn .icon {
-            font-size: 0.8rem;
-        }
-    }
-    </style>
-
-
 </head>
 
 <body>
@@ -142,14 +65,6 @@ if (session_status() === PHP_SESSION_NONE) {
     include "jalaliDate.php";
     $sdate = new SDate();
     ?>
-
-    <!-- ===== دکمه ثابت نصب PWA ===== -->
-    <button id="installPwaBtn" class="install-fixed-btn">
-        <span class="icon">📲</span>
-        <span>نصب رادیو سیمرغ</span>
-    </button>
-
-
 
     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
@@ -705,6 +620,7 @@ if (session_status() === PHP_SESSION_NONE) {
         </section>
 
         <hr class="my-4">
+        
         <script>
         $(document).ready(function() {
             let timer;
@@ -772,61 +688,8 @@ if (session_status() === PHP_SESSION_NONE) {
         }();
         </script>
 
-        <!-- ===== اسکریپت PWA ===== -->
+        <!-- ===== استوری ها ===== -->
         <script>
-        // ============================================
-        // مدیریت نصب PWA (دکمه ثابت سمت چپ)
-        // ============================================
-        let deferredPrompt;
-        const installBtn = document.getElementById('installPwaBtn');
-
-        // بررسی نصب بودن
-        function isInstalled() {
-            return window.matchMedia('(display-mode: standalone)').matches ||
-                window.navigator.standalone === true;
-        }
-
-        // اگر نصب شده، دکمه را مخفی کن
-        if (isInstalled()) {
-            installBtn.style.display = 'none';
-        }
-
-        // رویداد beforeinstallprompt
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-        });
-
-        // نصب
-        installBtn.addEventListener('click', async () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const result = await deferredPrompt.userChoice;
-                if (result.outcome === 'accepted') {
-                    installBtn.style.display = 'none';
-                    alert('✅ رادیو سیمرغ با موفقیت نصب شد!');
-                }
-                deferredPrompt = null;
-            } else {
-                // راهنمای نصب دستی
-                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-                const msg = isIOS ?
-                    'در Safari روی Share و سپس Add to Home Screen کلیک کنید.' :
-                    'از منوی مرورگر گزینه Add to Home Screen را انتخاب کنید.';
-                alert('📱 ' + msg);
-            }
-        });
-
-        // ثبت سرویس‌ورکر
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('radios/sw.js', {
-                    scope: '/radios/'
-                });
-            });
-        }
-
-        // ===== استوری ها =====
         document.addEventListener('DOMContentLoaded', function() {
             var storyItems = document.querySelectorAll('.story-item');
 
@@ -884,8 +747,6 @@ if (session_status() === PHP_SESSION_NONE) {
                 closeStoryModal();
             }
         });
-
-        console.log('✅ دکمه نصب PWA در سمت چپ فعال شد');
         </script>
 
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
@@ -896,6 +757,7 @@ if (session_status() === PHP_SESSION_NONE) {
         </script>
 
     </div>
+
     <?php include "footer.php"; ?>
 
 </body>

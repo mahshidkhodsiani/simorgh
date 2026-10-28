@@ -882,34 +882,8 @@ if ($is_pwa_mode) {
                 </div>
             </div>
             <div class="col-lg-7">
-                <?php if (!isset($_SESSION['user_id'])): ?>
-                <div class="text-center mb-4">
-                    <div class="alert alert-warning">
-                        برای دسترسی به برنامه‌ها، لطفاً
-                        <a href="<?php echo htmlspecialchars($login_url); ?>">وارد شوید</a>
-                    </div>
-                    <button class="btn btn-info btn-lg"
-                        onclick="location.href='<?php echo htmlspecialchars($login_url); ?>'">
-                        🔐 ورود یا ثبت‌نام
-                    </button>
-                </div>
-                <div id="playlistContainerTehran">
-                    <?php foreach ($programs as $program): ?>
-                    <div class="playlist-item-tehran opacity-50" style="cursor: not-allowed;">
-                        <div class="row align-items-center">
-                            <div class="col-auto">
-                                <div class="play-btn-tehran" style="opacity:0.5;">🔒</div>
-                            </div>
-                            <div class="col">
-                                <h6 class="mb-1"><?php echo htmlspecialchars($program['title']); ?></h6>
-                                <span class="program-badge-tehran">🌙
-                                    <?php echo htmlspecialchars($program['program_type']); ?></span>
-                            </div>
-                        </div>
-                    </div>
-                    <?php endforeach; ?>
-                </div>
-                <?php else: ?>
+                
+                <!-- بخش لیست برنامه ها -->
                 <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
                     <h3 class="mb-0" style="color: #ffd700;">📻 لیست پخش شبانه</h3>
                     <div class="input-group w-50">
@@ -919,10 +893,29 @@ if ($is_pwa_mode) {
                             style="border-radius: 50px; background: rgba(26,26,62,0.9); border: 1px solid rgba(255,215,0,0.3); color: #ffd700;">🌙</span>
                     </div>
                 </div>
+                
+                <!-- هشدار ورود (فقط برای برنامه‌های پولی) -->
+                <?php if (!isset($_SESSION['user_id'])): ?>
+                <div class="alert alert-warning text-center mb-3" style="background: rgba(255, 215, 0, 0.1); border-color: #ffd700; color: #fff;">
+                    ℹ️ برنامه‌های <strong>رایگان</strong> را می‌توانید همین‌جا گوش دهید. برای خرید و شنیدن برنامه‌های <strong>پولی</strong>، لطفاً 
+                    <a href="<?php echo htmlspecialchars($login_url); ?>" class="text-warning fw-bold text-decoration-underline">وارد شوید</a>.
+                </div>
+                <?php endif; ?>
+
                 <div id="playlistContainerTehran">
                     <?php if (count($programs) > 0): ?>
                     <?php foreach ($programs as $index => $program): 
+                        // بررسی دسترسی: آیا کاربر لاگین کرده؟
+                        $is_logged_in = isset($_SESSION['user_id']);
+                        
+                        // آیا این برنامه رایگان است؟ (اگر فیلد is_free فعال باشد یا قیمت صفر باشد)
+                        $is_free_program = (!empty($program['is_free']) || (int)$program['price'] === 0);
+
+                        // آیا کاربر به این برنامه دسترسی دارد؟
                         $has_access_to_this = $has_full_access || in_array($program['id'], $user_purchased_programs);
+                        
+                        // شرط نهایی پخش: اگر برنامه رایگان است، یا دسترسی دارد، یا گوینده است
+                        $can_play = $is_free_program || ($is_logged_in && $has_access_to_this);
                     ?>
                     <div class="playlist-item-tehran" data-title="<?php echo htmlspecialchars($program['title']); ?>"
                         data-type="<?php echo htmlspecialchars($program['program_type']); ?>"
@@ -930,14 +923,20 @@ if ($is_pwa_mode) {
                         data-program-id="<?php echo $program['id']; ?>" data-index="<?php echo $index; ?>">
                         <div class="row align-items-center">
                             <div class="col-auto">
-                                <?php if ($has_access_to_this): ?>
-                                <button class="play-btn-tehran"
-                                    onclick="playProgramTehran(this, <?php echo $index; ?>)">▶️</button>
+                                <?php if ($can_play): ?>
+                                    <!-- دکمه پخش (برای رایگان‌ها یا کاربر دارای دسترسی) -->
+                                    <button class="play-btn-tehran" onclick="playProgramTehran(this, <?php echo $index; ?>)">▶️</button>
+                                <?php elseif (!$is_logged_in && !$is_free_program): ?>
+                                    <!-- دکمه ورود (برای مهمان در برنامه پولی) -->
+                                    <button class="play-btn-tehran" style="background: #555;" onclick="location.href='<?php echo htmlspecialchars($login_url); ?>'">
+                                        🔒
+                                    </button>
                                 <?php else: ?>
-                                <button class="play-btn-tehran" style="background: #555;"
-                                    onclick="buyProgram(<?php echo $program['id']; ?>, '<?php echo addslashes($program['title']); ?>', <?php echo ($program['price'] / 10); ?>)">
-                                    💰
-                                </button>
+                                    <!-- دکمه خرید (برای کاربر لاگین کرده که برنامه را نخریده و پولی است) -->
+                                    <button class="play-btn-tehran" style="background: #555;"
+                                        onclick="buyProgram(<?php echo $program['id']; ?>, '<?php echo addslashes($program['title']); ?>', <?php echo ($program['price'] / 10); ?>)">
+                                        💰
+                                    </button>
                                 <?php endif; ?>
                             </div>
                             <div class="col">
@@ -945,12 +944,17 @@ if ($is_pwa_mode) {
                                     <div>
                                         <h6 class="mb-1 fw-bold">
                                             <?php echo htmlspecialchars($program['title']); ?>
-                                            <?php if ($has_access_to_this): ?>
-                                            <span class="purchased-badge ms-2">✅ خریداری شده</span>
+                                            
+                                            <?php if ($is_free_program): ?>
+                                                <span class="badge bg-success ms-2" style="border-radius: 50px;">رایگان</span>
                                             <?php endif; ?>
+
+                                            <?php if ($is_logged_in && $has_access_to_this && !$is_free_program): ?>
+                                                <span class="purchased-badge ms-2">✅ خریداری شده</span>
+                                            <?php endif; ?>
+                                            
                                             <?php if ($is_speaker): ?>
-                                            <span class="purchased-badge ms-2"
-                                                style="background: #ffd700; color: #1a1a3e;">🎙️ گوینده</span>
+                                                <span class="purchased-badge ms-2" style="background: #ffd700; color: #1a1a3e;">🎙️ گوینده</span>
                                             <?php endif; ?>
                                         </h6>
                                         <div class="d-flex align-items-center gap-2 flex-wrap">
@@ -962,15 +966,23 @@ if ($is_pwa_mode) {
                                             <?php endif; ?>
                                         </div>
                                     </div>
-                                    <?php if (!$has_access_to_this && !$is_speaker): ?>
-                                    <small style="color: #ff9800; cursor:pointer;"
-                                        onclick="buyProgram(<?php echo $program['id']; ?>, '<?php echo addslashes($program['title']); ?>', <?php echo ($program['price'] / 10); ?>)">
-                                        💰 <?php echo number_format($program['price'] / 10); ?> تومان
-                                    </small>
+                                    
+                                    <!-- متن سمت چپ (وضعیت قیمت) -->
+                                    <?php if ($is_free_program): ?>
+                                        <small style="color: #28a745; font-weight:bold;">🎧 رایگان</small>
+                                    <?php elseif (!$is_logged_in && !$is_free_program): ?>
+                                        <small style="color: #ff9800; cursor:pointer;" onclick="location.href='<?php echo htmlspecialchars($login_url); ?>'">
+                                            💰 ورود برای خرید
+                                        </small>
+                                    <?php elseif ($is_logged_in && !$has_access_to_this && !$is_speaker): ?>
+                                        <small style="color: #ff9800; cursor:pointer;"
+                                            onclick="buyProgram(<?php echo $program['id']; ?>, '<?php echo addslashes($program['title']); ?>', <?php echo ($program['price'] / 10); ?>)">
+                                            💰 <?php echo number_format($program['price'] / 10); ?> تومان
+                                        </small>
                                     <?php elseif ($is_speaker): ?>
-                                    <small style="color: #ffd700;">🎙️ دسترسی ویژه گوینده</small>
+                                        <small style="color: #ffd700;">🎙️ دسترسی ویژه گوینده</small>
                                     <?php else: ?>
-                                    <small style="color: #ffd700;">🎙️ شبانه</small>
+                                        <small style="color: #ffd700;">🎙️ شبانه</small>
                                     <?php endif; ?>
                                 </div>
                             </div>
@@ -985,7 +997,6 @@ if ($is_pwa_mode) {
                     </div>
                     <?php endif; ?>
                 </div>
-                <?php endif; ?>
             </div>
         </div>
 

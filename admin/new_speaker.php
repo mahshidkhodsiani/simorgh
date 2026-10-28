@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["all_data"])) {
+if (!isset($_SESSION["all_data"]) AND $_SESSION["all_data"]['admin'] != 1) {
     header("Location: ../login.php");
     exit();
 }
@@ -30,7 +30,7 @@ $id = $_SESSION["all_data"]['id'];
 
 <body>
 
-<?php include 'header.php'; ?>
+    <?php include 'header.php'; ?>
     <div class="container-fluid">
 
         <div class="row">
@@ -54,7 +54,8 @@ $id = $_SESSION["all_data"]['id'];
                         </div>
                         <div class="col-6">
                             <label for="kind">نوع صدا:</label>
-                            <input type="text" id="kind" name="kind" class="form-control mb-2" placeholder="نوع صدا" required>
+                            <input type="text" id="kind" name="kind" class="form-control mb-2" placeholder="نوع صدا"
+                                required>
 
                             <label for="image">اپلود عکس:</label>
                             <input type="file" name="image" class="form-control" id="inputGroupFile02" accept="image/*">
@@ -66,7 +67,8 @@ $id = $_SESSION["all_data"]['id'];
                     <div class="row">
                         <div class="col-md-4"></div>
                         <div class="col-md-6">
-                            <button class="btn btn-outline-success" type="submit" name="submit_speaker">ثبت برنامه</button>
+                            <button class="btn btn-outline-success" type="submit" name="submit_speaker">ثبت
+                                برنامه</button>
                         </div>
                     </div>
                 </form>
@@ -86,20 +88,20 @@ $id = $_SESSION["all_data"]['id'];
                             if ($result && $result->num_rows > 0) {
                                 $a = ($current_page - 1) * $items_per_page + 1;
                             ?>
-                                <table class="table border border-4">
-                                    <h4>آخرین مقالات :</h4>
-                                    <thead>
-                                        <tr>
-                                            <th scope="col" class="text-center">ردیف</th>
-                                            <th scope="col" class="text-center">نام</th>
-                                            <th scope="col" class="text-center">نوع برنامه</th>
-                                            <th scope="col" class="text-center">تصویر</th>
-                                            <th scope="col" class="text-center">پخش صدا</th>
-                                            <th scope="col" class="text-center">عملیات</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
+                            <table class="table border border-4">
+                                <h4>آخرین مقالات :</h4>
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="text-center">ردیف</th>
+                                        <th scope="col" class="text-center">نام</th>
+                                        <th scope="col" class="text-center">نوع برنامه</th>
+                                        <th scope="col" class="text-center">تصویر</th>
+                                        <th scope="col" class="text-center">پخش صدا</th>
+                                        <th scope="col" class="text-center">عملیات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
                                         while ($row = $result->fetch_assoc()) {
                                             // --- پردازش تصویر ---
                                             $images = $row['image'] ?? '';
@@ -133,49 +135,51 @@ $id = $_SESSION["all_data"]['id'];
                                                 $mp3Path = '';
                                             }
                                         ?>
-                                            <tr>
-                                                <th scope="row" class="text-center"><?= $a ?></th>
-                                                <td class="text-center"><?= htmlspecialchars($row['name']) ?></td>
-                                                <td class="text-center"><?= htmlspecialchars($row['kind']) ?></td>
-                                                <td class="text-center">
-                                                    <?php if ($mediaPath): ?>
-                                                        <img src="<?= $mediaPath ?>" height="50px">
-                                                    <?php else: ?>
-                                                        <span class="text-muted">—</span>
-                                                    <?php endif; ?>
-                                                </td>
-                                                <td class="text-center">
-                                                    <?php if ($mp3Path): ?>
-                                                        <audio controls preload="none" style="width: 220px;">
-                                                            <source src="<?= $mp3Path ?>" type="audio/mpeg">
-                                                            مرورگر شما از پخش صدا پشتیبانی نمی‌کند.
-                                                        </audio>
-                                                    <?php else: ?>
-                                                        <span class="text-muted">فایلی آپلود نشده</span>
-                                                    <?php endif; ?>
-                                                </td>
-                                                <td class="text-center">
-                                                    <form action="" method="GET" style="display:inline;">
-                                                        <input type="hidden" value="<?= $row['id'] ?>" name="id_speaker">
-                                                        <a href="edit_speaker.php?id_speaker=<?= $row['id'] ?>" class="btn btn-outline-warning btn-sm"> ویرایش</a>
-                                                        <button type="submit" name="delete_speaker"
-                                                            class="btn btn-outline-danger btn-sm" onclick="return confirmDelete()">حذف</button>
-                                                    </form>
-                                                </td>
-                                                <script>
-                                                    function confirmDelete() {
-                                                        return confirm("آیا مطمئن هستید که می‌خواهید این مورد را حذف کنید؟");
-                                                    }
-                                                </script>
-                                            </tr>
-                                        <?php
+                                    <tr>
+                                        <th scope="row" class="text-center"><?= $a ?></th>
+                                        <td class="text-center"><?= htmlspecialchars($row['name']) ?></td>
+                                        <td class="text-center"><?= htmlspecialchars($row['kind']) ?></td>
+                                        <td class="text-center">
+                                            <?php if ($mediaPath): ?>
+                                            <img src="<?= $mediaPath ?>" height="50px">
+                                            <?php else: ?>
+                                            <span class="text-muted">—</span>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td class="text-center">
+                                            <?php if ($mp3Path): ?>
+                                            <audio controls preload="none" style="width: 220px;">
+                                                <source src="<?= $mp3Path ?>" type="audio/mpeg">
+                                                مرورگر شما از پخش صدا پشتیبانی نمی‌کند.
+                                            </audio>
+                                            <?php else: ?>
+                                            <span class="text-muted">فایلی آپلود نشده</span>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td class="text-center">
+                                            <form action="" method="GET" style="display:inline;">
+                                                <input type="hidden" value="<?= $row['id'] ?>" name="id_speaker">
+                                                <a href="edit_speaker.php?id_speaker=<?= $row['id'] ?>"
+                                                    class="btn btn-outline-warning btn-sm"> ویرایش</a>
+                                                <button type="submit" name="delete_speaker"
+                                                    class="btn btn-outline-danger btn-sm"
+                                                    onclick="return confirmDelete()">حذف</button>
+                                            </form>
+                                        </td>
+                                        <script>
+                                        function confirmDelete() {
+                                            return confirm("آیا مطمئن هستید که می‌خواهید این مورد را حذف کنید؟");
+                                        }
+                                        </script>
+                                    </tr>
+                                    <?php
                                             $a++;
                                         }
                                         ?>
-                                    </tbody>
-                                </table>
+                                </tbody>
+                            </table>
 
-                                <?php
+                            <?php
                                 $sql = "SELECT COUNT(*) AS total FROM speakers";
                                 $result = $conn->query($sql);
                                 $row = $result->fetch_assoc();
@@ -190,23 +194,24 @@ $id = $_SESSION["all_data"]['id'];
                                 }
                                 ?>
 
-                                <nav aria-label="Page navigation">
-                                    <ul class="pagination justify-content-center">
-                                        <li class="page-item <?= $current_page == 1 ? 'disabled' : '' ?>">
-                                            <a class="page-link" href="?page=<?= max(1, $current_page - 1) ?>">قبلی</a>
-                                        </li>
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item <?= $current_page == 1 ? 'disabled' : '' ?>">
+                                        <a class="page-link" href="?page=<?= max(1, $current_page - 1) ?>">قبلی</a>
+                                    </li>
 
-                                        <?php for ($i = $start_page; $i <= $end_page; $i++) { ?>
-                                            <li class="page-item <?= $i == $current_page ? 'active' : '' ?>">
-                                                <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
-                                            </li>
-                                        <?php } ?>
+                                    <?php for ($i = $start_page; $i <= $end_page; $i++) { ?>
+                                    <li class="page-item <?= $i == $current_page ? 'active' : '' ?>">
+                                        <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                                    </li>
+                                    <?php } ?>
 
-                                        <li class="page-item <?= $current_page == $total_pages ? 'disabled' : '' ?>">
-                                            <a class="page-link" href="?page=<?= min($total_pages, $current_page + 1) ?>">بعدی</a>
-                                        </li>
-                                    </ul>
-                                </nav>
+                                    <li class="page-item <?= $current_page == $total_pages ? 'disabled' : '' ?>">
+                                        <a class="page-link"
+                                            href="?page=<?= min($total_pages, $current_page + 1) ?>">بعدی</a>
+                                    </li>
+                                </ul>
+                            </nav>
 
                             <?php
                             } else {
@@ -222,20 +227,20 @@ $id = $_SESSION["all_data"]['id'];
     </div>
 
     <script>
-        $(document).ready(function() {
-            $('.nav-link').click(function() {
-                $('.nav-link').removeClass('active');
-                $(this).addClass('active');
-            });
+    $(document).ready(function() {
+        $('.nav-link').click(function() {
+            $('.nav-link').removeClass('active');
+            $(this).addClass('active');
         });
+    });
 
-        function toggleCheckbox(checkedId, uncheckedId) {
-            var checkedBox = document.getElementById(checkedId);
-            var uncheckedBox = document.getElementById(uncheckedId);
-            if (checkedBox.checked) {
-                uncheckedBox.checked = false;
-            }
+    function toggleCheckbox(checkedId, uncheckedId) {
+        var checkedBox = document.getElementById(checkedId);
+        var uncheckedBox = document.getElementById(uncheckedId);
+        if (checkedBox.checked) {
+            uncheckedBox.checked = false;
         }
+    }
     </script>
 
 </body>

@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["all_data"])) {
+if (!isset($_SESSION["all_data"]) AND $_SESSION["all_data"]['admin'] != 1) {
     header("Location: ../login.php");
     exit();
 }
@@ -71,9 +71,9 @@ $id = $_SESSION["all_data"]['id'];
                             <label for="kind">نوع برنامه:</label>
                             <input type="text" id="kind" name="kind" class="form-control mb-2"
                                 value="<?= htmlspecialchars($row['program_type']) ?>">
-                            
+
                             <label for="price">قیمت (تومان):</label>
-                            <input type="number" id="price" name="price" class="form-control mb-2" 
+                            <input type="number" id="price" name="price" class="form-control mb-2"
                                 value="<?= $row['price'] ?>" min="10000" required>
                             <small class="text-muted">حداقل قیمت مجاز ۱۰,۰۰۰ تومان (به دلیل محدودیت درگاه)</small>
                         </div>

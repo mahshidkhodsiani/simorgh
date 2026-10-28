@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["all_data"])) {
+if (!isset($_SESSION["all_data"]) AND $_SESSION["all_data"]['admin'] != 1) {
     header("Location: ../login.php");
     exit();
 }
@@ -36,93 +36,93 @@ $id = $_SESSION["all_data"]['id'];
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-        body {
-            background-color: #f0f2f5;
-        }
+    body {
+        background-color: #f0f2f5;
+    }
 
-        .main-content {
-            padding: 20px;
-        }
+    .main-content {
+        padding: 20px;
+    }
 
-        .card-form,
-        .table-section {
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            padding: 20px;
-            margin-bottom: 30px;
-            border: none;
-        }
+    .card-form,
+    .table-section {
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        padding: 20px;
+        margin-bottom: 30px;
+        border: none;
+    }
 
-        .card-header-custom {
-            background-color: #4a5d73;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 8px 8px 0 0;
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin: -20px -20px 20px -20px;
-        }
+    .card-header-custom {
+        background-color: #4a5d73;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px 8px 0 0;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: -20px -20px 20px -20px;
+    }
 
-        .card-header-custom i {
-            margin-left: 8px;
-        }
+    .card-header-custom i {
+        margin-left: 8px;
+    }
 
-        .table-striped tbody tr:nth-of-type(odd) {
-            background-color: rgba(0, 0, 0, 0.03);
-        }
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: rgba(0, 0, 0, 0.03);
+    }
 
-        .toast-container {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1050;
-        }
+    .toast-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1050;
+    }
 
-        .story-image {
-            width: 50px;
-            height: 50px;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 2px solid #ddd;
-        }
+    .story-image {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 2px solid #ddd;
+    }
 
-        .story-image-placeholder {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #ccc;
-            font-size: 20px;
-        }
+    .story-image-placeholder {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #f0f0f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ccc;
+        font-size: 20px;
+    }
 
-        .badge-status {
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-        }
+    .badge-status {
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+    }
 
-        .badge-active {
-            background-color: #28a745;
-            color: white;
-        }
+    .badge-active {
+        background-color: #28a745;
+        color: white;
+    }
 
-        .badge-inactive {
-            background-color: #dc3545;
-            color: white;
-        }
+    .badge-inactive {
+        background-color: #dc3545;
+        color: white;
+    }
 
-        .badge-expired {
-            background-color: #6c757d;
-            color: white;
-        }
+    .badge-expired {
+        background-color: #6c757d;
+        color: white;
+    }
 
-        .toolbar-btn {
-            margin: 2px;
-        }
+    .toolbar-btn {
+        margin: 2px;
+    }
     </style>
 </head>
 
@@ -186,8 +186,8 @@ $id = $_SESSION["all_data"]['id'];
                                 <label for="expire_days" class="form-label">
                                     <i class="fas fa-calendar-day me-1"></i>تعداد روز:
                                 </label>
-                                <input type="number" name="expire_days" id="expire_days" class="form-control"
-                                    min="1" max="365" value="7">
+                                <input type="number" name="expire_days" id="expire_days" class="form-control" min="1"
+                                    max="365" value="7">
                             </div>
 
                             <div class="col-md-4 mb-3">
@@ -306,20 +306,20 @@ $id = $_SESSION["all_data"]['id'];
                         if ($result->num_rows > 0) {
                             $a = ($current_page - 1) * $items_per_page + 1;
                         ?>
-                            <table class="table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">#</th>
-                                        <th class="text-center">تصویر</th>
-                                        <th class="text-center">عنوان</th>
-                                        <th class="text-center">مدت</th>
-                                        <th class="text-center">انقضا</th>
-                                        <th class="text-center">وضعیت</th>
-                                        <th class="text-center">عملیات</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php while ($row = $result->fetch_assoc()) {
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">#</th>
+                                    <th class="text-center">تصویر</th>
+                                    <th class="text-center">عنوان</th>
+                                    <th class="text-center">مدت</th>
+                                    <th class="text-center">انقضا</th>
+                                    <th class="text-center">وضعیت</th>
+                                    <th class="text-center">عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php while ($row = $result->fetch_assoc()) {
                                         // لیبل‌های زمان
                                         $expire_labels = [
                                             'day' => '۱ روز',
@@ -348,66 +348,66 @@ $id = $_SESSION["all_data"]['id'];
                                             ? "<img src='{$image_path}' class='story-image' alt='استوری'>"
                                             : "<div class='story-image-placeholder'><i class='fas fa-image'></i></div>";
                                     ?>
-                                        <tr>
-                                            <td class="text-center"><?= $a ?></td>
-                                            <td class="text-center"><?= $image_html ?></td>
-                                            <td class="text-center"><?= htmlspecialchars($row['title']) ?></td>
-                                            <td class="text-center"><?= $expire_labels[$row['expire_type']] ?? 'نامشخص' ?></td>
-                                            <td class="text-center"><?= $expire_date ?></td>
-                                            <td class="text-center"><?= $status_badge ?></td>
-                                            <td class="text-center">
-                                                <a href="edit_story.php?id=<?= (int)$row['id'] ?>" 
-                                                   class="btn btn-outline-warning btn-sm toolbar-btn">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                                <a href="?delete=<?= (int)$row['id'] ?>" 
-                                                   class="btn btn-outline-danger btn-sm toolbar-btn"
-                                                   onclick="return confirm('آیا از حذف این استوری مطمئن هستید؟')">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    <?php $a++;
+                                <tr>
+                                    <td class="text-center"><?= $a ?></td>
+                                    <td class="text-center"><?= $image_html ?></td>
+                                    <td class="text-center"><?= htmlspecialchars($row['title']) ?></td>
+                                    <td class="text-center"><?= $expire_labels[$row['expire_type']] ?? 'نامشخص' ?></td>
+                                    <td class="text-center"><?= $expire_date ?></td>
+                                    <td class="text-center"><?= $status_badge ?></td>
+                                    <td class="text-center">
+                                        <a href="edit_story.php?id=<?= (int)$row['id'] ?>"
+                                            class="btn btn-outline-warning btn-sm toolbar-btn">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="?delete=<?= (int)$row['id'] ?>"
+                                            class="btn btn-outline-danger btn-sm toolbar-btn"
+                                            onclick="return confirm('آیا از حذف این استوری مطمئن هستید؟')">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <?php $a++;
                                     } ?>
-                                </tbody>
-                            </table>
+                            </tbody>
+                        </table>
 
-                            <!-- ===== Pagination Links ===== -->
-                            <?php if ($total_pages > 1) { ?>
-                                <nav aria-label="Page navigation">
-                                    <ul class="pagination justify-content-center">
-                                        <li class="page-item <?= $current_page == 1 ? 'disabled' : '' ?>">
-                                            <a class="page-link" href="?page=<?= max(1, $current_page - 1) ?>">
-                                                <i class="fas fa-chevron-right"></i> قبلی
-                                            </a>
-                                        </li>
+                        <!-- ===== Pagination Links ===== -->
+                        <?php if ($total_pages > 1) { ?>
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item <?= $current_page == 1 ? 'disabled' : '' ?>">
+                                    <a class="page-link" href="?page=<?= max(1, $current_page - 1) ?>">
+                                        <i class="fas fa-chevron-right"></i> قبلی
+                                    </a>
+                                </li>
 
-                                        <?php
+                                <?php
                                         $start_page = max(1, $current_page - 1);
                                         $end_page = min($total_pages, $start_page + 2);
                                         if ($end_page - $start_page < 2 && $start_page > 1) {
                                             $start_page = max(1, $end_page - 2);
                                         }
                                         for ($i = $start_page; $i <= $end_page; $i++) { ?>
-                                            <li class="page-item <?= $i == $current_page ? 'active' : '' ?>">
-                                                <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
-                                            </li>
-                                        <?php } ?>
+                                <li class="page-item <?= $i == $current_page ? 'active' : '' ?>">
+                                    <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                                </li>
+                                <?php } ?>
 
-                                        <li class="page-item <?= $current_page == $total_pages ? 'disabled' : '' ?>">
-                                            <a class="page-link" href="?page=<?= min($total_pages, $current_page + 1) ?>">
-                                                بعدی <i class="fas fa-chevron-left"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            <?php } ?>
+                                <li class="page-item <?= $current_page == $total_pages ? 'disabled' : '' ?>">
+                                    <a class="page-link" href="?page=<?= min($total_pages, $current_page + 1) ?>">
+                                        بعدی <i class="fas fa-chevron-left"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <?php } ?>
 
                         <?php } else { ?>
-                            <div class="text-center text-muted py-4">
-                                <i class="fas fa-inbox fa-3x mb-3 d-block"></i>
-                                <p>هیچ استوری ثبت نشده است!</p>
-                            </div>
+                        <div class="text-center text-muted py-4">
+                            <i class="fas fa-inbox fa-3x mb-3 d-block"></i>
+                            <p>هیچ استوری ثبت نشده است!</p>
+                        </div>
                         <?php } ?>
                         <?php $stmt->close(); ?>
                     </div>
@@ -447,33 +447,33 @@ $id = $_SESSION["all_data"]['id'];
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
 
     <script>
-        // ===== نمایش/مخفی کردن فیلد روزهای سفارشی =====
-        function toggleCustomDays() {
-            var type = document.getElementById('expire_type').value;
-            var customDiv = document.getElementById('customDaysDiv');
-            customDiv.style.display = (type === 'custom') ? 'block' : 'none';
-        }
+    // ===== نمایش/مخفی کردن فیلد روزهای سفارشی =====
+    function toggleCustomDays() {
+        var type = document.getElementById('expire_type').value;
+        var customDiv = document.getElementById('customDaysDiv');
+        customDiv.style.display = (type === 'custom') ? 'block' : 'none';
+    }
 
-        // ===== فعال کردن تابع در بارگذاری =====
-        document.addEventListener('DOMContentLoaded', function() {
-            toggleCustomDays();
-        });
+    // ===== فعال کردن تابع در بارگذاری =====
+    document.addEventListener('DOMContentLoaded', function() {
+        toggleCustomDays();
+    });
 
-        // ===== تابع تایید حذف (اضافی) =====
-        function confirmDelete() {
-            return confirm("آیا از حذف این استوری مطمئن هستید؟");
-        }
+    // ===== تابع تایید حذف (اضافی) =====
+    function confirmDelete() {
+        return confirm("آیا از حذف این استوری مطمئن هستید؟");
+    }
 
-        // ===== اتصال تابع به لینک‌های حذف =====
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('a[href*="delete="]').forEach(function(link) {
-                link.addEventListener('click', function(e) {
-                    if (!confirm('آیا از حذف این استوری مطمئن هستید؟')) {
-                        e.preventDefault();
-                    }
-                });
+    // ===== اتصال تابع به لینک‌های حذف =====
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('a[href*="delete="]').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                if (!confirm('آیا از حذف این استوری مطمئن هستید؟')) {
+                    e.preventDefault();
+                }
             });
         });
+    });
     </script>
 
 </body>

@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["all_data"])) {
+if (!isset($_SESSION["all_data"]) AND $_SESSION["all_data"]['admin'] != 1) {
     header("Location: ../login.php");
     exit();
 }
@@ -36,9 +36,9 @@ $id = $_SESSION["all_data"]['id'];
 
 <body>
 
-   
 
-<?php include 'header.php'; ?>
+
+    <?php include 'header.php'; ?>
     <div class="container-fluid">
 
 
@@ -47,12 +47,12 @@ $id = $_SESSION["all_data"]['id'];
                 <?php
                 include 'sidebar.php';
                 ?>
-              
+
             </div>
 
             <div class="col-md-8 mt-5">
 
-            <?php
+                <?php
             if(isset($_GET['id_matlab'])){
                 $id_article = $_GET['id_matlab'];
                 $sql = "SELECT * FROM courses WHERE id = $id_article";
@@ -64,115 +64,123 @@ $id = $_SESSION["all_data"]['id'];
                 }
                 ?>
 
-           
-              
-            <form action="" method="post" enctype="multipart/form-data" novalidate>
-                <div class="row">
-                    <!-- عنوان مطلب -->
-                    <div class="col-6">
-                        <label for="title">عنوان مطلب:</label>
-                        <input type="text" id="title" name="title" class="form-control mb-2" 
-                            value="<?= isset($row['title']) ? htmlspecialchars($row['title']) : '' ?>" required>
-                    </div>
 
-                    <!-- تصویر شاخص -->
-                    <div class="col-6">
-                        <label for="image">تصویر شاخص:</label>
-                        <input type="file" name="image" class="form-control" id="inputGroupFile02" accept="image/*">
-                        <?php if (!empty($row['images'])): ?>
+
+                <form action="" method="post" enctype="multipart/form-data" novalidate>
+                    <div class="row">
+                        <!-- عنوان مطلب -->
+                        <div class="col-6">
+                            <label for="title">عنوان مطلب:</label>
+                            <input type="text" id="title" name="title" class="form-control mb-2"
+                                value="<?= isset($row['title']) ? htmlspecialchars($row['title']) : '' ?>" required>
+                        </div>
+
+                        <!-- تصویر شاخص -->
+                        <div class="col-6">
+                            <label for="image">تصویر شاخص:</label>
+                            <input type="file" name="image" class="form-control" id="inputGroupFile02" accept="image/*">
+                            <?php if (!empty($row['images'])): ?>
                             <small>تصویر فعلی: <?= htmlspecialchars($row['images']) ?></small>
-                        <?php endif; ?>
+                            <?php endif; ?>
+                        </div>
+
+                        <!-- انتخاب دسته‌بندی -->
+                        <div class="col-6">
+                            <label for="category">انتخاب دسته‌بندی:</label>
+                            <select name="category" id="category" class="form-control" onchange="toggleCourseOptions()">
+                                <option value="matlab"
+                                    <?= (isset($row['category']) && $row['category'] === 'matlab') ? 'selected' : '' ?>>
+                                    مطلب جدید
+                                </option>
+                                <option value="course"
+                                    <?= (isset($row['category']) && $row['category'] === 'course') ? 'selected' : '' ?>>
+                                    دوره جدید
+                                </option>
+                            </select>
+                        </div>
+
+                        <!-- تنظیمات مخصوص دوره -->
+                        <div class="col-6" id="courseOption"
+                            style="display: <?= (isset($row['category']) && $row['category'] === 'course') ? 'block' : 'none' ?>;">
+                            <label for="courseHeader">نمایش در فهرست دوره‌ها:</label>
+                            <select name="courseHeader" class="form-control">
+                                <option value="0"
+                                    <?= (isset($row['show_header']) && !$row['show_header']) ? 'selected' : '' ?>>خیر
+                                </option>
+                                <option value="1"
+                                    <?= (isset($row['show_header']) && $row['show_header']) ? 'selected' : '' ?>>بله
+                                </option>
+                            </select>
+
+                            <label for="coursePrice">قیمت دوره:</label>
+                            <input type="text" name="coursePrice" class="form-control mb-2"
+                                value="<?= isset($row['coursePrice']) ? htmlspecialchars($row['coursePrice']) : '' ?>"
+                                placeholder="قیمت را اینجا وارد کنید">
+                        </div>
                     </div>
+                    <br>
 
-                    <!-- انتخاب دسته‌بندی -->
-                    <div class="col-6">
-                        <label for="category">انتخاب دسته‌بندی:</label>
-                        <select name="category" id="category" class="form-control" onchange="toggleCourseOptions()">
-                            <option value="matlab" <?= (isset($row['category']) && $row['category'] === 'matlab') ? 'selected' : '' ?>>
-                                مطلب جدید
-                            </option>
-                            <option value="course" <?= (isset($row['category']) && $row['category'] === 'course') ? 'selected' : '' ?>>
-                                دوره جدید
-                            </option>
-                        </select>
-                    </div>
-
-                    <!-- تنظیمات مخصوص دوره -->
-                    <div class="col-6" id="courseOption" style="display: <?= (isset($row['category']) && $row['category'] === 'course') ? 'block' : 'none' ?>;">
-                        <label for="courseHeader">نمایش در فهرست دوره‌ها:</label>
-                        <select name="courseHeader" class="form-control">
-                            <option value="0" <?= (isset($row['show_header']) && !$row['show_header']) ? 'selected' : '' ?>>خیر</option>
-                            <option value="1" <?= (isset($row['show_header']) && $row['show_header']) ? 'selected' : '' ?>>بله</option>
-                        </select>
-
-                        <label for="coursePrice">قیمت دوره:</label>
-                        <input type="text" name="coursePrice" class="form-control mb-2" 
-                            value="<?= isset($row['coursePrice']) ? htmlspecialchars($row['coursePrice']) : '' ?>" 
-                            placeholder="قیمت را اینجا وارد کنید">
-                    </div>
-                </div>
-                <br>
-
-                <!-- ویرایشگر متن -->
-                <textarea id="editor" name="content"><?= isset($row['text']) ? htmlspecialchars($row['text']) : '' ?></textarea>
-                <script>
+                    <!-- ویرایشگر متن -->
+                    <textarea id="editor"
+                        name="content"><?= isset($row['text']) ? htmlspecialchars($row['text']) : '' ?></textarea>
+                    <script>
                     const editor = new Jodit('#editor');
-                </script>
-                <br>
+                    </script>
+                    <br>
 
-                <button name="submit_post" class="btn btn-primary">ثبت</button>
-            </form>
+                    <button name="submit_post" class="btn btn-primary">ثبت</button>
+                </form>
 
 
-            
-            <?php
+
+                <?php
                 }else {
                 echo "<h2 style= 'text-align: center'>هنوز مقاله ای انتخاب نکردید !</h2>" ;
             }
             ?>
 
-                
+
             </div>
         </div>
     </div>
 
 
     <script>
-        $(document).ready(function() {
-            $('.nav-link').click(function() {
-                $('.nav-link').removeClass('active');
-                $(this).addClass('active');
-            });
-
-            // Initialize Summernote
-            $('#summernote').summernote({
-                hint: {
-                    mentions: ['jayden', 'sam', 'alvin', 'david'],
-                    match: /\B@(\w*)$/,
-                    search: function(keyword, callback) {
-                        callback($.grep(this.mentions, function(item) {
-                            return item.indexOf(keyword) == 0;
-                        }));
-                    },
-                    content: function(item) {
-                        return '@' + item;
-                    }
-                }
-            });
-
-            // Transfer content from Summernote to hidden input field before form submission
-            $('#articleForm').on('submit', function() {
-                var summernoteContent = $('#summernote').summernote('code');
-                $('#content').val(summernoteContent);
-            });
+    $(document).ready(function() {
+        $('.nav-link').click(function() {
+            $('.nav-link').removeClass('active');
+            $(this).addClass('active');
         });
+
+        // Initialize Summernote
+        $('#summernote').summernote({
+            hint: {
+                mentions: ['jayden', 'sam', 'alvin', 'david'],
+                match: /\B@(\w*)$/,
+                search: function(keyword, callback) {
+                    callback($.grep(this.mentions, function(item) {
+                        return item.indexOf(keyword) == 0;
+                    }));
+                },
+                content: function(item) {
+                    return '@' + item;
+                }
+            }
+        });
+
+        // Transfer content from Summernote to hidden input field before form submission
+        $('#articleForm').on('submit', function() {
+            var summernoteContent = $('#summernote').summernote('code');
+            $('#content').val(summernoteContent);
+        });
+    });
     </script>
 
 
     <script>
-        $('form').submit(function() {
+    $('form').submit(function() {
         $('#editor').val(editor.getEditorValue()); // انتقال محتوا به textarea
-        });
+    });
     </script>
 
 

@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["all_data"])) {
+if (!isset($_SESSION["all_data"]) AND $_SESSION["all_data"]['admin'] != 1) {
     header("Location: ../login.php");
     exit();
 }
@@ -26,16 +26,16 @@ $id = $_SESSION["all_data"]['id'];
     // include 'functions.php';
     // include 'PersianCalendar.php';
     ?>
-  
+
 
 
 </head>
 
 <body>
 
-   
 
-<?php include 'header.php'; ?>
+
+    <?php include 'header.php'; ?>
     <div class="container-fluid">
 
 
@@ -44,12 +44,12 @@ $id = $_SESSION["all_data"]['id'];
                 <?php
                 include 'sidebar.php';
                 ?>
-              
+
             </div>
 
             <div class="col-md-8 mt-5">
 
-            <?php
+                <?php
             if(isset($_GET['id_radio'])){
                 $id_article = $_GET['id_radio'];
                 $sql = "SELECT * FROM radio WHERE id = $id_article";
@@ -61,84 +61,87 @@ $id = $_SESSION["all_data"]['id'];
                 }
                 ?>
 
-           
-              
-            <form action="" method="POST" id="articleForm" enctype="multipart/form-data">
-                <div class="row">
-                    <div class="col-6">
-                        <label for="title">نام برنامه:</label>
-                        <input type="text" id="title" name="title" class="form-control mb-2" value="<?=$row['title']?>">
 
-                        <label for="mp3">آپلود فایل صوتی:</label>
-                        <?php if (!empty($row['file_path'])): ?>
+
+                <form action="" method="POST" id="articleForm" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="title">نام برنامه:</label>
+                            <input type="text" id="title" name="title" class="form-control mb-2"
+                                value="<?=$row['title']?>">
+
+                            <label for="mp3">آپلود فایل صوتی:</label>
+                            <?php if (!empty($row['file_path'])): ?>
                             <div class="mb-2">
                                 <audio controls>
                                     <source src="<?= $row['file_path']; ?>" type="audio/mpeg">
                                     مرورگر شما از پخش فایل صوتی پشتیبانی نمی‌کند.
                                 </audio>
                             </div>
-                        <?php endif; ?>
-                        <input type="file" name="mp3" class="form-control" id="inputGroupFile02">
+                            <?php endif; ?>
+                            <input type="file" name="mp3" class="form-control" id="inputGroupFile02">
+                        </div>
+                        <div class="col-6">
+                            <label for="kind">نوع برنامه:</label>
+                            <input type="text" id="kind" name="kind" class="form-control mb-2"
+                                value="<?=$row['program_type']?>">
+                        </div>
                     </div>
-                    <div class="col-6">
-                        <label for="kind">نوع برنامه:</label>
-                        <input type="text" id="kind" name="kind" class="form-control mb-2" value="<?=$row['program_type']?>">
+
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-6">
+                            <button class="btn btn-outline-success" type="submit" name="submit_post">ثبت
+                                تغییرات</button>
+                        </div>
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-4"></div>
-                    <div class="col-md-6">
-                        <button class="btn btn-outline-success" type="submit" name="submit_post">ثبت تغییرات</button>
-                    </div>
-                </div>
-            </form>
+                </form>
 
 
 
 
-            
-            <?php
+
+                <?php
                 }else {
                 echo "<h2 style= 'text-align: center'>هنوز مقاله ای انتخاب نکردید !</h2>" ;
             }
             ?>
 
-                
+
             </div>
         </div>
     </div>
 
 
     <script>
-        $(document).ready(function() {
-            $('.nav-link').click(function() {
-                $('.nav-link').removeClass('active');
-                $(this).addClass('active');
-            });
-
-            // Initialize Summernote
-            $('#summernote').summernote({
-                hint: {
-                    mentions: ['jayden', 'sam', 'alvin', 'david'],
-                    match: /\B@(\w*)$/,
-                    search: function(keyword, callback) {
-                        callback($.grep(this.mentions, function(item) {
-                            return item.indexOf(keyword) == 0;
-                        }));
-                    },
-                    content: function(item) {
-                        return '@' + item;
-                    }
-                }
-            });
-
-            // Transfer content from Summernote to hidden input field before form submission
-            $('#articleForm').on('submit', function() {
-                var summernoteContent = $('#summernote').summernote('code');
-                $('#content').val(summernoteContent);
-            });
+    $(document).ready(function() {
+        $('.nav-link').click(function() {
+            $('.nav-link').removeClass('active');
+            $(this).addClass('active');
         });
+
+        // Initialize Summernote
+        $('#summernote').summernote({
+            hint: {
+                mentions: ['jayden', 'sam', 'alvin', 'david'],
+                match: /\B@(\w*)$/,
+                search: function(keyword, callback) {
+                    callback($.grep(this.mentions, function(item) {
+                        return item.indexOf(keyword) == 0;
+                    }));
+                },
+                content: function(item) {
+                    return '@' + item;
+                }
+            }
+        });
+
+        // Transfer content from Summernote to hidden input field before form submission
+        $('#articleForm').on('submit', function() {
+            var summernoteContent = $('#summernote').summernote('code');
+            $('#content').val(summernoteContent);
+        });
+    });
     </script>
 
 

@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["all_data"])) {
+if (!isset($_SESSION["all_data"]) AND $_SESSION["all_data"]['admin'] != 1) {
     header("Location: ../login.php");
     exit();
 }
@@ -54,6 +54,7 @@ $id = $_SESSION["all_data"]['id'];
     }
 
     @media (max-width: 767.98px) {
+
         .users-table th,
         .users-table td {
             font-size: 0.82rem;
@@ -214,8 +215,8 @@ $id = $_SESSION["all_data"]['id'];
                                                 <input type="hidden" name="user_id" value="<?= $row['id'] ?>">
                                                 <input type="hidden" name="remove_speaker" value="1">
                                                 <input type="hidden" name="page" value="<?= $current_page ?>">
-                                                <button type="submit"
-                                                    class="btn btn-sm btn-outline-danger w-100">🎙️ برداشتن</button>
+                                                <button type="submit" class="btn btn-sm btn-outline-danger w-100">🎙️
+                                                    برداشتن</button>
                                             </form>
                                             <?php else: ?>
                                             <form method="POST" action="" style="display: inline;"

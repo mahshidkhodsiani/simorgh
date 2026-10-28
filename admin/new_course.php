@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["all_data"])) {
+if (!isset($_SESSION["all_data"]) AND $_SESSION["all_data"]['admin'] != 1) {
     header("Location: ../login.php");
     exit();
 }
@@ -57,9 +57,9 @@ $id = $_SESSION["all_data"]['id'];
 
 <body>
 
-   
 
-<?php include 'header.php'; ?>
+
+    <?php include 'header.php'; ?>
     <div class="container-fluid">
 
 
@@ -68,24 +68,25 @@ $id = $_SESSION["all_data"]['id'];
                 <?php
                 include 'sidebar.php';
                 ?>
-              
+
             </div>
 
             <div class="col-md-8 mt-5">
 
-              
+
                 <form action="" method="post" id="articleForm" enctype="multipart/form-data">
                     <div class="row">
                         <div class="col-6">
                             <label for="title">عنوان دوره:</label>
-                            <input type="text" id="title" name="title" class="form-control mb-2" placeholder="عنوان را اینجا وارد کنید">
+                            <input type="text" id="title" name="title" class="form-control mb-2"
+                                placeholder="عنوان را اینجا وارد کنید">
                         </div>
                         <div class="col-6">
                             <label for="image">تصویر شاخص:</label>
                             <input type="file" name="image" class="form-control" id="inputGroupFile02">
                         </div>
                     </div>
-                    
+
                     <div class="summernote" id="summernote"></div>
                     <input type="hidden" name="content" id="content">
 
@@ -93,7 +94,8 @@ $id = $_SESSION["all_data"]['id'];
                     <div class="row">
                         <div class="col-md-2 border">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="course_type" id="course_type" value="course" required>
+                                <input class="form-check-input" type="radio" name="course_type" id="course_type"
+                                    value="course" required>
                                 <label class="form-check-label" for="course_type">دوره</label>
                             </div>
                         </div>
@@ -104,44 +106,44 @@ $id = $_SESSION["all_data"]['id'];
                     </div>
                 </form>
 
-                
+
             </div>
         </div>
     </div>
 
     <script>
-        $(document).ready(function() {
-            $('.nav-link').click(function() {
-                $('.nav-link').removeClass('active');
-                $(this).addClass('active');
-            });
+    $(document).ready(function() {
+        $('.nav-link').click(function() {
+            $('.nav-link').removeClass('active');
+            $(this).addClass('active');
         });
+    });
     </script>
 
     <script>
-        $(document).ready(function() {
-            // Before form submission, ensure the content of the summernote is set to the hidden input
-            $('#articleForm').on('submit', function() {
-                $('#content').val($('#summernote').summernote('code'));  // Capture Summernote content
-            });
-
-            // Initialize Summernote
-            $('.summernote').summernote({
-                height: 300,   // set editor height
-                hint: {
-                    mentions: ['jayden', 'sam', 'alvin', 'david'],
-                    match: /\B@(\w*)$/,
-                    search: function(keyword, callback) {
-                        callback($.grep(this.mentions, function(item) {
-                            return item.indexOf(keyword) == 0;
-                        }));
-                    },
-                    content: function(item) {
-                        return '@' + item;
-                    }   
-                }
-            });
+    $(document).ready(function() {
+        // Before form submission, ensure the content of the summernote is set to the hidden input
+        $('#articleForm').on('submit', function() {
+            $('#content').val($('#summernote').summernote('code')); // Capture Summernote content
         });
+
+        // Initialize Summernote
+        $('.summernote').summernote({
+            height: 300, // set editor height
+            hint: {
+                mentions: ['jayden', 'sam', 'alvin', 'david'],
+                match: /\B@(\w*)$/,
+                search: function(keyword, callback) {
+                    callback($.grep(this.mentions, function(item) {
+                        return item.indexOf(keyword) == 0;
+                    }));
+                },
+                content: function(item) {
+                    return '@' + item;
+                }
+            }
+        });
+    });
     </script>
 
 

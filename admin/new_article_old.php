@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["all_data"])) {
+if (!isset($_SESSION["all_data"]) AND $_SESSION["all_data"]['admin'] != 1) {
     header("Location: ../login.php");
     exit();
 }
@@ -61,9 +61,9 @@ $id = $_SESSION["all_data"]['id'];
 
 <body>
 
-   
 
-<?php include 'header.php'; ?>
+
+    <?php include 'header.php'; ?>
     <div class="container-fluid">
 
 
@@ -72,30 +72,31 @@ $id = $_SESSION["all_data"]['id'];
                 <?php
                 include 'sidebar.php';
                 ?>
-              
+
             </div>
 
             <div class="col-md-8 mt-5">
 
-              
-                <form action="" method="post" enctype='multipart/form-data'>
-                
-                <div class="row">
-                    <div class="col-6">
-                        <label for="title">عنوان مقاله:</label>
-                        <input type="text" id="title" name="title" class="form-control mb-2" placeholder="عنوان را اینجا وارد کنید" required>
-                    </div>
-                    <div class="col-6">
-                        <label for="image">تصویر شاخص:</label>
-                        <input type="file" name="image" class="form-control" id="inputGroupFile02" required>
-                    </div>
-                </div>
-                <textarea id="editor" name="content"></textarea>
-                <script>
-                    const editor = new Jodit('#editor');
-                </script>
 
-                <button type="submit" name="submit_post" class="btn btn-primary">Submit</button>
+                <form action="" method="post" enctype='multipart/form-data'>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="title">عنوان مقاله:</label>
+                            <input type="text" id="title" name="title" class="form-control mb-2"
+                                placeholder="عنوان را اینجا وارد کنید" required>
+                        </div>
+                        <div class="col-6">
+                            <label for="image">تصویر شاخص:</label>
+                            <input type="file" name="image" class="form-control" id="inputGroupFile02" required>
+                        </div>
+                    </div>
+                    <textarea id="editor" name="content"></textarea>
+                    <script>
+                    const editor = new Jodit('#editor');
+                    </script>
+
+                    <button type="submit" name="submit_post" class="btn btn-primary">Submit</button>
                 </form>
 
 
@@ -117,18 +118,18 @@ $id = $_SESSION["all_data"]['id'];
                             if ($result->num_rows > 0) {
                                 $a = ($current_page - 1) * $items_per_page + 1; // Counter for row numbers
                             ?>
-                                <table class="table border border-4">
-                                    <h4>آخرین مقالات :</h4>
-                                    <thead>
-                                        <tr>
-                                            <th scope="col" class="text-center">ردیف</th>
-                                            <th scope="col" class="text-center">اسم مقاله</th>
-                                            <th scope="col" class="text-center">بدنه</th>
-                                            <th scope="col" class="text-center">عملیات</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
+                            <table class="table border border-4">
+                                <h4>آخرین مقالات :</h4>
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="text-center">ردیف</th>
+                                        <th scope="col" class="text-center">اسم مقاله</th>
+                                        <th scope="col" class="text-center">بدنه</th>
+                                        <th scope="col" class="text-center">عملیات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
                                         while ($row = $result->fetch_assoc()) {
                                             // Limit body content to 2 lines
                                             $body_text = strip_tags($row['body']); // Remove any HTML tags
@@ -137,31 +138,33 @@ $id = $_SESSION["all_data"]['id'];
                                                 $body_text = substr($body_text, 0, $max_length) . '...';
                                             }
                                         ?>
-                                        <tr>
-                                            <th scope="row" class="text-center"><?= $a ?></th>
-                                            <td class="text-center"><?= $row['title'] ?></td>
-                                            <td class="text-center"><?= $body_text ?></td>
-                                            <td class="text-center">
-                                                <form action="" method="GET">
-                                                    <input type="hidden" value="<?= $row['id'] ?>" name="id_art">
-                                                    <a href="edit_article.php?id_art=<?= $row['id'] ?>" class="btn btn-outline-warning btn-sm"> ویرایش</a>
-                                                    <button type="submit" name="delete_article" 
-                                                        class="btn btn-outline-danger btn-sm" onclick="return confirmDelete()">حذف</button>
-                                                </form>
-                                            </td>
-                                            <script>
-                                                function confirmDelete() {
-                                                    return confirm("آیا مطمئن هستید که می‌خواهید این مورد را رد کنید؟");
-                                                }
-                                            </script>
-                                        </tr>
-                                        <?php
+                                    <tr>
+                                        <th scope="row" class="text-center"><?= $a ?></th>
+                                        <td class="text-center"><?= $row['title'] ?></td>
+                                        <td class="text-center"><?= $body_text ?></td>
+                                        <td class="text-center">
+                                            <form action="" method="GET">
+                                                <input type="hidden" value="<?= $row['id'] ?>" name="id_art">
+                                                <a href="edit_article.php?id_art=<?= $row['id'] ?>"
+                                                    class="btn btn-outline-warning btn-sm"> ویرایش</a>
+                                                <button type="submit" name="delete_article"
+                                                    class="btn btn-outline-danger btn-sm"
+                                                    onclick="return confirmDelete()">حذف</button>
+                                            </form>
+                                        </td>
+                                        <script>
+                                        function confirmDelete() {
+                                            return confirm("آیا مطمئن هستید که می‌خواهید این مورد را رد کنید؟");
+                                        }
+                                        </script>
+                                    </tr>
+                                    <?php
                                             $a++;
                                         }
                                         ?>
-                                    </tbody>
-                                </table>
-                                <?php
+                                </tbody>
+                            </table>
+                            <?php
                                 // Pagination links
                                 $sql = "SELECT COUNT(*) AS total FROM articles";
                                 $result = $conn->query($sql);
@@ -178,30 +181,31 @@ $id = $_SESSION["all_data"]['id'];
                                 }
                                 ?>
 
-                                <nav aria-label="Page navigation">
-                                    <ul class="pagination justify-content-center">
-                                        <!-- Previous Button -->
-                                        <li class="page-item <?= $current_page == 1 ? 'disabled' : '' ?>">
-                                            <a class="page-link" href="?page=<?= max(1, $current_page - 1) ?>">قبلی</a>
-                                        </li>
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination justify-content-center">
+                                    <!-- Previous Button -->
+                                    <li class="page-item <?= $current_page == 1 ? 'disabled' : '' ?>">
+                                        <a class="page-link" href="?page=<?= max(1, $current_page - 1) ?>">قبلی</a>
+                                    </li>
 
-                                        <?php
+                                    <?php
                                         // Page Numbers
                                         for ($i = $start_page; $i <= $end_page; $i++) {
                                         ?>
-                                            <li class="page-item <?= $i == $current_page ? 'active' : '' ?>">
-                                                <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
-                                            </li>
-                                        <?php
+                                    <li class="page-item <?= $i == $current_page ? 'active' : '' ?>">
+                                        <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                                    </li>
+                                    <?php
                                         }
                                         ?>
 
-                                        <!-- Next Button -->
-                                        <li class="page-item <?= $current_page == $total_pages ? 'disabled' : '' ?>">
-                                            <a class="page-link" href="?page=<?= min($total_pages, $current_page + 1) ?>">بعدی</a>
-                                        </li>
-                                    </ul>
-                                </nav>
+                                    <!-- Next Button -->
+                                    <li class="page-item <?= $current_page == $total_pages ? 'disabled' : '' ?>">
+                                        <a class="page-link"
+                                            href="?page=<?= min($total_pages, $current_page + 1) ?>">بعدی</a>
+                                    </li>
+                                </ul>
+                            </nav>
 
                             <?php
                             } else {
@@ -213,16 +217,16 @@ $id = $_SESSION["all_data"]['id'];
                 </div>
 
 
-                
+
             </div>
         </div>
     </div>
 
 
     <script>
-        $('form').submit(function() {
+    $('form').submit(function() {
         $('#editor').val(editor.getEditorValue()); // انتقال محتوا به textarea
-        });
+    });
     </script>
 
 

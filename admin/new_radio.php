@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["all_data"])) {
+if (!isset($_SESSION["all_data"]) AND $_SESSION["all_data"]['admin'] != 1) {
     header("Location: ../login.php");
     exit();
 }
@@ -36,9 +36,9 @@ $id = $_SESSION["all_data"]['id'];
 
 <body>
 
-   
 
-<?php include 'header.php'; ?>
+
+    <?php include 'header.php'; ?>
     <div class="container-fluid">
 
 
@@ -47,45 +47,48 @@ $id = $_SESSION["all_data"]['id'];
                 <?php
                 include 'sidebar.php';
                 ?>
-              
+
             </div>
 
             <div class="col-md-8 mt-5">
 
-            
-              
-            <form id="articleForm" enctype="multipart/form-data" method="POST" class="border p-2">
-                <div class="row">
-                    <div class="col-6">
-                        <label for="title">نام برنامه:</label>
-                        <input type="text" id="title" name="title" class="form-control mb-2" placeholder="عنوان را اینجا وارد کنید" required>
 
-                        <label for="mp3">اپلود فایل صوتی:</label>
-                        <input type="file" name="mp3" class="form-control" id="inputGroupFile02">
+
+                <form id="articleForm" enctype="multipart/form-data" method="POST" class="border p-2">
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="title">نام برنامه:</label>
+                            <input type="text" id="title" name="title" class="form-control mb-2"
+                                placeholder="عنوان را اینجا وارد کنید" required>
+
+                            <label for="mp3">اپلود فایل صوتی:</label>
+                            <input type="file" name="mp3" class="form-control" id="inputGroupFile02">
+                        </div>
+                        <div class="col-6">
+                            <label for="kind">نوع برنامه:</label>
+                            <input type="text" id="kind" name="kind" class="form-control mb-2"
+                                placeholder="عنوان را اینجا وارد کنید" required>
+                        </div>
                     </div>
-                    <div class="col-6">
-                        <label for="kind">نوع برنامه:</label>
-                        <input type="text" id="kind" name="kind" class="form-control mb-2" placeholder="عنوان را اینجا وارد کنید" required>
+
+                    <br>
+
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-6">
+                            <button class="btn btn-outline-success" type="submit" name="submit_radio">ثبت
+                                برنامه</button>
+                        </div>
                     </div>
-                </div>
+                </form>
 
                 <br>
 
-                <div class="row">
-                    <div class="col-md-4"></div>
-                    <div class="col-md-6">
-                        <button class="btn btn-outline-success" type="submit" name="submit_radio">ثبت برنامه</button>
-                    </div>
-                </div>
-            </form>
 
-            <br>
-
-
-            <div class="row mt-5">
-                <div class="col-md-11">
-                    <div class="table-responsive">
-                        <?php
+                <div class="row mt-5">
+                    <div class="col-md-11">
+                        <div class="table-responsive">
+                            <?php
                         // Pagination configuration
                         $items_per_page = 10; // Number of items per page
                         $current_page = isset($_GET['page']) ? $_GET['page'] : 1; // Current page, default is 1
@@ -116,29 +119,32 @@ $id = $_SESSION["all_data"]['id'];
                                     while ($row = $result->fetch_assoc()) {
 
                                         ?>
-                                        <tr>
-                                            <th scope="row" class="text-center"><?= $a ?></th>
-                                            <td class="text-center"><?= htmlspecialchars($row['title']) ?></td>
-                                            <td class="text-center"><?= htmlspecialchars($row['program_type']) ?></td>
-                                            <td class="text-center">
-                                                <audio controls>
-                                                    <source src='<?=htmlspecialchars($row['file_path']) ?>' type='audio/mpeg'>
-                                                </audio>
-                                            </td>
-                                            <td class="text-center">
-                                                <form action="" method="GET">
-                                                    <input type="hidden" value="<?= $row['id'] ?>" name="id_radio">
-                                                    <a href="edit_radio.php?id_radio=<?= $row['id'] ?>" class="btn btn-outline-warning btn-sm"> ویرایش</a>
-                                                    <button type="submit" name="delete_radio" 
-                                                        class="btn btn-outline-danger btn-sm" onclick="return confirmDelete()">حذف</button>
-                                                </form>
-                                            </td>
-                                            <script>
-                                                function confirmDelete() {
-                                                    return confirm("آیا مطمئن هستید که می‌خواهید این مورد را حذف کنید؟");
-                                                }
-                                            </script>
-                                        </tr>
+                                    <tr>
+                                        <th scope="row" class="text-center"><?= $a ?></th>
+                                        <td class="text-center"><?= htmlspecialchars($row['title']) ?></td>
+                                        <td class="text-center"><?= htmlspecialchars($row['program_type']) ?></td>
+                                        <td class="text-center">
+                                            <audio controls>
+                                                <source src='<?=htmlspecialchars($row['file_path']) ?>'
+                                                    type='audio/mpeg'>
+                                            </audio>
+                                        </td>
+                                        <td class="text-center">
+                                            <form action="" method="GET">
+                                                <input type="hidden" value="<?= $row['id'] ?>" name="id_radio">
+                                                <a href="edit_radio.php?id_radio=<?= $row['id'] ?>"
+                                                    class="btn btn-outline-warning btn-sm"> ویرایش</a>
+                                                <button type="submit" name="delete_radio"
+                                                    class="btn btn-outline-danger btn-sm"
+                                                    onclick="return confirmDelete()">حذف</button>
+                                            </form>
+                                        </td>
+                                        <script>
+                                        function confirmDelete() {
+                                            return confirm("آیا مطمئن هستید که می‌خواهید این مورد را حذف کنید؟");
+                                        }
+                                        </script>
+                                    </tr>
                                     <?php
                                         $a++;
                                     }
@@ -174,53 +180,53 @@ $id = $_SESSION["all_data"]['id'];
                                     // Page Numbers
                                     for ($i = $start_page; $i <= $end_page; $i++) {
                                     ?>
-                                        <li class="page-item <?= $i == $current_page ? 'active' : '' ?>">
-                                            <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
-                                        </li>
+                                    <li class="page-item <?= $i == $current_page ? 'active' : '' ?>">
+                                        <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                                    </li>
                                     <?php
                                     }
                                     ?>
 
                                     <!-- Next Button -->
                                     <li class="page-item <?= $current_page == $total_pages ? 'disabled' : '' ?>">
-                                        <a class="page-link" href="?page=<?= min($total_pages, $current_page + 1) ?>">بعدی</a>
+                                        <a class="page-link"
+                                            href="?page=<?= min($total_pages, $current_page + 1) ?>">بعدی</a>
                                     </li>
                                 </ul>
                             </nav>
 
-                        <?php
+                            <?php
                         } else {
                             echo "<p>هیچ مشابهی پیدا نشد.</p>";
                         }
                         ?>
+                        </div>
                     </div>
                 </div>
-            </div>
 
 
-                
+
             </div>
         </div>
     </div>
 
     <script>
-        $(document).ready(function() {
-            $('.nav-link').click(function() {
-                $('.nav-link').removeClass('active');
-                $(this).addClass('active');
-            });
+    $(document).ready(function() {
+        $('.nav-link').click(function() {
+            $('.nav-link').removeClass('active');
+            $(this).addClass('active');
         });
-
+    });
     </script>
 
     <script>
-        function toggleCheckbox(checkedId, uncheckedId) {
-            var checkedBox = document.getElementById(checkedId);
-            var uncheckedBox = document.getElementById(uncheckedId);
-            if (checkedBox.checked) {
-                uncheckedBox.checked = false;
-            }
+    function toggleCheckbox(checkedId, uncheckedId) {
+        var checkedBox = document.getElementById(checkedId);
+        var uncheckedBox = document.getElementById(uncheckedId);
+        if (checkedBox.checked) {
+            uncheckedBox.checked = false;
         }
+    }
     </script>
 
 

@@ -8,17 +8,8 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <!-- PWA Meta Tags -->
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#764ba2">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="رادیو سیمرغ">
-    <link rel="apple-touch-icon" href="../images/36.png">
-
     <!-- ========================================== -->
-    <!-- تگ‌های سئو (فقط اضافه شده - متن اصلی حفظ شد) -->
+    <!-- تگ‌های سئو -->
     <!-- ========================================== -->
     <title>رادیو سیمرغ | پخش آنلاین برنامه‌های رادیویی</title>
     <meta name="description" content="رادیو سیمرغ، شب‌های تهران و کافه مه‌آلود - پخش آنلاین بهترین برنامه‌های رادیویی">
@@ -133,29 +124,6 @@ session_start();
         font-size: 1.2rem;
         opacity: 0.95;
         animation: fadeInUp 0.8s ease 0.2s both;
-    }
-
-    .install-permanent-btn {
-        background: rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(10px);
-        border: 2px solid rgba(255, 255, 255, 0.3);
-        color: white;
-        padding: 12px 30px;
-        border-radius: 50px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: all 0.3s;
-        font-size: 1rem;
-        margin-top: 20px;
-        animation: fadeInUp 0.8s ease 0.4s both;
-        display: inline-block;
-    }
-
-    .install-permanent-btn:hover {
-        background: white;
-        color: #764ba2;
-        transform: scale(1.05);
-        box-shadow: 0 5px 20px rgba(0,0,0,0.2);
     }
 
     .radio-card {
@@ -311,10 +279,6 @@ session_start();
             padding: 8px 20px;
             font-size: 0.9rem;
         }
-        .install-permanent-btn {
-            padding: 10px 20px;
-            font-size: 0.9rem;
-        }
     }
     </style>
 </head>
@@ -334,10 +298,6 @@ session_start();
         <div class="hero-section">
             <h1 class="hero-title">🎙️ به رادیو سیمرغ خوش آمدید</h1>
             <p class="hero-subtitle">تجربه‌ای نو از شنیدن بهترین برنامه‌های رادیویی با کیفیت عالی</p>
-            
-            <button id="installPermanentBtn" class="install-permanent-btn">
-                📲 نصب اپلیکیشن رادیو سیمرغ
-            </button>
         </div>
 
         <div class="row justify-content-center">
@@ -439,48 +399,6 @@ session_start();
     </div>
 
     <?php include 'footer.php'; ?>
-
-    <script>
-    let deferredPrompt;
-    const installBtn = document.getElementById('installPermanentBtn');
-
-    function isInstalled() {
-        return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-    }
-
-    if (isInstalled()) {
-        installBtn.style.display = 'none';
-    }
-
-    window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        deferredPrompt = e;
-    });
-
-    installBtn.addEventListener('click', async () => {
-        if (deferredPrompt) {
-            deferredPrompt.prompt();
-            const result = await deferredPrompt.userChoice;
-            if (result.outcome === 'accepted') {
-                installBtn.style.display = 'none';
-                alert('✅ رادیو سیمرغ با موفقیت نصب شد!');
-            }
-            deferredPrompt = null;
-        } else {
-            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-            const msg = isIOS ? 
-                'در Safari روی Share و سپس Add to Home Screen کلیک کنید.' :
-                'از منوی مرورگر گزینه Add to Home Screen را انتخاب کنید.';
-            alert('📱 ' + msg);
-        }
-    });
-
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('sw.js', { scope: '/radios/' });
-        });
-    }
-    </script>
 
 </body>
 

@@ -2,7 +2,7 @@
 session_start();
 include '../config.php';
 
-if (!isset($_SESSION["all_data"])) {
+if (!isset($_SESSION["all_data"]) AND $_SESSION["all_data"]['admin'] != 1) {
     header("Location: ../login.php");
     exit();
 }
@@ -100,38 +100,44 @@ if (isset($_GET['delete_photo'])) {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <style>
-        body {
-            background-color: #f0f2f5;
-            font-family: 'Vazirmatn', sans-serif;
-        }
-        .main-content {
-            padding: 20px;
-        }
-        .card-form, .table-section {
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            padding: 20px;
-            margin-bottom: 30px;
-            border: none;
-        }
-        .table-header {
-            background-color: #4a5d73;
-            color: white;
-            padding: 10px;
-            border-radius: 8px 8px 0 0;
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-        .table-striped tbody tr:nth-of-type(odd) {
-            background-color: rgba(0, 0, 0, 0.03);
-        }
-        .toast-container {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1050;
-        }
+    body {
+        background-color: #f0f2f5;
+        font-family: 'Vazirmatn', sans-serif;
+    }
+
+    .main-content {
+        padding: 20px;
+    }
+
+    .card-form,
+    .table-section {
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        padding: 20px;
+        margin-bottom: 30px;
+        border: none;
+    }
+
+    .table-header {
+        background-color: #4a5d73;
+        color: white;
+        padding: 10px;
+        border-radius: 8px 8px 0 0;
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: rgba(0, 0, 0, 0.03);
+    }
+
+    .toast-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1050;
+    }
     </style>
 </head>
 
@@ -151,7 +157,8 @@ if (isset($_GET['delete_photo'])) {
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="title" class="form-label">عنوان رسانه:</label>
-                                <input type="text" id="title" name="title" class="form-control" placeholder="عنوان را اینجا وارد کنید" required>
+                                <input type="text" id="title" name="title" class="form-control"
+                                    placeholder="عنوان را اینجا وارد کنید" required>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="pic" class="form-label">آپلود تصویر یا ویدیو:</label>
@@ -185,72 +192,77 @@ if (isset($_GET['delete_photo'])) {
                         if ($result->num_rows > 0) {
                             $a = ($current_page - 1) * $items_per_page + 1;
                         ?>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" class="text-center">#</th>
-                                        <th scope="col" class="text-center">عنوان</th>
-                                        <th scope="col" class="text-center">رسانه</th>
-                                        <th scope="col" class="text-center">عملیات</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php while ($row = $result->fetch_assoc()) {
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center">#</th>
+                                    <th scope="col" class="text-center">عنوان</th>
+                                    <th scope="col" class="text-center">رسانه</th>
+                                    <th scope="col" class="text-center">عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php while ($row = $result->fetch_assoc()) {
                                         $mediaPath = $row['images'];
                                         $fileExtension = strtolower(pathinfo($mediaPath, PATHINFO_EXTENSION));
                                         $isVideo = in_array($fileExtension, ['mp4', 'mov', 'avi', 'mkv', 'm4v', 'webm']);
                                     ?>
-                                        <tr>
-                                            <th scope="row" class="text-center"><?= $a ?></th>
-                                            <td class="text-center"><?= htmlspecialchars($row['title']) ?></td>
-                                            <td class="text-center">
-                                                <?php if ($isVideo) : ?>
-                                                    <video height="50px" controls>
-                                                        <source src="<?= htmlspecialchars($mediaPath) ?>" type="video/<?= $fileExtension ?>">
-                                                        مرورگر شما از پخش ویدیو پشتیبانی نمی‌کند.
-                                                    </video>
-                                                <?php else : ?>
-                                                    <img src="<?= htmlspecialchars($mediaPath) ?>" height="50px" alt="<?= htmlspecialchars($row['title']) ?>">
-                                                <?php endif; ?>
-                                            </td>
-                                            <td class="text-center">
-                                                <a href="edit_pic.php?id_photo=<?= $row['id'] ?>" class="btn btn-outline-warning btn-sm">
-                                                    <i class="fas fa-edit me-1"></i>ویرایش
-                                                </a>
-                                                <a href="?delete_photo=1&id_photo=<?= $row['id'] ?>" class="btn btn-outline-danger btn-sm" onclick="return confirmDelete()">
-                                                    <i class="fas fa-trash-alt me-1"></i>حذف
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    <?php $a++; } ?>
-                                </tbody>
-                            </table>
-                            <?php
+                                <tr>
+                                    <th scope="row" class="text-center"><?= $a ?></th>
+                                    <td class="text-center"><?= htmlspecialchars($row['title']) ?></td>
+                                    <td class="text-center">
+                                        <?php if ($isVideo) : ?>
+                                        <video height="50px" controls>
+                                            <source src="<?= htmlspecialchars($mediaPath) ?>"
+                                                type="video/<?= $fileExtension ?>">
+                                            مرورگر شما از پخش ویدیو پشتیبانی نمی‌کند.
+                                        </video>
+                                        <?php else : ?>
+                                        <img src="<?= htmlspecialchars($mediaPath) ?>" height="50px"
+                                            alt="<?= htmlspecialchars($row['title']) ?>">
+                                        <?php endif; ?>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="edit_pic.php?id_photo=<?= $row['id'] ?>"
+                                            class="btn btn-outline-warning btn-sm">
+                                            <i class="fas fa-edit me-1"></i>ویرایش
+                                        </a>
+                                        <a href="?delete_photo=1&id_photo=<?= $row['id'] ?>"
+                                            class="btn btn-outline-danger btn-sm" onclick="return confirmDelete()">
+                                            <i class="fas fa-trash-alt me-1"></i>حذف
+                                        </a>
+                                    </td>
+                                </tr>
+                                <?php $a++; } ?>
+                            </tbody>
+                        </table>
+                        <?php
                             $sql_count = "SELECT COUNT(*) AS total FROM gallery";
                             $result_count = $conn->query($sql_count);
                             $row_count = $result_count->fetch_assoc();
                             $total_items = $row_count['total'];
                             $total_pages = ceil($total_items / $items_per_page);
                             ?>
-                            <nav aria-label="Page navigation">
-                                <ul class="pagination justify-content-center">
-                                    <li class="page-item <?= $current_page == 1 ? 'disabled' : '' ?>">
-                                        <a class="page-link" href="?page=<?= max(1, $current_page - 1) ?>">قبلی</a>
-                                    </li>
-                                    <?php for ($i = 1; $i <= $total_pages; $i++) { ?>
-                                        <li class="page-item <?= $i == $current_page ? 'active' : '' ?>">
-                                            <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
-                                        </li>
-                                    <?php } ?>
-                                    <li class="page-item <?= $current_page == $total_pages ? 'disabled' : '' ?>">
-                                        <a class="page-link" href="?page=<?= min($total_pages, $current_page + 1) ?>">بعدی</a>
-                                    </li>
-                                </ul>
-                            </nav>
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item <?= $current_page == 1 ? 'disabled' : '' ?>">
+                                    <a class="page-link" href="?page=<?= max(1, $current_page - 1) ?>">قبلی</a>
+                                </li>
+                                <?php for ($i = 1; $i <= $total_pages; $i++) { ?>
+                                <li class="page-item <?= $i == $current_page ? 'active' : '' ?>">
+                                    <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                                </li>
+                                <?php } ?>
+                                <li class="page-item <?= $current_page == $total_pages ? 'disabled' : '' ?>">
+                                    <a class="page-link"
+                                        href="?page=<?= min($total_pages, $current_page + 1) ?>">بعدی</a>
+                                </li>
+                            </ul>
+                        </nav>
                         <?php } else { ?>
-                            <div class="alert alert-warning text-center" role="alert">
-                                <i class="fas fa-exclamation-triangle me-2"></i>هیچ محتوایی در گالری وجود ندارد.
-                            </div>
+                        <div class="alert alert-warning text-center" role="alert">
+                            <i class="fas fa-exclamation-triangle me-2"></i>هیچ محتوایی در گالری وجود ندارد.
+                        </div>
                         <?php } ?>
                     </div>
                 </div>
@@ -262,7 +274,8 @@ if (isset($_GET['delete_photo'])) {
         <div id="successToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
             <div class="toast-header bg-success text-white">
                 <strong class="me-auto">موفقیت</strong>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
             </div>
             <div class="toast-body">
                 عملیات با موفقیت انجام شد!
@@ -271,7 +284,8 @@ if (isset($_GET['delete_photo'])) {
         <div id="errorToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
             <div class="toast-header bg-danger text-white">
                 <strong class="me-auto">خطا</strong>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
             </div>
             <div class="toast-body">
                 خطایی در انجام عملیات رخ داد!
@@ -281,20 +295,20 @@ if (isset($_GET['delete_photo'])) {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        function confirmDelete() {
-            return confirm("آیا مطمئن هستید که می‌خواهید این مورد را حذف کنید؟");
-        }
+    function confirmDelete() {
+        return confirm("آیا مطمئن هستید که می‌خواهید این مورد را حذف کنید؟");
+    }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('status') === 'success') {
-                const successToast = new bootstrap.Toast(document.getElementById('successToast'));
-                successToast.show();
-            } else if (urlParams.get('status') === 'error') {
-                const errorToast = new bootstrap.Toast(document.getElementById('errorToast'));
-                errorToast.show();
-            }
-        });
+    document.addEventListener('DOMContentLoaded', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('status') === 'success') {
+            const successToast = new bootstrap.Toast(document.getElementById('successToast'));
+            successToast.show();
+        } else if (urlParams.get('status') === 'error') {
+            const errorToast = new bootstrap.Toast(document.getElementById('errorToast'));
+            errorToast.show();
+        }
+    });
     </script>
 </body>
 

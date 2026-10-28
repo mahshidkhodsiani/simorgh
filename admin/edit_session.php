@@ -1,12 +1,9 @@
 <?php
 session_start();
-
-// بررسی وضعیت ورود کاربر
-if (!isset($_SESSION["all_data"])) {
+if (!isset($_SESSION["all_data"]) AND $_SESSION["all_data"]['admin'] != 1) {
     header("Location: ../login.php");
     exit();
 }
-
 $user_id = $_SESSION["all_data"]['id'];
 $session_id = isset($_GET['id']) ? (int)$_GET['id'] : 0; // دریافت شناسه جلسه از URL
 
