@@ -1,0 +1,2 @@
+2026-10-28 16:27:27 - SUCCESS - Invoice: 1793192213679 - TransId: 2392457443 - UserID: 24 - Type: tehran
+2026-10-28 20:47:18 - SUCCESS - Invoice: 1793207790224 - TransId: 2392662007 - UserID: 29 - Type: tehran

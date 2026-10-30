@@ -1,11 +1,15 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["all_data"]) AND $_SESSION["all_data"]['admin'] != 1) {
+if (!isset($_SESSION["all_data"])) {
     header("Location: ../login.php");
     exit();
 }
 
+if($_SESSION["all_data"]["admin"] != 1){
+    header("Location: ../login.php");
+    exit();
+}
 include 'includes.php';
 include '../config.php';
 

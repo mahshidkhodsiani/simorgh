@@ -1,13 +1,18 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["all_data"]) AND $_SESSION["all_data"]['admin'] != 1) {
+if (!isset($_SESSION["all_data"])) {
+    header("Location: ../login.php");
+    exit();
+}
+
+if($_SESSION["all_data"]["admin"] != 1){
     header("Location: ../login.php");
     exit();
 }
 
 $id = $_SESSION["all_data"]['id'];
-// $admin = $_SESSION["all_data"]['admin'];
+
 ?>
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
