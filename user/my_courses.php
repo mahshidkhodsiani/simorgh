@@ -285,7 +285,7 @@ foreach ($enrolled_courses as $course) {
                         <?php echo count($enrolled_courses); ?> دوره ثبت‌نام شده
                     </p>
                 </div>
-
+             
             </div>
 
             <!-- کارت‌های آمار -->

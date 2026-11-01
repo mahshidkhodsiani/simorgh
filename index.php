@@ -4,30 +4,33 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 ?>
 <!doctype html>
-<html lang="en" dir="rtl">
+<html lang="fa" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="موسسه هفت هنر سیمرغ، پیشرو در آموزش گویندگی، انیمیشن، طراحی و موسیقی با ارائه دوره‌های تخصصی و کارگاه‌های عملی.">
-    <meta name="keywords" content="گویندگی, انیمیشن, طراحی, موسیقی, آموزش گویندگی, دوره‌های گویندگی, موسسه هنری">
-    <meta name="author" content="موسسه هفت هنر سیمرغ">
-    <meta property="og:title" content="موسسه هفت هنر سیمرغ">
+        content="موسسه فرهنگی هنری هفت هنر سیمرغ؛ رادیو سیمرغ و سریال صوتی شب‌های تهران، پکیج‌های آموزشی و دوره‌های بازیگری، دوبله و گویندگی، گریم سینمایی، موشن گرافیک، عکاسی و تدوین.">
+    <meta name="keywords"
+        content="موسسه فرهنگی هنری هفت هنر سیمرغ, رادیو سیمرغ, شب‌های تهران, سریال صوتی, پکیج آموزشی, آموزشگاه هنری, آموزش بازیگری, آموزش گویندگی, دوبله, گریم سینمایی, موشن گرافیک, عکاسی, تدوین">
+    <meta name="author" content="موسسه فرهنگی هنری هفت هنر سیمرغ">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+    <link rel="canonical" href="https://simorghtv.com/">
+    <meta property="og:site_name" content="موسسه فرهنگی هنری هفت هنر سیمرغ">
+    <meta property="og:title" content="موسسه فرهنگی هنری هفت هنر سیمرغ">
     <meta property="og:description"
-        content="موسسه هفت هنر سیمرغ، پیشرو در آموزش گویندگی، انیمیشن، طراحی و موسیقی با دوره‌های تخصصی و کارگاه‌های عملی.">
-
+        content="رادیو سیمرغ و سریال صوتی شب‌های تهران، پکیج‌های آموزشی و دوره‌های هنری بازیگری، دوبله، گویندگی، گریم و موشن گرافیک.">
     <meta property="og:image" content="https://simorghtv.com/images/logo1.png">
-
-    <meta property="og:url" content="https://www.simorghtv.com">
+    <meta property="og:url" content="https://simorghtv.com/">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="fa_IR">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="موسسه هفت هنر سیمرغ">
+    <meta name="twitter:title" content="موسسه فرهنگی هنری هفت هنر سیمرغ">
     <meta name="twitter:description"
-        content="موسسه هفت هنر سیمرغ، پیشرو در آموزش گویندگی، انیمیشن، طراحی و موسیقی با دوره‌های تخصصی و کارگاه‌های عملی.">
-    <meta name="twitter:image" content="URL-to-your-image.jpg">
-    <title>هفت هنر سیمرغ</title>
+        content="رادیو سیمرغ، شب‌های تهران و پکیج‌های آموزشی هنری موسسه فرهنگی هنری هفت هنر سیمرغ.">
+    <meta name="twitter:image" content="https://simorghtv.com/images/logo1.png">
+    <title>موسسه فرهنگی هنری هفت هنر سیمرغ</title>
+    <link rel="preload" as="image" href="images/29.jpg" fetchpriority="high">
     <link rel="icon" href="/images/logo1.ico" type="image/x-icon">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -37,17 +40,49 @@ if (session_status() === PHP_SESSION_NONE) {
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "موسسه هفت هنر سیمرغ",
-        "url": "https://simorghtv.com",
-        "logo": "https://simorghtv.com/images/logo1.png",
-        "contactPoint": {
-            "@type": "ContactPoint",
-            "telephone": "+02191300517",
-            "contactType": "customer service",
-            "areaServed": "IR",
-            "availableLanguage": "Persian"
-        }
+        "@graph": [
+            {
+                "@type": ["EducationalOrganization", "Organization"],
+                "@id": "https://simorghtv.com/#organization",
+                "name": "موسسه فرهنگی هنری هفت هنر سیمرغ",
+                "alternateName": ["هفت هنر سیمرغ", "رادیو سیمرغ"],
+                "url": "https://simorghtv.com/",
+                "logo": "https://simorghtv.com/images/logo1.png",
+                "description": "موسسه فرهنگی هنری با رادیو سیمرغ، سریال صوتی شب‌های تهران و پکیج‌های آموزشی بازیگری، دوبله، گویندگی، گریم، موشن گرافیک، عکاسی و تدوین.",
+                "contactPoint": {
+                    "@type": "ContactPoint",
+                    "telephone": "+98-21-91300517",
+                    "contactType": "customer service",
+                    "areaServed": "IR",
+                    "availableLanguage": "Persian"
+                }
+            },
+            {
+                "@type": "WebSite",
+                "@id": "https://simorghtv.com/#website",
+                "url": "https://simorghtv.com/",
+                "name": "موسسه فرهنگی هنری هفت هنر سیمرغ",
+                "inLanguage": "fa-IR",
+                "publisher": { "@id": "https://simorghtv.com/#organization" }
+            },
+            {
+                "@type": "RadioSeries",
+                "@id": "https://simorghtv.com/radios#radio",
+                "name": "رادیو سیمرغ",
+                "description": "برنامه‌های رادیویی فرهنگی و هنری با صدای گویندگان حرفه‌ای.",
+                "url": "https://simorghtv.com/radios",
+                "inLanguage": "fa-IR",
+                "publisher": { "@id": "https://simorghtv.com/#organization" }
+            },
+            {
+                "@type": "PodcastSeries",
+                "name": "شب‌های تهران",
+                "description": "سریال صوتی شب‌های تهران در دو فصل، از رادیو سیمرغ.",
+                "url": "https://simorghtv.com/radios/tehran1.php",
+                "inLanguage": "fa-IR",
+                "publisher": { "@id": "https://simorghtv.com/#organization" }
+            }
+        ]
     }
     </script>
 
@@ -69,19 +104,19 @@ if (session_status() === PHP_SESSION_NONE) {
     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img class="d-block w-100" src="images/29.jpg" alt="سیمرغ">
+                <img class="d-block w-100" fetchpriority="high" src="images/29.jpg" alt="موسسه فرهنگی هنری هفت هنر سیمرغ - اسلاید اول">
             </div>
             <div class="carousel-item">
-                <img class="d-block w-100" src="images/27.jpg" alt="سیمرغ">
+                <img class="d-block w-100" loading="lazy" src="images/27.jpg" alt="دوره‌های آموزشی موسسه هفت هنر سیمرغ - اسلاید دوم">
             </div>
             <div class="carousel-item">
-                <img class="d-block w-100" src="images/26.jpg" alt="سیمرغ">
+                <img class="d-block w-100" loading="lazy" src="images/26.jpg" alt="پکیج‌های آموزشی سیمرغ - اسلاید سوم">
             </div>
             <div class="carousel-item">
-                <img class="d-block w-100" src="images/28.jpg" alt="سیمرغ">
+                <img class="d-block w-100" loading="lazy" src="images/28.jpg" alt="آموزش گویندگی و بازیگری سیمرغ - اسلاید چهارم">
             </div>
             <div class="carousel-item">
-                <img class="d-block w-100" src="images/25.jpg" alt="سیمرغ">
+                <img class="d-block w-100" loading="lazy" src="images/25.jpg" alt="گویندگان رادیو سیمرغ - اسلاید پنجم">
             </div>
         </div>
 
@@ -188,191 +223,192 @@ if (session_status() === PHP_SESSION_NONE) {
         </div>
     </div>
 
-    <div class="container-fluid px-4 mt-4">
-        <section id="portfolio" class="py-5">
+        <div class="container-fluid px-4 mt-4">
+        <section id="portfolio" class="quick-section">
             <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-md-5 col-lg-4 text-center mb-4 mb-md-0">
-                        <img class="img-fluid rounded shadow-lg" src="images/37.png" alt="تصویر سیمرغ"
-                            style="max-height: 650px; object-fit: cover;">
+                <div class="row align-items-center g-4">
+                    <div class="col-md-5 col-lg-4 text-center">
+                        <div class="quick-visual">
+                            <img class="img-fluid rounded shadow-lg" src="images/37.png" alt="تصویر سیمرغ"
+                                loading="lazy" decoding="async" style="max-height: 650px; object-fit: cover;">
+                        </div>
                     </div>
 
                     <div class="col-md-7 col-lg-8">
-                        <div class="row">
-                            <div class="col-6 col-md-6 mb-4 card-spacing">
-                                <a href="radios" class="text-decoration-none" title="کلیک کنید">
-                                    <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
-                                        <div class="card-body d-flex align-items-center justify-content-center p-4">
-                                            <h6 class="card-title rtl-title text-center fw-bold text-dark mb-0">برنامه
-                                                های رادیویی سیمرغ</h6>
+                        <div class="row g-3">
+                            <?php
+                            $quick_links = [
+                                ['radios',                  'fa-microphone-lines', 'برنامه‌های رادیویی سیمرغ'],
+                                ['packages',                'fa-box-open',         'پکیج‌های آموزشی'],
+                                ['portofilo/pictures',      'fa-images',           'گالری و نمونه کارها'],
+                                ['articles/speakers_archive','fa-headphones',      'گویندگان رادیو سیمرغ'],
+                                ['portofilo/videos',        'fa-circle-play',      'ویدیوهای نمونه کار'],
+                                ['register',                'fa-credit-card',      'پرداخت نقدی دوره‌ها'],
+                                ['register2',               'fa-calendar-check',   'پرداخت اقساطی دوره‌ها'],
+                                ['pardakht',                'fa-hand-holding-dollar','پرداخت آزاد به موسسه'],
+                            ];
+                            foreach ($quick_links as $q) {
+                            ?>
+                            <div class="col-6 card-spacing">
+                                <a href="<?= $q[0] ?>" class="quick-link text-decoration-none" title="<?= $q[2] ?>">
+                                    <div class="card h-100 quick-card">
+                                        <div class="card-body d-flex align-items-center justify-content-center gap-3 p-4">
+                                            <span class="quick-icon"><i class="fas <?= $q[1] ?>"></i></span>
+                                            <h6 class="card-title rtl-title fw-bold mb-0"><?= $q[2] ?></h6>
                                         </div>
                                     </div>
                                 </a>
                             </div>
-
-                            <div class="col-6 col-md-6 mb-4 card-spacing">
-                                <a href="packages" class="text-decoration-none" title="کلیک کنید">
-                                    <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
-                                        <div class="card-body d-flex align-items-center justify-content-center p-4">
-                                            <h6 class="card-title rtl-title text-center fw-bold text-dark mb-0">پکیج های
-                                                آموزشی</h6>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="col-6 col-md-6 mb-4 card-spacing">
-                                <a href="portofilo/pictures" class="text-decoration-none" title="کلیک کنید">
-                                    <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
-                                        <div class="card-body d-flex align-items-center justify-content-center p-4">
-                                            <h6 class="card-title rtl-title text-center fw-bold text-dark mb-0">گالری و
-                                                نمونه کارها</h6>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="col-6 col-md-6 mb-4 card-spacing">
-                                <a href="articles/speakers_archive" class="text-decoration-none" title="کلیک کنید">
-                                    <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
-                                        <div class="card-body d-flex align-items-center justify-content-center p-4">
-                                            <h6 class="card-title rtl-title text-center fw-bold text-dark mb-0">گویندگان
-                                                رادیو سیمرغ</h6>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="col-6 col-md-6 mb-4 card-spacing">
-                                <a href="portofilo/videos" class="text-decoration-none" title="کلیک کنید">
-                                    <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
-                                        <div class="card-body d-flex align-items-center justify-content-center p-4">
-                                            <h6 class="card-title rtl-title text-center fw-bold text-dark mb-0">ویدیوهای
-                                                نمونه کار</h6>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="col-6 col-md-6 mb-4 card-spacing">
-                                <a href="register" class="text-decoration-none" title="کلیک کنید">
-                                    <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
-                                        <div class="card-body d-flex align-items-center justify-content-center p-4">
-                                            <h6 class="card-title rtl-title text-center fw-bold text-dark mb-0">پرداخت
-                                                نقدی دوره ها</h6>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="col-6 col-md-6 mb-4 card-spacing">
-                                <a href="register2" class="text-decoration-none" title="کلیک کنید">
-                                    <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
-                                        <div class="card-body d-flex align-items-center justify-content-center p-4">
-                                            <h6 class="card-title rtl-title text-center fw-bold text-dark mb-0">پرداخت
-                                                اقساطی دوره‌ها</h6>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="col-6 col-md-6 mb-4 card-spacing">
-                                <a href="pardakht" class="text-decoration-none" title="کلیک کنید">
-                                    <div class="card h-100 shadow-sm animated-card" style="border: 2px solid #d85353;">
-                                        <div class="card-body d-flex align-items-center justify-content-center p-4">
-                                            <h6 class="card-title rtl-title text-center fw-bold text-dark mb-0">پرداخت
-                                                آزاد به موسسه</h6>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+    </div>
 
-        <hr>
+    <!-- ===== سکشن اختصاصی رادیو سیمرغ ===== -->
+    <section class="radio-showcase" id="radioShowcase" aria-labelledby="radioTitle">
+        <div class="radio-bg-glow"></div>
+        <div class="container position-relative">
+            <div class="row align-items-center g-5">
 
-        <section class="light">
-            <div class="container py-2">
-                <a href="packages">
-                    <h2 class="h1 text-center text-dark fw-bold" id="pageHeaderTitle" title="کلیک کنید">
-                        آخرین پکیج‌های سیمرغ
-                        <img src="images/link.jpg" height="30px" width="30px" alt="آخرین پکیج‌ها"
-                            title="آخرین پکیج‌های سیمرغ">
+                <div class="col-lg-6 order-lg-2">
+                    <div class="radio-visual">
+                        <div class="radio-disc">
+                            <img src="images/radio-simorgh.jpg" alt="رادیو سیمرغ؛ سریال صوتی شب‌های تهران و برنامه‌های رادیویی" width="340" height="340" loading="lazy" decoding="async">
+                        </div>
+                        <div class="radio-waves" aria-hidden="true">
+                            <span></span><span></span><span></span><span></span><span></span>
+                            <span></span><span></span><span></span><span></span><span></span>
+                            <span></span><span></span>
+                        </div>
+                        <div class="radio-floating radio-floating--a"><i class="fas fa-microphone-lines"></i></div>
+                        <div class="radio-floating radio-floating--b"><i class="fas fa-headphones"></i></div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 order-lg-1 text-center text-lg-end">
+                    <span class="radio-badge"><i class="radio-dot"></i> شنیدنی‌های سیمرغ</span>
+                    <h2 class="radio-title" id="radioTitle">رادیو سیمرغ</h2>
+                    <p class="radio-subtitle">سفری شنیدنی در دنیای فرهنگ و هنر</p>
+                    <p class="radio-text">
+                        <a href="radios" class="radio-inline-link">برنامه‌های رادیویی سیمرغ</a> و سریال صوتی
+                        <a href="radios/tehran1.php" class="radio-inline-link">شب‌های تهران</a> را با صدای گویندگان
+                        حرفه‌ای بشنوید؛ گفت‌وگو، روایت و صداهایی که هنر و فرهنگ را به گوش شما می‌رساند.
+                        برای سفارش صدا هم می‌توانید از
+                        <a href="articles/speakers_archive" class="radio-inline-link">آرشیو گویندگان رادیو سیمرغ</a>
+                        استفاده کنید.
+                    </p>
+
+                    <div class="radio-chips">
+                        <span><a href="radios/tehran1.php" title="سریال صوتی شب‌های تهران فصل اول"><i class="fas fa-moon"></i> شب‌های تهران ۱</a></span>
+                        <span><a href="radios/tehran2.php" title="سریال صوتی شب‌های تهران فصل دوم"><i class="fas fa-moon"></i> شب‌های تهران ۲</a></span>
+                        <span><a href="radios/cafe_meh.php" title="سریال صوتی کافه مه‌آلود"><i class="fas fa-mug-hot"></i> کافه مه‌آلود</a></span>
+                        <span><a href="radios/radio_simorgh.php" title="جمعه‌های سیمرغی"><i class="fas fa-podcast"></i> جمعه‌های سیمرغی</a></span>
+                    </div>
+
+                    <div class="radio-actions">
+                        <a href="radios" class="btn-radio-main" title="گوش دادن به برنامه‌های رادیو سیمرغ">
+                            <i class="fas fa-play"></i> گوش دادن به برنامه‌ها
+                        </a>
+                        <a href="articles/speakers_archive" class="btn-radio-ghost" title="آرشیو گویندگان رادیو سیمرغ">
+                            گویندگان رادیو
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <div class="container-fluid px-4">
+        <section class="packages-section">
+            <div class="container">
+                <div class="sec-head">
+                    <span class="sec-eyebrow">پکیج آموزشی ویژه</span>
+                    <h2 class="sec-title">
+                        <a href="packages" title="مشاهده همه پکیج‌های آموزشی سیمرغ">پکیج آموزشی ویژه سیمرغ</a>
                     </h2>
-                </a>
+                    <div class="sec-line"></div>
+                </div>
 
                 <?php
-                $sql = "SELECT * FROM packages ORDER BY id DESC LIMIT 4";
+                $sql = "SELECT * FROM packages ORDER BY id ASC LIMIT 1"; // اولین پکیج ثبت‌شده
                 $result = $conn->query($sql);
-                if ($result->num_rows > 0) {
-                    $counter = 0;
-                    while ($row = $result->fetch_assoc()) {
-                        if (is_object(json_decode($row["pictures"]))) {
-                            $images = json_decode($row["pictures"], true);
-                            $image_url = $images["images"]["original"];
-                            $image_url = str_replace("/upload", "upload", $image_url);
-                        } else {
-                            $image_url = $row["pictures"];
-                            $image_url = str_replace("../upload", "upload", $image_url);
-                        }
+                if ($result && $result->num_rows > 0) {
+                    $row = $result->fetch_assoc();
 
-                        $body_content = preg_replace('/<p>/', '<p style="color: black !important; margin-right: 5px !important; font-size: 16px !important;">', $row['description']);
-
-                        if ($counter % 2 == 0) {
-                ?>
-
-                <article class="postcard light blue">
-                    <a class="postcard__img_link" href="packages">
-                        <img class="postcard__img" src="<?= $image_url ?>" alt="<?= $row["name"] ?>" />
-                    </a>
-                    <div class="postcard__text t-dark">
-                        <h3 class="postcard__title blue"><a href="packages"><?= $row["name"] ?></a></h3>
-                        <div class="postcard__bar"></div>
-                        <div class="postcard__preview-txt mr-5 fw-bold"><?= $body_content ?></div>
-                        <ul class="postcard__tagbox">
-                            <a href="packages">
-                                <li class="tag__item"><i class="fas fa-clock mr-2"></i>مشاهده پکیج</li>
-                            </a>
-                        </ul>
-                    </div>
-                </article>
-
-                <?php } else { ?>
-
-                <article class="postcard light red">
-                    <a class="postcard__img_link" href="packages">
-                        <img class="postcard__img" src="<?= $image_url ?>" alt="<?= $row["name"] ?>" />
-                    </a>
-                    <div class="postcard__text t-dark">
-                        <h3 class="postcard__title red"><a href="packages"><?= $row["name"] ?></a></h3>
-                        <div class="postcard__bar"></div>
-                        <div class="postcard__preview-txt fw-bold"><?= $body_content ?></div>
-                        <ul class="postcard__tagbox">
-                            <a href="packages">
-                                <li class="tag__item"><i class="fas fa-clock mr-2"></i>مشاهده پکیج</li>
-                            </a>
-                        </ul>
-                    </div>
-                </article>
-
-                <?php }
-                        $counter++;
+                    if (is_object(json_decode($row["pictures"]))) {
+                        $images = json_decode($row["pictures"], true);
+                        $image_url = $images["images"]["original"];
+                        $image_url = str_replace("/upload", "upload", $image_url);
+                    } else {
+                        $image_url = $row["pictures"];
+                        $image_url = str_replace("../upload", "upload", $image_url);
                     }
-                } else {
-                    echo "موردی یافت نشد";
-                }
+
+                    $plain_desc = trim(preg_replace('/\s+/u', ' ', strip_tags($row['description'])));
+                    if (mb_strlen($plain_desc) > 280) {
+                        $plain_desc = mb_substr($plain_desc, 0, 280) . '…';
+                    }
+
+                    $abs_img = (strpos($image_url, 'http') === 0) ? $image_url : 'https://simorghtv.com/' . ltrim($image_url, '/');
+                    $course_ld = [
+                        '@context' => 'https://schema.org',
+                        '@type' => 'Course',
+                        'name' => $row['name'],
+                        'description' => $plain_desc,
+                        'image' => $abs_img,
+                        'url' => 'https://simorghtv.com/packages',
+                        'inLanguage' => 'fa-IR',
+                        'provider' => [
+                            '@type' => 'Organization',
+                            'name' => 'موسسه هفت هنر سیمرغ',
+                            'sameAs' => 'https://simorghtv.com/'
+                        ]
+                    ];
                 ?>
+                <script type="application/ld+json"><?= json_encode($course_ld, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG) ?></script>
+
+                <article class="pkg-feature">
+                    <a class="pkg-feature__img" href="packages" title="<?= htmlspecialchars($row['name']) ?>">
+                        <img src="<?= htmlspecialchars($image_url) ?>" alt="<?= htmlspecialchars($row['name']) ?>"
+                            loading="lazy" decoding="async">
+                        <span class="pkg-feature__ribbon"><i class="fas fa-star"></i> پکیج ویژه</span>
+                    </a>
+                    <div class="pkg-feature__body">
+                        <h3 class="pkg-feature__title"><a href="packages"><?= htmlspecialchars($row['name']) ?></a></h3>
+                        <div class="pkg-feature__bar"></div>
+                        <p class="pkg-feature__desc"><?= htmlspecialchars($plain_desc) ?></p>
+                        <div class="pkg-feature__actions">
+                            <a href="packages" class="btn-pkg-main"><i class="fas fa-eye"></i> مشاهده پکیج</a>
+                            <a href="packages" class="btn-pkg-ghost">همه پکیج‌ها <i class="fas fa-arrow-left"></i></a>
+                        </div>
+                    </div>
+                </article>
+
+                <?php } else {
+                    echo '<p class="text-center text-muted">موردی یافت نشد</p>';
+                } ?>
+
+                <div class="text-center mt-4">
+                    <a href="packages" class="pkg-more">
+                        مشاهده بیشتر؛ همه پکیج‌های آموزشی <i class="fas fa-arrow-left"></i>
+                    </a>
+                </div>
             </div>
         </section>
+    </div>
 
-        <hr class="my-4">
-
-        <section id="team" class="pb-5">
+    <div class="container-fluid px-4">
+        <section id="team" class="latest-section">
             <div class="container">
-                <h5 class="section-title h1 fw-bold">تازه ترین ها</h5>
+                <div class="sec-head sec-head--light">
+                    <span class="sec-eyebrow">پیشنهادهای ویژه</span>
+                    <h2 class="sec-title">تازه ترین ها</h2>
+                    <div class="sec-line"></div>
+                </div>
                 <div class="row">
                     <div class="col-6 col-sm-4 mb-4">
                         <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
@@ -381,7 +417,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                     <div class="card">
                                         <div class="card-body text-center">
                                             <p>
-                                                <img class="img-fluid" src="images/audio.jpg" alt="card image">
+                                                <img class="img-fluid" loading="lazy" decoding="async" src="images/audio.jpg" alt="card image">
                                             </p>
                                             <h4 class="card-title fw-bold">گویندگان سیمرغ</h4>
                                             <p class="card-text fw-bold">اگر دنبال صداهای جذاب با گوینده های متنوع هستید
@@ -408,13 +444,13 @@ if (session_status() === PHP_SESSION_NONE) {
                         </div>
                     </div>
                     <div class="col-6 col-sm-4 mb-4">
-                        <div class="image-flip">
+                        <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
                             <div class="mainflip flip-0">
                                 <div class="frontside">
                                     <div class="card">
                                         <div class="card-body text-center">
                                             <p>
-                                                <img class="img-fluid" src="images/speaking3.jpg" alt="card image">
+                                                <img class="img-fluid" loading="lazy" decoding="async" src="images/speaking3.jpg" alt="card image">
                                             </p>
                                             <h4 class="card-title fw-bold">آموزش فن بیان و گویندگی</h4>
                                             <p class="card-text fw-bold">اینجا صدایتان شنیده می‌شود!</p>
@@ -440,13 +476,13 @@ if (session_status() === PHP_SESSION_NONE) {
                         </div>
                     </div>
                     <div class="col-6 col-sm-4 mb-4">
-                        <div class="image-flip">
+                        <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
                             <div class="mainflip flip-0">
                                 <div class="frontside">
                                     <div class="card">
                                         <div class="card-body text-center">
                                             <p>
-                                                <img class="img-fluid" src="images/packages.jpg" alt="card image">
+                                                <img class="img-fluid" loading="lazy" decoding="async" src="images/packages.jpg" alt="card image">
                                             </p>
                                             <h4 class="card-title fw-bold">پکیج‌های آموزشی</h4>
                                             <p class="card-text fw-bold">پکیج‌های آموزشی موسسه سیمرغ، راهی نوین برای
@@ -472,13 +508,13 @@ if (session_status() === PHP_SESSION_NONE) {
                         </div>
                     </div>
                     <div class="col-6 col-sm-4 mb-4">
-                        <div class="image-flip">
+                        <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
                             <div class="mainflip flip-0">
                                 <div class="frontside">
                                     <div class="card">
                                         <div class="card-body text-center">
                                             <p>
-                                                <img class="img-fluid" src="images/acting1.jpg" alt="card image">
+                                                <img class="img-fluid" loading="lazy" decoding="async" src="images/acting1.jpg" alt="card image">
                                             </p>
                                             <h4 class="card-title fw-bold">آموزش بازیگری</h4>
                                             <p class="card-text fw-bold">آیا به دنبال ارتقاء مهارت‌های بازیگری خود
@@ -506,13 +542,13 @@ if (session_status() === PHP_SESSION_NONE) {
                         </div>
                     </div>
                     <div class="col-6 col-sm-4 mb-4">
-                        <div class="image-flip">
+                        <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
                             <div class="mainflip flip-0">
                                 <div class="frontside">
                                     <div class="card">
                                         <div class="card-body text-center">
                                             <p>
-                                                <img class="img-fluid" src="images/ordering.jpg" alt="card image">
+                                                <img class="img-fluid" loading="lazy" decoding="async" src="images/ordering.jpg" alt="card image">
                                             </p>
                                             <h4 class="card-title fw-bold">سفارش تبلیغات شما</h4>
                                             <p class="card-text fw-bold">اینجا کسب و کارتان دیده می‌شود</p>
@@ -538,13 +574,13 @@ if (session_status() === PHP_SESSION_NONE) {
                         </div>
                     </div>
                     <div class="col-6 col-sm-4 mb-4">
-                        <div class="image-flip">
+                        <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
                             <div class="mainflip flip-0">
                                 <div class="frontside">
                                     <div class="card">
                                         <div class="card-body text-center">
                                             <p>
-                                                <img class="img-fluid" src="images/radio-simorgh.jpg" alt="رادیو سیمرغ">
+                                                <img class="img-fluid" loading="lazy" decoding="async" src="images/radio-simorgh.jpg" alt="رادیو سیمرغ">
                                             </p>
                                             <h4 class="card-title fw-bold">رادیو سیمرغ</h4>
                                             <p class="card-text fw-bold"> سفری شنیدنی در دنیای فرهنگ و هنر</p>
@@ -573,29 +609,29 @@ if (session_status() === PHP_SESSION_NONE) {
             </div>
         </section>
 
-        <hr class="my-4">
-
-        <section class="border">
+        <section class="blog-section">
             <div class="container">
-                <a href="articles">
-                    <h3 class="p text-center text-dark fw-bold" title="کلیک کنید">وبلاگ سیمرغ</h3>
-                </a>
+                <div class="sec-head">
+                    <span class="sec-eyebrow">مطالب آموزشی</span>
+                    <h2 class="sec-title"><a href="articles" title="مشاهده همه مقالات">وبلاگ سیمرغ</a></h2>
+                    <div class="sec-line"></div>
+                </div>
                 <div class="row">
                     <?php
                     $sql = "SELECT * FROM articles ORDER BY id DESC LIMIT 4";
                     $result = $conn->query($sql);
 
-                    if ($result->num_rows > 0) {
+                    if ($result && $result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
                     ?>
-
                     <div class="col-md-3 mb-4 col-6">
                         <div class="card-four position-relative overflow-hidden">
                             <a href="articles" class="d-block">
-                                <img src="<?= $row['images'] ?>" class="img-fluid w-100 hover-zoom" alt="تصویر مقاله"
+                                <img src="<?= htmlspecialchars($row['images']) ?>" class="img-fluid w-100 hover-zoom"
+                                    alt="<?= htmlspecialchars($row['title']) ?>" loading="lazy" decoding="async"
                                     style="height: 200px; object-fit: cover;">
                                 <div class="title-overlay">
-                                    <h5 class="card-title text-white fw-bold p-2"><?= $row['title'] ?></h5>
+                                    <h5 class="card-title text-white fw-bold p-2"><?= htmlspecialchars($row['title']) ?></h5>
                                 </div>
                             </a>
                         </div>
@@ -607,21 +643,20 @@ if (session_status() === PHP_SESSION_NONE) {
                 </div>
             </div>
         </section>
+    </div>
 
-        <hr class="my-4">
+    <!-- بنر پایانی: سبک و بدون background-attachment:fixed برای حفظ سرعت -->
+    <section class="cta-banner">
+        <img class="cta-banner__bg" src="images/33.webp" alt="" loading="lazy" aria-hidden="true">
+        <div class="cta-banner__overlay"></div>
+        <div class="container cta-banner__content">
+            <h2>دنیای هنر در دستان شماست!</h2>
+            <p>با دوره‌های تخصصی موسسه هفت هنر سیمرغ، استعدادهای خود را کشف و شکوفا کنید و به جمع هنرمندان حرفه‌ای بپیوندید.</p>
+            <a href="register2" class="btn-cta">همین حالا ثبت نام کنید <i class="fas fa-arrow-left"></i></a>
+        </div>
+    </section>
 
-        <section class="parallax-section">
-            <div class="parallax-content">
-                <h2>دنیای هنر در دستان شماست!</h2>
-                <p>با دوره‌های تخصصی موسسه هفت هنر سیمرغ، استعدادهای خود را کشف و شکوفا کنید و به جمع هنرمندان حرفه‌ای
-                    بپیوندید.</p>
-                <a href="register2" class="btn btn-light btn-lg mt-4 fw-bold">همین حالا ثبت نام کنید</a>
-            </div>
-        </section>
-
-        <hr class="my-4">
-        
-        <script>
+    <script>
         $(document).ready(function() {
             let timer;
 
@@ -755,8 +790,6 @@ if (session_status() === PHP_SESSION_NONE) {
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
             integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous">
         </script>
-
-    </div>
 
     <?php include "footer.php"; ?>
 

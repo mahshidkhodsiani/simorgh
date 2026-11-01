@@ -94,10 +94,7 @@
             </div>
 
             <div class="col-md-6 text-center">
-                <a href="https://trustseal.enamad.ir/?id=514858&Code=XLHp9yPcQnRZL83Nfd3Kg9BbN4INSCXP" target="_blank">
-                    <img src="https://trustseal.enamad.ir/logo.aspx?id=514858&Code=XLHp9yPcQnRZL83Nfd3Kg9BbN4INSCXP"
-                        alt="Enamad" style="cursor: pointer; max-width: 120px;">
-                </a>
+                <a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=514858&Code=XLHp9yPcQnRZL83Nfd3Kg9BbN4INSCXP'><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=514858&Code=XLHp9yPcQnRZL83Nfd3Kg9BbN4INSCXP' alt='' style='cursor:pointer' code='XLHp9yPcQnRZL83Nfd3Kg9BbN4INSCXP'></a>
                 <video autoplay loop muted style="margin-top: 15px; max-width: 100%; border-radius: 10px;">
                     <source src="../images/sms.mp4" type="video/mp4">
                 </video>

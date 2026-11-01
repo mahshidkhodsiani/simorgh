@@ -172,7 +172,6 @@ $conn->close();
             opacity: 0;
             transform: translateY(-20px);
         }
-
         to {
             opacity: 1;
             transform: translateY(0);
@@ -495,11 +494,8 @@ $conn->close();
         <!-- پیام‌های سیستم -->
         <?php if ($message): ?>
         <div class="container-fluid py-2">
-            <div id="alertMessage"
-                class="alert alert-<?php echo $message_type; ?> alert-dismissible fade show text-center" role="alert"
-                style="border-radius: 12px;">
-                <i
-                    class="bi <?php echo $message_type == 'success' ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill'; ?> me-2"></i>
+            <div id="alertMessage" class="alert alert-<?php echo $message_type; ?> alert-dismissible fade show text-center" role="alert" style="border-radius: 12px;">
+                <i class="bi <?php echo $message_type == 'success' ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill'; ?> me-2"></i>
                 <?php echo $message; ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -551,8 +547,7 @@ $conn->close();
                                                 موضوع تیکت
                                                 <span class="text-danger">*</span>
                                             </label>
-                                            <input type="text" class="form-control" id="subject" name="subject" required
-                                                placeholder="موضوع تیکت خود را وارد کنید">
+                                            <input type="text" class="form-control" id="subject" name="subject" required placeholder="موضوع تیکت خود را وارد کنید">
                                         </div>
                                         <div class="mb-0">
                                             <label for="message" class="form-label">
@@ -560,8 +555,7 @@ $conn->close();
                                                 متن پیام
                                                 <span class="text-danger">*</span>
                                             </label>
-                                            <textarea class="form-control" id="message" name="message" rows="5" required
-                                                placeholder="متن پیام خود را وارد کنید..."></textarea>
+                                            <textarea class="form-control" id="message" name="message" rows="5" required placeholder="متن پیام خود را وارد کنید..."></textarea>
                                         </div>
                                     </div>
 
@@ -611,12 +605,10 @@ $conn->close();
                                         <tr onclick="viewTicketDetails(<?php echo $ticket['id']; ?>)">
                                             <th scope="row"><?php echo $counter++; ?></th>
                                             <td>
-                                                <span
-                                                    class="ticket-subject"><?php echo htmlspecialchars($ticket['subject']); ?></span>
+                                                <span class="ticket-subject"><?php echo htmlspecialchars($ticket['subject']); ?></span>
                                             </td>
                                             <td>
-                                                <span class="ticket-message-preview"
-                                                    title="<?php echo htmlspecialchars($ticket['message']); ?>">
+                                                <span class="ticket-message-preview" title="<?php echo htmlspecialchars($ticket['message']); ?>">
                                                     <?php echo htmlspecialchars($ticket['message']); ?>
                                                 </span>
                                             </td>
@@ -654,8 +646,7 @@ $conn->close();
                                                 <?php endif; ?>
                                             </td>
                                             <td onclick="event.stopPropagation()">
-                                                <button class="btn-view-ticket"
-                                                    onclick="viewTicketDetails(<?php echo $ticket['id']; ?>)">
+                                                <button class="btn-view-ticket" onclick="viewTicketDetails(<?php echo $ticket['id']; ?>)">
                                                     <i class="bi bi-eye"></i>
                                                     مشاهده
                                                 </button>
@@ -669,8 +660,7 @@ $conn->close();
                             <div class="empty-state">
                                 <i class="bi bi-inbox"></i>
                                 <h5>هیچ تیکتی ثبت نشده است</h5>
-                                <p>شما تاکنون هیچ تیکتی ثبت نکرده‌اید. برای ارسال تیکت جدید روی دکمه <strong>ارسال تیکت
-                                        جدید</strong> کلیک کنید.</p>
+                                <p>شما تاکنون هیچ تیکتی ثبت نکرده‌اید. برای ارسال تیکت جدید روی دکمه <strong>ارسال تیکت جدید</strong> کلیک کنید.</p>
                             </div>
                             <?php endif; ?>
                         </div>
@@ -681,8 +671,7 @@ $conn->close();
     </div>
 
     <!-- Modal جزئیات تیکت -->
-    <div class="modal fade modal-ticket" id="ticketDetailModal" tabindex="-1" aria-labelledby="ticketDetailModalLabel"
-        aria-hidden="true">
+    <div class="modal fade modal-ticket" id="ticketDetailModal" tabindex="-1" aria-labelledby="ticketDetailModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -699,8 +688,7 @@ $conn->close();
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                        style="border-radius: 10px; padding: 10px 25px;">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="border-radius: 10px; padding: 10px 25px;">
                         <i class="bi bi-x-circle me-1"></i>بستن
                     </button>
                 </div>

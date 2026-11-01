@@ -476,3 +476,103 @@ Stack trace:
 #2 /home3/vuqgpgoc/public_html/articles/speakers_archive.php(79): include('/home3/vuqgpgoc...')
 #3 {main}
   thrown in /home3/vuqgpgoc/public_html/config.php on line 11
+[27-Oct-2026 04:01:03 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/motion_graphics.php on line 32
+[27-Oct-2026 04:01:03 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/motion_graphics.php on line 32
+[27-Oct-2026 13:50:32 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/order_ads.php on line 67
+[27-Oct-2026 13:50:32 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/order_ads.php on line 67
+[27-Oct-2026 13:50:33 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/motion_graphics.php on line 32
+[27-Oct-2026 13:50:33 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/motion_graphics.php on line 32
+[27-Oct-2026 13:50:34 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/teaser.php on line 32
+[27-Oct-2026 13:50:34 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/teaser.php on line 32
+[27-Oct-2026 13:50:35 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/cinema.php on line 33
+[27-Oct-2026 13:50:35 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/cinema.php on line 33
+[27-Oct-2026 13:50:36 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/chromakey.php on line 34
+[27-Oct-2026 13:50:36 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/chromakey.php on line 34
+[27-Oct-2026 17:55:34 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/chromakey.php on line 34
+[27-Oct-2026 17:55:34 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/chromakey.php on line 34
+[27-Oct-2026 17:58:49 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/cinema.php on line 33
+[27-Oct-2026 17:58:49 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/cinema.php on line 33
+[27-Oct-2026 18:04:51 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/motion_graphics.php on line 32
+[27-Oct-2026 18:04:51 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/motion_graphics.php on line 32
+[27-Oct-2026 18:16:18 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/cinema.php on line 33
+[27-Oct-2026 18:16:18 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/cinema.php on line 33
+[27-Oct-2026 18:19:01 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/order_ads.php on line 67
+[27-Oct-2026 18:19:01 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/order_ads.php on line 67
+[27-Oct-2026 18:21:45 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/motion_graphics.php on line 32
+[27-Oct-2026 18:21:45 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/motion_graphics.php on line 32
+[27-Oct-2026 18:27:12 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/chromakey.php on line 34
+[27-Oct-2026 18:27:12 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/chromakey.php on line 34
+[27-Oct-2026 18:38:07 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/teaser.php on line 32
+[27-Oct-2026 18:38:07 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/teaser.php on line 32
+[27-Oct-2026 19:58:07 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/order_ads.php on line 67
+[27-Oct-2026 19:58:07 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/order_ads.php on line 67
+[29-Oct-2026 01:52:40 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/teaser.php on line 32
+[29-Oct-2026 01:52:40 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/teaser.php on line 32
+[29-Oct-2026 03:22:41 Asia/Tehran] PHP Fatal error:  Uncaught mysqli_sql_exception: Too many connections in /home3/vuqgpgoc/public_html/config.php:11
+Stack trace:
+#0 /home3/vuqgpgoc/public_html/config.php(11): mysqli_connect('89.32.250.180', 'vuqgpgoc_admin', 'ZKdN]DZ1kEuJ', 'vuqgpgoc_simorg...')
+#1 /home3/vuqgpgoc/public_html/articles/order_ads.php(54): include('/home3/vuqgpgoc...')
+#2 {main}
+  thrown in /home3/vuqgpgoc/public_html/config.php on line 11
+[29-Oct-2026 03:52:45 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/motion_graphics.php on line 32
+[29-Oct-2026 03:52:45 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/motion_graphics.php on line 32
+[29-Oct-2026 07:22:40 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/cinema.php on line 33
+[29-Oct-2026 07:22:40 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/cinema.php on line 33
+[29-Oct-2026 07:52:41 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/chromakey.php on line 34
+[29-Oct-2026 07:52:41 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/chromakey.php on line 34
+[29-Oct-2026 12:34:12 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/teaser.php on line 32
+[29-Oct-2026 12:34:12 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/teaser.php on line 32
+[30-Oct-2026 06:31:08 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/order_ads.php on line 67
+[30-Oct-2026 06:31:08 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/order_ads.php on line 67
+[30-Oct-2026 06:31:08 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/motion_graphics.php on line 32
+[30-Oct-2026 06:31:08 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/motion_graphics.php on line 32
+[30-Oct-2026 06:31:09 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/teaser.php on line 32
+[30-Oct-2026 06:31:09 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/teaser.php on line 32
+[30-Oct-2026 06:31:09 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/cinema.php on line 33
+[30-Oct-2026 06:31:09 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/cinema.php on line 33
+[30-Oct-2026 06:31:10 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/chromakey.php on line 34
+[30-Oct-2026 06:31:10 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/chromakey.php on line 34
+[30-Oct-2026 11:25:55 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/order_ads.php on line 67
+[30-Oct-2026 11:25:55 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/order_ads.php on line 67
+[30-Oct-2026 16:29:54 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/cinema.php on line 33
+[30-Oct-2026 16:29:54 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/cinema.php on line 33
+[31-Oct-2026 07:13:38 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/cinema.php on line 33
+[31-Oct-2026 07:13:38 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/cinema.php on line 33
+[31-Oct-2026 09:41:22 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/order_ads.php on line 67
+[31-Oct-2026 09:41:22 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/order_ads.php on line 67
+[31-Oct-2026 09:41:28 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/motion_graphics.php on line 32
+[31-Oct-2026 09:41:28 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/motion_graphics.php on line 32
+[31-Oct-2026 09:41:34 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/teaser.php on line 32
+[31-Oct-2026 09:41:34 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/teaser.php on line 32
+[31-Oct-2026 09:41:39 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/cinema.php on line 33
+[31-Oct-2026 09:41:39 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/cinema.php on line 33
+[31-Oct-2026 09:41:45 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/chromakey.php on line 34
+[31-Oct-2026 09:41:45 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/chromakey.php on line 34
+[31-Oct-2026 09:42:56 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/order_ads.php on line 67
+[31-Oct-2026 09:42:56 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/order_ads.php on line 67
+[31-Oct-2026 09:43:09 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/motion_graphics.php on line 32
+[31-Oct-2026 09:43:09 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/motion_graphics.php on line 32
+[31-Oct-2026 09:43:20 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/teaser.php on line 32
+[31-Oct-2026 09:43:20 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/teaser.php on line 32
+[31-Oct-2026 09:43:36 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/cinema.php on line 33
+[31-Oct-2026 09:43:36 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/cinema.php on line 33
+[31-Oct-2026 09:43:55 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/chromakey.php on line 34
+[31-Oct-2026 09:43:55 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/chromakey.php on line 34
+[31-Oct-2026 12:40:04 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/motion_graphics.php on line 32
+[31-Oct-2026 12:40:04 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/motion_graphics.php on line 32
+[31-Oct-2026 13:53:30 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/order_ads.php on line 67
+[31-Oct-2026 13:53:30 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/order_ads.php on line 67
+[31-Oct-2026 13:53:30 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/motion_graphics.php on line 32
+[31-Oct-2026 13:53:30 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/motion_graphics.php on line 32
+[31-Oct-2026 13:53:31 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/teaser.php on line 32
+[31-Oct-2026 13:53:31 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/teaser.php on line 32
+[31-Oct-2026 13:53:31 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/cinema.php on line 33
+[31-Oct-2026 13:53:31 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/cinema.php on line 33
+[31-Oct-2026 13:53:31 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/chromakey.php on line 34
+[31-Oct-2026 13:53:31 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/chromakey.php on line 34
+[31-Oct-2026 22:05:08 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/order_ads.php on line 67
+[31-Oct-2026 22:05:08 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/order_ads.php on line 67
+[01-Nov-2026 03:45:02 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/order_ads.php on line 67
+[01-Nov-2026 03:45:02 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/order_ads.php on line 67
+[01-Nov-2026 07:15:40 Asia/Tehran] PHP Warning:  Undefined variable $row in /home3/vuqgpgoc/public_html/articles/cinema.php on line 33
+[01-Nov-2026 07:15:40 Asia/Tehran] PHP Warning:  Trying to access array offset on value of type null in /home3/vuqgpgoc/public_html/articles/cinema.php on line 33

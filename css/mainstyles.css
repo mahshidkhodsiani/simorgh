@@ -183,7 +183,8 @@ a:hover {
 /* ============================================ */
 
 #team {
-    background: #ddd22b !important;
+    /* گرادیان طلایی ← قرمز (تنظیم نهایی در بلوک «سکشن تازه‌ترین‌ها» انتهای فایل) */
+    background: linear-gradient(135deg, #f7c948 0%, #e9a210 35%, #d8452f 70%, #a3112b 100%) !important;
     padding: 40px 0 !important;
 }
 
@@ -804,8 +805,8 @@ hr {
 
 .parallax-section {
     background-image: url("../images/33.webp");
-    min-height: 500px;
-    background-attachment: fixed;
+    min-height: 320px;
+    background-attachment: scroll; /* fixed باعث repaint و کندی اسکرول می‌شد */
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -821,10 +822,7 @@ hr {
 .parallax-section::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: -1;
 }
@@ -1453,3 +1451,1501 @@ hr {
         -webkit-line-clamp: 3 !important;
     }
 }
+
+/* ============================================ */
+/* ============================================ */
+/* ===== استایل‌های جدید (طراحی مدرن) ===== */
+/* ============================================ */
+/* ============================================ */
+
+/* -------------------------------------------- */
+/* ----- الف) تیتر مشترک بخش‌ها ---------------- */
+/* -------------------------------------------- */
+
+.section-head {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.section-eyebrow {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #d85353;
+    background: rgba(216, 83, 83, 0.1);
+    padding: 6px 18px;
+    border-radius: 30px;
+    margin-bottom: 14px;
+    letter-spacing: 0.4px;
+}
+
+.section-title-main {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    margin: 0 0 10px 0;
+    background: linear-gradient(135deg, #2a1a1a, #d85353);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.section-subtitle {
+    font-size: 15px;
+    color: #888;
+    margin: 0;
+}
+
+
+/* -------------------------------------------- */
+/* ----- ب) پکیج شاخص (Hero Package) ---------- */
+/* -------------------------------------------- */
+
+.hero-package-section {
+    padding: 60px 0 40px 0;
+    background: linear-gradient(180deg, #fafafa 0%, #fff5f5 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-package-section::before {
+    content: "";
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(216, 83, 83, 0.08), transparent 70%);
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.hero-package-section .container {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-package-card {
+    position: relative;
+    background: #fff;
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 
+        0 4px 20px rgba(0, 0, 0, 0.06),
+        0 20px 60px rgba(216, 83, 83, 0.12);
+    border: 1px solid rgba(216, 83, 83, 0.1);
+    transition: box-shadow 0.4s ease, transform 0.4s ease;
+}
+
+.hero-package-card:hover {
+    box-shadow: 
+        0 8px 30px rgba(0, 0, 0, 0.08),
+        0 30px 80px rgba(216, 83, 83, 0.2);
+    transform: translateY(-6px);
+}
+
+.hero-package-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #f95074, #d85353, #7a0d31, #d85353, #f95074);
+    background-size: 200% 100%;
+    animation: shimmerBar 3s ease-in-out infinite;
+    z-index: 2;
+}
+
+@keyframes shimmerBar {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* تصویر */
+.hero-package-img-col {
+    min-height: 420px;
+}
+
+.hero-package-img-link {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 420px;
+    overflow: hidden;
+}
+
+.hero-package-img {
+    width: 100%;
+    height: 100%;
+    min-height: 420px;
+    max-height: 560px;
+    object-fit: cover;
+    transition: transform 0.8s ease;
+    display: block;
+}
+
+.hero-package-card:hover .hero-package-img {
+    transform: scale(1.08);
+}
+
+.hero-package-img-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(135deg, transparent 40%, rgba(42, 26, 26, 0.3) 100%);
+    pointer-events: none;
+}
+
+.hero-package-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, #f95074, #d85353);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 8px 18px;
+    border-radius: 30px;
+    box-shadow: 0 8px 24px rgba(216, 83, 83, 0.5);
+    z-index: 2;
+    animation: badgePulse 2s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* محتوا */
+.hero-package-content {
+    padding: 45px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
+.hero-package-meta {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+}
+
+.hero-package-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #7a0d31;
+    background: rgba(216, 83, 83, 0.08);
+    padding: 5px 14px;
+    border-radius: 20px;
+}
+
+.hero-package-meta span i {
+    color: #d85353;
+    font-size: 12px;
+}
+
+.hero-package-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    margin: 0 0 18px 0;
+    line-height: 1.3;
+}
+
+.hero-package-divider {
+    width: 70px;
+    height: 4px;
+    background: linear-gradient(90deg, #d85353, #f95074);
+    border-radius: 4px;
+    margin-bottom: 22px;
+    transition: width 0.35s ease;
+}
+
+.hero-package-card:hover .hero-package-divider {
+    width: 120px;
+}
+
+.hero-package-desc {
+    color: #555;
+    font-size: 15px;
+    line-height: 1.9;
+    margin-bottom: 22px;
+    max-height: 130px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+}
+
+.hero-package-desc p {
+    color: #555 !important;
+    font-size: 15px !important;
+    margin: 0 0 8px 0 !important;
+    line-height: 1.9 !important;
+}
+
+/* ویژگی‌ها */
+.hero-package-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 20px;
+    margin-bottom: 30px;
+}
+
+.hero-feature {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #444;
+    font-weight: 500;
+}
+
+.hero-feature i {
+    color: #d85353;
+    font-size: 15px;
+}
+
+/* دکمه‌ها */
+.hero-package-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: auto;
+}
+
+.btn-hero-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #f95074, #d85353);
+    color: #fff !important;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 13px 28px;
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 8px 24px rgba(216, 83, 83, 0.35);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    text-decoration: none;
+}
+
+.btn-hero-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 32px rgba(216, 83, 83, 0.5);
+    color: #fff !important;
+}
+
+.btn-hero-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: #d85353 !important;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 12px 24px;
+    border-radius: 12px;
+    border: 2px solid #d85353;
+    transition: all 0.25s ease;
+    text-decoration: none;
+}
+
+.btn-hero-secondary:hover {
+    background: #d85353;
+    color: #fff !important;
+    transform: translateY(-3px);
+}
+
+
+/* -------------------------------------------- */
+/* ----- ج) رادیو سیمرغ (Radio Hero) ---------- */
+/* -------------------------------------------- */
+
+.radio-hero-section {
+    padding: 60px 0;
+    background: linear-gradient(180deg, #fff5f5 0%, #ffffff 100%);
+    position: relative;
+}
+
+.radio-hero-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 36px;
+    padding-bottom: 22px;
+    border-bottom: 2px dashed rgba(216, 83, 83, 0.25);
+}
+
+.radio-hero-head-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.radio-live-dot {
+    width: 14px;
+    height: 14px;
+    background: #d85353;
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(216, 83, 83, 0.7);
+    animation: livePulse 1.8s infinite;
+    flex-shrink: 0;
+}
+
+@keyframes livePulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(216, 83, 83, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 14px rgba(216, 83, 83, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(216, 83, 83, 0);
+    }
+}
+
+.radio-hero-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.radio-hero-title i {
+    color: #d85353;
+    font-size: 1.7rem;
+}
+
+.radio-hero-sub {
+    color: #888;
+    font-size: 14px;
+    margin: 4px 0 0 0;
+}
+
+.radio-hero-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #d85353 !important;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 22px;
+    border: 2px solid #d85353;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.radio-hero-more:hover {
+    background: #d85353;
+    color: #fff !important;
+    transform: translateX(-6px);
+}
+
+/* کارت رادیو */
+.radio-hero-card {
+    display: block;
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    text-decoration: none;
+    height: 100%;
+    border: 1px solid rgba(216, 83, 83, 0.08);
+}
+
+.radio-hero-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 50px rgba(216, 83, 83, 0.22);
+}
+
+.radio-hero-thumb {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    background: #f0f0f0;
+}
+
+.radio-hero-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.radio-hero-card:hover .radio-hero-thumb img {
+    transform: scale(1.12);
+}
+
+.radio-hero-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.radio-hero-tag {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: rgba(216, 83, 83, 0.95);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 20px;
+    letter-spacing: 0.3px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    z-index: 2;
+}
+
+.radio-hero-play {
+    position: absolute;
+    bottom: 18px;
+    left: 18px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #fff;
+    color: #d85353;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    z-index: 3;
+}
+
+.radio-hero-play i {
+    margin-right: 2px;
+}
+
+.radio-hero-card:hover .radio-hero-play {
+    background: #d85353;
+    color: #fff;
+    transform: scale(1.15);
+}
+
+/* موج صوتی */
+.radio-hero-wave {
+    position: absolute;
+    bottom: 28px;
+    right: 20px;
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 22px;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.radio-hero-card:hover .radio-hero-wave {
+    opacity: 1;
+}
+
+.radio-hero-wave span {
+    display: block;
+    width: 3px;
+    background: #fff;
+    border-radius: 2px;
+    animation: waveAnim 1s ease-in-out infinite;
+}
+
+.radio-hero-wave span:nth-child(1) { height: 8px;  animation-delay: 0s; }
+.radio-hero-wave span:nth-child(2) { height: 16px; animation-delay: 0.15s; }
+.radio-hero-wave span:nth-child(3) { height: 22px; animation-delay: 0.3s; }
+.radio-hero-wave span:nth-child(4) { height: 14px; animation-delay: 0.45s; }
+.radio-hero-wave span:nth-child(5) { height: 10px; animation-delay: 0.6s; }
+
+@keyframes waveAnim {
+    0%, 100% { transform: scaleY(0.4); }
+    50% { transform: scaleY(1); }
+}
+
+.radio-hero-body {
+    padding: 18px 20px 22px 20px;
+    text-align: right;
+}
+
+.radio-hero-time {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    color: #999;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.radio-hero-time i {
+    color: #d85353;
+    font-size: 11px;
+}
+
+.radio-hero-card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 6px 0;
+    transition: color 0.25s ease;
+    line-height: 1.5;
+}
+
+.radio-hero-card:hover .radio-hero-card-title {
+    color: #d85353;
+}
+
+.radio-hero-card-desc {
+    font-size: 13px;
+    color: #777;
+    margin: 0;
+    line-height: 1.7;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+
+/* -------------------------------------------- */
+/* ----- د) فاصله‌های بهتر بین بخش‌ها ----------- */
+/* -------------------------------------------- */
+
+.blog-section {
+    padding: 40px 0;
+}
+
+#team {
+    margin-top: 20px !important;
+}
+
+
+/* -------------------------------------------- */
+/* ----- ه) ریسپانسیو (تبلت) ------------------ */
+/* -------------------------------------------- */
+
+@media (max-width: 991px) {
+    .section-title-main {
+        font-size: 1.9rem;
+    }
+
+    .hero-package-img-col,
+    .hero-package-img-link,
+    .hero-package-img {
+        min-height: 320px;
+        max-height: 380px;
+    }
+
+    .hero-package-content {
+        padding: 32px 28px;
+    }
+
+    .hero-package-title {
+        font-size: 1.7rem;
+    }
+
+    .radio-hero-title {
+        font-size: 1.6rem;
+    }
+
+    .radio-hero-title i {
+        font-size: 1.4rem;
+    }
+}
+
+
+/* -------------------------------------------- */
+/* ----- و) ریسپانسیو (موبایل) ---------------- */
+/* -------------------------------------------- */
+
+@media (max-width: 767px) {
+    .hero-package-section,
+    .radio-hero-section {
+        padding: 40px 0 30px 0;
+    }
+
+    .section-head {
+        margin-bottom: 26px;
+    }
+
+    .section-title-main {
+        font-size: 1.5rem;
+    }
+
+    .section-eyebrow {
+        font-size: 11px;
+        padding: 4px 14px;
+    }
+
+    .section-subtitle {
+        font-size: 13px;
+    }
+
+    .hero-package-card {
+        border-radius: 20px;
+    }
+
+    .hero-package-img-col,
+    .hero-package-img-link,
+    .hero-package-img {
+        min-height: 240px;
+        max-height: 280px;
+    }
+
+    .hero-package-content {
+        padding: 24px 20px;
+    }
+
+    .hero-package-title {
+        font-size: 1.35rem;
+        margin-bottom: 14px;
+    }
+
+    .hero-package-meta {
+        gap: 8px;
+        margin-bottom: 14px;
+    }
+
+    .hero-package-meta span {
+        font-size: 11px;
+        padding: 4px 10px;
+    }
+
+    .hero-package-divider {
+        width: 50px;
+        margin-bottom: 16px;
+    }
+
+    .hero-package-desc {
+        font-size: 13px;
+        line-height: 1.8;
+        -webkit-line-clamp: 3;
+        max-height: 100px;
+        margin-bottom: 18px;
+    }
+
+    .hero-package-desc p {
+        font-size: 13px !important;
+        line-height: 1.8 !important;
+    }
+
+    .hero-package-features {
+        gap: 8px 14px;
+        margin-bottom: 20px;
+    }
+
+    .hero-feature {
+        font-size: 12px;
+    }
+
+    .hero-feature i {
+        font-size: 13px;
+    }
+
+    .hero-package-actions {
+        gap: 8px;
+    }
+
+    .btn-hero-primary,
+    .btn-hero-secondary {
+        flex: 1;
+        justify-content: center;
+        padding: 11px 16px;
+        font-size: 13px;
+    }
+
+    /* رادیو موبایل */
+    .radio-hero-head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+        margin-bottom: 24px;
+        padding-bottom: 16px;
+    }
+
+    .radio-hero-head-right {
+        gap: 12px;
+    }
+
+    .radio-hero-title {
+        font-size: 1.3rem;
+    }
+
+    .radio-hero-title i {
+        font-size: 1.2rem;
+    }
+
+    .radio-hero-sub {
+        font-size: 12px;
+    }
+
+    .radio-hero-more {
+        font-size: 12px;
+        padding: 8px 16px;
+    }
+
+    .radio-hero-thumb {
+        height: 170px;
+    }
+
+    .radio-hero-body {
+        padding: 14px 16px 18px 16px;
+    }
+
+    .radio-hero-card-title {
+        font-size: 1rem;
+    }
+
+    .radio-hero-card-desc {
+        font-size: 12px;
+    }
+
+    .radio-hero-play {
+        width: 42px;
+        height: 42px;
+        font-size: 14px;
+        bottom: 14px;
+        left: 14px;
+    }
+
+    .radio-hero-badge {
+        font-size: 10px;
+        padding: 3px 10px;
+    }
+}
+
+@media (max-width: 400px) {
+    .section-title-main {
+        font-size: 1.25rem;
+    }
+
+    .hero-package-title {
+        font-size: 1.15rem;
+    }
+
+    .hero-package-desc {
+        font-size: 12px;
+        -webkit-line-clamp: 2;
+        max-height: 80px;
+    }
+
+    .hero-package-desc p {
+        font-size: 12px !important;
+    }
+
+    .hero-package-actions .btn-hero-primary,
+    .hero-package-actions .btn-hero-secondary {
+        font-size: 12px;
+        padding: 9px 12px;
+    }
+
+    .radio-hero-thumb {
+        height: 150px;
+    }
+
+    .radio-hero-card-title {
+        font-size: 0.9rem;
+    }
+}
+
+
+/* ================================================================== */
+/* =====================  طراحی جدید صفحه اصلی  ===================== */
+/* ================================================================== */
+
+:root {
+    --sim-red: #d85353;
+    --sim-red-dark: #7a0d31;
+    --sim-maroon: #4d0707;
+    --sim-gold: #f5b82e;
+    --sim-gold-light: #ffe08a;
+    --sim-ink: #2a1a1a;
+    --sim-bg: #faf6f3;
+    --sim-radius: 20px;
+    --sim-shadow: 0 10px 30px rgba(77, 7, 7, 0.12);
+    --sim-grad-brand: linear-gradient(135deg, #f7c948 0%, #e9a210 30%, #d8452f 70%, #a3112b 100%);
+}
+
+html { scroll-behavior: smooth; }
+
+body { background: var(--sim-bg); }
+
+/* سکشن‌های عمومی داخل فلکس‌باکسِ body نباید فشرده شوند */
+.radio-showcase,
+.cta-banner,
+.packages-section,
+.quick-section,
+.latest-section,
+.blog-section { flex-shrink: 0; }
+
+/* ---------- تیتر یکدست سکشن‌ها ---------- */
+.sec-head {
+    text-align: center;
+    margin-bottom: 36px;
+}
+
+.sec-eyebrow {
+    display: inline-block;
+    padding: 4px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--sim-red-dark);
+    background: rgba(216, 83, 83, 0.1);
+    border: 1px solid rgba(216, 83, 83, 0.25);
+    border-radius: 999px;
+}
+
+.sec-head .sec-title {
+    margin: 6px 0 0 !important;
+    font-size: 2.1rem;
+    font-weight: 800;
+    color: var(--sim-ink);
+    text-transform: none;
+}
+
+.sec-head .sec-title a { color: inherit; }
+.sec-head .sec-title a:hover { color: var(--sim-red); }
+
+.sec-line {
+    width: 90px;
+    height: 4px;
+    margin: 10px auto 0;
+    border-radius: 4px;
+    background: var(--sim-grad-brand);
+}
+
+.sec-head--light .sec-eyebrow {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+.sec-head--light .sec-title { color: #fff; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.25); }
+.sec-head--light .sec-line { background: #fff; }
+
+/* ---------- کارت‌های دسترسی سریع ---------- */
+.quick-section { padding: 30px 0 20px; }
+
+.quick-visual img {
+    border-radius: var(--sim-radius) !important;
+    box-shadow: var(--sim-shadow) !important;
+}
+
+.quick-link { display: block; height: 100%; }
+
+.quick-card {
+    background: #fff;
+    border: 1px solid rgba(216, 83, 83, 0.25);
+    border-radius: 16px;
+    box-shadow: 0 4px 14px rgba(77, 7, 7, 0.06);
+    position: relative;
+    overflow: hidden;
+    transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+}
+
+.quick-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: var(--sim-grad-brand);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform .35s ease;
+}
+
+.quick-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--sim-red);
+    box-shadow: 0 14px 28px rgba(216, 83, 83, 0.2);
+}
+.quick-card:hover::before { transform: scaleX(1); }
+
+.quick-icon {
+    flex: 0 0 46px;
+    width: 46px;
+    height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 19px;
+    color: #fff;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--sim-red), var(--sim-red-dark));
+    box-shadow: 0 6px 14px rgba(122, 13, 49, 0.3);
+    transition: transform .3s ease;
+}
+.quick-card:hover .quick-icon { transform: rotate(-8deg) scale(1.08); }
+
+.quick-card .card-title {
+    font-size: 15px;
+    color: var(--sim-ink);
+    line-height: 1.8 !important;
+}
+
+/* ================================================================== */
+/* ===================  سکشن اختصاصی رادیو سیمرغ  =================== */
+/* ================================================================== */
+
+.radio-showcase {
+    position: relative;
+    margin: 30px 0 10px;
+    padding: 80px 0;
+    color: #fff;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 85% 20%, rgba(224, 160, 90, 0.22), transparent 45%),
+        radial-gradient(circle at 8% 92%, rgba(139, 90, 60, 0.45), transparent 52%),
+        linear-gradient(135deg, #060b22 0%, #0d1a47 45%, #16295f 75%, #3a2a2a 100%);
+}
+
+/* الگوی نقطه‌ای ظریف */
+.radio-showcase::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+    background-size: 22px 22px;
+    pointer-events: none;
+}
+
+.radio-bg-glow {
+    position: absolute;
+    top: -120px;
+    left: -120px;
+    width: 380px;
+    height: 380px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(196, 132, 84, 0.3), transparent 70%);
+    pointer-events: none;
+}
+
+.radio-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 18px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--sim-gold-light);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(245, 184, 46, 0.45);
+    border-radius: 999px;
+    backdrop-filter: blur(4px);
+}
+
+.radio-dot {
+    position: relative;
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #ff4d4d;
+}
+.radio-dot::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: #ff4d4d;
+    animation: radioPulse 1.8s ease-out infinite;
+}
+
+.radio-title {
+    margin: 18px 0 0;
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    font-weight: 900;
+    line-height: 1.4 !important;
+    background: linear-gradient(90deg, #fff 0%, var(--sim-gold-light) 60%, var(--sim-gold) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.radio-subtitle {
+    margin: 0 0 12px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--sim-gold-light);
+}
+
+.radio-text {
+    max-width: 520px;
+    margin: 0 0 22px;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.82);
+}
+@media (min-width: 992px) { .radio-text { margin-right: 0; } }
+@media (max-width: 991px) { .radio-text { margin-left: auto; margin-right: auto; } }
+
+.radio-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 28px;
+}
+@media (max-width: 991px) { .radio-chips { justify-content: center; } }
+
+.radio-chips span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    font-size: 13px;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 999px;
+    transition: background .3s ease, transform .3s ease;
+}
+.radio-chips span:hover { background: rgba(245, 184, 46, 0.25); transform: translateY(-2px); }
+.radio-chips i { color: var(--sim-gold); }
+
+.radio-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+@media (max-width: 991px) { .radio-actions { justify-content: center; } }
+
+.btn-radio-main,
+.btn-radio-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 28px;
+    font-size: 15px;
+    font-weight: 800;
+    border-radius: 999px;
+    transition: transform .3s ease, box-shadow .3s ease, background .3s ease, color .3s ease;
+}
+
+.btn-radio-main {
+    color: #0d1a47;
+    background: linear-gradient(135deg, var(--sim-gold-light), var(--sim-gold));
+    box-shadow: 0 8px 22px rgba(245, 184, 46, 0.35);
+}
+.btn-radio-main:hover {
+    color: #0d1a47;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(245, 184, 46, 0.5);
+}
+
+.btn-radio-ghost {
+    color: #fff;
+    border: 2px solid rgba(255, 255, 255, 0.55);
+}
+.btn-radio-ghost:hover {
+    color: #0d1a47;
+    background: #fff;
+    transform: translateY(-3px);
+}
+
+/* ---- ویژوال: دیسک چرخان + موج صوتی ---- */
+.radio-visual {
+    position: relative;
+    max-width: 420px;
+    margin: 0 auto;
+    padding-bottom: 56px;
+}
+
+.radio-disc {
+    position: relative; /* قاب ثابت (بدون چرخش) */
+    width: min(100%, 340px);
+    aspect-ratio: 1 / 1;
+    margin: 0 auto;
+    border-radius: 50%;
+    padding: 12px;
+    background: conic-gradient(from 0deg, var(--sim-gold), #fff3c4, #a8693f, #2f4a9e, var(--sim-gold));
+    box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.06), 0 25px 60px rgba(0, 0, 0, 0.5);
+}
+
+.radio-disc img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+    border: 6px solid #060b22;
+}
+
+.radio-waves {
+    position: absolute;
+    right: 50%;
+    bottom: 0;
+    transform: translateX(50%);
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    height: 48px;
+}
+
+.radio-waves span {
+    display: block;
+    width: 6px;
+    height: 100%;
+    border-radius: 6px;
+    background: linear-gradient(to top, #a8693f, var(--sim-gold));
+    transform-origin: bottom;
+    animation: radioBar 1.1s ease-in-out infinite;
+}
+.radio-waves span:nth-child(1)  { animation-delay: 0s;    }
+.radio-waves span:nth-child(2)  { animation-delay: .12s;  }
+.radio-waves span:nth-child(3)  { animation-delay: .24s;  }
+.radio-waves span:nth-child(4)  { animation-delay: .36s;  }
+.radio-waves span:nth-child(5)  { animation-delay: .08s;  }
+.radio-waves span:nth-child(6)  { animation-delay: .2s;   }
+.radio-waves span:nth-child(7)  { animation-delay: .32s;  }
+.radio-waves span:nth-child(8)  { animation-delay: .44s;  }
+.radio-waves span:nth-child(9)  { animation-delay: .16s;  }
+.radio-waves span:nth-child(10) { animation-delay: .28s;  }
+.radio-waves span:nth-child(11) { animation-delay: .4s;   }
+.radio-waves span:nth-child(12) { animation-delay: .04s;  }
+
+.radio-floating {
+    position: absolute;
+    width: 54px;
+    height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: #0d1a47;
+    background: linear-gradient(135deg, var(--sim-gold-light), var(--sim-gold));
+    border-radius: 16px;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+    animation: radioFloat 4s ease-in-out infinite;
+}
+.radio-floating--a { top: 6%;  right: 2%; }
+.radio-floating--b { bottom: 24%; left: 0; animation-delay: -2s; color: #fff; background: linear-gradient(135deg, #3a5bbf, #16295f); }
+
+@keyframes radioBar   { 0%, 100% { transform: scaleY(.15); } 50% { transform: scaleY(1); } }
+@keyframes radioFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+@keyframes radioPulse { 0% { transform: scale(1); opacity: .7; } 100% { transform: scale(3.2); opacity: 0; } }
+
+/* ================================================================== */
+/* ===================  سکشن آخرین پکیج (یک کارت)  ================== */
+/* ================================================================== */
+
+.packages-section { padding: 50px 0 30px; }
+
+.pkg-feature {
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 24px;
+    border-top: 5px solid transparent;
+    border-image: var(--sim-grad-brand) 1;
+    border-image-slice: 1;
+    box-shadow: var(--sim-shadow);
+    transition: transform .35s ease, box-shadow .35s ease;
+}
+.pkg-feature:hover { transform: translateY(-5px); box-shadow: 0 20px 44px rgba(77, 7, 7, 0.18); }
+
+.pkg-feature__img {
+    position: relative;
+    flex: 0 0 44%;
+    min-height: 340px;
+    overflow: hidden;
+    display: block;
+}
+.pkg-feature__img img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .8s ease;
+}
+.pkg-feature:hover .pkg-feature__img img { transform: scale(1.06); }
+
+.pkg-feature__ribbon {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 16px;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--sim-maroon);
+    background: linear-gradient(135deg, var(--sim-gold-light), var(--sim-gold));
+    border-radius: 999px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+.pkg-feature__body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 36px 40px;
+}
+
+.pkg-feature__title { margin: 0; font-size: 1.7rem; font-weight: 800; }
+.pkg-feature__title a { color: var(--sim-red-dark); }
+.pkg-feature__title a:hover { color: var(--sim-red); }
+
+.pkg-feature__bar {
+    width: 70px;
+    height: 4px;
+    margin: 12px 0 16px;
+    border-radius: 4px;
+    background: var(--sim-grad-brand);
+    transition: width .4s ease;
+}
+.pkg-feature:hover .pkg-feature__bar { width: 130px; }
+
+.pkg-feature__desc {
+    margin: 0 0 24px;
+    font-size: 15px;
+    color: #4a3f3f;
+    text-align: justify;
+}
+
+.pkg-feature__actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+.btn-pkg-main,
+.btn-pkg-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 24px;
+    font-size: 14px;
+    font-weight: 800;
+    border-radius: 999px;
+    transition: transform .3s ease, box-shadow .3s ease, background .3s ease, color .3s ease;
+}
+
+.btn-pkg-main {
+    color: #fff;
+    background: linear-gradient(135deg, var(--sim-red), var(--sim-red-dark));
+    box-shadow: 0 8px 20px rgba(122, 13, 49, 0.3);
+}
+.btn-pkg-main:hover { color: #fff; transform: translateY(-3px); box-shadow: 0 12px 26px rgba(122, 13, 49, 0.4); }
+
+.btn-pkg-ghost { color: var(--sim-red-dark); border: 2px solid rgba(122, 13, 49, 0.35); }
+.btn-pkg-ghost:hover { color: #fff; background: var(--sim-red-dark); border-color: var(--sim-red-dark); transform: translateY(-3px); }
+.btn-pkg-ghost i { transition: transform .3s ease; }
+.btn-pkg-ghost:hover i { transform: translateX(-4px); }
+
+.pkg-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 34px;
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--sim-red-dark);
+    background: #fff;
+    border: 2px dashed rgba(216, 83, 83, 0.55);
+    border-radius: 999px;
+    transition: all .3s ease;
+}
+.pkg-more:hover {
+    color: #fff;
+    background: var(--sim-grad-brand);
+    border-color: transparent;
+    border-style: solid;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 26px rgba(216, 69, 47, 0.35);
+}
+.pkg-more i { transition: transform .3s ease; }
+.pkg-more:hover i { transform: translateX(-5px); }
+
+/* ================================================================== */
+/* ===================  سکشن تازه‌ترین‌ها (گرادیان)  ================ */
+/* ================================================================== */
+
+.latest-section,
+#team.latest-section {
+    position: relative;
+    margin: 30px 0 20px !important;
+    padding: 60px 0 40px !important;
+    overflow: hidden;
+    border-radius: 28px;
+    background:
+        radial-gradient(circle at 12% 15%, rgba(255, 255, 255, 0.35), transparent 40%),
+        radial-gradient(circle at 90% 90%, rgba(255, 215, 120, 0.35), transparent 45%),
+        linear-gradient(135deg, #ffd45e 0%, #f2a60c 28%, #e2552b 65%, #a3112b 100%) !important;
+    box-shadow: 0 18px 44px rgba(163, 17, 43, 0.28);
+}
+
+/* برق نوری ملایم */
+.latest-section::before {
+    content: "";
+    position: absolute;
+    top: -40%;
+    right: -20%;
+    width: 60%;
+    height: 180%;
+    background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.16) 50%, transparent 70%);
+    transform: rotate(8deg);
+    pointer-events: none;
+}
+
+.latest-section .container { position: relative; z-index: 1; }
+
+#team.latest-section .card {
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 10px 26px rgba(60, 0, 10, 0.25);
+}
+#team.latest-section .card .card-body { padding: 16px; }
+#team.latest-section .card-title { color: var(--sim-red-dark); }
+#team.latest-section .btn-primary {
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--sim-red), var(--sim-red-dark));
+    border: none;
+}
+
+/* ================================================================== */
+/* ===========================  وبلاگ  ============================== */
+/* ================================================================== */
+
+.blog-section { padding: 40px 0 30px; content-visibility: auto; contain-intrinsic-size: 0 420px; }
+
+.blog-section .card-four { border-radius: 16px; box-shadow: 0 8px 22px rgba(77, 7, 7, 0.14); }
+.blog-section .card-four:hover { transform: translateY(-6px); box-shadow: 0 16px 32px rgba(77, 7, 7, 0.22); }
+.blog-section .hover-zoom { transition: transform .6s ease; }
+.blog-section .card-four:hover .hover-zoom { transform: scale(1.08); }
+
+/* ================================================================== */
+/* ======  بنر پایانی (جایگزین پارالکس سنگین، بدون fixed)  ========== */
+/* ================================================================== */
+
+.cta-banner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 380px;
+    margin-top: 20px;
+    margin-bottom: 40px; /* کمی فاصله از فوتر */
+    padding: 50px 0;
+    overflow: hidden;
+    text-align: center;
+    color: #fff;
+    isolation: isolate;
+    content-visibility: auto;       /* تا نزدیک شدن به ویوپورت رندر نمی‌شود */
+    contain-intrinsic-size: 0 380px;
+}
+
+.cta-banner__bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+    image-rendering: auto;
+}
+
+.cta-banner__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    /* سایه خنثی (مشکی) و خیلی ملایم؛ پشت متن کمی پررنگ‌تر و کناره‌ها تقریباً بدون سایه */
+    background:
+        radial-gradient(ellipse at center, rgba(0, 0, 0, 0.42) 0%, rgba(0, 0, 0, 0.22) 55%, rgba(0, 0, 0, 0.08) 100%);
+    pointer-events: none;
+}
+
+.cta-banner__content h2 {
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.75);
+    margin: 0 0 12px;
+    font-size: clamp(1.7rem, 4vw, 2.6rem);
+    font-weight: 900;
+}
+.cta-banner__content p {
+    max-width: 700px;
+    margin: 0 auto 24px;
+    font-size: 1.05rem;
+    color: #fff;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.75);
+}
+
+.btn-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 36px;
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--sim-maroon);
+    background: linear-gradient(135deg, var(--sim-gold-light), var(--sim-gold));
+    border-radius: 999px;
+    box-shadow: 0 10px 26px rgba(245, 184, 46, 0.4);
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+.btn-cta:hover { color: var(--sim-maroon); transform: translateY(-3px) scale(1.03); box-shadow: 0 14px 32px rgba(245, 184, 46, 0.55); }
+.btn-cta i { transition: transform .3s ease; }
+.btn-cta:hover i { transform: translateX(-5px); }
+
+/* ================================================================== */
+/* ============================  ریسپانسیو  ========================= */
+/* ================================================================== */
+
+@media (max-width: 991px) {
+    .radio-showcase { padding: 56px 0; }
+    .radio-visual { max-width: 340px; }
+    .pkg-feature { flex-direction: column; }
+    .pkg-feature__img { flex: none; min-height: 240px; }
+    .pkg-feature__body { padding: 26px 22px; }
+}
+
+@media (max-width: 576px) {
+    .sec-head .sec-title { font-size: 1.6rem; }
+    .quick-card .card-body { padding: 14px !important; gap: 10px !important; }
+    .quick-icon { flex-basis: 38px; width: 38px; height: 38px; font-size: 16px; border-radius: 12px; }
+    .quick-card .card-title { font-size: 12.5px; }
+    .radio-floating { width: 42px; height: 42px; font-size: 17px; border-radius: 12px; }
+    .latest-section, #team.latest-section { border-radius: 20px; padding: 44px 0 24px !important; }
+    .btn-radio-main, .btn-radio-ghost { padding: 10px 20px; font-size: 14px; }
+    .pkg-feature__title { font-size: 1.3rem; }
+    .pkg-feature__desc { font-size: 14px; }
+    .cta-banner { min-height: 300px; }
+}
+
+/* احترام به کاربرانی که انیمیشن کم می‌خواهند */
+@media (prefers-reduced-motion: reduce) {
+    .radio-waves span, .radio-floating, .radio-dot::after { animation: none !important; }
+    html { scroll-behavior: auto; }
+}
+.radio-inline-link { color: var(--sim-gold-light); font-weight: 700; border-bottom: 1px dashed rgba(255, 224, 138, 0.6); }
+.radio-inline-link:hover { color: #fff; border-bottom-color: #fff; }
+.radio-chips span a { color: inherit; display: inline-flex; align-items: center; gap: 8px; }
+.radio-chips span a:hover { color: #fff; }

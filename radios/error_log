@@ -136,3 +136,328 @@ Stack trace:
 #1 /home3/vuqgpgoc/public_html/radios/index.php(290): include('/home3/vuqgpgoc...')
 #2 {main}
   thrown in /home3/vuqgpgoc/public_html/config.php on line 11
+[30-Oct-2026 14:45:52 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 14:45:52 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 14:45:52 Asia/Tehran] PHP Warning:  include(): Failed opening 'config.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 14:45:52 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 14:45:52 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 14:45:52 Asia/Tehran] PHP Warning:  include(): Failed opening 'PersianCalendar.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 14:45:52 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 14:45:52 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 14:45:52 Asia/Tehran] PHP Warning:  include(): Failed opening 'jalaliDate.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 14:45:52 Asia/Tehran] PHP Fatal error:  Uncaught Error: Class "SDate" not found in /home3/vuqgpgoc/public_html/radios/index.php:66
+Stack trace:
+#0 {main}
+  thrown in /home3/vuqgpgoc/public_html/radios/index.php on line 66
+[30-Oct-2026 16:51:52 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:51:52 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:51:52 Asia/Tehran] PHP Warning:  include(): Failed opening 'config.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:51:52 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:51:52 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:51:52 Asia/Tehran] PHP Warning:  include(): Failed opening 'PersianCalendar.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:51:52 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:51:52 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:51:52 Asia/Tehran] PHP Warning:  include(): Failed opening 'jalaliDate.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:51:52 Asia/Tehran] PHP Fatal error:  Uncaught Error: Class "SDate" not found in /home3/vuqgpgoc/public_html/radios/index.php:66
+Stack trace:
+#0 {main}
+  thrown in /home3/vuqgpgoc/public_html/radios/index.php on line 66
+[30-Oct-2026 16:52:15 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:52:15 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:52:15 Asia/Tehran] PHP Warning:  include(): Failed opening 'config.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:52:15 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:52:15 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:52:15 Asia/Tehran] PHP Warning:  include(): Failed opening 'PersianCalendar.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:52:15 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:52:15 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:52:15 Asia/Tehran] PHP Warning:  include(): Failed opening 'jalaliDate.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:52:15 Asia/Tehran] PHP Fatal error:  Uncaught Error: Class "SDate" not found in /home3/vuqgpgoc/public_html/radios/index.php:66
+Stack trace:
+#0 {main}
+  thrown in /home3/vuqgpgoc/public_html/radios/index.php on line 66
+[30-Oct-2026 16:52:31 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:52:31 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:52:31 Asia/Tehran] PHP Warning:  include(): Failed opening 'config.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:52:31 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:52:31 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:52:31 Asia/Tehran] PHP Warning:  include(): Failed opening 'PersianCalendar.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:52:31 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:52:31 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:52:31 Asia/Tehran] PHP Warning:  include(): Failed opening 'jalaliDate.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:52:31 Asia/Tehran] PHP Fatal error:  Uncaught Error: Class "SDate" not found in /home3/vuqgpgoc/public_html/radios/index.php:66
+Stack trace:
+#0 {main}
+  thrown in /home3/vuqgpgoc/public_html/radios/index.php on line 66
+[30-Oct-2026 16:52:45 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:52:45 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:52:45 Asia/Tehran] PHP Warning:  include(): Failed opening 'config.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:52:45 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:52:45 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:52:45 Asia/Tehran] PHP Warning:  include(): Failed opening 'PersianCalendar.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:52:45 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:52:45 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:52:45 Asia/Tehran] PHP Warning:  include(): Failed opening 'jalaliDate.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:52:45 Asia/Tehran] PHP Fatal error:  Uncaught Error: Class "SDate" not found in /home3/vuqgpgoc/public_html/radios/index.php:66
+Stack trace:
+#0 {main}
+  thrown in /home3/vuqgpgoc/public_html/radios/index.php on line 66
+[30-Oct-2026 16:53:13 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:53:13 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:53:13 Asia/Tehran] PHP Warning:  include(): Failed opening 'config.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:53:13 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:53:13 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:53:13 Asia/Tehran] PHP Warning:  include(): Failed opening 'PersianCalendar.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:53:13 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:53:13 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:53:13 Asia/Tehran] PHP Warning:  include(): Failed opening 'jalaliDate.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:53:13 Asia/Tehran] PHP Fatal error:  Uncaught Error: Class "SDate" not found in /home3/vuqgpgoc/public_html/radios/index.php:66
+Stack trace:
+#0 {main}
+  thrown in /home3/vuqgpgoc/public_html/radios/index.php on line 66
+[30-Oct-2026 16:54:16 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:54:16 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:54:16 Asia/Tehran] PHP Warning:  include(): Failed opening 'config.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:54:16 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:54:16 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:54:16 Asia/Tehran] PHP Warning:  include(): Failed opening 'PersianCalendar.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:54:16 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:54:16 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:54:16 Asia/Tehran] PHP Warning:  include(): Failed opening 'jalaliDate.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:54:16 Asia/Tehran] PHP Fatal error:  Uncaught Error: Class "SDate" not found in /home3/vuqgpgoc/public_html/radios/index.php:66
+Stack trace:
+#0 {main}
+  thrown in /home3/vuqgpgoc/public_html/radios/index.php on line 66
+[30-Oct-2026 16:54:20 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:54:20 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:54:20 Asia/Tehran] PHP Warning:  include(): Failed opening 'config.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:54:20 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:54:20 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:54:20 Asia/Tehran] PHP Warning:  include(): Failed opening 'PersianCalendar.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:54:20 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:54:20 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:54:20 Asia/Tehran] PHP Warning:  include(): Failed opening 'jalaliDate.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:54:20 Asia/Tehran] PHP Fatal error:  Uncaught Error: Class "SDate" not found in /home3/vuqgpgoc/public_html/radios/index.php:66
+Stack trace:
+#0 {main}
+  thrown in /home3/vuqgpgoc/public_html/radios/index.php on line 66
+[30-Oct-2026 16:54:23 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:54:23 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:54:23 Asia/Tehran] PHP Warning:  include(): Failed opening 'config.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:54:23 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:54:23 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:54:23 Asia/Tehran] PHP Warning:  include(): Failed opening 'PersianCalendar.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:54:23 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:54:23 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:54:23 Asia/Tehran] PHP Warning:  include(): Failed opening 'jalaliDate.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:54:23 Asia/Tehran] PHP Fatal error:  Uncaught Error: Class "SDate" not found in /home3/vuqgpgoc/public_html/radios/index.php:66
+Stack trace:
+#0 {main}
+  thrown in /home3/vuqgpgoc/public_html/radios/index.php on line 66
+[30-Oct-2026 16:54:29 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:54:29 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:54:29 Asia/Tehran] PHP Warning:  include(): Failed opening 'config.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:54:29 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:54:29 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:54:29 Asia/Tehran] PHP Warning:  include(): Failed opening 'PersianCalendar.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:54:29 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:54:29 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:54:29 Asia/Tehran] PHP Warning:  include(): Failed opening 'jalaliDate.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:54:29 Asia/Tehran] PHP Fatal error:  Uncaught Error: Class "SDate" not found in /home3/vuqgpgoc/public_html/radios/index.php:66
+Stack trace:
+#0 {main}
+  thrown in /home3/vuqgpgoc/public_html/radios/index.php on line 66
+[30-Oct-2026 16:54:41 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:54:41 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:54:41 Asia/Tehran] PHP Warning:  include(): Failed opening 'config.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:54:41 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:54:41 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:54:41 Asia/Tehran] PHP Warning:  include(): Failed opening 'PersianCalendar.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:54:41 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:54:41 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:54:41 Asia/Tehran] PHP Warning:  include(): Failed opening 'jalaliDate.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:54:41 Asia/Tehran] PHP Fatal error:  Uncaught Error: Class "SDate" not found in /home3/vuqgpgoc/public_html/radios/index.php:66
+Stack trace:
+#0 {main}
+  thrown in /home3/vuqgpgoc/public_html/radios/index.php on line 66
+[30-Oct-2026 16:54:46 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:54:46 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:54:46 Asia/Tehran] PHP Warning:  include(): Failed opening 'config.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:54:46 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:54:46 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:54:46 Asia/Tehran] PHP Warning:  include(): Failed opening 'PersianCalendar.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:54:46 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:54:46 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:54:46 Asia/Tehran] PHP Warning:  include(): Failed opening 'jalaliDate.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:54:46 Asia/Tehran] PHP Fatal error:  Uncaught Error: Class "SDate" not found in /home3/vuqgpgoc/public_html/radios/index.php:66
+Stack trace:
+#0 {main}
+  thrown in /home3/vuqgpgoc/public_html/radios/index.php on line 66
+[30-Oct-2026 16:54:57 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:54:57 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:54:57 Asia/Tehran] PHP Warning:  include(): Failed opening 'config.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:54:57 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:54:57 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:54:57 Asia/Tehran] PHP Warning:  include(): Failed opening 'PersianCalendar.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:54:57 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:54:57 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:54:57 Asia/Tehran] PHP Warning:  include(): Failed opening 'jalaliDate.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:54:57 Asia/Tehran] PHP Fatal error:  Uncaught Error: Class "SDate" not found in /home3/vuqgpgoc/public_html/radios/index.php:66
+Stack trace:
+#0 {main}
+  thrown in /home3/vuqgpgoc/public_html/radios/index.php on line 66
+[30-Oct-2026 16:55:01 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:55:01 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:55:01 Asia/Tehran] PHP Warning:  include(): Failed opening 'config.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:55:01 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:55:01 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:55:01 Asia/Tehran] PHP Warning:  include(): Failed opening 'PersianCalendar.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:55:01 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:55:01 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:55:01 Asia/Tehran] PHP Warning:  include(): Failed opening 'jalaliDate.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:55:01 Asia/Tehran] PHP Fatal error:  Uncaught Error: Class "SDate" not found in /home3/vuqgpgoc/public_html/radios/index.php:66
+Stack trace:
+#0 {main}
+  thrown in /home3/vuqgpgoc/public_html/radios/index.php on line 66
+[30-Oct-2026 16:55:18 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:55:18 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:55:18 Asia/Tehran] PHP Warning:  include(): Failed opening 'config.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:55:18 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:55:18 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:55:18 Asia/Tehran] PHP Warning:  include(): Failed opening 'PersianCalendar.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:55:18 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:55:18 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:55:18 Asia/Tehran] PHP Warning:  include(): Failed opening 'jalaliDate.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:55:18 Asia/Tehran] PHP Fatal error:  Uncaught Error: Class "SDate" not found in /home3/vuqgpgoc/public_html/radios/index.php:66
+Stack trace:
+#0 {main}
+  thrown in /home3/vuqgpgoc/public_html/radios/index.php on line 66
+[30-Oct-2026 16:55:26 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:55:26 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:55:26 Asia/Tehran] PHP Warning:  include(): Failed opening 'config.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:55:26 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:55:26 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:55:26 Asia/Tehran] PHP Warning:  include(): Failed opening 'PersianCalendar.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:55:26 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:55:26 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:55:26 Asia/Tehran] PHP Warning:  include(): Failed opening 'jalaliDate.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:55:26 Asia/Tehran] PHP Fatal error:  Uncaught Error: Class "SDate" not found in /home3/vuqgpgoc/public_html/radios/index.php:66
+Stack trace:
+#0 {main}
+  thrown in /home3/vuqgpgoc/public_html/radios/index.php on line 66
+[30-Oct-2026 16:55:34 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:55:34 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:55:34 Asia/Tehran] PHP Warning:  include(): Failed opening 'config.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:55:34 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:55:34 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:55:34 Asia/Tehran] PHP Warning:  include(): Failed opening 'PersianCalendar.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:55:34 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:55:34 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:55:34 Asia/Tehran] PHP Warning:  include(): Failed opening 'jalaliDate.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:55:34 Asia/Tehran] PHP Fatal error:  Uncaught Error: Class "SDate" not found in /home3/vuqgpgoc/public_html/radios/index.php:66
+Stack trace:
+#0 {main}
+  thrown in /home3/vuqgpgoc/public_html/radios/index.php on line 66
+[30-Oct-2026 16:58:39 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:58:39 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:58:39 Asia/Tehran] PHP Warning:  include(): Failed opening 'config.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 16:58:39 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:58:39 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:58:39 Asia/Tehran] PHP Warning:  include(): Failed opening 'PersianCalendar.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 16:58:39 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:58:39 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:58:39 Asia/Tehran] PHP Warning:  include(): Failed opening 'jalaliDate.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 16:58:39 Asia/Tehran] PHP Fatal error:  Uncaught Error: Class "SDate" not found in /home3/vuqgpgoc/public_html/radios/index.php:66
+Stack trace:
+#0 {main}
+  thrown in /home3/vuqgpgoc/public_html/radios/index.php on line 66
+[30-Oct-2026 17:09:45 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 17:09:45 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 17:09:45 Asia/Tehran] PHP Warning:  include(): Failed opening 'config.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 17:09:45 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 17:09:45 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 17:09:45 Asia/Tehran] PHP Warning:  include(): Failed opening 'PersianCalendar.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 17:09:45 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 17:09:45 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 17:09:45 Asia/Tehran] PHP Warning:  include(): Failed opening 'jalaliDate.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 17:09:45 Asia/Tehran] PHP Fatal error:  Uncaught Error: Class "SDate" not found in /home3/vuqgpgoc/public_html/radios/index.php:66
+Stack trace:
+#0 {main}
+  thrown in /home3/vuqgpgoc/public_html/radios/index.php on line 66
+[30-Oct-2026 17:12:16 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 17:12:16 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 17:12:16 Asia/Tehran] PHP Warning:  include(): Failed opening 'config.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 17:12:16 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 17:12:16 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 17:12:16 Asia/Tehran] PHP Warning:  include(): Failed opening 'PersianCalendar.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 17:12:16 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 17:12:16 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 17:12:16 Asia/Tehran] PHP Warning:  include(): Failed opening 'jalaliDate.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 17:12:16 Asia/Tehran] PHP Fatal error:  Uncaught Error: Class "SDate" not found in /home3/vuqgpgoc/public_html/radios/index.php:66
+Stack trace:
+#0 {main}
+  thrown in /home3/vuqgpgoc/public_html/radios/index.php on line 66
+[30-Oct-2026 17:19:59 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 17:19:59 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 17:19:59 Asia/Tehran] PHP Warning:  include(): Failed opening 'config.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 17:19:59 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 17:19:59 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 17:19:59 Asia/Tehran] PHP Warning:  include(): Failed opening 'PersianCalendar.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 17:19:59 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 17:19:59 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 17:19:59 Asia/Tehran] PHP Warning:  include(): Failed opening 'jalaliDate.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 17:19:59 Asia/Tehran] PHP Fatal error:  Uncaught Error: Class "SDate" not found in /home3/vuqgpgoc/public_html/radios/index.php:66
+Stack trace:
+#0 {main}
+  thrown in /home3/vuqgpgoc/public_html/radios/index.php on line 66
+[30-Oct-2026 17:20:02 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 17:20:02 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 17:20:02 Asia/Tehran] PHP Warning:  include(): Failed opening 'config.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 17:20:02 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 17:20:02 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 17:20:02 Asia/Tehran] PHP Warning:  include(): Failed opening 'PersianCalendar.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 17:20:02 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 17:20:02 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 17:20:02 Asia/Tehran] PHP Warning:  include(): Failed opening 'jalaliDate.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 17:20:02 Asia/Tehran] PHP Fatal error:  Uncaught Error: Class "SDate" not found in /home3/vuqgpgoc/public_html/radios/index.php:66
+Stack trace:
+#0 {main}
+  thrown in /home3/vuqgpgoc/public_html/radios/index.php on line 66
+[30-Oct-2026 17:20:04 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 17:20:04 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 17:20:04 Asia/Tehran] PHP Warning:  include(): Failed opening 'config.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 17:20:04 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 17:20:04 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 17:20:04 Asia/Tehran] PHP Warning:  include(): Failed opening 'PersianCalendar.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 17:20:04 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 17:20:04 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 17:20:04 Asia/Tehran] PHP Warning:  include(): Failed opening 'jalaliDate.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 17:20:04 Asia/Tehran] PHP Fatal error:  Uncaught Error: Class "SDate" not found in /home3/vuqgpgoc/public_html/radios/index.php:66
+Stack trace:
+#0 {main}
+  thrown in /home3/vuqgpgoc/public_html/radios/index.php on line 66
+[30-Oct-2026 18:28:16 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 18:28:16 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 18:28:16 Asia/Tehran] PHP Warning:  include(): Failed opening 'config.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 18:28:16 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 18:28:16 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 18:28:16 Asia/Tehran] PHP Warning:  include(): Failed opening 'PersianCalendar.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 18:28:16 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 18:28:16 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 18:28:16 Asia/Tehran] PHP Warning:  include(): Failed opening 'jalaliDate.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 18:28:16 Asia/Tehran] PHP Fatal error:  Uncaught Error: Class "SDate" not found in /home3/vuqgpgoc/public_html/radios/index.php:66
+Stack trace:
+#0 {main}
+  thrown in /home3/vuqgpgoc/public_html/radios/index.php on line 66
+[30-Oct-2026 18:28:52 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 18:28:52 Asia/Tehran] PHP Warning:  include(config.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 18:28:52 Asia/Tehran] PHP Warning:  include(): Failed opening 'config.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 63
+[30-Oct-2026 18:28:52 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 18:28:52 Asia/Tehran] PHP Warning:  include(PersianCalendar.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 18:28:52 Asia/Tehran] PHP Warning:  include(): Failed opening 'PersianCalendar.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 64
+[30-Oct-2026 18:28:52 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 18:28:52 Asia/Tehran] PHP Warning:  include(jalaliDate.php): Failed to open stream: No such file or directory in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 18:28:52 Asia/Tehran] PHP Warning:  include(): Failed opening 'jalaliDate.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home3/vuqgpgoc/public_html/radios/index.php on line 65
+[30-Oct-2026 18:28:52 Asia/Tehran] PHP Fatal error:  Uncaught Error: Class "SDate" not found in /home3/vuqgpgoc/public_html/radios/index.php:66
+Stack trace:
+#0 {main}
+  thrown in /home3/vuqgpgoc/public_html/radios/index.php on line 66

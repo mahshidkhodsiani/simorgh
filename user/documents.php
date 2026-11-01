@@ -147,248 +147,248 @@ $conn->close();
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="styles.css">
-
+    
     <style>
-    /* استایل‌های اختصاصی صفحه مدارک */
-    .upload-section {
-        background: #f8f9fc;
-        border-radius: 12px;
-        padding: 20px;
-        border: 2px dashed #d1d3e2;
-        transition: all 0.3s ease;
-    }
-
-    .upload-section:hover {
-        border-color: #4e73df;
-        background: #f0f2f7;
-    }
-
-    .upload-section .form-label {
-        font-weight: 600;
-        color: #2d3748;
-        margin-bottom: 10px;
-    }
-
-    .upload-section .form-label i {
-        color: #4e73df;
-        margin-left: 8px;
-    }
-
-    .file-preview {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        padding: 10px 15px;
-        background: white;
-        border-radius: 8px;
-        border: 1px solid #e3e6f0;
-        margin-top: 10px;
-    }
-
-    .file-preview img {
-        width: 60px;
-        height: 60px;
-        object-fit: cover;
-        border-radius: 8px;
-        border: 2px solid #e3e6f0;
-    }
-
-    .file-preview .file-info {
-        flex: 1;
-    }
-
-    .file-preview .file-info .file-name {
-        font-weight: 500;
-        color: #2d3748;
-    }
-
-    .file-preview .file-info .file-status {
-        font-size: 13px;
-        color: #38a169;
-    }
-
-    .btn-change-file {
-        background: #edf2f7;
-        border: none;
-        color: #4a5568;
-        padding: 5px 15px;
-        border-radius: 6px;
-        font-size: 13px;
-        transition: all 0.3s ease;
-    }
-
-    .btn-change-file:hover {
-        background: #e2e8f0;
-        color: #2d3748;
-    }
-
-    .btn-change-file i {
-        margin-left: 5px;
-    }
-
-    .custom-file-input {
-        display: none;
-    }
-
-    .custom-file-label {
-        display: inline-block;
-        padding: 10px 20px;
-        background: white;
-        border: 2px dashed #4e73df;
-        border-radius: 8px;
-        color: #4e73df;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-weight: 500;
-        width: 100%;
-        text-align: center;
-    }
-
-    .custom-file-label:hover {
-        background: #4e73df;
-        color: white;
-    }
-
-    .custom-file-label i {
-        margin-left: 8px;
-    }
-
-    .card-documents {
-        border: none;
-        border-radius: 16px;
-        overflow: hidden;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-    }
-
-    .card-documents .card-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        padding: 18px 25px;
-        border: none;
-    }
-
-    .card-documents .card-header h6 {
-        color: white;
-        font-weight: 600;
-    }
-
-    .card-documents .card-header h6 i {
-        margin-left: 10px;
-    }
-
-    .card-documents .card-body {
-        padding: 30px;
-    }
-
-    .btn-submit-documents {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border: none;
-        padding: 12px 30px;
-        font-weight: 600;
-        border-radius: 10px;
-        transition: all 0.3s ease;
-        width: 100%;
-    }
-
-    .btn-submit-documents:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-    }
-
-    .btn-submit-documents i {
-        margin-left: 8px;
-    }
-
-    .progress-steps {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 30px;
-        position: relative;
-        padding: 0 15px;
-    }
-
-    .progress-steps::before {
-        content: '';
-        position: absolute;
-        top: 15px;
-        left: 30px;
-        right: 30px;
-        height: 2px;
-        background: #e3e6f0;
-        z-index: 0;
-    }
-
-    .progress-step {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        z-index: 1;
-        background: white;
-        padding: 0 10px;
-    }
-
-    .progress-step .step-circle {
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        background: #e3e6f0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 600;
-        font-size: 14px;
-        color: #858796;
-        transition: all 0.3s ease;
-    }
-
-    .progress-step.active .step-circle {
-        background: #4e73df;
-        color: white;
-    }
-
-    .progress-step.completed .step-circle {
-        background: #38a169;
-        color: white;
-    }
-
-    .progress-step .step-label {
-        margin-top: 8px;
-        font-size: 12px;
-        color: #858796;
-        font-weight: 500;
-    }
-
-    .progress-step.active .step-label {
-        color: #4e73df;
-    }
-
-    .progress-step.completed .step-label {
-        color: #38a169;
-    }
-
-    @media (max-width: 768px) {
-        .card-documents .card-body {
+        /* استایل‌های اختصاصی صفحه مدارک */
+        .upload-section {
+            background: #f8f9fc;
+            border-radius: 12px;
             padding: 20px;
+            border: 2px dashed #d1d3e2;
+            transition: all 0.3s ease;
         }
-
+        
+        .upload-section:hover {
+            border-color: #4e73df;
+            background: #f0f2f7;
+        }
+        
+        .upload-section .form-label {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+        
+        .upload-section .form-label i {
+            color: #4e73df;
+            margin-left: 8px;
+        }
+        
         .file-preview {
-            flex-wrap: wrap;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 10px 15px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e3e6f0;
+            margin-top: 10px;
         }
-
+        
         .file-preview img {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid #e3e6f0;
         }
-
-        .progress-steps {
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
+        
+        .file-preview .file-info {
+            flex: 1;
         }
-
-        .progress-steps::before {
+        
+        .file-preview .file-info .file-name {
+            font-weight: 500;
+            color: #2d3748;
+        }
+        
+        .file-preview .file-info .file-status {
+            font-size: 13px;
+            color: #38a169;
+        }
+        
+        .btn-change-file {
+            background: #edf2f7;
+            border: none;
+            color: #4a5568;
+            padding: 5px 15px;
+            border-radius: 6px;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-change-file:hover {
+            background: #e2e8f0;
+            color: #2d3748;
+        }
+        
+        .btn-change-file i {
+            margin-left: 5px;
+        }
+        
+        .custom-file-input {
             display: none;
         }
-    }
+        
+        .custom-file-label {
+            display: inline-block;
+            padding: 10px 20px;
+            background: white;
+            border: 2px dashed #4e73df;
+            border-radius: 8px;
+            color: #4e73df;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .custom-file-label:hover {
+            background: #4e73df;
+            color: white;
+        }
+        
+        .custom-file-label i {
+            margin-left: 8px;
+        }
+        
+        .card-documents {
+            border: none;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        }
+        
+        .card-documents .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 18px 25px;
+            border: none;
+        }
+        
+        .card-documents .card-header h6 {
+            color: white;
+            font-weight: 600;
+        }
+        
+        .card-documents .card-header h6 i {
+            margin-left: 10px;
+        }
+        
+        .card-documents .card-body {
+            padding: 30px;
+        }
+        
+        .btn-submit-documents {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            padding: 12px 30px;
+            font-weight: 600;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .btn-submit-documents:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-submit-documents i {
+            margin-left: 8px;
+        }
+        
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+            padding: 0 15px;
+        }
+        
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 30px;
+            right: 30px;
+            height: 2px;
+            background: #e3e6f0;
+            z-index: 0;
+        }
+        
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 1;
+            background: white;
+            padding: 0 10px;
+        }
+        
+        .progress-step .step-circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #e3e6f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            color: #858796;
+            transition: all 0.3s ease;
+        }
+        
+        .progress-step.active .step-circle {
+            background: #4e73df;
+            color: white;
+        }
+        
+        .progress-step.completed .step-circle {
+            background: #38a169;
+            color: white;
+        }
+        
+        .progress-step .step-label {
+            margin-top: 8px;
+            font-size: 12px;
+            color: #858796;
+            font-weight: 500;
+        }
+        
+        .progress-step.active .step-label {
+            color: #4e73df;
+        }
+        
+        .progress-step.completed .step-label {
+            color: #38a169;
+        }
+        
+        @media (max-width: 768px) {
+            .card-documents .card-body {
+                padding: 20px;
+            }
+            
+            .file-preview {
+                flex-wrap: wrap;
+            }
+            
+            .file-preview img {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .progress-steps {
+                flex-wrap: wrap;
+                gap: 10px;
+                justify-content: center;
+            }
+            
+            .progress-steps::before {
+                display: none;
+            }
+        }
     </style>
 </head>
 
@@ -402,11 +402,8 @@ $conn->close();
         <!-- پیام‌های سیستم -->
         <?php if ($message): ?>
         <div class="container-fluid py-2">
-            <div id="alertMessage"
-                class="alert alert-<?php echo $message_type; ?> alert-dismissible fade show text-center" role="alert"
-                style="border-radius: 12px;">
-                <i
-                    class="bi <?php echo $message_type == 'success' ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill'; ?> me-2"></i>
+            <div id="alertMessage" class="alert alert-<?php echo $message_type; ?> alert-dismissible fade show text-center" role="alert" style="border-radius: 12px;">
+                <i class="bi <?php echo $message_type == 'success' ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill'; ?> me-2"></i>
                 <?php echo $message; ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -442,13 +439,11 @@ $conn->close();
                     <div class="step-circle"><?php echo $personely_path ? '✓' : '1'; ?></div>
                     <span class="step-label">عکس پرسنلی</span>
                 </div>
-                <div
-                    class="progress-step <?php echo $shenasname_path ? 'completed' : ($personely_path ? 'active' : ''); ?>">
+                <div class="progress-step <?php echo $shenasname_path ? 'completed' : ($personely_path ? 'active' : ''); ?>">
                     <div class="step-circle"><?php echo $shenasname_path ? '✓' : '2'; ?></div>
                     <span class="step-label">شناسنامه</span>
                 </div>
-                <div
-                    class="progress-step <?php echo $meli_card_path ? 'completed' : ($shenasname_path ? 'active' : ''); ?>">
+                <div class="progress-step <?php echo $meli_card_path ? 'completed' : ($shenasname_path ? 'active' : ''); ?>">
                     <div class="step-circle"><?php echo $meli_card_path ? '✓' : '3'; ?></div>
                     <span class="step-label">کارت ملی</span>
                 </div>
@@ -473,7 +468,7 @@ $conn->close();
                                         عکس پرسنلی
                                         <small class="text-muted">(فرمت‌های مجاز: jpg, png, webp)</small>
                                     </label>
-
+                                    
                                     <?php if ($personely_path): ?>
                                     <div class="file-preview">
                                         <img src="<?php echo htmlspecialchars($personely_path); ?>" alt="عکس پرسنلی">
@@ -484,21 +479,18 @@ $conn->close();
                                                 آپلود شده
                                             </div>
                                         </div>
-                                        <button type="button" class="btn-change-file"
-                                            onclick="toggleFileInput('personely')">
+                                        <button type="button" class="btn-change-file" onclick="toggleFileInput('personely')">
                                             <i class="bi bi-pencil"></i>
                                             تغییر
                                         </button>
                                     </div>
-                                    <input class="custom-file-input" type="file" id="personely" name="personely"
-                                        accept="image/*">
+                                    <input class="custom-file-input" type="file" id="personely" name="personely" accept="image/*">
                                     <?php else: ?>
                                     <label for="personely" class="custom-file-label">
                                         <i class="bi bi-cloud-upload"></i>
                                         انتخاب عکس پرسنلی
                                     </label>
-                                    <input class="custom-file-input" type="file" id="personely" name="personely"
-                                        accept="image/*" required>
+                                    <input class="custom-file-input" type="file" id="personely" name="personely" accept="image/*" required>
                                     <?php endif; ?>
                                 </div>
 
@@ -509,7 +501,7 @@ $conn->close();
                                         عکس صفحه اول شناسنامه
                                         <small class="text-muted">(فرمت‌های مجاز: jpg, png, webp)</small>
                                     </label>
-
+                                    
                                     <?php if ($shenasname_path): ?>
                                     <div class="file-preview">
                                         <img src="<?php echo htmlspecialchars($shenasname_path); ?>" alt="عکس شناسنامه">
@@ -520,21 +512,18 @@ $conn->close();
                                                 آپلود شده
                                             </div>
                                         </div>
-                                        <button type="button" class="btn-change-file"
-                                            onclick="toggleFileInput('shenasname')">
+                                        <button type="button" class="btn-change-file" onclick="toggleFileInput('shenasname')">
                                             <i class="bi bi-pencil"></i>
                                             تغییر
                                         </button>
                                     </div>
-                                    <input class="custom-file-input" type="file" id="shenasname" name="shenasname"
-                                        accept="image/*">
+                                    <input class="custom-file-input" type="file" id="shenasname" name="shenasname" accept="image/*">
                                     <?php else: ?>
                                     <label for="shenasname" class="custom-file-label">
                                         <i class="bi bi-cloud-upload"></i>
                                         انتخاب عکس شناسنامه
                                     </label>
-                                    <input class="custom-file-input" type="file" id="shenasname" name="shenasname"
-                                        accept="image/*" required>
+                                    <input class="custom-file-input" type="file" id="shenasname" name="shenasname" accept="image/*" required>
                                     <?php endif; ?>
                                 </div>
 
@@ -545,7 +534,7 @@ $conn->close();
                                         عکس پشت و روی کارت ملی
                                         <small class="text-muted">(فرمت‌های مجاز: jpg, png, webp)</small>
                                     </label>
-
+                                    
                                     <?php if ($meli_card_path): ?>
                                     <div class="file-preview">
                                         <img src="<?php echo htmlspecialchars($meli_card_path); ?>" alt="عکس کارت ملی">
@@ -556,21 +545,18 @@ $conn->close();
                                                 آپلود شده
                                             </div>
                                         </div>
-                                        <button type="button" class="btn-change-file"
-                                            onclick="toggleFileInput('meli_card')">
+                                        <button type="button" class="btn-change-file" onclick="toggleFileInput('meli_card')">
                                             <i class="bi bi-pencil"></i>
                                             تغییر
                                         </button>
                                     </div>
-                                    <input class="custom-file-input" type="file" id="meli_card" name="meli_card"
-                                        accept="image/*">
+                                    <input class="custom-file-input" type="file" id="meli_card" name="meli_card" accept="image/*">
                                     <?php else: ?>
                                     <label for="meli_card" class="custom-file-label">
                                         <i class="bi bi-cloud-upload"></i>
                                         انتخاب عکس کارت ملی
                                     </label>
-                                    <input class="custom-file-input" type="file" id="meli_card" name="meli_card"
-                                        accept="image/*" required>
+                                    <input class="custom-file-input" type="file" id="meli_card" name="meli_card" accept="image/*" required>
                                     <?php endif; ?>
                                 </div>
 
@@ -581,8 +567,7 @@ $conn->close();
                                         <i class="bi bi-save"></i>
                                         ذخیره و آپلود مدارک
                                     </button>
-                                    <button type="reset" class="btn btn-outline-secondary px-4"
-                                        style="border-radius: 10px;">
+                                    <button type="reset" class="btn btn-outline-secondary px-4" style="border-radius: 10px;">
                                         <i class="bi bi-arrow-counterclockwise"></i>
                                         بازنشانی
                                     </button>
@@ -598,88 +583,85 @@ $conn->close();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.all.min.js"></script>
     <script>
-    // تاگل سایدبار
-    document.getElementById('sidebarToggle').addEventListener('click', function() {
-        document.body.classList.toggle('sidebar-toggled');
-    });
-
-    // تابع نمایش/پنهان کردن فیلد آپلود
-    function toggleFileInput(id) {
-        const fileInput = document.getElementById(id);
-        const isHidden = fileInput.style.display === "none" || fileInput.style.display === "";
-
-        if (isHidden) {
-            fileInput.style.display = "block";
-            fileInput.required = true;
-            // اسکرول به سمت فیلد
-            fileInput.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center'
-            });
-        } else {
-            fileInput.style.display = "none";
-            fileInput.required = false;
-        }
-    }
-
-    // نمایش نام فایل انتخاب شده
-    document.querySelectorAll('.custom-file-input').forEach(input => {
-        input.addEventListener('change', function() {
-            const fileName = this.files[0]?.name || 'فایلی انتخاب نشده';
-            const label = this.previousElementSibling;
-            if (label && label.classList.contains('custom-file-label')) {
-                label.innerHTML = `<i class="bi bi-file-earmark"></i> ${fileName}`;
-            }
-        });
-    });
-
-    // اعتبارسنجی فرم با SweetAlert
-    document.querySelector('form').addEventListener('submit', function(e) {
-        const requiredInputs = this.querySelectorAll('input[required]');
-        let allFilled = true;
-
-        requiredInputs.forEach(input => {
-            if (!input.files || input.files.length === 0) {
-                allFilled = false;
-            }
+        // تاگل سایدبار
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            document.body.classList.toggle('sidebar-toggled');
         });
 
-        if (!allFilled) {
-            e.preventDefault();
-            Swal.fire({
-                icon: 'warning',
-                title: 'تکمیل مدارک',
-                text: 'لطفاً تمام مدارک مورد نیاز را آپلود کنید!',
-                confirmButtonColor: '#667eea',
-                confirmButtonText: 'متوجه شدم'
+        // تابع نمایش/پنهان کردن فیلد آپلود
+        function toggleFileInput(id) {
+            const fileInput = document.getElementById(id);
+            const isHidden = fileInput.style.display === "none" || fileInput.style.display === "";
+            
+            if (isHidden) {
+                fileInput.style.display = "block";
+                fileInput.required = true;
+                // اسکرول به سمت فیلد
+                fileInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+                fileInput.style.display = "none";
+                fileInput.required = false;
+            }
+        }
+
+        // نمایش نام فایل انتخاب شده
+        document.querySelectorAll('.custom-file-input').forEach(input => {
+            input.addEventListener('change', function() {
+                const fileName = this.files[0]?.name || 'فایلی انتخاب نشده';
+                const label = this.previousElementSibling;
+                if (label && label.classList.contains('custom-file-label')) {
+                    label.innerHTML = `<i class="bi bi-file-earmark"></i> ${fileName}`;
+                }
             });
-        }
-    });
+        });
 
-    // نمایش SweetAlert برای پیام موفقیت
-    <?php if ($message && $message_type == 'success'): ?>
-    Swal.fire({
-        icon: 'success',
-        title: 'آپلود موفق!',
-        text: '<?php echo $message; ?>',
-        timer: 3000,
-        timerProgressBar: true,
-        confirmButtonColor: '#667eea',
-        confirmButtonText: 'باشه'
-    });
-    <?php endif; ?>
+        // اعتبارسنجی فرم با SweetAlert
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const requiredInputs = this.querySelectorAll('input[required]');
+            let allFilled = true;
+            
+            requiredInputs.forEach(input => {
+                if (!input.files || input.files.length === 0) {
+                    allFilled = false;
+                }
+            });
 
-    // محو شدن پیام هشدار
-    setTimeout(function() {
-        const alert = document.getElementById('alertMessage');
-        if (alert) {
-            alert.style.transition = "opacity 0.8s ease";
-            alert.style.opacity = "0";
-            setTimeout(() => {
-                alert.style.display = "none";
-            }, 800);
-        }
-    }, 5000);
+            if (!allFilled) {
+                e.preventDefault();
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'تکمیل مدارک',
+                    text: 'لطفاً تمام مدارک مورد نیاز را آپلود کنید!',
+                    confirmButtonColor: '#667eea',
+                    confirmButtonText: 'متوجه شدم'
+                });
+            }
+        });
+
+        // نمایش SweetAlert برای پیام موفقیت
+        <?php if ($message && $message_type == 'success'): ?>
+        Swal.fire({
+            icon: 'success',
+            title: 'آپلود موفق!',
+            text: '<?php echo $message; ?>',
+            timer: 3000,
+            timerProgressBar: true,
+            confirmButtonColor: '#667eea',
+            confirmButtonText: 'باشه'
+        });
+        <?php endif; ?>
+
+        // محو شدن پیام هشدار
+        setTimeout(function() {
+            const alert = document.getElementById('alertMessage');
+            if (alert) {
+                alert.style.transition = "opacity 0.8s ease";
+                alert.style.opacity = "0";
+                setTimeout(() => {
+                    alert.style.display = "none";
+                }, 800);
+            }
+        }, 5000);
     </script>
 </body>
 

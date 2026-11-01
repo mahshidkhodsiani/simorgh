@@ -326,10 +326,10 @@ $episode_count     = $total_episodes;
         z-index: 1;
     }
 
-    /* ✅ هدر با تصویر پس‌زمینه 43.png — ۱۰۰۰×۴۰۰ و واضح‌تر */
+      /* ✅ هدر با تصویر پس‌زمینه 43.png — ۱۰۰۰×۴۰۰ و واضح‌تر */
     /* ✅ هدر با تصویر پس‌زمینه 43.png — ارتفاع ۴۰۰، عرض کامل */
     /* ✅ هدر با تصویر پس‌زمینه 43.png — ارتفاع ۴۰۰، عرض کامل */
-    .tehran-header {
+      .tehran-header {
         background-image: linear-gradient(135deg, rgba(10, 10, 26, 0.55), rgba(26, 26, 46, 0.55), rgba(10, 10, 26, 0.55)), url('../images/43.png');
         background-size: cover;
         background-position: center;
@@ -365,7 +365,7 @@ $episode_count     = $total_episodes;
         z-index: 0;
     }
 
-    .tehran-header>* {
+    .tehran-header > * {
         position: relative;
         z-index: 1;
     }
@@ -475,7 +475,7 @@ $episode_count     = $total_episodes;
         overflow: hidden;
     }
 
-    .tehran-player-card>* {
+    .tehran-player-card > * {
         position: relative;
         z-index: 1;
     }
@@ -1391,7 +1391,7 @@ $episode_count     = $total_episodes;
             const title = item.getAttribute('data-title').toLowerCase();
             const type = item.getAttribute('data-type').toLowerCase();
             item.style.display = (title.includes(searchTerm) || type.includes(searchTerm)) ? '' :
-                'none';
+            'none';
         });
     });
     document.addEventListener('keydown', (e) => {

@@ -369,7 +369,7 @@ $episode_count     = $total_episodes;
         z-index: 0;
     }
 
-    .tehran-header>* {
+    .tehran-header > * {
         position: relative;
         z-index: 1;
     }
@@ -479,7 +479,7 @@ $episode_count     = $total_episodes;
         overflow: hidden;
     }
 
-    .tehran-player-card>* {
+    .tehran-player-card > * {
         position: relative;
         z-index: 1;
     }
@@ -1400,7 +1400,7 @@ $episode_count     = $total_episodes;
             const title = item.getAttribute('data-title').toLowerCase();
             const type = item.getAttribute('data-type').toLowerCase();
             item.style.display = (title.includes(searchTerm) || type.includes(searchTerm)) ? '' :
-                'none';
+            'none';
         });
     });
     document.addEventListener('keydown', (e) => {

@@ -151,6 +151,16 @@ $id = $_SESSION["all_data"]['id'];
                         </div>
                     </div>
 
+                    <div class="row g-3 mt-1">
+                        <div class="col-12 col-md-6">
+                            <label for="mobile" class="form-label fw-semibold">
+                                شماره موبایل
+                            </label>
+                            <input type="text" name="mobile" class="form-control" autocomplete="off"
+                                pattern="[0-9]{11}" maxlength="11" placeholder="09xxxxxxxxx">
+                        </div>
+                    </div>
+
                     <div class="row mt-3">
                         <div class="col-12">
                             <div class="form-check">
@@ -171,23 +181,61 @@ $id = $_SESSION["all_data"]['id'];
                 <div class="row mt-4">
                     <div class="col-12">
                         <?php
+                        // ========== بخش جستجو ==========
+                        $search = isset($_GET['search']) ? trim($_GET['search']) : '';
+
                         // Pagination configuration
-                        $items_per_page = 10; // Number of items per page
-                        $current_page = isset($_GET['page']) ? intval($_GET['page']) : 1; // Current page, default is 1
+                        $items_per_page = 10;
+                        $current_page = isset($_GET['page']) ? intval($_GET['page']) : 1;
                         if ($current_page < 1) $current_page = 1;
 
-                        // Calculate the offset for the SQL query
                         $offset = ($current_page - 1) * $items_per_page;
 
-                        // SQL query to retrieve a subset of rows based on pagination with LIMIT
-                        $sql = "SELECT * FROM users ORDER BY id DESC LIMIT $offset, $items_per_page";
-                        $result = $conn->query($sql);
+                        // ساخت شرط جستجو (بر اساس موبایل، نام، نام خانوادگی و کد ملی)
+                        $where_clause = "";
+                        if ($search !== '') {
+                            $search_escaped = $conn->real_escape_string($search);
+                            $where_clause = " WHERE mobile LIKE '%$search_escaped%' 
+                                              OR name LIKE '%$search_escaped%' 
+                                              OR family LIKE '%$search_escaped%' 
+                                              OR meli_code LIKE '%$search_escaped%' ";
+                        }
 
+                        // کوئری اصلی با شرط جستجو
+                        $sql = "SELECT * FROM users $where_clause ORDER BY id DESC LIMIT $offset, $items_per_page";
+                        $result = $conn->query($sql);
+                        ?>
+
+                        <!-- فرم جستجو -->
+                        <div class="card mb-3">
+                            <div class="card-body p-2">
+                                <form method="GET" action="new_user.php" class="row g-2 align-items-center">
+                                    <div class="col-12 col-md-8">
+                                        <input type="text" name="search" class="form-control"
+                                            placeholder="🔍 جستجو بر اساس شماره موبایل، نام، نام خانوادگی یا کد ملی..."
+                                            value="<?= htmlspecialchars($search) ?>" autocomplete="off">
+                                    </div>
+                                    <div class="col-12 col-md-4 d-flex gap-2">
+                                        <button type="submit" class="btn btn-primary w-100">جستجو</button>
+                                        <?php if ($search !== ''): ?>
+                                        <a href="new_user.php" class="btn btn-outline-secondary w-100">پاک کردن</a>
+                                        <?php endif; ?>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <?php
                         // Display the table
                         if ($result && $result->num_rows > 0) {
-                            $a = ($current_page - 1) * $items_per_page + 1; // Counter for row numbers
+                            $a = ($current_page - 1) * $items_per_page + 1;
                             ?>
-                        <h4 class="mb-2">نگاه کلی :</h4>
+                        <h4 class="mb-2">
+                            نگاه کلی :
+                            <?php if ($search !== ''): ?>
+                            <small class="text-muted fs-6">(نتایج جستجو برای: "<?= htmlspecialchars($search) ?>")</small>
+                            <?php endif; ?>
+                        </h4>
                         <div class="table-responsive">
                             <table class="table table-bordered users-table align-middle">
                                 <thead class="table-light">
@@ -196,6 +244,7 @@ $id = $_SESSION["all_data"]['id'];
                                         <th scope="col" class="text-center">نام</th>
                                         <th scope="col" class="text-center">نام خانوادگی</th>
                                         <th scope="col" class="text-center">کد ملی</th>
+                                        <th scope="col" class="text-center">شماره موبایل</th>
                                         <th scope="col" class="text-center">نقش</th>
                                         <th scope="col" class="text-center">گوینده</th>
                                         <th scope="col" class="text-center">عملیات</th>
@@ -209,7 +258,17 @@ $id = $_SESSION["all_data"]['id'];
                                         <th scope="row" class="text-center"><?= $a ?></th>
                                         <td class="text-center"><?= htmlspecialchars($row['name']) ?></td>
                                         <td class="text-center"><?= htmlspecialchars($row['family']) ?></td>
-                                        <td class="text-center"><?= htmlspecialchars($row['meli_code']) ?></td>
+                                        <td class="text-center"><?= htmlspecialchars($row['meli_code'] ?? '') ?></td>
+                                        <td class="text-center">
+                                            <?php if (!empty($row['mobile'])): ?>
+                                            <a href="tel:<?= htmlspecialchars($row['mobile']) ?>" dir="ltr"
+                                                class="text-decoration-none">
+                                                <?= htmlspecialchars($row['mobile']) ?>
+                                            </a>
+                                            <?php else: ?>
+                                            <span class="text-muted">-</span>
+                                            <?php endif; ?>
+                                        </td>
                                         <td class="text-center">
                                             <?= $row['level'] == 'admin' ? '<span class="badge bg-danger">ادمین</span>' : '<span class="badge bg-secondary">کاربر عادی</span>' ?>
                                         </td>
@@ -220,6 +279,7 @@ $id = $_SESSION["all_data"]['id'];
                                                 <input type="hidden" name="user_id" value="<?= $row['id'] ?>">
                                                 <input type="hidden" name="remove_speaker" value="1">
                                                 <input type="hidden" name="page" value="<?= $current_page ?>">
+                                                <input type="hidden" name="search" value="<?= htmlspecialchars($search) ?>">
                                                 <button type="submit" class="btn btn-sm btn-outline-danger w-100">🎙️
                                                     برداشتن</button>
                                             </form>
@@ -229,6 +289,7 @@ $id = $_SESSION["all_data"]['id'];
                                                 <input type="hidden" name="user_id" value="<?= $row['id'] ?>">
                                                 <input type="hidden" name="make_speaker" value="1">
                                                 <input type="hidden" name="page" value="<?= $current_page ?>">
+                                                <input type="hidden" name="search" value="<?= htmlspecialchars($search) ?>">
                                                 <button type="submit" class="btn btn-sm btn-outline-primary w-100">تبدیل
                                                     به گوینده</button>
                                             </form>
@@ -239,6 +300,7 @@ $id = $_SESSION["all_data"]['id'];
                                                 onsubmit="return confirm('آیا مطمئن هستید که می‌خواهید این کاربر را حذف کنید؟');">
                                                 <input type="hidden" name="delete_user_id" value="<?= $row['id'] ?>">
                                                 <input type="hidden" name="page" value="<?= $current_page ?>">
+                                                <input type="hidden" name="search" value="<?= htmlspecialchars($search) ?>">
                                                 <button type="submit" name="delete_user"
                                                     class="btn btn-sm btn-outline-danger w-100">🗑️ حذف</button>
                                             </form>
@@ -253,52 +315,54 @@ $id = $_SESSION["all_data"]['id'];
                         </div>
 
                         <?php
-
-                            // Pagination links
-                            $sql = "SELECT COUNT(*) AS total FROM users";
-                            $result = $conn->query($sql);
-                            $row = $result->fetch_assoc();
-                            $total_items = $row['total'];
+                            // Pagination links (با حفظ پارامتر search)
+                            $count_sql = "SELECT COUNT(*) AS total FROM users $where_clause";
+                            $count_result = $conn->query($count_sql);
+                            $count_row = $count_result->fetch_assoc();
+                            $total_items = $count_row['total'];
                             $total_pages = ceil($total_items / $items_per_page);
 
-                            // Display pagination links
+                            // ساخت query string برای حفظ search در لینک‌ها
+                            $search_query = ($search !== '') ? '&search=' . urlencode($search) : '';
+
                             if ($total_pages > 1) {
                             ?>
                         <nav aria-label="Page navigation" class="mt-3">
                             <ul class="pagination justify-content-center mb-0">
                                 <?php if ($current_page > 1): ?>
                                 <li class="page-item">
-                                    <a class="page-link" href="?page=<?= $current_page - 1 ?>">قبلی</a>
+                                    <a class="page-link"
+                                        href="?page=<?= $current_page - 1 ?><?= $search_query ?>">قبلی</a>
                                 </li>
                                 <?php endif; ?>
 
                                 <?php
-                                // محدود کردن تعداد لینک‌های نمایش داده شده در موبایل
                                 $start = max(1, $current_page - 2);
                                 $end = min($total_pages, $current_page + 2);
 
                                 if ($start > 1) {
-                                    echo '<li class="page-item"><a class="page-link" href="?page=1">1</a></li>';
+                                    echo '<li class="page-item"><a class="page-link" href="?page=1' . $search_query . '">1</a></li>';
                                     if ($start > 2) echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
                                 }
 
                                 for ($i = $start; $i <= $end; $i++) {
                                     ?>
                                 <li class="page-item <?= $i == $current_page ? 'active' : '' ?>">
-                                    <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                                    <a class="page-link" href="?page=<?= $i ?><?= $search_query ?>"><?= $i ?></a>
                                 </li>
                                 <?php
                                 }
 
                                 if ($end < $total_pages) {
                                     if ($end < $total_pages - 1) echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
-                                    echo '<li class="page-item"><a class="page-link" href="?page=' . $total_pages . '">' . $total_pages . '</a></li>';
+                                    echo '<li class="page-item"><a class="page-link" href="?page=' . $total_pages . $search_query . '">' . $total_pages . '</a></li>';
                                 }
                                 ?>
 
                                 <?php if ($current_page < $total_pages): ?>
                                 <li class="page-item">
-                                    <a class="page-link" href="?page=<?= $current_page + 1 ?>">بعدی</a>
+                                    <a class="page-link"
+                                        href="?page=<?= $current_page + 1 ?><?= $search_query ?>">بعدی</a>
                                 </li>
                                 <?php endif; ?>
                             </ul>
@@ -306,7 +370,11 @@ $id = $_SESSION["all_data"]['id'];
                         <?php
                             }
                         } else {
-                            echo "<p class='text-center mt-3'>هیچ رکوردی یافت نشد.</p>";
+                            if ($search !== '') {
+                                echo "<p class='text-center mt-3 text-muted'>نتیجه‌ای برای جستجوی \"<strong>" . htmlspecialchars($search) . "</strong>\" یافت نشد.</p>";
+                            } else {
+                                echo "<p class='text-center mt-3'>هیچ رکوردی یافت نشد.</p>";
+                            }
                         }
                         ?>
                     </div>
@@ -336,6 +404,7 @@ if(isset($_POST['enter'])){
     $name = $_POST['name'];
     $family = $_POST['family'];
     $username = $_POST['username'];
+    $mobile = $_POST['mobile'] ?? '';
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     if(isset($_POST['isAdmin'])){
         $isAdmin = 1 ;
@@ -367,8 +436,8 @@ if(isset($_POST['enter'])){
             </script>";
 
     }else{
-       $sql = "INSERT INTO users (name, family, username, password, admin, created_at) 
-            VALUES ('$name', '$family', '$username', '$password', '$isAdmin', NOW())";
+       $sql = "INSERT INTO users (name, family, username, mobile, password, admin, created_at) 
+            VALUES ('$name', '$family', '$username', '$mobile', '$password', '$isAdmin', NOW())";
         $result = $conn->query($sql); 
 
         if ($result) {
@@ -431,13 +500,14 @@ if(isset($_POST['enter'])){
 if (isset($_POST['make_speaker'])) {
     $user_id_to_update = intval($_POST['user_id']);
     $return_page = isset($_POST['page']) ? intval($_POST['page']) : 1;
+    $return_search = isset($_POST['search']) ? '&search=' . urlencode($_POST['search']) : '';
     
     $update_sql = "UPDATE users SET speaker = 1 WHERE id = $user_id_to_update";
     
     if ($conn->query($update_sql) === TRUE) {
         echo "<script>
                 alert('✅ کاربر با موفقیت به گوینده تبدیل شد');
-                window.location.href = 'new_user.php?page=$return_page';
+                window.location.href = 'new_user.php?page=$return_page$return_search';
               </script>";
     } else {
         echo "<script>alert('❌ خطا در بروزرسانی: " . $conn->error . "');</script>";
@@ -448,13 +518,14 @@ if (isset($_POST['make_speaker'])) {
 if (isset($_POST['remove_speaker'])) {
     $user_id_to_update = intval($_POST['user_id']);
     $return_page = isset($_POST['page']) ? intval($_POST['page']) : 1;
+    $return_search = isset($_POST['search']) ? '&search=' . urlencode($_POST['search']) : '';
     
     $update_sql = "UPDATE users SET speaker = 0 WHERE id = $user_id_to_update";
     
     if ($conn->query($update_sql) === TRUE) {
         echo "<script>
                 alert('🗑️ دسترسی گویندگی از کاربر برداشته شد');
-                window.location.href = 'new_user.php?page=$return_page';
+                window.location.href = 'new_user.php?page=$return_page$return_search';
               </script>";
     } else {
         echo "<script>alert('❌ خطا در بروزرسانی: " . $conn->error . "');</script>";
@@ -465,6 +536,7 @@ if (isset($_POST['remove_speaker'])) {
 if (isset($_POST['delete_user'])) {
     $user_id_to_delete = intval($_POST['delete_user_id']);
     $return_page = isset($_POST['page']) ? intval($_POST['page']) : 1;
+    $return_search = isset($_POST['search']) ? '&search=' . urlencode($_POST['search']) : '';
     
     if ($user_id_to_delete == $id) {
         echo "<script>alert('❌ شما نمی‌توانید خودتان را حذف کنید!');</script>";
@@ -474,7 +546,7 @@ if (isset($_POST['delete_user'])) {
         if ($conn->query($delete_sql) === TRUE) {
             echo "<script>
                     alert('✅ کاربر با موفقیت حذف شد');
-                    window.location.href = 'new_user.php?page=$return_page';
+                    window.location.href = 'new_user.php?page=$return_page$return_search';
                   </script>";
         } else {
             echo "<script>alert('❌ خطا در حذف کاربر: " . $conn->error . "');</script>";

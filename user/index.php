@@ -518,8 +518,7 @@ function show_time() {
                         <?php echo htmlspecialchars($full_name); ?>
                     </div>
                     <div class="welcome-text">
-                        به پنل کاربری خود خوش آمدید. از اینجا می‌توانید دوره‌های خود را مدیریت کنید، تیکت‌های پشتیبانی
-                        را پیگیری کنید و اطلاعات شخصی خود را بروزرسانی نمایید.
+                        به پنل کاربری خود خوش آمدید. از اینجا می‌توانید دوره‌های خود را مدیریت کنید، تیکت‌های پشتیبانی را پیگیری کنید و اطلاعات شخصی خود را بروزرسانی نمایید.
                     </div>
                     <div class="welcome-date">
                         <i class="bi bi-calendar3 me-1"></i>
@@ -621,38 +620,35 @@ function show_time() {
                         </div>
                         <div class="card-body">
                             <?php if (!empty($recent_activities)): ?>
-                            <?php foreach ($recent_activities as $activity): ?>
-                            <div class="activity-item mb-2">
-                                <div class="activity-icon">
-                                    <i class="bi bi-book text-primary"></i>
-                                </div>
-                                <div class="activity-content">
-                                    <div class="activity-title"><?php echo htmlspecialchars($activity['title']); ?>
+                                <?php foreach ($recent_activities as $activity): ?>
+                                <div class="activity-item mb-2">
+                                    <div class="activity-icon">
+                                        <i class="bi bi-book text-primary"></i>
                                     </div>
-                                    <div class="activity-meta">
-                                        <span>
-                                            <i class="bi bi-calendar3 me-1"></i>
-                                            <?php echo htmlspecialchars($activity['date']); ?>
-                                        </span>
-                                        <span
-                                            class="badge-status <?php echo $activity['status'] == 'پرداخت شده' ? 'bg-success text-white' : 'bg-warning text-dark'; ?>">
-                                            <i class="bi <?php echo $activity['icon']; ?> me-1"></i>
-                                            <?php echo $activity['status']; ?>
-                                        </span>
+                                    <div class="activity-content">
+                                        <div class="activity-title"><?php echo htmlspecialchars($activity['title']); ?></div>
+                                        <div class="activity-meta">
+                                            <span>
+                                                <i class="bi bi-calendar3 me-1"></i>
+                                                <?php echo htmlspecialchars($activity['date']); ?>
+                                            </span>
+                                            <span class="badge-status <?php echo $activity['status'] == 'پرداخت شده' ? 'bg-success text-white' : 'bg-warning text-dark'; ?>">
+                                                <i class="bi <?php echo $activity['icon']; ?> me-1"></i>
+                                                <?php echo $activity['status']; ?>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <?php endforeach; ?>
+                                <?php endforeach; ?>
                             <?php else: ?>
-                            <div class="text-center py-4">
-                                <i class="bi bi-inbox" style="font-size: 48px; color: #d1d3e2;"></i>
-                                <p class="text-muted mt-2">هنوز فعالیتی ثبت نشده است</p>
-                                <a href="../courses.php" class="btn btn-primary bg-gradient px-4"
-                                    style="border-radius: 10px;">
-                                    <i class="bi bi-arrow-left me-2"></i>
-                                    شروع یادگیری
-                                </a>
-                            </div>
+                                <div class="text-center py-4">
+                                    <i class="bi bi-inbox" style="font-size: 48px; color: #d1d3e2;"></i>
+                                    <p class="text-muted mt-2">هنوز فعالیتی ثبت نشده است</p>
+                                    <a href="../courses.php" class="btn btn-primary bg-gradient px-4" style="border-radius: 10px;">
+                                        <i class="bi bi-arrow-left me-2"></i>
+                                        شروع یادگیری
+                                    </a>
+                                </div>
                             <?php endif; ?>
                         </div>
                     </div>
