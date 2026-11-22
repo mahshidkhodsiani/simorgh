@@ -19,29 +19,35 @@ if(isset($_SESSION['user_id'])) {
     $speaker_stmt->close();
 }
 
-// ========== بررسی پرداخت موفق ==========
+// ========== پرداخت ==========
 $payment_message = '';
-if(isset($_GET['payment']) && $_GET['payment'] == 'success') {
-    $payment_message = '<div class="alert alert-success text-center">✅ پرداخت شما با موفقیت انجام شد! از شنیدن برنامه‌ها لذت ببرید. ☕</div>';
+if(isset($_GET['payment'])) {
+    if($_GET['payment'] == 'success') {
+        $payment_message = '<div class="alert alert-success text-center">✅ پرداخت شما با موفقیت انجام شد! از شنیدن برنامه‌ها لذت ببرید. ☕</div>';
+    } elseif($_GET['payment'] == 'failed') {
+        $payment_message = '<div class="alert alert-danger text-center">❌ پرداخت با شکست مواجه شد. لطفاً مجدداً تلاش کنید.</div>';
+    } elseif($_GET['payment'] == 'already') {
+        $payment_message = '<div class="alert alert-info text-center">ℹ️ شما قبلاً اشتراک کامل کافه مه‌آلود را خریداری کرده‌اید.</div>';
+    }
 }
 
-// ========== دریافت قیمت کافه ==========
+// ========== دریافت قیمت کافه (id=2) ==========
 $cafe_id = 2;
 $radio_query = "SELECT * FROM radios WHERE id = $cafe_id";
 $radio_result = $conn->query($radio_query);
-$radio_info = $radio_result->fetch_assoc();
-$cafe_price = $radio_info['price'] ?? 35000;
+$radio_info = $radio_result ? $radio_result->fetch_assoc() : null;
+$cafe_price = (int)($radio_info['price'] ?? 35000);
 
 // ========== بررسی دسترسی کاربر ==========
 $has_full_cafe_access = false;
 
 if($is_speaker) {
-    $has_full_cafe_access = true; 
-} 
-elseif(isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id'];
-    
-    $check_full_sql = "SELECT * FROM user_radio WHERE user_id = ? AND radio_type = 'cafe' AND paid = 1 AND program_id IS NULL LIMIT 1";
+    $has_full_cafe_access = true;
+} elseif(isset($_SESSION['user_id'])) {
+    $user_id = (int)$_SESSION['user_id'];
+    $check_full_sql = "SELECT id FROM user_radio 
+                       WHERE user_id = ? AND radio_type = 'cafe' 
+                       AND paid = 1 AND program_id IS NULL LIMIT 1";
     $check_stmt = $conn->prepare($check_full_sql);
     $check_stmt->bind_param("i", $user_id);
     $check_stmt->execute();
@@ -52,7 +58,6 @@ elseif(isset($_SESSION['user_id'])) {
 }
 
 // ========== دریافت برنامه‌ها ==========
-// ✅ دموها اول (title LIKE '%دمو%')، بعد از قدیم به جدید (id ASC)
 $programs = [];
 $sql = "SELECT * FROM radio 
         WHERE program_type = 'کافه مه آلود' 
@@ -60,14 +65,14 @@ $sql = "SELECT * FROM radio
             CASE WHEN title LIKE '%دمو%' THEN 0 ELSE 1 END ASC,
             id ASC";
 $result = $conn->query($sql);
-if($result->num_rows > 0) {
+if($result && $result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
         $programs[] = $row;
     }
 }
 
 // ============================================
-// ✅ پردازش ارسال کامنت جدید
+// ✅ پردازش کامنت
 // ============================================
 $comment_message = '';
 $comment_message_type = '';
@@ -102,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_comment'])) {
 }
 
 // ============================================
-// ✅ دریافت لیست کامنت‌ها
+// ✅ دریافت کامنت‌ها
 // ============================================
 $comments = [];
 $comments_sql = "SELECT id, full_name, comment_text, admin_reply, created_at
@@ -116,10 +121,9 @@ if ($comments_result && $comments_result->num_rows > 0) {
     }
 }
 
-// ذخیره آدرس فعلی برای بازگشت بعد از لاگین
 $current_url = $_SERVER['REQUEST_URI'];
+$login_url = '../login.php?redirect=' . urlencode($current_url);
 ?>
-
 <!doctype html>
 <html lang="fa" dir="rtl">
 <head>
@@ -133,7 +137,6 @@ $current_url = $_SERVER['REQUEST_URI'];
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://simorghtv.com/radios/cafe_meh.php">
 
-    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="کافه مه آلود | فضایی گرم با موسیقی و گفتگوهای دلنشین">
     <meta property="og:description" content="کافه مه آلود - فضایی گرم با موسیقی و گفتگوهای دلنشین">
@@ -143,13 +146,11 @@ $current_url = $_SERVER['REQUEST_URI'];
     <meta property="og:image:width" content="512">
     <meta property="og:image:height" content="512">
 
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="کافه مه آلود | فضایی گرم با موسیقی و گفتگوهای دلنشین">
     <meta name="twitter:description" content="کافه مه آلود - فضایی گرم با موسیقی و گفتگوهای دلنشین">
     <meta name="twitter:image" content="https://simorghtv.com/images/35.png">
 
-    <!-- JSON-LD Schema.org -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -209,506 +210,618 @@ $current_url = $_SERVER['REQUEST_URI'];
     <?php include "includes.php"; ?>
     <link rel="icon" href="../images/logo1.ico" type="image/x-icon">
 
-
     <style>
-:root { --cafe-brown: #6F4E37; --cafe-cream: #F5E6D3; --cafe-dark: #2C1810; --cafe-warm: #D4A373; }
+    :root { --cafe-brown: #6F4E37; --cafe-cream: #F5E6D3; --cafe-dark: #2C1810; --cafe-warm: #D4A373; }
 
-body {
-    background: linear-gradient(135deg, #2c1810 0%, #3e2723 60%, #4a3028 100%);
-    min-height: 100vh;
-    position: relative;
-}
-
-body::before {
-    content: '';
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-image:
-        radial-gradient(circle at 30% 40%, rgba(210, 180, 140, 0.06) 0%, transparent 60%),
-        radial-gradient(circle at 70% 80%, rgba(160, 120, 80, 0.05) 0%, transparent 60%),
-        repeating-linear-gradient(45deg, rgba(139, 69, 19, 0.03) 0px, rgba(139, 69, 19, 0.03) 1px, transparent 1px, transparent 10px);
-    pointer-events: none;
-    z-index: 0;
-}
-
-.container { position: relative; z-index: 1; }
-
-/* ============ هدر با تصویر پس‌زمینه 47.png — ارتفاع ۴۰۰، عرض کامل ============ */
-.cafe-header {
-    background-image: linear-gradient(135deg, rgba(26, 15, 10, 0.55), rgba(44, 24, 16, 0.55), rgba(26, 15, 10, 0.55)), url('../images/47.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    border-radius: 40px;
-    width: 100%;
-    height: 420px;
-    min-height: 420px;
-    max-height: 420px;
-    margin-bottom: 40px;
-    padding: 0 30px;
-    text-align: center;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(212, 163, 115, 0.3);
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;
-}
-
-.cafe-header::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: radial-gradient(circle at 50% 50%, transparent 0%, rgba(0, 0, 0, 0.35) 100%);
-    pointer-events: none;
-    z-index: 0;
-}
-
-.cafe-header > * { position: relative; z-index: 1; }
-
-.cafe-header h1 {
-    font-size: 3rem;
-    font-weight: bold;
-    color: #f0e0c0;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9), 0 0 20px rgba(212, 163, 115, 0.5);
-}
-
-.cafe-header .lead {
-    color: #e8d8c0;
-    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
-}
-
-.cafe-header small {
-    color: #d4c4a8;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
-}
-
-/* ============ کارت پلیر ============ */
-.cafe-player-card {
-    background: rgba(30, 20, 15, 0.7);
-    backdrop-filter: blur(12px);
-    border-radius: 30px;
-    padding: 30px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(212, 163, 115, 0.3);
-}
-
-.coffee-cup-icon {
-    width: 100px;
-    height: 100px;
-    margin: 0 auto 20px;
-    background: linear-gradient(135deg, #D4A373, #B8956A);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 50px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    animation: float 3s ease-in-out infinite;
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-}
-
-.now-playing-title { font-size: 1.5rem; font-weight: bold; color: #f0e0c0; }
-
-.now-playing-type {
-    background: rgba(212, 163, 115, 0.8);
-    display: inline-block;
-    padding: 5px 15px;
-    border-radius: 50px;
-    font-size: 0.85rem;
-    color: #2c1810;
-    font-weight: bold;
-}
-
-.custom-audio-player {
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 60px;
-    padding: 15px 20px;
-    margin-top: 20px;
-}
-
-audio { width: 100%; border-radius: 50px; }
-audio::-webkit-media-controls-enclosure { overflow: hidden; }
-audio::-webkit-media-controls-panel { width: calc(100% + 30px); }
-audio::-webkit-media-controls-current-time-display,
-audio::-webkit-media-controls-time-remaining-display { display: none; }
-audio::-moz-media-controls-download-button { display: none !important; }
-audio::-ms-media-controls-download-button { display: none !important; }
-
-/* ============ منو ============ */
-.menu-section {
-    background: rgba(30, 20, 15, 0.6);
-    backdrop-filter: blur(10px);
-    border-radius: 30px;
-    padding: 25px;
-    border: 1px solid rgba(212, 163, 115, 0.25);
-}
-
-.menu-title {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: #f0e0c0;
-    border-bottom: 3px solid #D4A373;
-    display: inline-block;
-    padding-bottom: 10px;
-}
-
-.menu-item {
-    background: rgba(45, 35, 30, 0.8);
-    backdrop-filter: blur(5px);
-    border-radius: 20px;
-    margin-bottom: 15px;
-    padding: 15px 20px;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(212, 163, 115, 0.2);
-    position: relative;
-}
-
-.menu-item:hover {
-    transform: translateX(-5px);
-    border-color: rgba(212, 163, 115, 0.5);
-    background: rgba(55, 45, 40, 0.9);
-}
-
-.menu-item.is-demo {
-    border-color: rgba(255, 215, 0, 0.6);
-    background: linear-gradient(135deg, rgba(45, 35, 30, 0.9), rgba(60, 45, 20, 0.9));
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
-}
-
-.play-btn-cafe {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: rgba(80, 60, 50, 0.9);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid rgba(212, 163, 115, 0.5);
-    font-size: 1.2rem;
-    color: #D4A373;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.play-btn-cafe:hover { transform: scale(1.1); background: #D4A373; color: #2c1810; }
-
-.play-btn-cafe.playing {
-    background: #D4A373;
-    color: #2c1810;
-    animation: pulseCafe 1.5s infinite;
-}
-
-@keyframes pulseCafe {
-    0% { box-shadow: 0 0 0 0 rgba(212, 163, 115, 0.4); }
-    70% { box-shadow: 0 0 0 10px rgba(212, 163, 115, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(212, 163, 115, 0); }
-}
-
-.program-title-cafe { font-size: 1rem; font-weight: 600; color: #f0e0c0; }
-
-.program-badge-cafe {
-    display: inline-block;
-    padding: 3px 12px;
-    border-radius: 20px;
-    font-size: 11px;
-    background: rgba(212, 163, 115, 0.2);
-    color: #D4A373;
-}
-
-.cafe-buy-btn {
-    background: linear-gradient(135deg, #D4A373, #b8956a);
-    color: #2c1810 !important;
-    font-weight: bold !important;
-    border: none !important;
-    border-radius: 50px !important;
-    padding: 10px 25px;
-    transition: all 0.3s ease;
-}
-
-.cafe-buy-btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(212, 163, 115, 0.4); }
-
-.cafe-stats {
-    background: rgba(30, 20, 15, 0.6);
-    backdrop-filter: blur(10px);
-    border-radius: 25px;
-    padding: 20px;
-    margin-top: 25px;
-    border: 1px solid rgba(212, 163, 115, 0.25);
-}
-
-.stat-number-cafe { font-size: 1.8rem; font-weight: bold; color: #D4A373; }
-
-.search-input-cafe {
-    border-radius: 50px;
-    border: 1px solid rgba(212, 163, 115, 0.5);
-    padding: 10px 20px;
-    background: rgba(45, 35, 30, 0.8);
-    color: #f0e0c0;
-}
-
-.search-input-cafe:focus {
-    box-shadow: 0 0 0 3px rgba(212, 163, 115, 0.2);
-    border-color: #D4A373;
-    background: rgba(55, 45, 40, 0.9);
-    color: #f0e0c0;
-}
-
-.coffee-steam {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    font-size: 30px;
-    opacity: 0.2;
-    pointer-events: none;
-    animation: steam 4s ease-in-out infinite;
-    z-index: 2;
-}
-
-@keyframes steam {
-    0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.2; }
-    50% { transform: translateY(-15px) rotate(5deg); opacity: 0.4; }
-}
-
-/* ✅ بج دمو */
-.demo-badge {
-    display: inline-block;
-    padding: 4px 14px;
-    border-radius: 20px;
-    font-size: 11px;
-    font-weight: bold;
-    background: linear-gradient(135deg, #ffd700, #ffb300);
-    color: #2c1810;
-    margin-left: 8px;
-    box-shadow: 0 3px 10px rgba(255, 215, 0, 0.4);
-    animation: demoPulse 2s ease-in-out infinite;
-}
-
-@keyframes demoPulse {
-    0%, 100% { box-shadow: 0 3px 10px rgba(255, 215, 0, 0.4); }
-    50% { box-shadow: 0 3px 20px rgba(255, 215, 0, 0.7); }
-}
-
-/* ✅ بج خریداری شده */
-.purchased-badge {
-    background: #28a745;
-    border-radius: 50px;
-    padding: 4px 12px;
-    font-size: 11px;
-    color: white;
-    margin-right: 6px;
-}
-
-/* ============ دکمه خروج ============ */
-.logout-btn {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    z-index: 9999;
-    background: linear-gradient(135deg, #dc3545, #c82333);
-    color: white;
-    border: none;
-    border-radius: 60px;
-    padding: 12px 24px;
-    font-weight: bold;
-    font-size: 15px;
-    box-shadow: 0 8px 25px rgba(220, 53, 69, 0.4);
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-    font-family: inherit;
-    cursor: pointer;
-}
-
-.logout-btn:hover {
-    transform: translateY(-3px) scale(1.03);
-    box-shadow: 0 12px 35px rgba(220, 53, 69, 0.5);
-    color: white;
-    background: linear-gradient(135deg, #c82333, #a71d2a);
-}
-
-.logout-btn svg { width: 20px; height: 20px; fill: currentColor; }
-
-.no-download {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-/* ============ بردکرامب ============ */
-.breadcrumb-nav {
-    margin-bottom: 20px;
-    padding: 12px 20px;
-    background: rgba(30, 20, 15, 0.7);
-    border-radius: 50px;
-    border: 1px solid rgba(212, 163, 115, 0.2);
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.9rem;
-}
-
-.breadcrumb-nav a { color: #D4A373; text-decoration: none; transition: all 0.3s; }
-.breadcrumb-nav a:hover { color: #f0e0c0; text-shadow: 0 0 10px rgba(212, 163, 115, 0.5); }
-.breadcrumb-nav .separator { color: #a09080; }
-.breadcrumb-nav .current { color: #f0e0c0; font-weight: bold; }
-
-/* ============ کامنت‌ها ============ */
-.comments-section {
-    background: rgba(30, 20, 15, 0.7);
-    backdrop-filter: blur(10px);
-    border-radius: 30px;
-    padding: 35px 30px;
-    margin-top: 40px;
-    border: 1px solid rgba(212, 163, 115, 0.3);
-    color: #f0e0c0;
-}
-
-.comments-title {
-    color: #D4A373;
-    font-weight: bold;
-    border-bottom: 2px solid #D4A373;
-    display: inline-block;
-    padding-bottom: 8px;
-    margin-bottom: 25px;
-}
-
-.comment-form-card {
-    background: rgba(20, 12, 8, 0.8);
-    border-radius: 20px;
-    padding: 15px 18px;
-    border: 1px solid rgba(212, 163, 115, 0.25);
-    margin-bottom: 25px;
-    max-width: 50%;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.comment-form-card h5 { color: #D4A373; font-size: 1rem; margin-bottom: 12px; }
-
-.comment-form-card .form-control {
-    background: rgba(45, 35, 30, 0.9);
-    border: 1px solid rgba(212, 163, 115, 0.3);
-    color: #f0e0c0;
-    border-radius: 12px;
-    padding: 8px 14px;
-    font-size: 0.9rem;
-}
-
-.comment-form-card .form-control:focus {
-    background: rgba(55, 45, 40, 0.95);
-    border-color: #D4A373;
-    color: #fff;
-    box-shadow: 0 0 0 3px rgba(212, 163, 115, 0.15);
-}
-
-.comment-form-card .form-control::placeholder { color: #a09080; }
-.comment-form-card label { color: #D4A373; font-size: 12px; margin-bottom: 4px; }
-.comment-form-card textarea.form-control { min-height: 70px; }
-
-.comment-submit-btn {
-    background: linear-gradient(135deg, #D4A373, #b8956a);
-    color: #2c1810;
-    font-weight: bold;
-    border: none;
-    border-radius: 50px;
-    padding: 8px 25px;
-    font-size: 0.9rem;
-    transition: all 0.3s;
-}
-
-.comment-submit-btn:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(212, 163, 115, 0.5); color: #2c1810; }
-
-.comment-item {
-    background: rgba(20, 12, 8, 0.7);
-    border-radius: 18px;
-    padding: 20px;
-    margin-bottom: 18px;
-    border: 1px solid rgba(212, 163, 115, 0.15);
-    transition: all 0.3s;
-}
-
-.comment-item:hover { border-color: rgba(212, 163, 115, 0.4); transform: translateX(-3px); }
-
-.comment-author { color: #D4A373; font-weight: bold; margin-bottom: 5px; }
-.comment-date { color: #a09080; font-size: 12px; }
-
-.comment-text {
-    color: #e8d8c0;
-    margin-top: 10px;
-    line-height: 1.8;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-}
-
-.admin-reply-box {
-    background: rgba(212, 163, 115, 0.08);
-    border-right: 3px solid #D4A373;
-    border-radius: 12px;
-    padding: 12px 18px;
-    margin-top: 15px;
-    margin-right: 20px;
-}
-
-.admin-reply-label { color: #D4A373; font-weight: bold; font-size: 13px; margin-bottom: 5px; }
-
-.admin-reply-text {
-    color: #d8c8b0;
-    line-height: 1.7;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-}
-
-.no-comments { text-align: center; padding: 40px 20px; color: #a09080; }
-.no-comments .icon { font-size: 50px; margin-bottom: 15px; }
-
-.comments-count-badge {
-    background: rgba(212, 163, 115, 0.2);
-    color: #D4A373;
-    border-radius: 50px;
-    padding: 3px 12px;
-    font-size: 13px;
-    margin-right: 10px;
-}
-
-/* ============ موبایل ============ */
-@media (max-width: 768px) {
-    .cafe-header {
-        height: 320px;
-        min-height: 320px;
-        max-height: 320px;
-        padding: 0 15px;
+    body {
+        background: linear-gradient(135deg, #2c1810 0%, #3e2723 60%, #4a3028 100%);
+        min-height: 100vh;
+        position: relative;
     }
 
-    .cafe-header h1 { font-size: 2rem; }
-    .cafe-header .lead { font-size: 0.95rem; }
-    .cafe-header small { font-size: 0.8rem; }
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background-image:
+            radial-gradient(circle at 30% 40%, rgba(210, 180, 140, 0.06) 0%, transparent 60%),
+            radial-gradient(circle at 70% 80%, rgba(160, 120, 80, 0.05) 0%, transparent 60%),
+            repeating-linear-gradient(45deg, rgba(139, 69, 19, 0.03) 0px, rgba(139, 69, 19, 0.03) 1px, transparent 1px, transparent 10px);
+        pointer-events: none;
+        z-index: 0;
+    }
 
-    .menu-item { padding: 12px 15px; }
-    .play-btn-cafe { width: 40px; height: 40px; font-size: 1rem; }
+    .container { position: relative; z-index: 1; }
+
+    .cafe-header {
+        background-image: linear-gradient(135deg, rgba(26, 15, 10, 0.55), rgba(44, 24, 16, 0.55), rgba(26, 15, 10, 0.55)), url('../images/47.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        border-radius: 40px;
+        width: 100%;
+        height: 420px;
+        min-height: 420px;
+        max-height: 420px;
+        margin-bottom: 30px;
+        padding: 0 30px;
+        text-align: center;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(212, 163, 115, 0.3);
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+    }
+
+    .cafe-header::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: radial-gradient(circle at 50% 50%, transparent 0%, rgba(0, 0, 0, 0.35) 100%);
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    .cafe-header > * { position: relative; z-index: 1; }
+
+    .cafe-header h1 {
+        font-size: 3rem;
+        font-weight: bold;
+        color: #f0e0c0;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9), 0 0 20px rgba(212, 163, 115, 0.5);
+    }
+
+    .cafe-header .lead {
+        color: #e8d8c0;
+        text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
+    }
+
+    .cafe-header small {
+        color: #d4c4a8;
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+    }
+
+    /* ============ باکس قیمت ============ */
+    .cafe-price-box {
+        background: linear-gradient(135deg, rgba(212, 163, 115, 0.15), rgba(184, 149, 106, 0.08));
+        border: 2px solid rgba(212, 163, 115, 0.4);
+        border-radius: 25px;
+        padding: 25px 30px;
+        margin-bottom: 30px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .price-label { color: #d4c4a8; font-size: 0.95rem; margin-bottom: 5px; }
+
+    .price-value {
+        color: #D4A373;
+        font-size: 2.2rem;
+        font-weight: bold;
+        text-shadow: 0 0 15px rgba(212, 163, 115, 0.4);
+        line-height: 1.2;
+    }
+
+    .price-unit { font-size: 1rem; color: #d4c4a8; font-weight: normal; }
+
+    .price-hint { color: #b8a88a; display: block; margin-top: 8px; line-height: 1.6; }
+    .price-hint a { color: #D4A373; font-weight: bold; text-decoration: underline; }
+
+    .cafe-buy-main {
+        background: linear-gradient(135deg, #D4A373, #b8956a);
+        color: #2c1810 !important;
+        font-weight: bold;
+        border: none;
+        border-radius: 50px;
+        padding: 14px 30px;
+        font-size: 1.05rem;
+        transition: all 0.3s;
+        box-shadow: 0 5px 20px rgba(212, 163, 115, 0.4);
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .cafe-buy-main:hover {
+        transform: translateY(-3px) scale(1.03);
+        box-shadow: 0 10px 30px rgba(212, 163, 115, 0.6);
+        color: #2c1810 !important;
+    }
+
+    .cafe-player-card {
+        background: rgba(30, 20, 15, 0.7);
+        backdrop-filter: blur(12px);
+        border-radius: 30px;
+        padding: 30px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(212, 163, 115, 0.3);
+    }
+
+    .coffee-cup-icon {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto 20px;
+        background: linear-gradient(135deg, #D4A373, #B8956A);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 50px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+    }
+
+    .now-playing-title { font-size: 1.5rem; font-weight: bold; color: #f0e0c0; }
+
+    .now-playing-type {
+        background: rgba(212, 163, 115, 0.8);
+        display: inline-block;
+        padding: 5px 15px;
+        border-radius: 50px;
+        font-size: 0.85rem;
+        color: #2c1810;
+        font-weight: bold;
+    }
+
+    .custom-audio-player {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 60px;
+        padding: 15px 20px;
+        margin-top: 20px;
+    }
+
+    audio { width: 100%; border-radius: 50px; }
+    audio::-webkit-media-controls-enclosure { overflow: hidden; }
+    audio::-webkit-media-controls-panel { width: calc(100% + 30px); }
+    audio::-webkit-media-controls-current-time-display,
+    audio::-webkit-media-controls-time-remaining-display { display: none; }
+    audio::-moz-media-controls-download-button { display: none !important; }
+    audio::-ms-media-controls-download-button { display: none !important; }
+
+    .menu-section {
+        background: rgba(30, 20, 15, 0.6);
+        backdrop-filter: blur(10px);
+        border-radius: 30px;
+        padding: 25px;
+        border: 1px solid rgba(212, 163, 115, 0.25);
+    }
+
+    .menu-title {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #f0e0c0;
+        border-bottom: 3px solid #D4A373;
+        display: inline-block;
+        padding-bottom: 10px;
+    }
+
+    .menu-item {
+        background: rgba(45, 35, 30, 0.8);
+        backdrop-filter: blur(5px);
+        border-radius: 20px;
+        margin-bottom: 15px;
+        padding: 15px 20px;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(212, 163, 115, 0.2);
+        position: relative;
+    }
+
+    .menu-item:hover {
+        transform: translateX(-5px);
+        border-color: rgba(212, 163, 115, 0.5);
+        background: rgba(55, 45, 40, 0.9);
+    }
+
+    .menu-item.is-demo {
+        border-color: rgba(255, 215, 0, 0.6);
+        background: linear-gradient(135deg, rgba(45, 35, 30, 0.9), rgba(60, 45, 20, 0.9));
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
+    }
+
+    .menu-item.active {
+        background: linear-gradient(135deg, rgba(212, 163, 115, 0.2), rgba(184, 149, 106, 0.2));
+        border-color: #D4A373;
+        border-width: 2px;
+    }
+
+    .play-btn-cafe {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: rgba(80, 60, 50, 0.9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba(212, 163, 115, 0.5);
+        font-size: 1.2rem;
+        color: #D4A373;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .play-btn-cafe:hover { transform: scale(1.1); background: #D4A373; color: #2c1810; }
+
+    .play-btn-cafe.playing {
+        background: #D4A373;
+        color: #2c1810;
+        animation: pulseCafe 1.5s infinite;
+    }
+
+    @keyframes pulseCafe {
+        0% { box-shadow: 0 0 0 0 rgba(212, 163, 115, 0.4); }
+        70% { box-shadow: 0 0 0 10px rgba(212, 163, 115, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(212, 163, 115, 0); }
+    }
+
+    .program-title-cafe { font-size: 1rem; font-weight: 600; color: #f0e0c0; }
+
+    .program-badge-cafe {
+        display: inline-block;
+        padding: 3px 12px;
+        border-radius: 20px;
+        font-size: 11px;
+        background: rgba(212, 163, 115, 0.2);
+        color: #D4A373;
+    }
+
+    .cafe-stats {
+        background: rgba(30, 20, 15, 0.6);
+        backdrop-filter: blur(10px);
+        border-radius: 25px;
+        padding: 20px;
+        margin-top: 25px;
+        border: 1px solid rgba(212, 163, 115, 0.25);
+    }
+
+    .stat-number-cafe { font-size: 1.8rem; font-weight: bold; color: #D4A373; }
+
+    .search-input-cafe {
+        border-radius: 50px;
+        border: 1px solid rgba(212, 163, 115, 0.5);
+        padding: 10px 20px;
+        background: rgba(45, 35, 30, 0.8);
+        color: #f0e0c0;
+    }
+
+    .search-input-cafe:focus {
+        box-shadow: 0 0 0 3px rgba(212, 163, 115, 0.2);
+        border-color: #D4A373;
+        background: rgba(55, 45, 40, 0.9);
+        color: #f0e0c0;
+    }
+
+    .coffee-steam {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        font-size: 30px;
+        opacity: 0.2;
+        pointer-events: none;
+        animation: steam 4s ease-in-out infinite;
+        z-index: 2;
+    }
+
+    @keyframes steam {
+        0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.2; }
+        50% { transform: translateY(-15px) rotate(5deg); opacity: 0.4; }
+    }
+
+    .demo-badge {
+        display: inline-block;
+        padding: 4px 14px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: bold;
+        background: linear-gradient(135deg, #ffd700, #ffb300);
+        color: #2c1810;
+        margin-left: 8px;
+        box-shadow: 0 3px 10px rgba(255, 215, 0, 0.4);
+        animation: demoPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes demoPulse {
+        0%, 100% { box-shadow: 0 3px 10px rgba(255, 215, 0, 0.4); }
+        50% { box-shadow: 0 3px 20px rgba(255, 215, 0, 0.7); }
+    }
+
+    .purchased-badge {
+        background: #28a745;
+        border-radius: 50px;
+        padding: 4px 12px;
+        font-size: 11px;
+        color: white;
+        margin-right: 6px;
+    }
 
     .logout-btn {
-        bottom: 20px;
-        right: 20px;
-        padding: 10px 18px;
-        font-size: 13px;
-        gap: 6px;
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 9999;
+        background: linear-gradient(135deg, #dc3545, #c82333);
+        color: white;
+        border: none;
+        border-radius: 60px;
+        padding: 12px 24px;
+        font-weight: bold;
+        font-size: 15px;
+        box-shadow: 0 8px 25px rgba(220, 53, 69, 0.4);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        font-family: inherit;
+        cursor: pointer;
     }
 
-    .comment-form-card { max-width: 100%; }
-    .breadcrumb-nav { font-size: 0.8rem; padding: 10px 15px; }
-}
-</style>
+    .logout-btn:hover {
+        transform: translateY(-3px) scale(1.03);
+        box-shadow: 0 12px 35px rgba(220, 53, 69, 0.5);
+        color: white;
+        background: linear-gradient(135deg, #c82333, #a71d2a);
+    }
+
+    .logout-btn svg { width: 20px; height: 20px; fill: currentColor; }
+
+    .breadcrumb-nav {
+        margin-bottom: 20px;
+        padding: 12px 20px;
+        background: rgba(30, 20, 15, 0.7);
+        border-radius: 50px;
+        border: 1px solid rgba(212, 163, 115, 0.2);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.9rem;
+    }
+
+    .breadcrumb-nav a { color: #D4A373; text-decoration: none; transition: all 0.3s; }
+    .breadcrumb-nav a:hover { color: #f0e0c0; text-shadow: 0 0 10px rgba(212, 163, 115, 0.5); }
+    .breadcrumb-nav .separator { color: #a09080; }
+    .breadcrumb-nav .current { color: #f0e0c0; font-weight: bold; }
+
+    .comments-section {
+        background: rgba(30, 20, 15, 0.7);
+        backdrop-filter: blur(10px);
+        border-radius: 30px;
+        padding: 35px 30px;
+        margin-top: 40px;
+        border: 1px solid rgba(212, 163, 115, 0.3);
+        color: #f0e0c0;
+    }
+
+    .comments-title {
+        color: #D4A373;
+        font-weight: bold;
+        border-bottom: 2px solid #D4A373;
+        display: inline-block;
+        padding-bottom: 8px;
+        margin-bottom: 25px;
+    }
+
+    .comment-form-card {
+        background: rgba(20, 12, 8, 0.8);
+        border-radius: 20px;
+        padding: 15px 18px;
+        border: 1px solid rgba(212, 163, 115, 0.25);
+        margin-bottom: 25px;
+        max-width: 50%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .comment-form-card h5 { color: #D4A373; font-size: 1rem; margin-bottom: 12px; }
+
+    .comment-form-card .form-control {
+        background: rgba(45, 35, 30, 0.9);
+        border: 1px solid rgba(212, 163, 115, 0.3);
+        color: #f0e0c0;
+        border-radius: 12px;
+        padding: 8px 14px;
+        font-size: 0.9rem;
+    }
+
+    .comment-form-card .form-control:focus {
+        background: rgba(55, 45, 40, 0.95);
+        border-color: #D4A373;
+        color: #fff;
+        box-shadow: 0 0 0 3px rgba(212, 163, 115, 0.15);
+    }
+
+    .comment-form-card .form-control::placeholder { color: #a09080; }
+    .comment-form-card label { color: #D4A373; font-size: 12px; margin-bottom: 4px; }
+    .comment-form-card textarea.form-control { min-height: 70px; }
+
+    .comment-submit-btn {
+        background: linear-gradient(135deg, #D4A373, #b8956a);
+        color: #2c1810;
+        font-weight: bold;
+        border: none;
+        border-radius: 50px;
+        padding: 8px 25px;
+        font-size: 0.9rem;
+        transition: all 0.3s;
+    }
+
+    .comment-submit-btn:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(212, 163, 115, 0.5); color: #2c1810; }
+
+    .comment-item {
+        background: rgba(20, 12, 8, 0.7);
+        border-radius: 18px;
+        padding: 20px;
+        margin-bottom: 18px;
+        border: 1px solid rgba(212, 163, 115, 0.15);
+        transition: all 0.3s;
+    }
+
+    .comment-item:hover { border-color: rgba(212, 163, 115, 0.4); transform: translateX(-3px); }
+
+    .comment-author { color: #D4A373; font-weight: bold; margin-bottom: 5px; }
+    .comment-date { color: #a09080; font-size: 12px; }
+
+    .comment-text {
+        color: #e8d8c0;
+        margin-top: 10px;
+        line-height: 1.8;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+
+    .admin-reply-box {
+        background: rgba(212, 163, 115, 0.08);
+        border-right: 3px solid #D4A373;
+        border-radius: 12px;
+        padding: 12px 18px;
+        margin-top: 15px;
+        margin-right: 20px;
+    }
+
+    .admin-reply-label { color: #D4A373; font-weight: bold; font-size: 13px; margin-bottom: 5px; }
+
+    .admin-reply-text {
+        color: #d8c8b0;
+        line-height: 1.7;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+
+    .no-comments { text-align: center; padding: 40px 20px; color: #a09080; }
+    .no-comments .icon { font-size: 50px; margin-bottom: 15px; }
+
+    .comments-count-badge {
+        background: rgba(212, 163, 115, 0.2);
+        color: #D4A373;
+        border-radius: 50px;
+        padding: 3px 12px;
+        font-size: 13px;
+        margin-right: 10px;
+    }
+
+    /* ============ استایل کد تخفیف ============ */
+    .coupon-input {
+        flex: 1;
+        padding: 10px 14px;
+        border-radius: 12px;
+        background: rgba(45, 35, 30, 0.9);
+        border: 1px solid rgba(212, 163, 115, 0.4);
+        color: #f0e0c0;
+        font-size: 0.9rem;
+        outline: none;
+        transition: all 0.3s;
+    }
+
+    .coupon-input:focus {
+        border-color: #D4A373;
+        box-shadow: 0 0 0 3px rgba(212, 163, 115, 0.2);
+    }
+
+    .coupon-input::placeholder { color: #a09080; }
+
+    .coupon-apply-btn {
+        padding: 10px 18px;
+        border: none;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #D4A373, #b8956a);
+        color: #2c1810;
+        font-weight: bold;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: all 0.3s;
+        white-space: nowrap;
+    }
+
+    .coupon-apply-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(212, 163, 115, 0.5);
+    }
+
+    .coupon-apply-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    .coupon-msg {
+        margin-top: 6px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        display: none;
+    }
+
+    .price-value-final {
+        color: #8ce3a1;
+        font-size: 2.2rem;
+        font-weight: bold;
+        text-shadow: 0 0 15px rgba(140, 227, 161, 0.4);
+        line-height: 1.2;
+    }
+
+    .price-strike {
+        font-size: 0.9rem;
+        color: #b8a88a;
+        text-decoration: line-through;
+        margin-bottom: 2px;
+    }
+
+    .discount-note {
+        font-size: 0.85rem;
+        color: #8ce3a1;
+        margin-top: 4px;
+    }
+
+    .coupon-remove-btn {
+        background: none;
+        border: none;
+        color: #ff9ba6;
+        font-size: 0.8rem;
+        text-decoration: underline;
+        cursor: pointer;
+        margin-right: 8px;
+        padding: 0;
+    }
+
+
+    .coupon-remove-btn:hover { color: #ff6b7a; }
+
+    @media (max-width: 768px) {
+        .cafe-header {
+            height: 320px;
+            min-height: 320px;
+            max-height: 320px;
+            padding: 0 15px;
+        }
+
+        .cafe-header h1 { font-size: 2rem; }
+        .cafe-header .lead { font-size: 0.95rem; }
+        .cafe-header small { font-size: 0.8rem; }
+
+        .price-value,
+        .price-value-final { font-size: 1.6rem; }
+
+        .menu-item { padding: 12px 15px; }
+        .play-btn-cafe { width: 40px; height: 40px; font-size: 1rem; }
+
+        .logout-btn {
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 18px;
+            font-size: 13px;
+            gap: 6px;
+        }
+
+        .comment-form-card { max-width: 100%; }
+        .breadcrumb-nav { font-size: 0.8rem; padding: 10px 15px; }
+    }
+    </style>
 
 </head>
 <body>
@@ -722,25 +835,104 @@ audio::-ms-media-controls-download-button { display: none !important; }
             <span class="current">☕ کافه مه آلود</span>
         </div>
 
-        <?php 
-        if(isset($_GET['payment']) && $_GET['payment'] == 'already') {
-            echo '<div class="alert alert-info text-center">ℹ️ شما قبلاً اشتراک کامل کافه مه‌آلود را خریداری کرده‌اید.</div>';
-        }
-        if(isset($_GET['payment']) && $_GET['payment'] == 'success') {
-            echo '<div class="alert alert-success text-center">✅ پرداخت شما با موفقیت انجام شد! از شنیدن برنامه‌ها لذت ببرید. ☕</div>';
-        }
-        if(isset($_GET['payment']) && $_GET['payment'] == 'failed') {
-            echo '<div class="alert alert-danger text-center">❌ پرداخت با شکست مواجه شد. لطفاً مجدداً تلاش کنید.</div>';
-        }
-        ?>
+        <?php echo $payment_message; ?>
+
         <?php if($is_speaker): ?>
         <div class="alert alert-success text-center mb-3" style="background: linear-gradient(135deg, #D4A373, #b8956a); color: #2c1810; border: none;">🌟🌟 به پنل گویندگی خوش آمدید! دسترسی رایگان و کامل به تمام برنامه‌ها. 🌟🌟</div>
         <?php endif; ?>
+
         <div class="cafe-header fade-up">
             <h1>☕ کافه مه آلود</h1>
             <p class="lead">داستان یک کافه قدیمی در نزدیکی ایستگاه قطار متروکه، با باریستای مرموز که فقط نیمه شبها باز میشه.</p>
             <small>🎧 <?php echo count($programs); ?> برنامه برای لحظات آرام شما</small>
         </div>
+
+        <!-- ✅ باکس قیمت اشتراک کامل -->
+        <?php if($is_speaker): ?>
+        <div class="cafe-price-box" style="border-color: #D4A373; background: linear-gradient(135deg, rgba(212,163,115,0.15), rgba(212,163,115,0.05));">
+            <div class="text-center">
+                <div style="font-size: 1.3rem; color: #D4A373; font-weight: bold;">
+                    🎙️ دسترسی ویژه گوینده به همه برنامه‌ها فعال است
+                </div>
+            </div>
+        </div>
+        <?php elseif($has_full_cafe_access): ?>
+        <div class="cafe-price-box" style="border-color: #28a745; background: linear-gradient(135deg, rgba(40,167,69,0.15), rgba(40,167,69,0.05));">
+            <div class="text-center">
+                <div style="font-size: 1.3rem; color: #28a745; font-weight: bold;">
+                    ✅ دسترسی کامل به کافه مه‌آلود برای شما فعال است
+                </div>
+                <small style="color: #b8a88a;">می‌توانید تمام برنامه‌ها را بشنوید</small>
+            </div>
+        </div>
+        <?php else: ?>
+        <div class="cafe-price-box">
+            <div class="row align-items-center">
+                <div class="col-md-7 text-center text-md-start mb-3 mb-md-0">
+                    <div class="price-label">💰 قیمت اشتراک کامل کافه مه‌آلود:</div>
+
+                    <!-- قیمت اصلی -->
+                    <div id="priceMainWrap">
+                        <div class="price-value">
+                            <?php echo number_format($cafe_price); ?>
+                            <span class="price-unit">تومان</span>
+                        </div>
+                    </div>
+
+                    <!-- قیمت با تخفیف -->
+                    <div id="priceFinalWrap" style="display:none;">
+                        <div class="price-strike">
+                            <span id="priceBaseLabel"><?php echo number_format($cafe_price); ?></span> تومان
+                        </div>
+                        <div class="price-value-final">
+                            <span id="priceFinalLabel">0</span>
+                            <span class="price-unit">تومان</span>
+                        </div>
+                        <div class="discount-note">
+                            🎁 تخفیف: <span id="discountLabel">0</span> تومان
+                            <button type="button" id="removeCouponBtn" class="coupon-remove-btn">
+                                حذف کد
+                            </button>
+                        </div>
+                    </div>
+
+                    <small class="price-hint">
+                        با یک بار خرید، به <strong>تمام <?php echo count($programs); ?> برنامه</strong> کافه دسترسی دائمی پیدا می‌کنید.
+                        <?php if(!isset($_SESSION['user_id'])): ?>
+                        <br>برای خرید ابتدا باید <a href="<?php echo htmlspecialchars($login_url); ?>">وارد شوید</a>.
+                        <?php endif; ?>
+                    </small>
+                </div>
+
+                <div class="col-md-5 text-center">
+                    <?php if(!isset($_SESSION['user_id'])): ?>
+                        <a href="<?php echo htmlspecialchars($login_url); ?>" class="btn cafe-buy-main">
+                            🔐 ورود و خرید
+                        </a>
+                    <?php else: ?>
+                        <!-- کد تخفیف -->
+                        <div id="couponBox" style="margin-bottom:10px;">
+                            <div style="display:flex; gap:6px;">
+                                <input type="text" id="couponInput" class="coupon-input"
+                                    placeholder="کد تخفیف" maxlength="64" autocomplete="off">
+                                <button type="button" id="applyCouponBtn" class="coupon-apply-btn">
+                                    اعمال
+                                </button>
+                            </div>
+                            <div id="couponMsg" class="coupon-msg"></div>
+                        </div>
+
+                        <!-- دکمه پرداخت -->
+                        <a id="payBtn" href="buy_cafe.php" class="btn cafe-buy-main"
+                            data-base-url="buy_cafe.php">
+                            💳 خرید اشتراک
+                        </a>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
+
         <div class="row">
             <div class="col-lg-5 mb-4">
                 <div class="cafe-player-card fade-up" style="animation-delay: 0.1s;">
@@ -757,11 +949,22 @@ audio::-ms-media-controls-download-button { display: none !important; }
                 </div>
                 <div class="cafe-stats fade-up" style="animation-delay: 0.2s;">
                     <div class="row">
-                        <div class="col-6"><div class="stat-item-cafe"><div class="stat-number-cafe"><?php echo count($programs); ?></div><small>برنامه در منو</small></div></div>
-                        <div class="col-6"><div class="stat-item-cafe"><div class="stat-number-cafe"><?php echo $is_speaker ? '🎙️' : '💰'; ?></div><small><?php echo $is_speaker ? 'دسترسی ویژه' : 'اشتراک کامل'; ?></small></div></div>
+                        <div class="col-6">
+                            <div class="text-center">
+                                <div class="stat-number-cafe"><?php echo count($programs); ?></div>
+                                <small>برنامه در منو</small>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="text-center">
+                                <div class="stat-number-cafe"><?php echo $is_speaker ? '🎙️' : '💰'; ?></div>
+                                <small><?php echo $is_speaker ? 'دسترسی ویژه' : 'اشتراک کامل'; ?></small>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
             <div class="col-lg-7 fade-up" style="animation-delay: 0.15s;">
                 <div class="menu-section">
                     <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
@@ -771,38 +974,12 @@ audio::-ms-media-controls-download-button { display: none !important; }
                             <span class="input-group-text">🔍</span>
                         </div>
                     </div>
-                    <?php if(!isset($_SESSION['user_id'])): ?>
-                        <div class="text-center mb-4">
-                            <div class="alert alert-warning">برای دسترسی به برنامه‌ها، لطفاً <a href="../login.php?redirect=<?php echo urlencode($current_url); ?>">وارد شوید</a>. قسمت‌های <strong>دمو</strong> رایگان هستند.</div>
-                            <button class="btn btn-info btn-lg" onclick="location.href='../login.php?redirect=<?php echo urlencode($current_url); ?>'">🔐 ورود یا ثبت‌نام</button>
-                        </div>
-                    <?php else: ?>
-                        <div class="alert text-center mb-4" style="background: rgba(212, 163, 115, 0.15); border: 1px solid #D4A373; color: #f0e0c0; border-radius: 20px;">
-                            <?php if($is_speaker): ?>
-                                <span style="color: #D4A373; font-weight: bold; font-size: 1.1rem;">🎙️ دسترسی ویژه گوینده به تمام برنامه‌ها فعال است!</
-                                
-                                                            <?php elseif($has_full_cafe_access): ?>
-                                <span style="color: #D4A373; font-weight: bold; font-size: 1.1rem;">✅ دسترسی کامل به تمام برنامه‌های کافه مه‌آلود برای شما فعال است! ☕</span>
-                            <?php else: ?>
-                                <strong>☕ دسترسی به همه اپیزودها یک‌جا</strong><br>
-                                <small>با خرید اشتراک کامل، تمام برنامه‌های کافه برای شما باز می‌شود.</small><br>
-                             
-                             <a href="buy_cafe.php" class="btn cafe-buy-btn mt-2">💰 خرید اشتراک کامل (<?php echo number_format($cafe_price); ?> تومان)</a>
-                            <?php endif; ?>
-                        </div>
-                    <?php endif; ?>
+
                     <div id="playlistContainer">
                         <?php if (count($programs) > 0): ?>
                         <?php foreach($programs as $index => $program): 
-                            // ✅ تشخیص دمو بر اساس عنوان
                             $is_demo = (mb_strpos($program['title'], 'دمو') !== false);
                             $is_logged_in = isset($_SESSION['user_id']);
-                            
-                            // ✅ منطق دسترسی:
-                            // - دمو → همه (حتی مهمان)
-                            // - گوینده / خریدار → همه
-                            // - مهمان غیر دمو → دکمه ورود
-                            // - کاربر لاگین بدون اشتراک → دکمه خرید
                             $can_play = $is_demo || $is_speaker || $has_full_cafe_access;
                         ?>
                         <div class="menu-item <?php echo $is_demo ? 'is-demo' : ''; ?>" 
@@ -814,15 +991,12 @@ audio::-ms-media-controls-download-button { display: none !important; }
                             <div class="row align-items-center">
                                 <div class="col-auto">
                                     <?php if($can_play): ?>
-                                        <!-- ✅ پخش (دمو / گوینده / خریدار) -->
                                         <button class="play-btn-cafe" onclick="playProgram(this, <?php echo $index; ?>)">▶️</button>
                                     <?php elseif(!$is_logged_in): ?>
-                                        <!-- ✅ مهمان غیر دمو → برو لاگین -->
                                         <button class="play-btn-cafe" style="background: #555; cursor: pointer;" 
-                                                onclick="location.href='../login.php?redirect=<?php echo urlencode($current_url); ?>'"
+                                                onclick="location.href='<?php echo htmlspecialchars($login_url); ?>'"
                                                 title="برای شنیدن این برنامه، وارد شوید.">🔒</button>
                                     <?php else: ?>
-                                        <!-- ✅ کاربر لاگین بدون اشتراک → برو خرید -->
                                         <button class="play-btn-cafe" style="background: #555; cursor: pointer;" 
                                                 onclick="location.href='buy_cafe.php'"
                                                 title="برای شنیدن این برنامه، اشتراک کامل کافه را بخرید.">💰</button>
@@ -934,7 +1108,7 @@ audio::-ms-media-controls-download-button { display: none !important; }
 
     </div>
     <div class="coffee-steam">☁️☕☁️</div>
-    
+
     <?php include 'footer.php'; ?>
 
     <?php if(isset($_SESSION['user_id'])): ?>
@@ -945,24 +1119,26 @@ audio::-ms-media-controls-download-button { display: none !important; }
     <?php endif; ?>
 
     <?php $conn->close(); ?>
+
+    <!-- اسکریپت پلیر -->
     <script>
     const audio = document.getElementById('mainAudio');
     let currentPlayingButton = null;
     let programs = <?php echo json_encode($programs); ?>;
-    
+
     document.addEventListener('dragstart', function(e) {
         if (e.target.tagName === 'A' || e.target.tagName === 'IMG') {
             e.preventDefault();
         }
     });
-    
+
     document.addEventListener('contextmenu', function(e) {
         if (e.target.closest('.custom-audio-player') || e.target.tagName === 'AUDIO') {
             e.preventDefault();
             return false;
         }
     });
-    
+
     function playProgram(button, index) {
         const program = programs[index];
         if (!program) return;
@@ -1015,6 +1191,112 @@ audio::-ms-media-controls-download-button { display: none !important; }
             audio.paused ? audio.play() : audio.pause();
         }
     });
+    </script>
+
+    <!-- ✅ اسکریپت کد تخفیف -->
+    <script>
+    (function() {
+        const BASE_PRICE = <?php echo (int)$cafe_price; ?>;
+        const couponInput    = document.getElementById('couponInput');
+        const applyBtn       = document.getElementById('applyCouponBtn');
+        const couponMsg      = document.getElementById('couponMsg');
+        const priceMainWrap  = document.getElementById('priceMainWrap');
+        const priceFinalWrap = document.getElementById('priceFinalWrap');
+        const priceBaseLabel = document.getElementById('priceBaseLabel');
+        const priceFinalLabel= document.getElementById('priceFinalLabel');
+        const discountLabel  = document.getElementById('discountLabel');
+        const removeBtn      = document.getElementById('removeCouponBtn');
+        const payBtn         = document.getElementById('payBtn');
+
+        if (!applyBtn) return;
+
+        let appliedCode = '';
+        let appliedDiscount = 0;
+
+        function formatFa(n) {
+            return Number(n).toLocaleString('fa-IR');
+        }
+
+        function showMsg(text, type) {
+            couponMsg.style.display = 'block';
+            couponMsg.textContent = text;
+            couponMsg.style.color = (type === 'success') ? '#8ce3a1' : '#ff9ba6';
+        }
+
+        function clearMsg() {
+            couponMsg.style.display = 'none';
+            couponMsg.textContent = '';
+        }
+
+        function applyUI() {
+            const final = Math.max(0, BASE_PRICE - appliedDiscount);
+            priceMainWrap.style.display  = 'none';
+            priceFinalWrap.style.display = 'block';
+            priceBaseLabel.textContent  = formatFa(BASE_PRICE);
+            priceFinalLabel.textContent = formatFa(final);
+            discountLabel.textContent   = formatFa(appliedDiscount);
+
+            payBtn.href = payBtn.getAttribute('data-base-url') + '?coupon=' + encodeURIComponent(appliedCode);
+            payBtn.innerHTML = '💳 پرداخت ' + formatFa(final) + ' تومان';
+        }
+
+        function resetUI() {
+            appliedCode = '';
+            appliedDiscount = 0;
+            priceMainWrap.style.display  = 'block';
+            priceFinalWrap.style.display = 'none';
+            payBtn.href = payBtn.getAttribute('data-base-url');
+            payBtn.innerHTML = '💳 خرید اشتراک';
+            couponInput.value = '';
+            couponInput.disabled = false;
+            applyBtn.disabled = false;
+            applyBtn.textContent = 'اعمال';
+            clearMsg();
+        }
+
+        applyBtn.addEventListener('click', function() {
+            const code = couponInput.value.trim();
+            if (!code) { showMsg('لطفاً کد را وارد کنید.', 'error'); return; }
+
+            applyBtn.disabled = true;
+            applyBtn.textContent = '...';
+
+            fetch('check_coupon.php', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: 'code=' + encodeURIComponent(code) + '&context=radio'
+            })
+            .then(r => r.json())
+            .then(data => {
+                applyBtn.disabled = false;
+                applyBtn.textContent = 'اعمال';
+
+                if (data.ok) {
+                    appliedCode = data.code;
+                    appliedDiscount = data.discount;
+                    showMsg('✅ کد اعمال شد', 'success');
+                    couponInput.disabled = true;
+                    applyBtn.textContent = '✓';
+                    applyBtn.disabled = true;
+                    applyUI();
+                } else {
+                    showMsg('❌ ' + (data.error || 'کد نامعتبر است.'), 'error');
+                    resetUI();
+                }
+            })
+            .catch(() => {
+                applyBtn.disabled = false;
+                applyBtn.textContent = 'اعمال';
+                showMsg('❌ خطا در ارتباط با سرور.', 'error');
+            });
+        });
+
+        removeBtn.addEventListener('click', resetUI);
+
+        couponInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') { e.preventDefault(); applyBtn.click(); }
+        });
+    })();
     </script>
 </body>
 </html>

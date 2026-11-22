@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-$user_id = $_SESSION['user_id'];
+$user_id = (int)$_SESSION['user_id'];
 $season  = isset($_GET['season']) ? (int)$_GET['season'] : 1;
 
 // اعتبارسنجی فصل
@@ -48,9 +48,56 @@ if (!$radio_result || $radio_result->num_rows === 0) {
     die("خطا: اطلاعات فصل یافت نشد");
 }
 $radio_info = $radio_result->fetch_assoc();
-$price_in_toman = (int)$radio_info['price'];
+$price_in_toman_base = (int)$radio_info['price'];
+$radio_name = $radio_info['name'];
+
+// ========== چک کد تخفیف (اگر از tehran1.php اومده) ==========
+$coupon_code    = trim($_GET['coupon'] ?? '');
+$discount_toman = 0;
+$valid_coupon   = '';
+
+if ($coupon_code !== '') {
+    $cstmt = $conn->prepare("SELECT code, applies_to, takhfif_amount, is_active 
+                             FROM codes WHERE code = ? LIMIT 1");
+    $cstmt->bind_param("s", $coupon_code);
+    $cstmt->execute();
+    $cres = $cstmt->get_result();
+    if ($cres->num_rows === 1) {
+        $c = $cres->fetch_assoc();
+        if ((int)$c['is_active'] === 1
+            && in_array($c['applies_to'], ['radio', 'all'], true)
+            && (int)$c['takhfif_amount'] > 0) {
+            $discount_toman = (int)$c['takhfif_amount'];
+            $valid_coupon = $c['code'];
+        }
+    }
+    $cstmt->close();
+}
+
+// ========== محاسبه قیمت نهایی ==========
+$price_in_toman = max(0, $price_in_toman_base - $discount_toman);
 $price_in_rial  = $price_in_toman * 10;  // تبدیل به ریال برای درگاه
-$radio_name     = $radio_info['name'];
+
+// ========== اگر تخفیف >= قیمت → مستقیم بدون درگاه ثبت کن ==========
+if ($price_in_rial <= 0) {
+    $ins = $conn->prepare("INSERT INTO user_radio 
+        (user_id, radio_type, program_id, paid, price, created_at)
+        VALUES (?, ?, NULL, 1, ?, NOW())");
+    $ins->bind_param("isi", $user_id, $radio_type, $price_in_toman_base);
+    $ins->execute();
+    $ins->close();
+
+    // افزایش used_count کد تخفیف
+    if ($valid_coupon !== '') {
+        $upd = $conn->prepare("UPDATE codes SET used_count = used_count + 1 WHERE code = ?");
+        $upd->bind_param("s", $valid_coupon);
+        $upd->execute();
+        $upd->close();
+    }
+    $conn->close();
+    header("Location: tehran{$season}.php?payment=success");
+    exit();
+}
 
 // ========== ساخت invoice_id ==========
 $invoice_id = time() . rand(100, 999);
@@ -74,8 +121,9 @@ if ($result['code'] == 200) {
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("isii", $user_id, $radio_type, $price_in_toman, $invoice_id);
     $stmt->execute();
+    $stmt->close();
     $conn->close();
-    
+
     // ========== هدایت به درگاه ==========
     Gateway::redirect($result['content'], '');
     exit();

@@ -12,7 +12,6 @@ if($_SESSION["all_data"]["admin"] != 1){
 }
 
 $id = $_SESSION["all_data"]['id'];
-// $admin = $_SESSION["all_data"]['admin'];
 ?>
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
@@ -20,142 +19,280 @@ $id = $_SESSION["all_data"]['id'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خانه</title>
-
+    <title>ویرایش مقاله</title>
 
     <link rel="icon" href="img/logo.png" type="image/x-icon">
 
     <?php
     include 'includes.php';
     include '../config.php';
-    // include 'functions.php';
-    // include 'PersianCalendar.php';
     ?>
-    <!-- <link rel="stylesheet" href="styles.css"> -->
 
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://code.jquery.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://code.jquery.com">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <link href="https://cdn.jsdelivr.net/npm/jodit/build/jodit.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/jodit/build/jodit.min.js"></script>
+    <style>
+    body {
+        background-color: #f0f2f5;
+    }
 
+    .main-content {
+        padding: 20px;
+    }
+
+    .card-form {
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        padding: 25px;
+        margin-bottom: 30px;
+        border: none;
+    }
+
+    .toast-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1050;
+    }
+
+    #editor {
+        min-height: 400px;
+    }
+
+    .char-counter {
+        font-size: 0.8rem;
+        color: #6c757d;
+        float: left;
+    }
+
+    .char-counter.warning {
+        color: #dc3545;
+        font-weight: 600;
+    }
+
+    .seo-helper {
+        font-size: 0.8rem;
+        color: #6c757d;
+    }
+
+    .current-image {
+        max-width: 200px;
+        max-height: 150px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        padding: 4px;
+        background: #fafafa;
+    }
+    </style>
 </head>
 
 <body>
 
-
-
     <?php include 'header.php'; ?>
     <div class="container-fluid">
 
-
         <div class="row">
             <div class="col-md-3 d-flex">
-                <?php
-                include 'sidebar.php';
-                ?>
-
+                <?php include 'sidebar.php'; ?>
             </div>
 
-            <div class="col-md-8 mt-5">
+            <div class="col-md-9 main-content">
+                <h3 class="text-center mb-4">ویرایش مقاله</h3>
 
                 <?php
-            if(isset($_GET['id_art'])){
-                $id_article = $_GET['id_art'];
-                $sql = "SELECT * FROM articles WHERE id = $id_article";
-                $result = $conn->query($sql);
-                if($result->num_rows > 0){
-                    $row = $result->fetch_assoc();
-                }else{
-                    echo "<h2 style= 'text-align: center'>چنین مقاله ای پیدا نشد دوباره تلاش کنید !</h2>" ;
-                }
+                if (isset($_GET['id_art'])) {
+                    $id_article = (int)$_GET['id_art'];
+
+                    // امن: prepared statement
+                    $stmt_get = $conn->prepare("SELECT * FROM articles WHERE id = ?");
+                    $stmt_get->bind_param("i", $id_article);
+                    $stmt_get->execute();
+                    $result = $stmt_get->get_result();
+
+                    if ($result->num_rows > 0) {
+                        $row = $result->fetch_assoc();
                 ?>
 
+                <div class="card-form">
+                    <form action="" method="POST" id="articleForm" enctype="multipart/form-data" novalidate>
 
-
-                <form action="" method="POST" id="articleForm" enctype="multipart/form-data">
-                    <div class="row">
-                        <div class="col-6">
-                            <label for="title">عنوان مقاله:</label>
-                            <input type="text" id="title" name="title" class="form-control mb-2"
-                                value="<?= $row['title'];?>">
+                        <!-- ردیف اول: عنوان مقاله + عنوان سئو -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="title" class="form-label">عنوان مقاله: <span class="text-danger">*</span></label>
+                                <input type="text" id="title" name="title" class="form-control"
+                                    value="<?= htmlspecialchars($row['title']) ?>" required>
+                                <small class="seo-helper">این عنوان در سایت و لیست مقالات نمایش داده می‌شود.</small>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="meta_title" class="form-label">عنوان سئو (اختیاری):</label>
+                                <input type="text" id="meta_title" name="meta_title" class="form-control"
+                                    value="<?= htmlspecialchars($row['meta_title'] ?? '') ?>"
+                                    placeholder="اگر خالی بمونه، از عنوان مقاله استفاده می‌شه" maxlength="70">
+                                <small class="seo-helper">برای تگ &lt;title&gt; گوگل. پیشنهاد: ۵۰ تا ۶۰ کاراکتر. <span class="char-counter" id="meta_title_counter">0 / 70</span></small>
+                            </div>
                         </div>
-                        <div class="col-6">
-                            <label for="image">تصویر شاخص:</label>
-                            <input type="file" name="image" class="form-control" id="inputGroupFile02">
+
+                        <!-- ردیف دوم: تصویر شاخص + کلمات کلیدی -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="image" class="form-label">تصویر شاخص:</label>
+                                <input type="file" name="image" class="form-control" id="inputGroupFile02" accept="image/*">
+                                <small class="seo-helper">اگر خالی بگذارید، تصویر فعلی حفظ می‌شود.</small>
+                                <?php if (!empty($row['images'])) { ?>
+                                    <div class="mt-2">
+                                        <img src="../<?= htmlspecialchars($row['images']) ?>" alt="تصویر فعلی" class="current-image">
+                                    </div>
+                                <?php } ?>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="keywords" class="form-label">کلمات کلیدی:</label>
+                                <input type="text" id="keywords" name="keywords" class="form-control"
+                                    value="<?= htmlspecialchars($row['keywords'] ?? '') ?>"
+                                    placeholder="کلمات کلیدی را با کاما جدا کنید">
+                            </div>
                         </div>
-                    </div>
 
-
-
-                    <textarea id="editor" name="content">
-                    <?= $row['body'] ?>
-                    </textarea>
-                    <script>
-                    const editor = new Jodit('#editor');
-                    </script>
-
-                    <div class="row">
-
-                        <div class="col-md-4"></div>
-                        <div class="col-md-6">
-                            <button class="btn btn-outline-success" type="submit" name="submit_post">ثبت
-                                تغییرات</button>
+                        <!-- ردیف سوم: متا دیسکریپشن -->
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <label for="meta_description" class="form-label">متا دیسکریپشن (اختیاری):</label>
+                                <textarea id="meta_description" name="meta_description" class="form-control" 
+                                    rows="3" maxlength="170"
+                                    placeholder="اگر خالی بمونه، از ابتدای متن مقاله به‌صورت خودکار ساخته می‌شه"><?= htmlspecialchars($row['meta_description'] ?? '') ?></textarea>
+                                <small class="seo-helper">توضیحات متا برای گوگل. پیشنهاد: ۱۲۰ تا ۱۶۰ کاراکتر. <span class="char-counter" id="meta_desc_counter">0 / 170</span></small>
+                            </div>
                         </div>
-                    </div>
-                </form>
 
+                        <!-- محتوای اصلی -->
+                        <div class="mb-3">
+                            <label for="editor" class="form-label">محتوای اصلی: <span class="text-danger">*</span></label>
+                            <textarea id="editor" name="content" class="form-control"><?= htmlspecialchars($row['body']) ?></textarea>
+                        </div>
 
+                        <div class="d-flex justify-content-center mt-4 gap-2">
+                            <button class="btn btn-outline-success" type="submit" name="submit_post">
+                                <i class="fas fa-save me-2"></i>ثبت تغییرات
+                            </button>
+                            <a href="new_article.php" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-right me-2"></i>بازگشت
+                            </a>
+                        </div>
+                    </form>
+                </div>
 
                 <?php
-                }else {
-                echo "<h2 style= 'text-align: center'>هنوز مقاله ای انتخاب نکردید !</h2>" ;
-            }
-            ?>
-
-
+                    } else {
+                        echo '<div class="alert alert-warning text-center">چنین مقاله‌ای پیدا نشد. <a href="new_article.php">بازگشت به لیست</a></div>';
+                    }
+                    $stmt_get->close();
+                } else {
+                    echo '<div class="alert alert-warning text-center">هنوز مقاله‌ای انتخاب نکردید! <a href="new_article.php">بازگشت به لیست</a></div>';
+                }
+                ?>
             </div>
         </div>
     </div>
 
+    <!-- Toast ها -->
+    <div class="toast-container">
+        <div id="successToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
+            <div class="toast-header bg-success text-white">
+                <strong class="me-auto">موفقیت</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">عملیات با موفقیت انجام شد!</div>
+        </div>
+        <div id="errorToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
+            <div class="toast-header bg-danger text-white">
+                <strong class="me-auto">خطا</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">خطایی در انجام عملیات رخ داد!</div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
 
     <script>
-    $(document).ready(function() {
-        $('.nav-link').click(function() {
-            $('.nav-link').removeClass('active');
-            $(this).addClass('active');
+    // ---------------------------------------------------------------
+    // لود تنبل (Lazy Load) ادیتور Jodit
+    // ---------------------------------------------------------------
+    let joditLoaded = false;
+    let joditLoadingPromise = null;
+    let editorInstance = null;
+
+    function loadJodit() {
+        if (joditLoadingPromise) return joditLoadingPromise;
+
+        joditLoadingPromise = new Promise(function(resolve, reject) {
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://cdn.jsdelivr.net/npm/jodit/build/jodit.min.css';
+            document.head.appendChild(link);
+
+            var script = document.createElement('script');
+            script.src = 'https://cdn.jsdelivr.net/npm/jodit/build/jodit.min.js';
+            script.onload = function() {
+                editorInstance = new Jodit('#editor');
+                joditLoaded = true;
+                resolve(editorInstance);
+            };
+            script.onerror = reject;
+            document.body.appendChild(script);
         });
 
-        // Initialize Summernote
-        $('#summernote').summernote({
-            hint: {
-                mentions: ['jayden', 'sam', 'alvin', 'david'],
-                match: /\B@(\w*)$/,
-                search: function(keyword, callback) {
-                    callback($.grep(this.mentions, function(item) {
-                        return item.indexOf(keyword) == 0;
-                    }));
-                },
-                content: function(item) {
-                    return '@' + item;
-                }
+        return joditLoadingPromise;
+    }
+
+    // در این صفحه، چون محتوا از قبل هست، ادیتور رو بلافاصله بعد از لود صفحه فعال می‌کنیم
+    // تا کاربر برای دیدن محتوا لازم نباشه کلیک کنه
+    window.addEventListener('DOMContentLoaded', function() {
+        loadJodit().catch(function() {
+            console.error('خطا در لود ادیتور');
+        });
+    });
+
+    // قبل از ارسال فرم، مطمئن شو مقدار ادیتور در textarea هست
+    document.getElementById('articleForm').addEventListener('submit', function(e) {
+        if (joditLoaded && editorInstance) {
+            document.getElementById('editor').value = editorInstance.getEditorValue();
+        }
+    });
+
+    // ---------------------------------------------------------------
+    // شمارنده کاراکتر برای فیلدهای SEO
+    // ---------------------------------------------------------------
+    function setupCounter(inputId, counterId, max) {
+        var input = document.getElementById(inputId);
+        var counter = document.getElementById(counterId);
+        if (!input || !counter) return;
+
+        function update() {
+            var len = input.value.length;
+            counter.textContent = len + ' / ' + max;
+            if (len > max * 0.9) {
+                counter.classList.add('warning');
+            } else {
+                counter.classList.remove('warning');
             }
-        });
+        }
+        input.addEventListener('input', update);
+        update();
+    }
 
-        // Transfer content from Summernote to hidden input field before form submission
-        $('#articleForm').on('submit', function() {
-            var summernoteContent = $('#summernote').summernote('code');
-            $('#content').val(summernoteContent);
-        });
-    });
+    setupCounter('meta_title', 'meta_title_counter', 70);
+    setupCounter('meta_description', 'meta_desc_counter', 170);
     </script>
-
-
-    <script>
-    $('form').submit(function() {
-        $('#editor').val(editor.getEditorValue()); // انتقال محتوا به textarea
-    });
-    </script>
-
 
 </body>
 
@@ -163,163 +300,131 @@ $id = $_SESSION["all_data"]['id'];
 
 
 <?php
+// ============================================================
+// پردازش فرم ویرایش
+// ============================================================
 
+// تابع کمکی: ساخت متا دیسکریپشن خودکار از متن
+function buildAutoMetaDescription($html, $limit = 160) {
+    $text = strip_tags($html);
+    $text = preg_replace('/\s+/', ' ', $text);
+    $text = trim($text);
+    if (mb_strlen($text, 'UTF-8') > $limit) {
+        $text = mb_substr($text, 0, $limit, 'UTF-8');
+        $lastSpace = mb_strrpos($text, ' ', 0, 'UTF-8');
+        if ($lastSpace !== false && $lastSpace > $limit * 0.7) {
+            $text = mb_substr($text, 0, $lastSpace, 'UTF-8');
+        }
+        $text .= '...';
+    }
+    return $text;
+}
 
+if (isset($_POST['submit_post']) && isset($_GET['id_art'])) {
+    $id_article = (int)$_GET['id_art'];
 
-if (isset($_POST['submit_post'])) {
-    $title = $_POST['title'];
-    $content = $_POST['content'];
+    $title = trim($_POST['title'] ?? '');
+    $content = $_POST['content'] ?? '';
+    $keywords = trim($_POST['keywords'] ?? '');
+    $meta_title = trim($_POST['meta_title'] ?? '');
+    $meta_description = trim($_POST['meta_description'] ?? '');
 
-    // Escape strings to prevent SQL injection
-    $title = $conn->real_escape_string($title);
+    // Fallback ها
+    if ($meta_title === '') {
+        $meta_title = $title;
+    }
+    if ($meta_description === '') {
+        $meta_description = buildAutoMetaDescription($content, 160);
+    }
 
+    $imagePath = null;
 
-    $imagePath = '';
-
-    // Handle the file upload
+    // آپلود تصویر جدید (اختیاری)
     if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
-        $uploadDir = '../upload/images/2024/';
+        $uploadDir = '../upload/images/2025/';
         $originalFileName = basename($_FILES['image']['name']);
         $uploadFile = $uploadDir . $originalFileName;
 
-        // Ensure the upload directory exists
         if (!file_exists($uploadDir)) {
             mkdir($uploadDir, 0777, true);
         }
 
-        // Move the uploaded file to the target directory
         if (move_uploaded_file($_FILES['image']['tmp_name'], $uploadFile)) {
-            $imagePath = "upload/images/2024/" . $originalFileName; // Save the relative path for the database entry
+            $imagePath = "upload/images/2025/" . $originalFileName;
         } else {
-            echo json_encode(["status" => "error", "message" => "Failed to upload file."]);
+            echo "<script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var errorToast = new bootstrap.Toast(document.getElementById('errorToast'));
+                    var toastBody = errorToast._element.querySelector('.toast-body');
+                    toastBody.innerText = 'خطا در آپلود تصویر!';
+                    errorToast.show();
+                });
+                </script>";
             exit;
         }
-
-        // Update query when an image is provided
-        $stmt = $conn->prepare("UPDATE articles SET title = ?, body = ?, images = ?, updated_at = NOW() WHERE id = ?");
-        $stmt->bind_param("sssi", $title, $content, $imagePath, $id_article);
-    } else {
-        // Update query when no image is provided
-        $stmt = $conn->prepare("UPDATE articles SET title = ?, body = ?, updated_at = NOW() WHERE id = ?");
-        $stmt->bind_param("ssi", $title, $content, $id_article);
     }
 
-    // Execute the query
-    if ($stmt->execute()) {
-        // Success Toast
-        echo "<div id='successToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 20px; right: 20px; width: 300px;'>
-          <div class='toast-header bg-success text-white'>
-              <strong class='mr-auto'>Success</strong>
-              <button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>
-                  <span aria-hidden='true'>&times;</span>
-              </button>
-          </div>
-          <div class='toast-body'>
-              پست شما با موفقیت ویرایش شد!
-          </div>
-        </div>
-        <script>
-        $(document).ready(function(){
-            $('#successToast').toast({
-                autohide: true,
-                delay: 2000
-            }).toast('show');
-            setTimeout(function(){
-                window.location.href = 'new_article';
-            }, 2000);
-        });
-        </script>";
+    // اگر تصویر جدید آپلود شده → با تصویر، وگرنه بدون تصویر
+    if ($imagePath !== null) {
+        $stmt = $conn->prepare("UPDATE articles 
+            SET title = ?, meta_title = ?, body = ?, keywords = ?, meta_description = ?, images = ?, updated_at = NOW() 
+            WHERE id = ?");
+        $stmt->bind_param("ssssssi", $title, $meta_title, $content, $keywords, $meta_description, $imagePath, $id_article);
     } else {
-        // Error Toast
-        echo "<div id='errorToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 20px; right: 20px; width: 300px;'>
-            <div class='toast-header bg-danger text-white'>
-                <strong class='mr-auto'>Error</strong>
-                <button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>
-                    <span aria-hidden='true'>&times;</span>
-                </button>
-            </div>
-            <div class='toast-body'>
-                خطایی در ویرایش پست پیش آمده!
-            </div>
-            </div>
-            <script>
-            $(document).ready(function(){
-                $('#errorToast').toast({
-                    autohide: true,
-                    delay: 3000
-                }).toast('show');
-                setTimeout(function(){
-                    $('#errorToast').toast('hide');
-                }, 3000);
+        $stmt = $conn->prepare("UPDATE articles 
+            SET title = ?, meta_title = ?, body = ?, keywords = ?, meta_description = ?, updated_at = NOW() 
+            WHERE id = ?");
+        $stmt->bind_param("sssssi", $title, $meta_title, $content, $keywords, $meta_description, $id_article);
+    }
+
+    if ($stmt->execute()) {
+        echo "<script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var successToast = new bootstrap.Toast(document.getElementById('successToast'));
+                successToast.show();
+                setTimeout(function(){ window.location.href = 'new_article'; }, 2000);
             });
             </script>";
-
-        echo "<div class='alert alert-danger mt-2' role='alert'>
-            Error: " . $conn->error . "
-            </div>";
+    } else {
+        echo "<script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var errorToast = new bootstrap.Toast(document.getElementById('errorToast'));
+                var toastBody = errorToast._element.querySelector('.toast-body');
+                toastBody.innerText = 'خطا در ویرایش مقاله!';
+                errorToast.show();
+            });
+            </script>";
     }
 
     $stmt->close();
 }
 
 
+// ============================================================
+// پردازش حذف (از طریق GET — همان‌طور که در کد قبلی بود)
+// ============================================================
+if (isset($_GET['delete_article']) && isset($_GET['id_art'])) {
+    $id_art = (int)$_GET['id_art'];
 
+    $stmt = $conn->prepare("DELETE FROM articles WHERE id = ?");
+    $stmt->bind_param("i", $id_art);
 
-
-if(isset($_GET['delete_article'])){
-
-    $id_art = $_GET['id_art'];
-
-    $sql = "DELETE FROM articles WHERE id = $id_art";
-    $result = $conn->query($sql);
-    if ($result) {
-        // Use Bootstrap's toast component to show a success toast message
-        echo "<div id='successToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 0; right: 0; width: 300px;'>
-            <div class='toast-header bg-success text-white'>
-                <strong class='mr-auto'>Success</strong>
-                <button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>
-                    <span aria-hidden='true'>&times;</span>
-                </button>
-            </div>
-            <div class='toast-body'>
-                مقاله با موفقیت حذف شد!
-            </div>
-            </div>
-            <script>
-            $(document).ready(function(){
-                $('#successToast').toast('show');
-                setTimeout(function(){
-                    $('#successToast').toast('hide');
-                    // Redirect after 3 seconds
-                    setTimeout(function(){
-                        window.location.href = 'new_article';
-                    }, 1000);
-                }, 1000);
+    if ($stmt->execute()) {
+        echo "<script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var successToast = new bootstrap.Toast(document.getElementById('successToast'));
+                successToast.show();
+                setTimeout(function(){ window.location.href = 'new_article'; }, 2000);
             });
             </script>";
     } else {
-        // Use Bootstrap's toast component to show an error toast message
-        echo "<div id='errorToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='3000' style='position: fixed; bottom: 0; right: 0; width: 300px;'>
-                <div class='toast-header bg-danger text-white'>
-                    <strong class='mr-auto'>Error</strong>
-                    <button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>
-                        <span aria-hidden='true'>&times;</span>
-                    </button>
-                </div>
-                <div class='toast-body'>
-                    خطایی در حذف مقاله پیش آمده!
-                </div>
-              </div>
-              <script>
-                $(document).ready(function(){
-                    $('#errorToast').toast('show');
-                    setTimeout(function(){
-                        $('#errorToast').toast('hide');
-                    }, 1000);
-                });
-              </script>";
-
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "<script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var errorToast = new bootstrap.Toast(document.getElementById('errorToast'));
+                errorToast.show();
+            });
+            </script>";
     }
-    
+    $stmt->close();
 }
+?>

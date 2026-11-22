@@ -62,7 +62,6 @@ if (isset($_GET['payment'])) {
 }
 
 // ========== دریافت قسمت‌های فصل دوم ==========
-// ✅ دموها اول (is_free DESC)، بعد بقیه بر اساس id ASC
 $programs = [];
 $sql = "SELECT * FROM radio_tehran 
         WHERE season = 2 
@@ -332,7 +331,6 @@ $episode_count     = $total_episodes;
         z-index: 1;
     }
 
-    /* ✅ هدر با تصویر پس‌زمینه 44.png — ارتفاع ۴۵۰، عرض کامل */
     .tehran-header {
         background-image: linear-gradient(135deg, rgba(10, 10, 26, 0.55), rgba(26, 26, 46, 0.55), rgba(10, 10, 26, 0.55)), url('../images/46.png');
         background-size: cover;
@@ -467,7 +465,7 @@ $episode_count     = $total_episodes;
         color: #fff !important;
     }
 
-    /* ✅ کارت پلیر — بدون تصویر پس‌زمینه */
+    /* ✅ کارت پلیر */
     .tehran-player-card {
         background: rgba(15, 15, 30, 0.85);
         backdrop-filter: blur(12px);
@@ -499,15 +497,8 @@ $episode_count     = $total_episodes;
     }
 
     @keyframes floatNight {
-
-        0%,
-        100% {
-            transform: translateY(0px);
-        }
-
-        50% {
-            transform: translateY(-10px);
-        }
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
     }
 
     .now-playing-title {
@@ -539,26 +530,12 @@ $episode_count     = $total_episodes;
         border-radius: 50px;
     }
 
-    audio::-webkit-media-controls-enclosure {
-        overflow: hidden;
-    }
-
-    audio::-webkit-media-controls-panel {
-        width: calc(100% + 30px);
-    }
-
+    audio::-webkit-media-controls-enclosure { overflow: hidden; }
+    audio::-webkit-media-controls-panel { width: calc(100% + 30px); }
     audio::-webkit-media-controls-current-time-display,
-    audio::-webkit-media-controls-time-remaining-display {
-        display: none;
-    }
-
-    audio::-moz-media-controls-download-button {
-        display: none !important;
-    }
-
-    audio::-ms-media-controls-download-button {
-        display: none !important;
-    }
+    audio::-webkit-media-controls-time-remaining-display { display: none; }
+    audio::-moz-media-controls-download-button { display: none !important; }
+    audio::-ms-media-controls-download-button { display: none !important; }
 
     .menu-section {
         background: rgba(15, 15, 30, 0.7);
@@ -634,17 +611,9 @@ $episode_count     = $total_episodes;
     }
 
     @keyframes pulseTehran {
-        0% {
-            box-shadow: 0 0 0 0 rgba(157, 126, 255, 0.4);
-        }
-
-        70% {
-            box-shadow: 0 0 0 10px rgba(157, 126, 255, 0);
-        }
-
-        100% {
-            box-shadow: 0 0 0 0 rgba(157, 126, 255, 0);
-        }
+        0% { box-shadow: 0 0 0 0 rgba(157, 126, 255, 0.4); }
+        70% { box-shadow: 0 0 0 10px rgba(157, 126, 255, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(157, 126, 255, 0); }
     }
 
     .program-title-tehran {
@@ -676,31 +645,8 @@ $episode_count     = $total_episodes;
     }
 
     @keyframes demoPulse {
-
-        0%,
-        100% {
-            box-shadow: 0 3px 10px rgba(226, 185, 111, 0.4);
-        }
-
-        50% {
-            box-shadow: 0 3px 20px rgba(226, 185, 111, 0.7);
-        }
-    }
-
-    .tehran-buy-btn {
-        background: linear-gradient(135deg, #9d7eff, #6d5ed9);
-        color: #fff !important;
-        font-weight: bold !important;
-        border: none !important;
-        border-radius: 50px !important;
-        padding: 10px 25px;
-        transition: all 0.3s ease;
-    }
-
-    .tehran-buy-btn:hover {
-        transform: scale(1.05);
-        box-shadow: 0 5px 20px rgba(157, 126, 255, 0.5);
-        color: #fff !important;
+        0%, 100% { box-shadow: 0 3px 10px rgba(226, 185, 111, 0.4); }
+        50% { box-shadow: 0 3px 20px rgba(226, 185, 111, 0.7); }
     }
 
     .tehran-stats {
@@ -745,17 +691,8 @@ $episode_count     = $total_episodes;
     }
 
     @keyframes glowPulse {
-
-        0%,
-        100% {
-            opacity: 0.2;
-            transform: scale(1);
-        }
-
-        50% {
-            opacity: 0.4;
-            transform: scale(1.1);
-        }
+        0%, 100% { opacity: 0.2; transform: scale(1); }
+        50% { opacity: 0.4; transform: scale(1.1); }
     }
 
     .logout-btn {
@@ -843,6 +780,7 @@ $episode_count     = $total_episodes;
         padding-bottom: 8px;
         margin-bottom: 25px;
     }
+
 
     .comment-form-card {
         background: rgba(10, 10, 20, 0.9);
@@ -993,6 +931,95 @@ $episode_count     = $total_episodes;
         margin-right: 6px;
     }
 
+    /* ============ استایل کد تخفیف ============ */
+    .coupon-input {
+        flex: 1;
+        padding: 10px 14px;
+        border-radius: 12px;
+        background: rgba(25, 25, 45, 0.9);
+        border: 1px solid rgba(157, 126, 255, 0.4);
+        color: #e8e0ff;
+        font-size: 0.9rem;
+        outline: none;
+        transition: all 0.3s;
+    }
+
+    .coupon-input:focus {
+        border-color: #9d7eff;
+        box-shadow: 0 0 0 3px rgba(157, 126, 255, 0.2);
+    }
+
+    .coupon-input::placeholder {
+        color: #7a7090;
+    }
+
+    .coupon-apply-btn {
+        padding: 10px 18px;
+        border: none;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #9d7eff, #6d5ed9);
+        color: #fff;
+        font-weight: bold;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: all 0.3s;
+        white-space: nowrap;
+    }
+
+    .coupon-apply-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(157, 126, 255, 0.5);
+    }
+
+    .coupon-apply-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    .coupon-msg {
+        margin-top: 6px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        display: none;
+    }
+
+    .price-value-final {
+        color: #8ce3a1;
+        font-size: 2.2rem;
+        font-weight: bold;
+        text-shadow: 0 0 15px rgba(140, 227, 161, 0.4);
+        line-height: 1.2;
+    }
+
+    .price-strike {
+        font-size: 0.9rem;
+        color: #a090c0;
+        text-decoration: line-through;
+        margin-bottom: 2px;
+    }
+
+    .discount-note {
+        font-size: 0.85rem;
+        color: #8ce3a1;
+        margin-top: 4px;
+    }
+
+    .coupon-remove-btn {
+        background: none;
+        border: none;
+        color: #ff9ba6;
+        font-size: 0.8rem;
+        text-decoration: underline;
+        cursor: pointer;
+        margin-right: 8px;
+        padding: 0;
+    }
+
+    .coupon-remove-btn:hover {
+        color: #ff6b7a;
+    }
+
     @media (max-width: 768px) {
         .tehran-header {
             padding: 30px 20px;
@@ -1009,7 +1036,8 @@ $episode_count     = $total_episodes;
             padding: 20px;
         }
 
-        .price-value {
+        .price-value,
+        .price-value-final {
             font-size: 1.6rem;
         }
 
@@ -1070,11 +1098,11 @@ $episode_count     = $total_episodes;
         </div>
         <?php endif; ?>
 
-        <!-- ✅ هدر با تصویر پس‌زمینه 44.png -->
+        <!-- ✅ هدر با تصویر پس‌زمینه 46.png -->
         <header class="tehran-header">
             <h1>🌃 شب‌های تهران - فصل دوم</h1>
             <p class="lead"><?php echo htmlspecialchars($tehran_desc); ?></p>
-            <div class="season-badge">📖 فصل دوم — قسمت 11 تا 20 </div>
+            <div class="season-badge">📖 فصل دوم — قسمت 11 تا 20</div>
             <br>
             <small>🎧 <?php echo $total_episodes; ?> قسمت برای شنیدن</small>
         </header>
@@ -1102,10 +1130,34 @@ $episode_count     = $total_episodes;
         <?php else: ?>
         <div class="tehran-price-box">
             <div class="row align-items-center">
-                <div class="col-md-8 text-center text-md-start mb-3 mb-md-0">
+                <div class="col-md-7 text-center text-md-start mb-3 mb-md-0">
                     <div class="price-label">💰 قیمت اشتراک کامل فصل دوم:</div>
-                    <div class="price-value"><?php echo number_format($tehran_price); ?> <span
-                            class="price-unit">تومان</span></div>
+
+                    <!-- قیمت اصلی -->
+                    <div id="priceMainWrap">
+                        <div class="price-value">
+                            <?php echo number_format($tehran_price); ?>
+                            <span class="price-unit">تومان</span>
+                        </div>
+                    </div>
+
+                    <!-- قیمت با تخفیف (مخفی تا وقتی کد اعمال شه) -->
+                    <div id="priceFinalWrap" style="display:none;">
+                        <div class="price-strike">
+                            <span id="priceBaseLabel"><?php echo number_format($tehran_price); ?></span> تومان
+                        </div>
+                        <div class="price-value-final">
+                            <span id="priceFinalLabel">0</span>
+                            <span class="price-unit">تومان</span>
+                        </div>
+                        <div class="discount-note">
+                            🎁 تخفیف: <span id="discountLabel">0</span> تومان
+                            <button type="button" id="removeCouponBtn" class="coupon-remove-btn">
+                                حذف کد
+                            </button>
+                        </div>
+                    </div>
+
                     <small class="price-hint">
                         با یک بار خرید، به <strong>تمام <?php echo $total_episodes; ?> قسمت</strong> فصل دوم دسترسی
                         دائمی پیدا می‌کنید.
@@ -1114,15 +1166,30 @@ $episode_count     = $total_episodes;
                         <?php endif; ?>
                     </small>
                 </div>
-                <div class="col-md-4 text-center">
+
+                <div class="col-md-5 text-center">
                     <?php if (!isset($_SESSION['user_id'])): ?>
-                    <a href="<?php echo htmlspecialchars($login_url); ?>" class="btn btn-buy-main">
-                        🔐 ورود و خرید
-                    </a>
+                        <a href="<?php echo htmlspecialchars($login_url); ?>" class="btn btn-buy-main">
+                            🔐 ورود و خرید
+                        </a>
                     <?php else: ?>
-                    <a href="buy_tehran.php?season=2" class="btn btn-buy-main">
-                        💳 خرید اشتراک
-                    </a>
+                        <!-- کد تخفیف -->
+                        <div id="couponBox" style="margin-bottom:10px;">
+                            <div style="display:flex; gap:6px;">
+                                <input type="text" id="couponInput" class="coupon-input"
+                                    placeholder="کد تخفیف" maxlength="64" autocomplete="off">
+                                <button type="button" id="applyCouponBtn" class="coupon-apply-btn">
+                                    اعمال
+                                </button>
+                            </div>
+                            <div id="couponMsg" class="coupon-msg"></div>
+                        </div>
+
+                        <!-- دکمه پرداخت -->
+                        <a id="payBtn" href="buy_tehran.php?season=2" class="btn btn-buy-main"
+                            data-base-url="buy_tehran.php?season=2">
+                            💳 خرید اشتراک
+                        </a>
                     <?php endif; ?>
                 </div>
             </div>
@@ -1131,7 +1198,7 @@ $episode_count     = $total_episodes;
 
         <div class="row">
             <div class="col-lg-5 mb-4">
-                <!-- ✅ کارت پلیر بدون تصویر پس‌زمینه -->
+                <!-- ✅ کارت پلیر -->
                 <div class="tehran-player-card">
                     <div class="text-center">
                         <div class="moon-icon" id="nowPlayingIcon" aria-label="نوازنده">🌙</div>
@@ -1178,15 +1245,8 @@ $episode_count     = $total_episodes;
                     <div id="playlistContainer">
                         <?php if (count($programs) > 0): ?>
                         <?php foreach ($programs as $index => $program): 
-                            // ✅ دمو فقط بر اساس is_free
                             $is_demo = ((int)($program['is_free'] ?? 0) === 1);
                             $is_logged_in = isset($_SESSION['user_id']);
-                            
-                            // ✅ منطق دسترسی:
-                            // - دمو → همه (حتی مهمان)
-                            // - گوینده / خریدار → همه
-                            // - مهمان غیر دمو → دکمه ورود
-                            // - کاربر لاگین بدون اشتراک → دکمه خرید
                             $can_play = $is_demo || $is_speaker || $has_full_tehran_access;
                         ?>
                         <article class="menu-item <?php echo $is_demo ? 'is-demo' : ''; ?>"
@@ -1198,16 +1258,13 @@ $episode_count     = $total_episodes;
                             <div class="row align-items-center">
                                 <div class="col-auto">
                                     <?php if ($can_play): ?>
-                                    <!-- ✅ پخش (دمو / گوینده / خریدار) -->
                                     <button class="play-btn-tehran" onclick="playProgram(this, <?php echo $index; ?>)"
                                         aria-label="پخش <?php echo htmlspecialchars($program['title']); ?>">▶️</button>
                                     <?php elseif (!$is_logged_in): ?>
-                                    <!-- ✅ مهمان → برو لاگین -->
                                     <button class="play-btn-tehran" style="background:#444; cursor:pointer;"
                                         onclick="location.href='<?php echo htmlspecialchars($login_url); ?>'"
                                         title="برای شنیدن این قسمت، وارد شوید." aria-label="ورود برای شنیدن">🔒</button>
                                     <?php else: ?>
-                                    <!-- ✅ کاربر لاگین بدون اشتراک → برو خرید -->
                                     <button class="play-btn-tehran" style="background:#444; cursor:pointer;"
                                         onclick="location.href='buy_tehran.php?season=2'"
                                         title="برای شنیدن این قسمت، اشتراک فصل را بخرید."
@@ -1336,6 +1393,8 @@ $episode_count     = $total_episodes;
     <?php endif; ?>
 
     <?php $conn->close(); ?>
+
+    <!-- اسکریپت پلیر (همون قبلی) -->
     <script>
     const audio = document.getElementById('mainAudio');
     let currentPlayingButton = null;
@@ -1409,6 +1468,112 @@ $episode_count     = $total_episodes;
             audio.paused ? audio.play() : audio.pause();
         }
     });
+    </script>
+
+    <!-- ✅ اسکریپت کد تخفیف -->
+    <script>
+    (function() {
+        const BASE_PRICE = <?php echo (int)$tehran_price; ?>;
+        const couponInput    = document.getElementById('couponInput');
+        const applyBtn       = document.getElementById('applyCouponBtn');
+        const couponMsg      = document.getElementById('couponMsg');
+        const priceMainWrap  = document.getElementById('priceMainWrap');
+        const priceFinalWrap = document.getElementById('priceFinalWrap');
+        const priceBaseLabel = document.getElementById('priceBaseLabel');
+        const priceFinalLabel= document.getElementById('priceFinalLabel');
+        const discountLabel  = document.getElementById('discountLabel');
+        const removeBtn      = document.getElementById('removeCouponBtn');
+        const payBtn         = document.getElementById('payBtn');
+
+        if (!applyBtn) return; // اگه کاربر لاگین نیست، کاری نکن
+
+        let appliedCode = '';
+        let appliedDiscount = 0;
+
+        function formatFa(n) {
+            return Number(n).toLocaleString('fa-IR');
+        }
+
+        function showMsg(text, type) {
+            couponMsg.style.display = 'block';
+            couponMsg.textContent = text;
+            couponMsg.style.color = (type === 'success') ? '#8ce3a1' : '#ff9ba6';
+        }
+
+        function clearMsg() {
+            couponMsg.style.display = 'none';
+            couponMsg.textContent = '';
+        }
+
+        function applyUI() {
+            const final = Math.max(0, BASE_PRICE - appliedDiscount);
+            priceMainWrap.style.display  = 'none';
+            priceFinalWrap.style.display = 'block';
+            priceBaseLabel.textContent  = formatFa(BASE_PRICE);
+            priceFinalLabel.textContent = formatFa(final);
+            discountLabel.textContent   = formatFa(appliedDiscount);
+
+            payBtn.href = payBtn.getAttribute('data-base-url') + '&coupon=' + encodeURIComponent(appliedCode);
+            payBtn.innerHTML = '💳 پرداخت ' + formatFa(final) + ' تومان';
+        }
+
+        function resetUI() {
+            appliedCode = '';
+            appliedDiscount = 0;
+            priceMainWrap.style.display  = 'block';
+            priceFinalWrap.style.display = 'none';
+            payBtn.href = payBtn.getAttribute('data-base-url');
+            payBtn.innerHTML = '💳 خرید اشتراک';
+            couponInput.value = '';
+            couponInput.disabled = false;
+            applyBtn.disabled = false;
+            applyBtn.textContent = 'اعمال';
+            clearMsg();
+        }
+
+        applyBtn.addEventListener('click', function() {
+            const code = couponInput.value.trim();
+            if (!code) { showMsg('لطفاً کد را وارد کنید.', 'error'); return; }
+
+            applyBtn.disabled = true;
+            applyBtn.textContent = '...';
+
+            fetch('check_coupon.php', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: 'code=' + encodeURIComponent(code) + '&context=radio'
+            })
+            .then(r => r.json())
+            .then(data => {
+                applyBtn.disabled = false;
+                applyBtn.textContent = 'اعمال';
+
+                if (data.ok) {
+                    appliedCode = data.code;
+                    appliedDiscount = data.discount;
+                    showMsg('✅ کد اعمال شد', 'success');
+                    couponInput.disabled = true;
+                    applyBtn.textContent = '✓';
+                    applyBtn.disabled = true;
+                    applyUI();
+                } else {
+                    showMsg('❌ ' + (data.error || 'کد نامعتبر است.'), 'error');
+                    resetUI();
+                }
+            })
+            .catch(() => {
+                applyBtn.disabled = false;
+                applyBtn.textContent = 'اعمال';
+                showMsg('❌ خطا در ارتباط با سرور.', 'error');
+            });
+        });
+
+        removeBtn.addEventListener('click', resetUI);
+
+        couponInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') { e.preventDefault(); applyBtn.click(); }
+        });
+    })();
     </script>
 </body>
 

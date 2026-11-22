@@ -41,12 +41,6 @@ $id = $_SESSION["all_data"]['id'];
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!--
-        نکته: CSS ادیتور Jodit عمداً از اینجا حذف و پایین صفحه، هم‌زمان با خود اسکریپت
-        Jodit به‌صورت تنبل (lazy) لود می‌شه؛ چون این ادیتور سنگین‌ترین بخش صفحه است
-        و لود اولیه رو به‌شدت کند می‌کرد.
-    -->
-
     <style>
     body {
         background-color: #f0f2f5;
@@ -90,6 +84,23 @@ $id = $_SESSION["all_data"]['id'];
     #editor {
         min-height: 300px;
     }
+
+    /* شمارنده کاراکتر برای فیلدهای SEO */
+    .char-counter {
+        font-size: 0.8rem;
+        color: #6c757d;
+        float: left;
+    }
+
+    .char-counter.warning {
+        color: #dc3545;
+        font-weight: 600;
+    }
+
+    .seo-helper {
+        font-size: 0.8rem;
+        color: #6c757d;
+    }
     </style>
 </head>
 
@@ -112,27 +123,54 @@ $id = $_SESSION["all_data"]['id'];
                             <i class="fas fa-info-circle me-2"></i><strong>دقت کنید:</strong> هر آنچه اینجا وارد کنید در
                             سایت اصلی اولین مطلب می آید.
                         </div>
+
+                        <!-- ردیف اول: عنوان مقاله + عنوان سئو -->
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label for="title" class="form-label">عنوان مقاله:</label>
+                                <label for="title" class="form-label">عنوان مقاله: <span class="text-danger">*</span></label>
                                 <input type="text" id="title" name="title" class="form-control"
                                     placeholder="عنوان را اینجا وارد کنید" required>
+                                <small class="seo-helper">این عنوان در سایت و لیست مقالات نمایش داده می‌شود.</small>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label for="image" class="form-label">تصویر شاخص:</label>
-                                <input type="file" name="image" class="form-control" id="inputGroupFile02" required>
+                                <label for="meta_title" class="form-label">عنوان سئو (اختیاری):</label>
+                                <input type="text" id="meta_title" name="meta_title" class="form-control"
+                                    placeholder="اگر خالی بمونه، از عنوان مقاله استفاده می‌شه" maxlength="70">
+                                <small class="seo-helper">برای تگ &lt;title&gt; گوگل. پیشنهاد: ۵۰ تا ۶۰ کاراکتر. <span class="char-counter" id="meta_title_counter">0 / 70</span></small>
                             </div>
-                            <div class="col-12 mb-3">
-                                <label for="keywords" class="form-label">کلمات کلیدی:</label>
+                        </div>
+
+                        <!-- ردیف دوم: تصویر شاخص + کلمات کلیدی -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="image" class="form-label">تصویر شاخص: <span class="text-danger">*</span></label>
+                                <input type="file" name="image" class="form-control" id="inputGroupFile02" required accept="image/*">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="keywords" class="form-label">کلمات کلیدی: <span class="text-danger">*</span></label>
                                 <input type="text" id="keywords" name="keywords" class="form-control"
                                     placeholder="کلمات کلیدی را با کاما جدا کنید" required>
                             </div>
                         </div>
+
+                        <!-- ردیف سوم: متا دیسکریپشن -->
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <label for="meta_description" class="form-label">متا دیسکریپشن (اختیاری):</label>
+                                <textarea id="meta_description" name="meta_description" class="form-control" 
+                                    rows="3" maxlength="170"
+                                    placeholder="اگر خالی بمونه، از ابتدای متن مقاله به‌صورت خودکار ساخته می‌شه"></textarea>
+                                <small class="seo-helper">توضیحات متا برای گوگل. پیشنهاد: ۱۲۰ تا ۱۶۰ کاراکتر. <span class="char-counter" id="meta_desc_counter">0 / 170</span></small>
+                            </div>
+                        </div>
+
+                        <!-- محتوای اصلی -->
                         <div class="mb-3">
-                            <label for="editor" class="form-label">محتوای اصلی:</label>
+                            <label for="editor" class="form-label">محتوای اصلی: <span class="text-danger">*</span></label>
                             <textarea id="editor" name="content" class="form-control"
                                 placeholder="برای شروع نوشتن کلیک کنید..."></textarea>
                         </div>
+
                         <div class="d-flex justify-content-center mt-4">
                             <button name="submit_post" class="btn btn-outline-success">
                                 <i class="fas fa-plus-circle me-2"></i>ثبت مقاله جدید
@@ -149,7 +187,8 @@ $id = $_SESSION["all_data"]['id'];
                         <?php
                         // Pagination configuration
                         $items_per_page = 10;
-                        $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+                        $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+                        if ($current_page < 1) $current_page = 1;
                         $offset = ($current_page - 1) * $items_per_page;
 
                         // SQL query to retrieve a subset of rows based on pagination
@@ -164,7 +203,8 @@ $id = $_SESSION["all_data"]['id'];
                                 <tr>
                                     <th scope="col" class="text-center">ردیف</th>
                                     <th scope="col" class="text-center">عنوان مقاله</th>
-                                    <th scope="col" class="text-center">بدنه</th>
+                                    <th scope="col" class="text-center">عنوان سئو</th>
+                                    <th scope="col" class="text-center">متا دیسکریپشن</th>
                                     <th scope="col" class="text-center">کلمات کلیدی</th>
                                     <th scope="col" class="text-center">بازدید</th>
                                     <th scope="col" class="text-center">عملیات</th>
@@ -173,17 +213,25 @@ $id = $_SESSION["all_data"]['id'];
                             <tbody>
                                 <?php
                                     while ($row = $result->fetch_assoc()) {
-                                        // Limit body content to 2 lines
-                                        $body_text = strip_tags($row['body']);
-                                        $max_length = 150;
-                                        if (strlen($body_text) > $max_length) {
-                                            $body_text = substr($body_text, 0, $max_length) . '...';
+                                        // کوتاه کردن متا دیسکریپشن برای نمایش در جدول (با mb_ برای پشتیبانی از فارسی)
+                                        $meta_desc_short = $row['meta_description'] ?? '';
+                                        if (mb_strlen($meta_desc_short, 'UTF-8') > 80) {
+                                            $meta_desc_short = mb_substr($meta_desc_short, 0, 80, 'UTF-8') . '...';
                                         }
                                     ?>
                                 <tr>
                                     <th scope="row" class="text-center"><?= $a ?></th>
                                     <td class="text-center"><?= htmlspecialchars($row['title']) ?></td>
-                                    <td class="text-center"><?= htmlspecialchars($body_text) ?></td>
+                                    <td class="text-center">
+                                        <?= !empty($row['meta_title']) 
+                                            ? htmlspecialchars($row['meta_title']) 
+                                            : '<span class="text-muted small">— خودکار از عنوان —</span>' ?>
+                                    </td>
+                                    <td class="text-center">
+                                        <?= !empty($row['meta_description']) 
+                                            ? htmlspecialchars($meta_desc_short) 
+                                            : '<span class="text-muted small">— خودکار از متن —</span>' ?>
+                                    </td>
                                     <td class="text-center"><?= htmlspecialchars($row['keywords']) ?></td>
                                     <td class="text-center"><?= $row['views'] ?></td>
                                     <td class="text-center">
@@ -272,22 +320,12 @@ $id = $_SESSION["all_data"]['id'];
         </div>
     </div>
 
-    <!--
-        اسکریپت‌ها به انتهای body منتقل شدن و از defer استفاده می‌کنن،
-        تا مرورگر HTML را قبل از دانلود/اجرای JS به‌طور کامل پارس و رندر کنه.
-        این خودش باعث می‌شه صفحه خیلی زودتر قابل مشاهده و تعامل بشه.
-    -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
 
     <script>
     // ---------------------------------------------------------------
     // لود تنبل (Lazy Load) ادیتور Jodit
-    // ادیتور سنگین‌ترین بخش صفحه است (چند صد کیلوبایت CSS+JS).
-    // به‌جای لود شدنش هم‌زمان با باز شدن صفحه، فقط وقتی که کاربر
-    // واقعاً روی فیلد "محتوای اصلی" کلیک/فوکوس کنه لود و فعال می‌شه.
-    // اگر هم کاربر بدون کلیک روی فیلد، مستقیم دکمه‌ی ثبت رو بزنه،
-    // قبل از سابمیت به‌صورت خودکار لود و مقداردهی می‌شه تا محتوا گم نشه.
     // ---------------------------------------------------------------
     let joditLoaded = false;
     let joditLoadingPromise = null;
@@ -297,13 +335,11 @@ $id = $_SESSION["all_data"]['id'];
         if (joditLoadingPromise) return joditLoadingPromise;
 
         joditLoadingPromise = new Promise(function(resolve, reject) {
-            // CSS ادیتور
             var link = document.createElement('link');
             link.rel = 'stylesheet';
             link.href = 'https://cdn.jsdelivr.net/npm/jodit/build/jodit.min.css';
             document.head.appendChild(link);
 
-            // JS ادیتور
             var script = document.createElement('script');
             script.src = 'https://cdn.jsdelivr.net/npm/jodit/build/jodit.min.js';
             script.onload = function() {
@@ -318,23 +354,44 @@ $id = $_SESSION["all_data"]['id'];
         return joditLoadingPromise;
     }
 
-    // فعال‌سازی با اولین فوکوس/کلیک روی فیلد محتوا
     document.getElementById('editor').addEventListener('focus', loadJodit, {
         once: true
     });
 
-    // شبکه‌ی ایمنی: قبل از ارسال فرم، مطمئن می‌شویم مقدار ادیتور (اگر لود شده) در textarea نشسته
+    // شبکه‌ی ایمنی: قبل از ارسال فرم، مقدار ادیتور رو در textarea بنشون
     document.querySelector('form').addEventListener('submit', function(e) {
         if (joditLoaded && editorInstance) {
             document.getElementById('editor').value = editorInstance.getEditorValue();
         }
-        // اگر ادیتور اصلاً لود نشده باشه (کاربر روش کلیک نکرده)، مقدار ساده‌ی
-        // خود textarea همون‌طور که هست ارسال می‌شه.
     });
 
     function confirmDelete() {
         return confirm("آیا مطمئن هستید که می‌خواهید این مورد را حذف کنید؟");
     }
+
+    // ---------------------------------------------------------------
+    // شمارنده کاراکتر برای فیلدهای SEO
+    // ---------------------------------------------------------------
+    function setupCounter(inputId, counterId, max) {
+        var input = document.getElementById(inputId);
+        var counter = document.getElementById(counterId);
+        if (!input || !counter) return;
+
+        function update() {
+            var len = input.value.length;
+            counter.textContent = len + ' / ' + max;
+            if (len > max * 0.9) {
+                counter.classList.add('warning');
+            } else {
+                counter.classList.remove('warning');
+            }
+        }
+        input.addEventListener('input', update);
+        update();
+    }
+
+    setupCounter('meta_title', 'meta_title_counter', 70);
+    setupCounter('meta_description', 'meta_desc_counter', 170);
     </script>
 
 </body>
@@ -343,15 +400,44 @@ $id = $_SESSION["all_data"]['id'];
 
 
 <?php
+// ============================================================
+// پردازش فرم‌ها
+// ============================================================
+
+// تابع کمکی: ساخت متا دیسکریپشن خودکار از متن
+function buildAutoMetaDescription($html, $limit = 160) {
+    // حذف تگ‌ها و فاصله‌های اضافی
+    $text = strip_tags($html);
+    $text = preg_replace('/\s+/', ' ', $text);
+    $text = trim($text);
+    if (mb_strlen($text, 'UTF-8') > $limit) {
+        $text = mb_substr($text, 0, $limit, 'UTF-8');
+        // تلاش برای بریدن در انتهای کلمه
+        $lastSpace = mb_strrpos($text, ' ', 0, 'UTF-8');
+        if ($lastSpace !== false && $lastSpace > $limit * 0.7) {
+            $text = mb_substr($text, 0, $lastSpace, 'UTF-8');
+        }
+        $text .= '...';
+    }
+    return $text;
+}
 
 if (isset($_POST['submit_post'])) {
-    $title = $_POST['title'];
-    $content = $_POST['content'];
-    $keywords = $_POST['keywords'];
+    $title = trim($_POST['title'] ?? '');
+    $content = $_POST['content'] ?? '';
+    $keywords = trim($_POST['keywords'] ?? '');
+    $meta_title = trim($_POST['meta_title'] ?? '');
+    $meta_description = trim($_POST['meta_description'] ?? '');
 
-    // Escape strings to prevent SQL injection
-    $title = $conn->real_escape_string($title);
-    $keywords = $conn->real_escape_string($keywords);
+    // اگر عنوان سئو خالی بود، از عنوان مقاله استفاده کن
+    if ($meta_title === '') {
+        $meta_title = $title;
+    }
+
+    // اگر متا دیسکریپشن خالی بود، از متن مقاله بساز
+    if ($meta_description === '') {
+        $meta_description = buildAutoMetaDescription($content, 160);
+    }
 
     $imagePath = '';
 
@@ -361,12 +447,10 @@ if (isset($_POST['submit_post'])) {
         $originalFileName = basename($_FILES['image']['name']);
         $uploadFile = $uploadDir . $originalFileName;
 
-        // Ensure the upload directory exists
         if (!file_exists($uploadDir)) {
             mkdir($uploadDir, 0777, true);
         }
 
-        // Move the uploaded file to the target directory
         if (move_uploaded_file($_FILES['image']['tmp_name'], $uploadFile)) {
             $imagePath = "upload/images/2025/" . $originalFileName;
         } else {
@@ -383,8 +467,18 @@ if (isset($_POST['submit_post'])) {
     }
 
     // Use prepared statements to prevent SQL injection
-    $stmt = $conn->prepare("INSERT INTO articles (title, slug, body, images, keywords, created_at) VALUES (?, ?, ?, ?, ?, NOW())");
-    $stmt->bind_param("sssss", $title, $title, $content, $imagePath, $keywords);
+    $stmt = $conn->prepare("INSERT INTO articles 
+        (title, meta_title, slug, body, images, keywords, meta_description, created_at) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, NOW())");
+    $stmt->bind_param("sssssss", 
+        $title, 
+        $meta_title, 
+        $title,       // slug - بعداً اصلاح می‌شود
+        $content, 
+        $imagePath, 
+        $keywords,
+        $meta_description
+    );
 
     if ($stmt->execute()) {
         echo "<script>
@@ -409,7 +503,7 @@ if (isset($_POST['submit_post'])) {
 }
 
 if (isset($_POST['delete_article'])) {
-    $id_art = $_POST['id_art'];
+    $id_art = (int)$_POST['id_art'];
 
     $sql = "DELETE FROM articles WHERE id = ?";
     $stmt = $conn->prepare($sql);

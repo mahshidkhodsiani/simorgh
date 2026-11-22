@@ -1,222 +1,370 @@
+<?php
+session_start();
+include '../config.php';
+include '../PersianCalendar.php';
+include '../jalaliDate.php';
+$sdate = new SDate();
+
+// ============================================================
+// Pagination + دریافت مقالات
+// ============================================================
+$articlesPerPage = 9;
+
+$countSql = "SELECT COUNT(*) as total FROM articles";
+$countResult = $conn->query($countSql);
+$totalCount = (int)$countResult->fetch_assoc()['total'];
+$totalPages = max(1, (int)ceil($totalCount / $articlesPerPage));
+
+// اعتبارسنجی صفحه
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+if ($page < 1) $page = 1;
+if ($page > $totalPages) $page = $totalPages;
+$offset = ($page - 1) * $articlesPerPage;
+
+$sql = "SELECT * FROM articles ORDER BY id DESC LIMIT $offset, $articlesPerPage";
+$result = $conn->query($sql);
+
+$articles = [];
+if ($result && $result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $articles[] = $row;
+    }
+}
+
+// ============================================================
+// SEO: عنوان و توضیحات داینامیک بر اساس صفحه
+// ============================================================
+$siteName = "وبلاگ سیمرغ";
+if ($page == 1) {
+    $pageTitle = $siteName . " | مقالات و مطالب آموزشی";
+    $pageDescription = "وبلاگ رسمی سیمرغ — جدیدترین مقالات، مطالب آموزشی و اخبار در حوزه گویندگی، رادیو و هنر.";
+} else {
+    $pageTitle = $siteName . " | صفحه " . $page;
+    $pageDescription = "صفحه " . $page . " از " . $totalPages . " — آرشیو مقالات وبلاگ سیمرغ.";
+}
+
+// Canonical URL
+$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+$host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+$basePath = str_replace('/admin', '', dirname($_SERVER['SCRIPT_NAME']));
+$canonicalUrl = $protocol . '://' . $host . $basePath . '/blog' . ($page > 1 ? '?page=' . $page : '');
+?>
 <!doctype html>
-<html lang="en" dir="rtl">
-  <head>
+<html lang="fa" dir="rtl">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>وبلاگ سیمرغ</title>
-  
-    
+
+    <!-- ===== SEO Meta Tags ===== -->
+    <title><?= htmlspecialchars($pageTitle) ?></title>
+    <meta name="description" content="<?= htmlspecialchars($pageDescription) ?>">
+    <link rel="canonical" href="<?= htmlspecialchars($canonicalUrl) ?>">
+
+    <!-- ===== Open Graph ===== -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="<?= htmlspecialchars($pageTitle) ?>">
+    <meta property="og:description" content="<?= htmlspecialchars($pageDescription) ?>">
+    <meta property="og:url" content="<?= htmlspecialchars($canonicalUrl) ?>">
+    <meta property="og:site_name" content="<?= htmlspecialchars($siteName) ?>">
+    <meta property="og:locale" content="fa_IR">
+
+    <!-- ===== Twitter Card ===== -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<?= htmlspecialchars($pageTitle) ?>">
+    <meta name="twitter:description" content="<?= htmlspecialchars($pageDescription) ?>">
+
+    <!-- ===== Robots (صفحه‌بندی: صفحه ۱ index، بقیه هم index) ===== -->
+    <meta name="robots" content="index, follow">
+
+    <!-- ===== Preconnect ===== -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+
     <?php include "includes.php"; ?>
 
-
     <style>
-      /* Ensure modal is on top */
-    .modal {
-        z-index: 1050; /* Bootstrap's default value; you can increase this if needed */
+    /* ============================================================
+       استایل اختصاصی صفحه وبلاگ
+       ============================================================ */
+    body {
+        background-color: #f6f7f9;
     }
 
-    /* Bold modal header and content */
-    .modal-content {
-        border: 2px solid #000; /* Add a bold border */
-        font-weight: bold; /* Make text bold */
+    .blog-hero {
+        background: linear-gradient(135deg, #1f2d3d 0%, #4a5d73 100%);
+        color: #fff;
+        padding: 50px 20px;
+        text-align: center;
+        border-radius: 0 0 20px 20px;
+        margin-bottom: 40px;
     }
 
-    /* Bold modal header */
-    .modal-header {
-        background-color: #343a40; /* Dark background for header */
-        color: white; /* White text */
-        font-weight: bold; /* Bold text */
+    .blog-hero h1 {
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 10px;
     }
 
-    /* Bold modal title */
-    .modal-title {
-        font-size: 1.5rem; /* Increase title size */
-        font-weight: bold; /* Bold title */
+    .blog-hero p {
+        font-size: 1.05rem;
+        opacity: 0.9;
+        max-width: 700px;
+        margin: 0 auto;
     }
 
-    /* Bold modal body */
-    .modal-body {
-        font-size: 1.1rem; /* Increase body text size */
-        line-height: 1.5; /* Improve readability */
+    /* کارت مقاله */
+    .article-card {
+        background: #fff;
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #eef0f3;
     }
 
-    /* Modal footer buttons */
-    .modal-footer .btn {
-        font-weight: bold; /* Bold buttons */
-        padding: 0.5rem 1rem; /* Add padding */
+    .article-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.10);
     }
 
+    .article-card .card-img-wrapper {
+        position: relative;
+        aspect-ratio: 16 / 9;
+        overflow: hidden;
+        background: #e9ecef;
+    }
+
+    .article-card .card-img-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+    }
+
+    .article-card:hover .card-img-wrapper img {
+        transform: scale(1.05);
+    }
+
+    .article-card .card-body {
+        padding: 18px 20px 20px;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    .article-card .card-title {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: #1f2d3d;
+        margin-bottom: 10px;
+        line-height: 1.6;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .article-card .card-text {
+        font-size: 0.9rem;
+        color: #5a6773;
+        line-height: 1.8;
+        flex: 1;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin-bottom: 15px;
+    }
+
+    .article-card .btn-read-more {
+        align-self: flex-start;
+        font-size: 0.88rem;
+        font-weight: 600;
+        border-radius: 8px;
+        padding: 7px 16px;
+        border: 1.5px solid #4a5d73;
+        color: #4a5d73;
+        transition: all 0.2s ease;
+        text-decoration: none;
+    }
+
+    .article-card .btn-read-more:hover {
+        background: #4a5d73;
+        color: #fff;
+    }
+
+    .article-meta {
+        display: flex;
+        gap: 12px;
+        font-size: 0.78rem;
+        color: #8a95a1;
+        margin-bottom: 10px;
+    }
+
+    .article-meta i {
+        margin-left: 3px;
+    }
+
+    /* Empty state */
+    .empty-state {
+        text-align: center;
+        padding: 80px 20px;
+        color: #6c757d;
+    }
+
+    .empty-state i {
+        font-size: 4rem;
+        color: #cbd3da;
+        margin-bottom: 20px;
+    }
+
+    /* Pagination */
+    .pagination .page-link {
+        color: #4a5d73;
+        border-radius: 8px;
+        margin: 0 3px;
+        border: 1px solid #dee2e6;
+        font-weight: 600;
+    }
+
+    .pagination .page-item.active .page-link {
+        background-color: #4a5d73;
+        border-color: #4a5d73;
+    }
+
+    .pagination .page-link:hover {
+        background-color: #eef0f3;
+        color: #1f2d3d;
+    }
     </style>
+</head>
+<body>
 
-  
-  </head>
-  <body>
+<?php include 'header.php'; ?>
 
-    <?php
-    include 'header.php';
-    include '../config.php';
-    include '../PersianCalendar.php';
-    include '../jalaliDate.php';
-    $sdate = new SDate();
+<!-- ===== Hero ===== -->
+<div class="blog-hero">
+    <h1><i class="fas fa-feather-alt me-2"></i>وبلاگ سیمرغ</h1>
+    <p>جدیدترین مقالات، مطالب آموزشی و اخبار در حوزه گویندگی، رادیو و هنر</p>
+</div>
 
-   
-    $articlesPerPage = 9;
-    
-    // Count total number of results
-    $countSql = "SELECT COUNT(*) as total FROM articles";
-    $countResult = $conn->query($countSql);
-    $totalCount = $countResult->fetch_assoc()['total'];
-    
-    // Calculate total pages
-    $totalPages = ceil($totalCount / $articlesPerPage);
-    
-    // Get current page
-    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-    $offset = ($page - 1) * $articlesPerPage;
-    
-    // Query with LIMIT and ORDER BY for pagination and descending order
-    $sql = "SELECT * FROM articles ORDER BY id DESC LIMIT $offset, $articlesPerPage";  // Change 'id' to another column if necessary
-    $result = $conn->query($sql);
-    
-    if ($result->num_rows > 0) {
-        $articles = [];
-        while ($row = $result->fetch_assoc()) {
-            $articles[] = $row;
-        }
-    }
+<!-- ===== لیست مقالات ===== -->
+<div class="container mb-5">
+    <?php if (!empty($articles)): ?>
+        <div class="row g-4">
+            <?php foreach ($articles as $article):
+                // --- پردازش تصویر ---
+                $images = $article['images'] ?? '';
+                $imageSrc = '';
+                $imageData = json_decode($images, true);
+                if (json_last_error() === JSON_ERROR_NONE && is_array($imageData)) {
+                    $imageSrc = $imageData['thumb'] ?? $imageData['original'] ?? '';
+                } else {
+                    $imageSrc = $images;
+                }
+                if (empty($imageSrc)) {
+                    $imageSrc = 'assets/img/placeholder.jpg'; // مسیر پیش‌فرض
+                }
 
-   
-    ?>
-    
+                // --- توضیحات کوتاه (از meta_description یا body) ---
+                $shortDesc = $article['meta_description'] ?? '';
+                if (empty($shortDesc)) {
+                    $shortDesc = strip_tags($article['body'] ?? '');
+                }
+                $shortDesc = preg_replace('/\s+/', ' ', trim($shortDesc));
+                if (mb_strlen($shortDesc, 'UTF-8') > 140) {
+                    $shortDesc = mb_substr($shortDesc, 0, 140, 'UTF-8') . '...';
+                }
 
-    
-
-
-   
-
-
-
-    <div class="container mt-5">
-      <?php if (!empty($articles)): ?>
-        <div class="row">
-            <?php foreach ($articles as $article): ?>
-              <div class="col-md-4">
-                  <div class="card mb-4 shadow-sm">
-                    <?php
-                    // Decode the JSON to access the image URLs
-                    
-                    $images = $article['images'];
-                    
-                    // Attempt to decode the JSON string
-                    $imageData = json_decode($images, true);
-                    
-                    // Check if decoding was successful (i.e., it's JSON)
-                    if (json_last_error() === JSON_ERROR_NONE && is_array($imageData)) {
-                        // It's a JSON string with multiple sizes
-                        $imageSrc = $imageData['thumb']; // Use 'thumb' or choose 'original', '300', '600', '900'
-                    } else {
-                        // It's a simple string (path to the image)
-                        $imageSrc = $images;
-                    }
-                    ?>
-                    <img class="card-img-top" src="<?php echo "../" . htmlspecialchars($imageSrc); ?>" alt="موسسه هفت هنر سیمرغ">
-                    
-                    <div class="card-body">
-                        <h5 class="card-title"><?php echo htmlspecialchars($article['title']); ?></h5>
-                        <p class="card-text"><?php echo htmlspecialchars(substr($article['description'], 0, 100)); ?></p>
-                        <!-- <button class="btn btn-primary" data-toggle="modal" data-target="#articleModal<?php echo $article['id']; ?>">مطالعه بیشتر</button> -->
-                        <a class="btn btn-outline-primary" href="article?slug=<?=$article['title'];?>">مطالعه بیشتر</a>
-                    </div>
-                </div>
-              </div>
-
-                <!-- Modal -->
-                <div class="modal fade" id="articleModal<?php echo $article['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title"><?php echo htmlspecialchars($article['title']); ?></h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                            <img class="card-img-top" src="<?php echo "../" . htmlspecialchars($imageSrc); ?>" alt="موسسه هفت هنر سیمرغ">
-                                <p><?php echo $article['body']; ?></p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
-                            </div>
+                // --- لینک مقاله (slug واقعی) ---
+                $slug = !empty($article['slug']) ? $article['slug'] : $article['id'];
+                $articleUrl = 'article?slug=' . urlencode($slug);
+            ?>
+            <div class="col-md-6 col-lg-4">
+                <article class="article-card">
+                    <a href="<?= htmlspecialchars($articleUrl) ?>" class="text-decoration-none">
+                        <div class="card-img-wrapper">
+                            <img src="../<?= htmlspecialchars($imageSrc) ?>"
+                                 alt="<?= htmlspecialchars($article['title']) ?>"
+                                 loading="lazy"
+                                 width="400" height="225">
                         </div>
+                    </a>
+                    <div class="card-body">
+                        <div class="article-meta">
+                            <span><i class="far fa-eye"></i><?= (int)($article['views'] ?? 0) ?> بازدید</span>
+                            <?php if (!empty($article['created_at'])): ?>
+                                <span><i class="far fa-calendar"></i><?= htmlspecialchars(substr($article['created_at'], 0, 10)) ?></span>
+                            <?php endif; ?>
+                        </div>
+                        <h2 class="card-title">
+                            <a href="<?= htmlspecialchars($articleUrl) ?>" class="text-decoration-none text-dark">
+                                <?= htmlspecialchars($article['title']) ?>
+                            </a>
+                        </h2>
+                        <p class="card-text"><?= htmlspecialchars($shortDesc) ?></p>
+                        <a href="<?= htmlspecialchars($articleUrl) ?>" class="btn-read-more">
+                            مطالعه بیشتر <i class="fas fa-arrow-left me-1"></i>
+                        </a>
                     </div>
-                </div>
+                </article>
+            </div>
             <?php endforeach; ?>
         </div>
 
-        <!-- Pagination -->
-        <nav aria-label="Page navigation">
+        <!-- ===== Pagination ===== -->
+        <?php if ($totalPages > 1): ?>
+        <nav aria-label="صفحه‌بندی مقالات" class="mt-5">
             <ul class="pagination justify-content-center">
+                <!-- قبلی -->
+                <li class="page-item <?= $page <= 1 ? 'disabled' : '' ?>">
+                    <a class="page-link" href="?page=<?= max(1, $page - 1) ?>" aria-label="قبلی">
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                </li>
 
-                <!-- Previous button -->
-                <?php if ($page > 1): ?>
-                    <li class="page-item">
-                        <a class="page-link" href="?page=<?php echo $page - 1; ?>" aria-label="Previous">
-                            <span aria-hidden="true">قبلی</span>
-                        </a>
-                    </li>
-                <?php endif; ?>
-
-                <!-- Page numbers -->
+                <!-- شماره‌ها -->
                 <?php
-                $startPage = max(1, $page - 1);
-                $endPage = min($totalPages, $startPage + 2);
-                for ($i = $startPage; $i <= $endPage; $i++): ?>
-                    <li class="page-item <?php if ($i == $page) echo 'active'; ?>">
-                        <a class="page-link" href="?page=<?php echo $i; ?>">
-                            <?php echo $i; ?>
-                        </a>
+                $startPage = max(1, $page - 2);
+                $endPage = min($totalPages, $startPage + 4);
+                if ($endPage - $startPage < 4) {
+                    $startPage = max(1, $endPage - 4);
+                }
+                for ($i = $startPage; $i <= $endPage; $i++):
+                ?>
+                    <li class="page-item <?= $i == $page ? 'active' : '' ?>">
+                        <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
                     </li>
                 <?php endfor; ?>
 
-                <!-- Next button -->
-                <?php if ($page < $totalPages): ?>
-                    <li class="page-item">
-                        <a class="page-link" href="?page=<?php echo $page + 1; ?>" aria-label="Next">
-                            <span aria-hidden="true">بعدی</span>
-                        </a>
-                    </li>
-                <?php endif; ?>
+                <!-- بعدی -->
+                <li class="page-item <?= $page >= $totalPages ? 'disabled' : '' ?>">
+                    <a class="page-link" href="?page=<?= min($totalPages, $page + 1) ?>" aria-label="بعدی">
+                        <i class="fas fa-chevron-left"></i>
+                    </a>
+                </li>
             </ul>
         </nav>
-        <?php else: ?>
-            <p class="text-center">No articles found.</p>
         <?php endif; ?>
-    </div>
 
+    <?php else: ?>
+        <div class="empty-state">
+            <i class="far fa-newspaper"></i>
+            <h3>هنوز مقاله‌ای منتشر نشده</h3>
+            <p>به‌زودی مطالب جدیدی در این بخش منتشر خواهد شد.</p>
+        </div>
+    <?php endif; ?>
+</div>
 
+<?php include 'footer.php'; ?>
 
-
-
-
-   
-
-
-
-  <!-- Bootstrap CSS -->
-<!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> -->
-<!-- Bootstrap JS (Include after jQuery) -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-
-
-  
-
-
-     <?php
-      include 'footer.php';
-     ?>
-  </body>
+<!-- ===== Scripts ===== -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
-

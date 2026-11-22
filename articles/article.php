@@ -14,9 +14,18 @@ $article_title = "وبلاگ سیمرغ";
 $article_description = "آموزش فن بیان، گویندگی، بازیگری، طراحی سایت، موشن گرافیک و هنرهای فرهنگی در موسسه سیمرغ. بهترین دوره‌های هنری و فرهنگی برای علاقه‌مندان به خلاقیت.";
 $article_keywords = "فن بین و گویندگی , بازیگری , طراحی سایت , موشن گرافیک , آموزش , فرهنگی هنری , هنر";
 
-// دریافت اطلاعات متا برای SEO
+// ============================================
+// ✅ SEO: دریافت اطلاعات کامل مقاله (title, meta_title, meta_description, images, dates)
+// ============================================
+$seo_meta_title = '';
+$seo_meta_description = '';
+$seo_image = '';
+$seo_created_at = '';
+$seo_updated_at = '';
+$seo_body_plain = '';
+
 if (!empty($title_slug)) {
-    $stmt_select = $conn->prepare("SELECT title, body, keywords FROM articles WHERE title = ?");
+    $stmt_select = $conn->prepare("SELECT title, meta_title, meta_description, body, keywords, images, created_at, updated_at FROM articles WHERE title = ?");
     $stmt_select->bind_param("s", $title_slug);
     $stmt_select->execute();
     $result_select = $stmt_select->get_result();
@@ -25,9 +34,54 @@ if (!empty($title_slug)) {
         $row_meta = $result_select->fetch_assoc();
         $article_title = $row_meta['title'];
         $article_keywords = $row_meta['keywords'];
-        $article_description = mb_substr(strip_tags($row_meta['body']), 0, 150, 'UTF-8') . '...';
+
+        // عنوان سئو
+        $seo_meta_title = !empty($row_meta['meta_title']) ? $row_meta['meta_title'] : $row_meta['title'];
+
+        // متا دیسکریپشن
+        if (!empty($row_meta['meta_description'])) {
+            $seo_meta_description = $row_meta['meta_description'];
+        } else {
+            $seo_body_plain = preg_replace('/\s+/', ' ', trim(strip_tags($row_meta['body'])));
+            $seo_meta_description = mb_substr($seo_body_plain, 0, 160, 'UTF-8');
+            if (mb_strlen($seo_body_plain, 'UTF-8') > 160) {
+                $seo_meta_description .= '...';
+            }
+        }
+        $article_description = $seo_meta_description;
+
+        // تصویر
+        if (!empty($row_meta['images'])) {
+            $imgDecoded = json_decode($row_meta['images'], true);
+            if (json_last_error() === JSON_ERROR_NONE && is_array($imgDecoded)) {
+                $seo_image = $imgDecoded['original'] ?? $imgDecoded['900'] ?? $imgDecoded['600'] ?? $imgDecoded['thumb'] ?? '';
+            } else {
+                $seo_image = $row_meta['images'];
+            }
+        }
+
+        $seo_created_at = $row_meta['created_at'];
+        $seo_updated_at = $row_meta['updated_at'];
     }
     $stmt_select->close();
+}
+
+// ============================================
+// URL فعلی (بدون تغییر — همون که هست)
+// ============================================
+$current_url = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' ? 'https' : 'http')
+    . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
+// آدرس کامل تصویر برای OG
+$seo_image_absolute = '';
+if (!empty($seo_image)) {
+    if (preg_match('#^https?://#i', $seo_image)) {
+        $seo_image_absolute = $seo_image;
+    } else {
+        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+        $base_url = $protocol . '://' . $_SERVER['HTTP_HOST'] . '/';
+        $seo_image_absolute = $base_url . ltrim($seo_image, '/');
+    }
 }
 
 // ============================================
@@ -98,19 +152,113 @@ if ($article_id_for_comments > 0) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= htmlspecialchars($article_title) ?></title>
 
+    <!-- ============================================================
+         ✅ SEO Meta Tags
+         ============================================================ -->
+    <title><?= htmlspecialchars(!empty($seo_meta_title) ? $seo_meta_title : $article_title) ?></title>
     <meta name="description" content="<?= htmlspecialchars($article_description) ?>">
+    <link rel="canonical" href="<?= htmlspecialchars($current_url) ?>">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
 
-    <?php
-    if (!empty($article_keywords)) {
-    ?>
+    <?php if (!empty($article_keywords)) { ?>
         <meta name="keywords" content="<?= htmlspecialchars($article_keywords) ?>">
-    <?php
-    }
-    ?>
+    <?php } ?>
 
     <meta name="author" content="سیمرغ">
+
+    <!-- ============================================================
+         ✅ Open Graph
+         ============================================================ -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="<?= htmlspecialchars(!empty($seo_meta_title) ? $seo_meta_title : $article_title) ?>">
+    <meta property="og:description" content="<?= htmlspecialchars($article_description) ?>">
+    <meta property="og:url" content="<?= htmlspecialchars($current_url) ?>">
+    <meta property="og:site_name" content="سیمرغ">
+    <meta property="og:locale" content="fa_IR">
+    <?php if (!empty($seo_image_absolute)): ?>
+    <meta property="og:image" content="<?= htmlspecialchars($seo_image_absolute) ?>">
+    <meta property="og:image:alt" content="<?= htmlspecialchars($article_title) ?>">
+    <?php endif; ?>
+    <?php if (!empty($seo_created_at)): ?>
+    <meta property="article:published_time" content="<?= date('c', strtotime($seo_created_at)) ?>">
+    <?php endif; ?>
+    <?php if (!empty($seo_updated_at)): ?>
+    <meta property="article:modified_time" content="<?= date('c', strtotime($seo_updated_at)) ?>">
+    <?php endif; ?>
+    <?php if (!empty($article_keywords)): ?>
+    <meta property="article:tag" content="<?= htmlspecialchars($article_keywords) ?>">
+    <?php endif; ?>
+
+    <!-- ============================================================
+         ✅ Twitter Card
+         ============================================================ -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<?= htmlspecialchars(!empty($seo_meta_title) ? $seo_meta_title : $article_title) ?>">
+    <meta name="twitter:description" content="<?= htmlspecialchars($article_description) ?>">
+    <?php if (!empty($seo_image_absolute)): ?>
+    <meta name="twitter:image" content="<?= htmlspecialchars($seo_image_absolute) ?>">
+    <?php endif; ?>
+
+    <!-- ============================================================
+         ✅ JSON-LD Schema.org (Article + Breadcrumb)
+         ============================================================ -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": <?= json_encode($article_title, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?>,
+        "description": <?= json_encode($article_description, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?>,
+        <?php if (!empty($seo_image_absolute)): ?>
+        "image": <?= json_encode($seo_image_absolute, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?>,
+        <?php endif; ?>
+        <?php if (!empty($seo_created_at)): ?>
+        "datePublished": <?= json_encode(date('c', strtotime($seo_created_at))) ?>,
+        <?php endif; ?>
+        <?php if (!empty($seo_updated_at)): ?>
+        "dateModified": <?= json_encode(date('c', strtotime($seo_updated_at))) ?>,
+        <?php endif; ?>
+        "author": {
+            "@type": "Organization",
+            "name": "سیمرغ"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "سیمرغ"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": <?= json_encode($current_url, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?>
+        },
+        "inLanguage": "fa-IR"
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "خانه",
+                "item": <?= json_encode((!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?>
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "وبلاگ",
+                "item": <?= json_encode((!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/blog', JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?>
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": <?= json_encode($article_title, JSON_UNESCAPED_UNICODE) ?>
+            }
+        ]
+    }
+    </script>
 
     <?php include "includes.php"; ?>
 
@@ -740,22 +888,32 @@ if ($article_id_for_comments > 0) {
                             </div>
                         </div>
 
+                        <!-- ============================================================
+                             ✅ سایدبار: رادیوها و داستان‌های صوتی سیمرغ
+                             (جایگزین «دوره‌ها و خدمات سیمرغ»)
+                             ============================================================ -->
                         <div class="card sidebar-card mt-4">
                             <div class="card-header sidebar-header text-center">
-                                <h5 class="m-0">🎭 دوره‌ها و خدمات سیمرغ</h5>
+                                <h5 class="m-0">🎙️ رادیوها و داستان‌های صوتی سیمرغ</h5>
                             </div>
                       
                             <div class="list-group list-group-flush sidebar-list">
-                                <a href="../courses/course.php?slug=دوبله+پیشرفته" class="list-group-item list-group-item-action sidebar-item"><i class="fas fa-microphone-alt"></i> دوره دوبله پیشرفته</a>
-                                <a href="../courses/course.php?slug=فن+بیان+و+گویندگی+کودکان" class="list-group-item list-group-item-action sidebar-item"><i class="fas fa-child"></i> دوره گویندگی و فن بیان کودکان</a>
-                                <a href="../courses/course.php?slug=موشن+گرافیک" class="list-group-item list-group-item-action sidebar-item"><i class="fas fa-pen-nib"></i> موشن گرافیک</a>
-                                <a href="../courses/course.php?slug=تدوین+فیلم" class="list-group-item list-group-item-action sidebar-item"><i class="fas fa-film"></i> تدوین فیلم</a>
-                                <a href="../courses/course.php?slug=بازیگری+بزرگسال" class="list-group-item list-group-item-action sidebar-item"><i class="fas fa-theater-masks"></i> کلاس بازیگری</a>
-                                
-                                <a href="../packages" class="list-group-item list-group-item-action sidebar-item">
-                                    <i class="fas fa-cubes"></i> پکیج های آموزشی سیمرغ
-                                </a>
-                                
+                                <?php
+                                $radiosStmt = $conn->prepare("SELECT name, slug FROM radios WHERE status = 1 ORDER BY id ASC");
+                                $radiosStmt->execute();
+                                $radiosResult = $radiosStmt->get_result();
+
+                                if ($radiosResult->num_rows > 0) {
+                                    while ($radioRow = $radiosResult->fetch_assoc()) {
+                                        $radioName = htmlspecialchars($radioRow['name']);
+                                        $radioSlug = htmlspecialchars($radioRow['slug']);
+                                        echo '<a href="../radios/' . urlencode($radioSlug) . '.php" class="list-group-item list-group-item-action sidebar-item"><i class="fas fa-headphones"></i>' . $radioName . '</a>';
+                                    }
+                                } else {
+                                    echo '<p class="text-center p-3 m-0 text-muted">رادیویی برای نمایش نیست.</p>';
+                                }
+                                $radiosStmt->close();
+                                ?>
                             </div>
                         </div>
                     </div>
